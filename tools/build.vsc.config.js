@@ -36,7 +36,7 @@ const alias = {
     'js-beautify': path.resolve(CONTEXT, 'design-editor/node_modules/js-beautify/js/index.js'),
     jquery: path.resolve(CONTEXT, 'design-editor/node_modules/jquery/dist/jquery.js'),
     'jquery-ui': path.resolve(CONTEXT, 'design-editor/node_modules/jquery-ui/jquery-ui.js'),
-    'assistant-view': path.resolve(CONTEXT, 'vsc-extension/design-editor/libs/assistant-view/assistant-view-manager.js')
+    'assistant-view': path.resolve(CONTEXT, 'vsc-extension/design-editor/libs/assistant-view-manager.js')
 };
 
 const production = {

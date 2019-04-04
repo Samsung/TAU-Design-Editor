@@ -21,7 +21,6 @@ class AssistantViewManager {
             type: 'ASSISTANT_VIEW_OPEN'
         }, '*');
         this._isOpened = true;
-
     }
 
     /**
@@ -29,7 +28,7 @@ class AssistantViewManager {
      */
     close() {
         window.parent.postMessage({
-            type: 'ASSISTANT_VIEW_CLOSE'
+            type: 'CLOSE_EDITOR'
         }, '*');
         this._isOpened = false;
     }

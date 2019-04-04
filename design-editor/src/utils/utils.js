@@ -34,12 +34,32 @@ export default {
 	/**
 	 * Generates absolute bath for the server
 	 * from relative one passed as an input
-	 * @TODO: refactor this method and move it to path-utils
+	 * @TODO refactor this method and move it to path-utils
 	 * @param {string} relativePath
 	 * @returns {string} absolutePath
 	 */
 	generateAbsolutePath(relativePath) {
 		const projectPath = this.checkGlobalContext('globalData').projectPath;
 		return path.join(projectPath, '..', relativePath);
+	},
+
+	/**
+	 * Resolves promise passed in parameter if it's resolved within
+	 * timeoutThreshold time or rejects otherwise.
+	 *
+	 * @param {Promise} promise
+	 * @param {number} timeoutThreshold
+	 */
+	timeoutPromise(promise, timeoutThreshold) {
+		timeoutThreshold = timeoutThreshold || 2500;
+
+		const timeoutTriggerPromise = new Promise((_, reject) => {
+            const timeoutId = setTimeout(() => {
+                clearTimeout(timeoutId);
+                reject(new Error(`Timed out in ${timeoutThreshold} ms.`));
+            }, timeoutThreshold);
+		});
+
+		return Promise.race(timeoutTriggerPromise, promise);
 	}
 }
