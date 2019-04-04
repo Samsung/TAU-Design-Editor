@@ -9,7 +9,7 @@ import editor from '../editor';
 import {PropertyContainerElement} from '../panel/property/property-container-element';
 import {AnimationContainerElement} from '../panel/animation/animation-container-element';
 import {StructureElement} from '../panel/property/structure/structure-element';
-import {InstantTextEditorElement} from '../pane/select-layer/instant-text-editor-element';
+import HTMLAssistant from '../pane/select-layer/html-assistant';
 import {ToolbarElement} from '../panel/toolbar-element';
 import {PreviewElement} from '../panel/preview/preview-element';
 import {PreviewToolbarElement} from '../panel/preview/preview-toolbar-element';
@@ -39,44 +39,17 @@ class StageManager {
         this._toolbarContainerElement = new ToolbarElement();
         this._toolbarContainerElementPanel = null;
 
-        if (!vscode){
-        this._instantTextEditor = new InstantTextEditorElement();}
-
         this._previewElementToolbar = new PreviewToolbarElement();
         this._previewElementToolbarPanel = null;
 		// this._interactionViewElementToolbar = new InteractionViewToolbarElement();
 		// this._interactionViewElementToolbarPanel = null;
        // this._interactionView = new InteractionViewElement();
 
-        // for syntax highlighting
-        if(!vscode){
-            setTimeout(() => {
-                this._instantTextEditor.$el.appendTo('body');
-            }, 0);
-        }
-
+        this._htmlAssistant = new HTMLAssistant();
         this._assistantManager = new AssistantManager();
-
-        // @TODO try find better solution
-        if (window.atom !== undefined) {
-            this._toolbarContainerElementPanel = editor.workspace.addLeftPanel({
-                item: this._toolbarContainerElement,
-                visible: true,
-                priority: 110
-            });
-        } else {
-            panelManager.openPanel({type: 'left', item: this._toolbarContainerElement, priority: 110});
-        }
+        panelManager.openPanel({type: 'left', item: this._toolbarContainerElement, priority: 110});
 
         this._toolbarControls = this._toolbarContainerElement.Controls;
-
-        if (window.atom !== undefined) {
-            this._previewElementToolbarPanel = editor.workspace.addLeftPanel({
-                item: this._previewElementToolbar,
-                visible: false,
-                priority: 110
-            });
-        }
 
         this._subscriptions = null;
         this._lastClosetEditor = null;
@@ -105,22 +78,12 @@ class StageManager {
         eventEmitter.on(EVENTS.ElementSelected, this._onElementSelected.bind(this));
         eventEmitter.on(EVENTS.ElementDeselected, this._onElementDeselected.bind(this));
         eventEmitter.on(EVENTS.ToggleAssistantView, this._onToggleAssistantView.bind(this));
-
+        eventEmitter.on(EVENTS.ToggleInstantTextEditor, this._toggleHTMLAssistant.bind(this));
         eventEmitter.on(EVENTS.ToggleAnimationPanel, this._onToggleAnimationPanel.bind(this));
 
-        eventEmitter.on(EVENTS.OpenInstantTextEditor, this._onOpenInstantTextEditor.bind(this));
 
     }
 
-    /**
-     * Open instant text editor
-     * @param options
-     * @private
-     */
-    _onOpenInstantTextEditor(options) {
-        this._instantTextEditor.setGrammar(editor.grammars.grammarsByScopeName['text.html.basic.tau']);
-        this._instantTextEditor.open();
-    }
 
     /**
      * Set last closet editor info
@@ -129,12 +92,6 @@ class StageManager {
     _setLastClosetEditorInfo() {
         var activePane = null;
         this._lastClosetEditor = this._activeEditor;
-        if (window.atom) {
-            activePane = editor.workspace.getActivePaneItem();
-            if (activePane) {
-                this._lastClosetPath = activePane.getPath();
-            }
-        }
     }
 
     /**
@@ -187,6 +144,18 @@ class StageManager {
         }
     }
 
+
+    _toggleHTMLAssistant() {
+        this._htmlAssistant.toggle((opened) => {
+            console.log('HTML Assistant toggle', opened);
+            if (opened) {
+                this._toolbarContainerElement.turnOnControl(this._toolbarControls.INSTANT_EDIT);
+            } else {
+                this._toolbarContainerElement.turnOffControl(this._toolbarControls.INSTANT_EDIT);
+            }
+        })
+        
+    }
     /**
      * Toggle assistant view
      * @private

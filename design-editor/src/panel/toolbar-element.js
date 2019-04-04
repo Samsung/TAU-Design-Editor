@@ -34,7 +34,7 @@ class Toolbar extends DressElement {
             'click .layout-detail-toggle': 'onClickLayoutDetail',
             'click .structure-element-toggle': EVENTS.ToggleStructureElement,
             'click .animation-panel-toggle': EVENTS.ToggleAnimationPanel,
-            'click .instant-edit': EVENTS.OpenInstantTextEditor,
+            'click .instant-edit': EVENTS.ToggleInstantTextEditor,
             'click .insert-code': EVENTS.OpenAssistantWizard,
             'click .save-file': EVENTS.DocumentSave
         };
