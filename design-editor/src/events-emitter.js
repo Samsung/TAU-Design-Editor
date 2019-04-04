@@ -78,6 +78,8 @@ const EVENTS = {
     ChangeElementStyle: 'attribute-element:ChangeElementStyle',
     TextToolShowed: 'select-layer:TextToolShowed',
     OpenInstantTextEditor: 'instant-text-editor:Open',
+    CloseInstantTextEditor: 'instant-text-editor:Close',
+    ToggleInstantTextEditor: 'instant-text-editor:Toggle',
     PreviewElementToolbarBackward: 'preview-element-toolbar-backward',
     InteractionViewElementToolbarBackward: 'interaction-view-element-toolbar-backward',
     TooltipPanelOpen: 'tooltip-open',
