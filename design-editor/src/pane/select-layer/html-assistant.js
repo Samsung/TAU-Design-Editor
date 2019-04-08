@@ -6,8 +6,8 @@ import {appManager} from '../../app-manager';
 import utils from '../../utils/utils'
 
 /**
- * Responsible for running of HTML editor of selected component 
- * Need to implement platform-specific class 
+ * Responsible for running of HTML editor of selected component
+ * Need to implement platform-specific class
  */
 class HTMLAssistant {
 	constructor() {
@@ -29,7 +29,7 @@ class HTMLAssistant {
 	}
 
 	/**
-	 * Setting new content of selected content to model 
+	 * Setting new content of selected content to model
 	 * @param {string | Promise} content HTML content of edited element
 	 */
 	setSelectedContent(content) {
@@ -51,9 +51,14 @@ class HTMLAssistant {
 	 * @param {function} callback
 	 */
 	toggle(callback) {
-		if(this._htmlAssistantEditor.isOpened()) {
-			this.setSelectedContent(this._htmlAssistantEditor.getEditorContent());
-			this._htmlAssistantEditor.close();
+		if (this._htmlAssistantEditor.isOpened()) {
+			Promise.resolve(this._htmlAssistantEditor.getEditorContent())
+				.then((content) => {
+					this.setSelectedContent(content);
+					this._htmlAssistantEditor.close();
+				})
+				.catch(error => console.error(error));
+
 		} else {
 			this._htmlAssistantEditor.open(this.getSelectedContent(this.element));
 		}
@@ -69,7 +74,7 @@ class HTMLAssistant {
         });
 
 		eventEmitter.on(EVENTS.ElementDeselected, () => {
-			console.log("element deselected");			
+			console.log("element deselected");
 				this.selectedElementId = null;
         });
 	}
