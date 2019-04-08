@@ -2,7 +2,7 @@ const utils = require('../../../design-editor/src/utils/utils');
 const fsExtra = require('./fs-extra');
 
 
-export default class HTMLAssistantEditor {
+class HTMLAssistantEditorElement {
     constructor() {
         this._isOpened = false;
         this._tempFileName = '.html-assistant-tmp';
@@ -50,3 +50,5 @@ export default class HTMLAssistantEditor {
         });
     }
 }
+
+export {HTMLAssistantEditorElement};
