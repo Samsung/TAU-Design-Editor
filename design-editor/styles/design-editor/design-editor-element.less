@@ -1,0 +1,305 @@
+@-webkit-keyframes scrollControllerAnimation {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+closet-design-editor {
+    display: flex;
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    font-size: 12px;
+    -webkit-user-select: none;
+    color: #9da5b4;
+    flex-direction: column;
+
+    .design-area {
+        flex: 1;
+        position: relative;
+    }
+
+    .closet-design-editor-frame, .frame-dummy {
+        transform-origin: top left;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border: 0;
+    }
+
+    .frame-dummy {
+        z-index: -1;
+    }
+
+    .closet-dv-scroll-up, .closet-dv-scroll-down {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        -webkit-animation: scrollControllerAnimation 2s infinite;
+        z-index: 99;
+    }
+}
+
+.closet-design-editor-scroller {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: inherit;
+}
+
+closet-select-layer {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 50;
+    height: 100%;
+    outline: none;
+    color: #9da5b4;
+
+    .closet-select-item, .closet-draggable-marker-item {
+        position: absolute;
+        border: 1px solid #1baee1;
+        pointer-events: none;
+        &.closet-editable {
+            pointer-events: fill;
+        }
+    }
+
+    .closet-highlight-item {
+        position: absolute;
+        border: 2px solid rgba(160, 199, 255, 0.26);
+        background-color: rgba(160, 199, 255, 0.22);
+    }
+
+
+    .closet-text-format {
+        position: absolute;
+        top: -86px;
+        left: 50%;
+        margin-left: -160px;
+        height: 66px;
+        padding: 3px 6px 3px 6px;
+        width: 335px;
+        background-color: @inset-panel-background-color;
+        border: 1px solid @inset-panel-border-color;
+        border-radius: 5px;
+        text-align: center;
+
+        > .row {
+            margin: 0;
+            height: 30px;
+
+            input[type=text],
+            input[type=number],
+            select {
+                border: 1px solid @input-border-color;
+                width: 100px;
+                background-color: #1b1d23;
+                color: #9da5b4;
+            }
+
+            select {
+                margin: 0 5px;
+                &[data-tag="fontName"] {
+                    width: 130px;
+                }
+            }
+
+            input[type=color] {
+                background: @button-background-color;
+                border: 1px solid @button-border-color;
+            }
+
+            button.active {
+                outline: -webkit-focus-ring-color auto 5px;
+            }
+
+            .size {
+                width: 40px;
+            }
+
+            .spacer {
+                display: inline-block;
+                width: 5px;
+            }
+        }
+    }
+    closet-alternative-selector {
+        cursor: pointer;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top-style: solid;
+        border-top-color: @text-color-warning;
+        border-left-style: solid;
+        border-left-color: transparent;
+    }
+
+    .closet-guide-info {
+        width: auto;
+        height: 20px;
+        color: #ffffff;
+        padding: 0 10px;
+        font-size: 15px;
+        position: absolute;
+        &.closet-guide-info-reject {
+            display: none;
+            &.closet-guide-relative-info {
+                display: block;
+                background-color: rgba(214, 24, 41, 1);
+                .closet-guide-border {
+                    background-color: rgba(214, 24, 41, 0.4);
+                }
+            }
+        }
+        .closet-guide-border {
+            position: absolute;
+            box-sizing: border-box;
+            left: 0;
+        }
+        &.closet-guide-element-info {
+            z-index: 2;
+            background-color: rgb(255, 91, 95);
+            .closet-guide-border {
+                border: 1px solid rgba(214, 0, 17, 1);
+            }
+        }
+        &.closet-guide-relative-info {
+            z-index: 3;
+            background-color: rgb(109, 88, 214);
+            .closet-guide-border {
+                border: 1px solid rgba(135, 118, 214, 0.40);
+                background-color: rgba(135, 118, 214, 0.2);
+            }
+        }
+        &.closet-guide-container-info {
+            z-index: 1;
+            background-color: rgb(32, 70, 32);
+            .closet-guide-border {
+                border: 1px solid rgba(141, 214, 155, 0.4);
+            }
+        }
+    }
+
+    closet-element-layout-detail {
+        position: absolute;
+        .closet-layout-detail-element-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .closet-layout-detail-element {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-color: transparent;
+            border-style: solid;
+            box-sizing: border-box;
+            &.closet-layout-detail-element-layout {
+                background-color: rgba(67, 152, 253, 0.3);
+                border: 0;
+                z-index: 4;
+            }
+            &.closet-layout-detail-element-padding {
+                border-color: rgba(124, 239, 143, 0.3);
+                z-index: 3;
+            }
+            &.closet-layout-detail-element-border {
+                border-color: rgba(239, 224, 64, 0.3);
+                z-index: 2;
+            }
+            &.closet-layout-detail-element-margin {
+                top: 0;
+                left: 0;
+                border-color: rgba(239, 167, 64, 0.3);
+                z-index: 1;
+            }
+        }
+    }
+}
+
+closet-section-controller {
+    display: none;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    .closet-section-add-btn {
+        top: 50%;
+        transform: translate(0, -50%);
+        position: absolute;
+        opacity: 0;
+        z-index: 100;
+        &.closet-section-add-btn-right {
+            right: 40px;
+        }
+
+        &.closet-section-add-btn-left {
+            left: 40px;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+        &:active {
+            color: #858585;
+        }
+    }
+
+    .closet-section-move-btn {
+        top: 50%;
+        transform: translate(0, -50%);
+        position: absolute;
+        &.closet-section-move-btn-right {
+            right: 0;
+        }
+
+        &.closet-section-move-btn-left {
+            left: 0;
+        }
+
+        &:active {
+            color: #858585;
+        }
+    }
+}
+
+canvas[is="closet-design-editor-grid"] {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 300%;
+    pointer-events: none;
+}
+
+canvas[is="closet-design-editor-ruler"] {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 15px;
+    pointer-events: none;
+    background-color: @base-border-color;
+    z-index: 101;
+    &.orientation-vertical {
+        width: 15px;
+        height: 300%;
+    }
+}

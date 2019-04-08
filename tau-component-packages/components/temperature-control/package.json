@@ -1,0 +1,28 @@
+{
+  "label": "TemperatureControl",
+  "selector": ".ui-temperature-control",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 300,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./temperature-control.png",
+      "tv": "./temperature-control.png",
+      "wearable": "./temperature-control.png"
+    }
+  },
+  "template": "<div class=\"ui-temperature-control\"></div>",
+  "generator": {
+    "constructor": "tau.widget.TemperatureControl",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

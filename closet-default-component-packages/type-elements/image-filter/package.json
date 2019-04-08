@@ -1,0 +1,6 @@
+{
+  "resources": {
+    "js": "image-filter.js",
+    "css": "cssgram.css"
+  }
+}

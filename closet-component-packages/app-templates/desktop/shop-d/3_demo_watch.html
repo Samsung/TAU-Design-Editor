@@ -1,0 +1,137 @@
+<html>
+<head>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/tau.animation.min.js"></script>
+    <script type="text/javascript">
+        window.tau.animation.SimpleMixin($.fn);
+    </script>
+    <script type="text/javascript" src="libs/closet/1.0.0/dress.closet.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/closet/1.0.0/dress.closet.full.css">
+</head>
+<body style="width:100%;height:100%;">
+<closet-page>
+    <closet-section style="flex:none;height:70px;background-color:rgb(16, 16, 16)">
+        <div class="header" style="width:100%;height:100%;position: relative;display: flex;-webkit-align-items:center;text-align:center;">
+            <closet-text style="display: table-cell; vertical-align: middle; margin-left:30px;">
+                <div class="closet-text-contents" style="font-size:15px;font-weight:bold;font-family: 'Raleway Heavy';color:rgb(182, 182, 182);">THE BACKYARD SHOP</div>
+            </closet-text>
+
+            <closet-text style="display: table-cell; vertical-align: middle;position:absolute;top:25px;right:175px;">
+                <div class="closet-text-contents" style="font-size:12px;color:rgb(161, 161, 161);">Home</div>
+            </closet-text>
+            <closet-text style="display: table-cell; vertical-align: middle;position:absolute;top:25px;right:110px;">
+                <div class="closet-text-contents" style="font-size:12px;color:rgb(161, 161, 161);">Gallery</div>
+            </closet-text>
+            <closet-text style="display: table-cell; vertical-align: middle;position:absolute;top:25px;right:35px;">
+                <div class="closet-text-contents" style="font-size:12px;color:rgb(161, 161, 161);">About me</div>
+            </closet-text>
+        </div>
+    </closet-section>
+    <closet-section style="min-height:300px;flex: 1; display: flex; flex-direction:row;background-color:rgb(255,255,255);">
+        <div class="product-container" style="flex: 1; display: flex; flex-direction:row; ">
+            <closet-image src="./resources/images/watch.jpg" style="width:400px; height:500px;"></closet-image>
+            <div class="image-area" style="flex: 1;">
+            </div>
+            <div class="product-info" style="flex: 1; display: flex; flex-direction: column;">
+
+                <div class="product-name" style="height:60px;">
+                    <closet-text>
+                        <div class="closet-text-contents" style="font-size: 40px; padding: 20px 20px 5px;">The classic watch</div>
+                    </closet-text>
+                </div>
+                <div class="product-name-sub" style="flex: 0.1">
+                    <closet-text>
+                        <div class="closet-text-contents" style="font-size: 20px; padding: 10px 20px; color: rgb(161, 161, 161);">Item collection 1</div>
+                    </closet-text>
+                </div>
+                <div class="product-feature" style="flex: 0.2">
+                    <closet-text>
+                        <div class="closet-text-contents" style="font-size: 20px; padding-left: 20px;">
+                            Feature 1
+                        </div>
+                    </closet-text>
+                    <closet-text style="display:block">
+                        <div class="closet-text-contents" style="font-size: 15px; color: rgb(161, 161, 161); padding: 20px;">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies.<br />
+                            Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus.<br />
+                            In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.
+                        </div>
+                    </closet-text>
+                </div>
+                <div class="product-feature" style="flex: 0.2">
+                    <closet-text>
+                        <div class="closet-text-contents" style="font-size: 20px; padding-left: 20px;">
+                            Feature 2
+                        </div>
+                    </closet-text>
+                    <closet-text style="display:block">
+                        <div class="closet-text-contents" style="font-size: 15px; color: rgb(161, 161, 161); padding: 20px;">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies.<br />
+                            Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus.<br />
+                            In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.
+                        </div>
+                    </closet-text>
+                </div>
+                <div class="product-feature" style="flex: 0.2">
+                    <closet-text style="display:block">
+                        <div class="closet-text-contents" style="font-size: 20px; padding-left: 20px;">
+                            Feature 3
+                        </div>
+                    </closet-text>
+                    <closet-text style="display:block">
+                        <div class="closet-text-contents" style="font-size: 15px; color: rgb(161, 161, 161); padding: 20px;">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies.<br />
+                            Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus.<br />
+                            In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.
+                        </div>
+                    </closet-text>
+                </div>
+                <div class="product-price" style="flex: 0.1">
+                    <closet-text>
+                        <div class="closet-text-contents" style="font-size: 30px; font-weight: bold; padding: 10px 20px;">
+                            $ 400
+                        </div>
+                    </closet-text>
+                </div>
+                <div class="product-btn" style="flex: 0.1">
+                    <div class="buy-btn" style="width: 30%; height: 50px; background-color: #383b3c; margin: 0 auto; color: #ffffff; line-height: 50px; text-align: center;">Buy Now</div>
+                </div>
+            </div>
+
+        </div>
+    </closet-section>
+    <closet-section style="height:130px;background-color:rgb(16, 16, 16);flex: none;">
+        <div style="height:100%;width:100%;display:flex;position:relative;-webkit-justify-content: center;-webkit-flex-direction:column;">
+            <div style="display:table;width:100%;top:0;left:0;max-width:1050px;margin-left:auto;margin-right:auto;  ">
+                <div style="text-align:center;display:table-cell;vertical-align:middle;position:relative;">
+                    <div style="vertical-align:middle;margin-right:20px;margin-left:20px;display:inline-block;">
+                        <closet-text style="margin:10px 20px 0px 20px;display:inline-block;">
+                            <div class="closet-text-contents" style="color:rgb(124, 124, 124);font-size:17px;text-align:left;line-height:0.9em;">
+                                <b>The backyard shop.</b>
+                            </div>
+                        </closet-text>
+                    </div>
+                    <br>
+                    <closet-text style="display:inline-block;max-width:inherit;text-align:center;margin:0 20px;">
+                        <div class="closet-text-contents" style="font-size:10px;color:rgb(142,142,142);">
+                            All rights reserved 2015
+                        </div>
+                    </closet-text>
+                    <br>
+                    <div style="text-align:center;display:block;">
+                        <div style="margin:10px 5px 10px 5px;display:inline-block;">
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/facebook.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/twitter.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/linkedin.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/youtube.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/pinterest.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/instagram.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </closet-section>
+</closet-page>
+</body>
+</html>

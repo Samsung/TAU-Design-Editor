@@ -1,0 +1,24 @@
+{
+  "label": "Video",
+  "resources": {
+    "js": [
+      "video.js"
+    ],
+    "css": "video.css"
+  },
+  "attributes": {
+    "src": {
+      "label": "Video Src",
+      "value": "",
+      "type": {
+        "name": "file",
+        "option": {
+          "extension": [
+            "mp4",
+            "ogg"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "label": "More Button",
+  "selector": ".ui-btn.ui-more",
+  "type": "standalone-component",
+  "displayOrderWeight": 1800,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+        "mobile": "./more-options.png",
+        "tv": "./more-options.png",
+        "wearable": "./more-options.png"
+    }
+  },
+  "template": "<button type=\"button\" class=\"ui-btn ui-more\"></button>",
+  "device-profile": ["wearable"]
+}

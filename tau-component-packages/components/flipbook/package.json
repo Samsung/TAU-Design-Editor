@@ -1,0 +1,23 @@
+{
+    "label": "FlipBook",
+    "selector": ".ui-flipbook",
+    "attachable": true,
+    "type": "ui-component",
+    "resources": {
+        "css": [
+            "../../tau/theme/tau.min.css"
+        ],
+        "js": "../../tau/tau.min.js",
+        "icon": {
+            "mobile": "./ui-flipbook.png"
+        }
+    },
+    "template": "<div class=\"ui-flipbook\" style=\"width: 840px; height: 480px\"></div>",
+    "generator": {
+        "constructor": "tau.widget.mobile.FlipBook",
+        "parameter": {
+            "options": {}
+        }
+    },
+    "draggable": true
+}

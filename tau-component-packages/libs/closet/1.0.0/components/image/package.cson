@@ -1,0 +1,103 @@
+# label for component panel
+'label': 'Image'
+'selector': 'closet-image'
+
+'attachable': true
+'type': 'common-component'
+'template': '<closet-image></closet-image>'
+
+'resizable': true
+'draggable': true
+# component resource files
+'resources':
+    'js': 'image.js'
+    'css': 'image.css'
+    'icon': './resources/img.png'
+
+# attribute of component
+'attributes':
+    'src':
+        'label': 'Image Src'
+        'type':
+            'name': 'file'
+            'option':
+                'extensions': ["jpg", "png"]
+    'filter-preset':
+        'label': 'Preset Filters'
+        'type':
+            'name': 'image-filter'
+            'option':
+                'list': [
+                    {'name': 'aden', 'label': 'Aden'}
+                    {'name': 'brooklyn', 'label': 'Brooklyn'}
+                    {'name': 'earlybird', 'label': 'Earlybird'}
+                    {'name': 'gingham', 'label': 'Gingham'}
+                    {'name': 'hudson', 'label': 'Hudson'}
+                    {'name': 'inkwell', 'label': 'Inkwell'}
+                    {'name': 'lofi', 'label': 'Lofi'}
+                    {'name': 'mayfair', 'label': 'Mayfair'}
+                ]
+    'brightness':
+        'label': 'brightness'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '2'
+                'step': '0.1'
+    'contrast':
+        'label': 'contrast'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '10'
+                'step': '0.1'
+    'saturate':
+        'label': 'saturate'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '10'
+                'step': '0.1'
+    'sepia':
+        'label': 'sepia'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '1'
+                'step': '0.1'
+    'grayscale':
+        'label': 'grayscale'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '10'
+                'step': '0.1'
+    'hue-rotate':
+        'label': 'hue rotate'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '360'
+                'step': '1'
+    'radius':
+        'label': 'radius'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '50'
+                'step': '1'
+    'opacity':
+        'label': 'opacity'
+        'type':
+            'name': 'range'
+            'option':
+                'min': '0'
+                'max': '1.0'
+                'step': '0.01'

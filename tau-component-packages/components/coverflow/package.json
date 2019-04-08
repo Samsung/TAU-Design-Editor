@@ -1,0 +1,55 @@
+{
+  "label": "CoverFlow",
+  "selector": ".ui-coverflow",
+  "attachable": true,
+  "type": "interactive-container-component",
+  "displayOrderWeight": 100,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./coverflow.png",
+      "wearable": "./coverflow.png",
+      "tv": "./coverflow.png"
+    }
+  },
+  "template": "<div class=\"ui-coverflow\"></div>",
+  "generator": {
+    "constructor": "tau.widget.CoverFlow",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "options": [
+    {
+      "label": "Effect Selection",
+      "name": "effect",
+      "values": [
+        {
+          "value": "coverflow",
+          "label": "coverflow"
+        },
+        {
+          "value": "carousel",
+          "label": "carousel"
+        },
+        {
+          "value": "wheel",
+          "label": "wheel"
+        },
+        {
+          "value": "flat",
+          "label": "flat"
+        },
+        {
+          "value": "3d wall",
+          "label": "3d wall"
+        }
+      ]
+    }
+  ],
+  "draggable": true,
+  "new": true
+}

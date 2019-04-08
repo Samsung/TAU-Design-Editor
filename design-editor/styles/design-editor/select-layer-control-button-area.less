@@ -1,0 +1,22 @@
+closet-control-button-area {
+    position: absolute;
+    width: auto;
+    height: auto;
+
+    i {
+        display: inline-block !important;
+        background-color: @button-background-color;
+        color: @text-color;
+        border: 1px solid @text-color;
+        padding:5px;
+        pointer-events: all;
+        width: 34px;
+        height: 34px;
+        z-index: 1000;
+        box-sizing: border-box;
+        &:hover {
+            background-color: @button-background-color-selected;
+            color: @text-color-selected;
+        }
+    }
+}

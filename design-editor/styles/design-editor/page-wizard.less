@@ -1,0 +1,176 @@
+atom-panel.closet-page-wizard-panel.modal {
+    width : 100%;
+    height : 100%;
+    margin : 0;
+    left : 0;
+    top : 0;
+    display : flex;
+    text-align: center;
+    -webkit-align-items : center;
+    -webkit-justify-content : center;
+
+    &:after {
+        position : absolute;
+        width : 200%;
+        height : 200%;
+        left : -50%;
+        top : -50%;
+    }
+
+    &:before {
+        width : 95%;
+        height : 95%;
+        left : initial;
+        bottom : initial;
+        position : absolute;
+        top : initial;
+        right : initial;
+        -webkit-align-items : center;
+        -webkit-justify-content : center;
+    }
+}
+
+.closet-container closet-panel.closet-editor-panel-visible.closet-editor-panel.modal {
+    width : 100%;
+    height : 100%;
+    margin : 0;
+    left: 0;
+    top: 0;
+    padding: 5%;
+    display : flex;
+    text-align: center;
+    -webkit-align-items : center;
+    -webkit-justify-content : center;
+    position: absolute;
+    color: @text-color;
+    box-sizing: border-box;
+    overflow: hidden;
+
+
+    &:after {
+        content: "";
+        z-index: -1;
+        background: @overlay-backdrop-color;
+        backface-visibility: hidden; // fixes scrollbar on retina screens
+        -webkit-animation: overlay-fade .1s cubic-bezier(0.215, 0.61, 0.355, 1);
+        position : absolute;
+        width : 200%;
+        height : 200%;
+        left : -50%;
+        top : -50%;
+        overflow: hidden;
+    }
+}
+
+closet-page-wizard {
+    background-color: @panel-heading-background-color;
+    outline: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    width : 95%;
+    height : 95%;
+    text-align: left;
+    -webkit-justify-content: flex-start;
+
+    .highlight-info {
+        font-size: 15px;
+    }
+    .pw-float-right {
+        float: right;
+    }
+    .brackets-text-edit {
+        overflow: auto;
+        font-size: @ui-input-size;
+        max-height: none;
+        padding-left: @ui-padding/3;
+        border-radius: @component-border-radius;
+        color: @text-color-highlight;
+        border: 1px solid @input-border-color;
+        background-color: @input-background-color;
+        width: 100%;
+    }
+    closet-file-picker {
+        select {
+            overflow: auto;
+            height: 34px;
+            font-size: @ui-input-size;
+            max-height: none;
+            padding-left: @ui-padding/3;
+            border-radius: @component-border-radius;
+            color: @text-color-highlight;
+            border: 1px solid @input-border-color;
+            background-color: @input-background-color;
+            width: 100%;
+        }
+        input {
+            display: none;
+        }
+    }
+    .closet-template-set-view {
+        display: -webkit-flex;
+        flex: 1;
+        flex-direction: row;
+        height: 100%;
+        margin-bottom: 0.83em;
+        .closet-template-thumbnail-wrapper {
+            display: -webkit-flex;
+            order : 2;
+            -webkit-flex: 9;
+            background-color: @background-color-highlight;
+            padding: 10px;
+            closet-pw-thumbnail {
+                display : -webkit-flex;
+                flex-direction: column;
+                width : 100%;
+                overflow : hidden;
+            }
+            .closet-pw-thumbnail-area {
+                display: -webkit-flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                -webkit-flex: 1;
+                padding: 1em 2em;
+                overflow-y: auto;
+            }
+            .closet-pw-thumbnail-list {
+                height: 260px;
+                display: block;
+                padding: 12px;
+                margin: 6px;
+                border: transparent 5px solid;
+                border-radius: 20px;
+                transition: all 0.4s ease-in;
+
+                &.selected {
+                    border-color : @button-background-color-selected;
+                }
+
+                .closet-pw-thumbnail {
+                    height: 100%;
+                    border-top-left-radius:5px;
+                    border-top-right-radius:5px;
+                }
+
+                .hovereffect {
+                    height: 225px;
+                    overflow: hidden;
+                    position: relative;
+                    text-align: center;
+                    cursor: default;
+                    border-top-left-radius:5px;
+                    border-top-right-radius:5px;
+                }
+
+                .closet-pw-thumbnail-name {
+                    font-size: 20px;
+                    line-height: 48px;
+                    display: block;
+                    text-align: center;
+                    margin-bottom: 3px;
+                    color: #ACB2B3;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+  "label": "Selector item",
+  "selector": ".ui-selector .ui-item",
+  "attachable": true,
+  "resources": {
+    "css": "../../tau/theme/tau.css",
+    "icon": {
+        "mobile": "./selectoritem.png",
+        "tv": "./selectoritem.png",
+        "wearable": "./selectoritem.png"
+    }
+  },
+  "template": "<div class=\"ui-item\"></div>",
+  "type": "container-component",
+  "displayOrderWeight": 800,
+  "version": "wearable-circle",
+  "constraint": [
+    "text",
+    "closet-image"
+  ],
+  "generator": {
+    "dependency-component": "selector",
+    "constructor": "",
+    "parameter": {
+      "options": {}
+    },
+    "parent-call-method": "addItem"
+  },
+  "class": [],
+  "attributes": {
+    "data-title": {
+      "label": "Title",
+      "type": "text"
+    }
+  }
+}

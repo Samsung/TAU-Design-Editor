@@ -1,0 +1,25 @@
+{
+  "label": "Section",
+  "type": "container-component",
+  "attachable": false,
+  "resources": {
+    "css": "../tau/theme/tau.css"
+  },
+  "parent-constraint": [
+    "sectionchanger"
+  ],
+  "constraint": [
+    "checkbox",
+    "listview",
+    "processing",
+    "radio",
+    "toggleswitch",
+    "text",
+    "closet-image",
+    "closet-tau-circle-progress",
+    "box",
+    "button"
+  ],
+  "selector": ".ui-section-changer section",
+  "template": "<section><span>Section</span></section>"
+}

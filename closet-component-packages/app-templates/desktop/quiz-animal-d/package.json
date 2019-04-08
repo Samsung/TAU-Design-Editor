@@ -1,0 +1,11 @@
+{
+  "profile": "desktop",
+  "category": "Education",
+  "thumbnail": "thumbnail.png",
+  "label": "Animal Quiz",
+  "libraries": [
+    "closet",
+    "jquery.js",
+    "tau.animation.min.js"
+  ]
+}

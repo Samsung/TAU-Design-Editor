@@ -1,0 +1,45 @@
+.setMiddlePosition() {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+atom-panel-container.right atom-panel {
+    width: 331px;
+    border-left: 1px solid @tool-panel-border-color;
+}
+
+atom-panel:nth-child(3) {
+    z-index: 0;
+    overflow: hidden;
+}
+
+closet-assistant-view {
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    border-left-width: 1px;
+    border-left-color: @tree-view-border-color;
+    border-left-style: solid;
+    width: 600px;
+    min-width: 100px;
+
+    &.animate-panel {
+        width: 360px;
+    }
+    .closet-assistant-editor {
+        width : 100%;
+        height : 100%;
+        position: absolute;
+        border : 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    .CodeMirror {
+        height: 100%;
+    }
+}

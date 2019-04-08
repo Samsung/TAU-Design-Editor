@@ -1,0 +1,61 @@
+{
+  "label": "PageIndicator",
+  "type": "standalone-component",
+  "displayOrderWeight": 1700,
+  "resources": {
+    "css": "../tau/theme/tau.css",
+    "icon": {
+      "mobile": "./mobile-pageindicator.png",
+      "tv": "./mobile-pageindicator.png",
+      "wearable": "./pageindicator.png"
+    }
+  },
+  "selector": ".ui-page-indicator",
+  "template": "<div class=\"using-alternative-selector ui-page-indicator\" data-number-of-pages=\"5\"></div>",
+  "parent-constraint": [
+    "page"
+  ],
+  "altSelector": true,
+  "generator": {
+    "constructor": "tau.widget.PageIndicator",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "attributes": {
+    "data-max-page": {
+      "label": "Max Page",
+      "widget-option": true,
+      "value": 60,
+      "type": {
+        "name": "number"
+      }
+    },
+    "data-number-of-pages": {
+      "label": "Number of Pages",
+      "widget-option": true,
+      "value": 15,
+      "type": {
+        "name": "number"
+      }
+    },
+    "data-layout": {
+      "label": "Layout",
+      "type": {
+        "name": "select"
+      },
+      "list": [
+        { "value": "linear", "label": "Linear", "checkSelected": true },
+        { "value": "circular", "label": "Circular" }
+      ]
+    },
+    "data-interval-angle": {
+      "label": "Interval Angle",
+      "widget-option": true,
+      "value": 6,
+      "type": {
+        "name": "number"
+      }
+    }
+  }
+}

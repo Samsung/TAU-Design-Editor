@@ -1,0 +1,38 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-template-curly-in-string": "error",
+        "no-var":"error",
+        "prefer-const": "error",
+        "prefer-arrow-callback": "error",
+        "prefer-template": "error",
+        "no-unused-expressions": "error",
+        "max-len": ["error", {"code": 80}],
+        "no-multiple-empty-lines": "error",
+        "no-trailing-spaces": "error",
+        "eol-last":"error",
+        "lines-between-class-members":"error"
+        }
+}

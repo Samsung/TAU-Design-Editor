@@ -1,0 +1,12 @@
+{
+  "profile": "mobile",
+  "category": "TAU",
+  "thumbnail": "thumbnail.png",
+  "label": "Basic",
+  "libraries": [
+    "tau/mobile",
+    "closet",
+    "circle-helper.js",
+    "jquery.js"
+  ]
+}

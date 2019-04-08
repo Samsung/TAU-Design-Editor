@@ -1,0 +1,6 @@
+.ui-listview li .canvas { 
+    height: 40px;
+    width: 100%;
+    background: #72beff;
+    transition: linear background-color 200ms;
+}

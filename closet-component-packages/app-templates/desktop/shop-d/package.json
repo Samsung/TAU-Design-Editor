@@ -1,0 +1,11 @@
+{
+  "profile": "desktop",
+  "category": "business",
+  "thumbnail": "thumbnail.png",
+  "label": "Shop",
+  "libraries": [
+    "closet",
+    "jquery.js",
+    "tau.animation.min.js"
+  ]
+}

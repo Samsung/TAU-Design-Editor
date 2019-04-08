@@ -1,0 +1,94 @@
+closet-property-container-element {
+    width: 330px;
+    height: 100%;
+    display: flex;
+    -webkit-flex-direction: row-reverse;
+    -webkit-align-items: stretch;
+    overflow: hidden;
+
+    > :not(:first-child) {
+        position:absolute;
+        top: 0;
+        left: 0;
+        z-index:0;
+        width: 300px;
+        height: 100%;
+        display: flex;
+        flex-direction : column;
+        transform: translateX(330px);
+        overflow: hidden;
+        .closet-property-content {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+    .fast-show {
+        transform: translateX(0px);
+        transition: transform 0.2s ease-in-out;
+        z-index:100;
+    }
+    .fast-hide {
+        transform: translateX(330px);
+        transition: transform 0.2s;
+    }
+
+}
+
+.closet-property-container-tab {
+    height: 100%;
+    z-index: 200;
+    background-color: @tab-background-color;
+    border-left: 1px solid #111;
+    flex: 1;
+    max-width: 30px;
+
+    .closet-property-container-tab-item {
+        position: relative;
+        height: 130px;
+        color: rgba(157, 165, 180, 0.6);
+        font-size: 15px;
+        margin: 0;
+        display: -webkit-flex;
+        -webkit-justify-content: center;
+        -webkit-align-items: center;
+
+        &::after {
+            content: "";
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: -1px;
+            right: 0;
+            height: inherit;
+            border-radius: 0 3px 3px 0;
+            border: 1px solid #181a1f;
+            border-left-color: @tool-panel-background-color;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+            background-clip: content-box;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06);
+            transition: opacity .16s;
+            opacity: 0;
+        }
+
+        .closet-property-container-tab-title {
+            margin-top: 35px;
+            line-height: 30px;
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            transform: rotate(90deg);
+            white-space: nowrap;
+            margin-bottom: 60px;
+            flex: 1;
+        }
+    }
+
+    .closet-property-container-tab-item.closet-property-container-tab-active {
+        color: @text-color-selected;
+        background-color: #282c34;
+
+        &::after {
+            opacity: 1;
+            transition: none;
+        }
+    }
+}

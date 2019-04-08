@@ -1,0 +1,28 @@
+{
+  "label": "StatusPanel",
+  "selector": ".ui-status-panel",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 200,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./ui-status-panel.png",
+      "tv": "./ui-status-panel.png",
+      "wearable": "./ui-status-panel.png"
+    }
+  },
+  "template": "<div class=\"ui-status-panel\"><div class=\"ui-status-title\">Home</div><div class=\"ui-status-value\">27</div><div class=\"ui-status-unit\">&deg;C</div></div>",
+  "generator": {
+    "constructor": "tau.widget.StatusPanel",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

@@ -1,0 +1,6 @@
+{
+  "resources": {
+    "js": "tau.js",
+    "css": "theme/tau.css"
+  }
+}

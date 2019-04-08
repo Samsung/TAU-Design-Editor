@@ -1,0 +1,39 @@
+{
+  "label": "Page",
+  "container": true,
+  "selector": [
+    "closet-page"
+  ],
+  "reousrces": {
+    "js": "./page.js",
+    "css": "./page.css"
+  },
+  "attributes": {},
+  "behaviors": {
+    "events": {
+      "shown": {
+        "label": "Show"
+      },
+      "hidden": {
+        "label": "Hide"
+      }
+    },
+    "functions": {
+      "goto": {
+        "label": "Move Page",
+        "parameter": {
+          "pageId": {
+            "label": "Page",
+            "type": {
+              "name": "string-select-list",
+              "option": {
+                "list": "getPageIdList()"
+              }
+            },
+            "value": "none"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{{#apps}}
+<div class="closet-interaction-view-tools"
+     data-preview-id="{{previewId}}" style="left: {{view.left}}px; top: {{view.top}}px">
+    <div class="ui-button ui-button-icon"><i class="fa fa-minus-square fa-lg"></i></div>
+    <div class="ui-button ui-button-icon"><i class="fa fa-plus-square fa-lg"></i></div>
+    <div class="ui-button ui-button-icon"><i class="fa fa-copy fa-lg"></i></div>
+    <div class="ui-button ui-button-icon"><i class="fa fa-edit fa-lg"></i></div>
+    <select data-preview-id="{{previewId}}" class="btn-alt-quiet">
+        <option>Host</option>
+        <option selected>Client</option>
+    </select>
+</div>
+<div class="closet-interaction-view-container closet-preview-profile-{{view.profile}}"
+     data-preview-id="{{previewId}}" data-scale="{{view.scale}}"
+     style="left: {{view.left}}px; top: {{view.top}}px; transform: scale({{view.scale}})">
+    <div class="closet-interaction-view-clip-border">
+        <div class="closet-interaction-view-clip">
+            <iframe class="closet-interaction-view-frame" data-src="{{url}}"></iframe>
+        </div>
+    </div>
+</div>
+{{/apps}}

@@ -1,0 +1,77 @@
+<div class="panel-heading closet-property-list-title">
+    <div class="closet-property-header">
+        <div class="closet-property-anchor">
+            <span class="fa fa-caret-down closet-property-list-title-icon"></span>
+            <span class="title">Basic Widgets</span>
+        </div>
+    </div>
+</div>
+<ul class="closet-attribute-common-list closet-property-list">
+    {{#standalone-component}}
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+        <div class="component-label">
+            {{label}}
+        </div>
+    </li>
+    {{/standalone-component}}
+</ul>
+<div class="panel-heading closet-property-list-title">
+    <div class="closet-property-header">
+        <div class="closet-property-anchor">
+            <span class="fa fa-caret-down closet-property-list-title-icon"></span>
+            <span class="title">Containers</span>
+        </div>
+    </div>
+</div>
+<ul class="closet-attribute-common-list closet-property-list">
+    {{#container-component}}
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+        <div class="component-label">
+            {{label}}
+        </div>
+    </li>
+    {{/container-component}}
+</ul>
+<div class="panel-heading closet-property-list-title">
+    <div class="closet-property-header">
+        <div class="closet-property-anchor">
+            <span class="fa fa-caret-down closet-property-list-title-icon"></span>
+            <span class="title">Interactive Widgets</span>
+        </div>
+    </div>
+</div>
+<ul class="closet-attribute-common-list closet-property-list">
+    {{#interactive-container-component}}
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+        <div class="component-label">
+            {{label}}
+        </div>
+    </li>
+    {{/interactive-container-component}}
+</ul>
+<ul class="closet-attribute-common-list closet-property-list">
+    {{#hiding-container-component}}
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+        <div class="component-label">
+            {{label}}
+        </div>
+    </li>
+    {{/hiding-container-component}}
+</ul>
+<div class="panel-heading closet-property-list-title">
+    <div class="closet-property-header">
+        <div class="closet-property-anchor">
+            <span class="fa fa-caret-down closet-property-list-title-icon"></span>
+            <span class="title">Layout</span>
+        </div>
+    </div>
+</div>
+<ul class="closet-attribute-common-list closet-property-list">
+    {{#layout-component}}
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+        <div class="component-label">
+            {{label}}
+        </div>
+    </li>
+    {{/layout-component}}
+</ul>

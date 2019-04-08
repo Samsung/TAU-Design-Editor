@@ -1,0 +1,127 @@
+<html>
+<head>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/tau.animation.min.js"></script>
+    <script type="text/javascript">
+        window.tau.animation.SimpleMixin($.fn);
+    </script>
+    <script type="text/javascript" src="libs/closet/1.0.0/dress.closet.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/closet/1.0.0/dress.closet.full.css">
+</head>
+<body style="width:100%;height:100%;">
+<closet-page>
+    <closet-section style="flex:none;height:70px;background-color:rgb(16, 16, 16)">
+        <div class="header" style="width:100%;height:100%;position: relative;display: flex;-webkit-align-items:center;text-align:center;">
+            <closet-text style="display: table-cell; vertical-align: middle; margin-left:30px;">
+                <div class="closet-text-contents" style="font-size:15px;font-weight:bold;font-family: 'Raleway Heavy';color:rgb(182, 182, 182);">THE BACKYARD SHOP</div>
+            </closet-text>
+
+            <closet-text style="display: table-cell; vertical-align: middle;position:absolute;top:25px;right:175px;">
+                <div class="closet-text-contents" style="font-size:12px;color:rgb(161, 161, 161);">Home</div>
+            </closet-text>
+            <closet-text style="display: table-cell; vertical-align: middle;position:absolute;top:25px;right:110px;">
+                <div class="closet-text-contents" style="font-size:12px;color:rgb(161, 161, 161);">Gallery</div>
+            </closet-text>
+            <closet-text style="display: table-cell; vertical-align: middle;position:absolute;top:25px;right:35px;">
+                <div class="closet-text-contents" style="font-size:12px;color:rgb(161, 161, 161);">About me</div>
+            </closet-text>
+        </div>
+    </closet-section>
+    <closet-section style="min-height:400px;flex:1;display:-webkit-flex;padding:0 30px 0 30px;-webkit-justify-content:center;-webkit-align-content:center;background-size:100%; background-position:center 0; background-repeat:no-repeat;background-color:rgb(255,255,255);">
+        <div style="width:100%;display:flex;flex-direction:column;-webkit-align-content:space-around;-webkit-flex-wrap:wrap;">
+            <closet-image src="./resources/images/item1.jpg" style="position:absolute;z-index: 20;width:150px;height:150px;"></closet-image>
+            <closet-image src="./resources/images/item2.jpg" style="position:absolute;width:150px;height:150px;z-index: 20; left: 30%;"></closet-image>
+            <closet-image src="./resources/images/item3.jpg" style="position:absolute;width:150px;height:150px;z-index: 20; left: 60%;"></closet-image>
+            <closet-image src="./resources/images/item4.jpg" style="position:absolute;width:150px;height:150px;z-index: 20; top: 50%;"></closet-image>
+            <closet-image src="./resources/images/item5.jpg" style="position:absolute;width:150px;height:150px;z-index: 20; top: 50%; left: 30%;"></closet-image>
+            <closet-image src="./resources/images/item6.jpg" style="position:absolute;width:150px;height:150px;z-index: 20; top: 50%; left: 60%;"></closet-image>
+            <div style="flex:1; display:flex;">
+
+                <div style="flex:1;width:24%;margin:10px;position:relative;overflow:hidden;display:-webkit-flex;flex-direction:column;vertical-align:top;">
+                    <div style="width:100%;flex:0.8;"></div>
+                    <div class="text-box" style="text-align: center;flex:0.2;margin:10px;">
+                        <closet-text style="width:100%;font-weight:bold;font-size:30px;color:rgb(142,142,142);line-height:27px"><div class="closet-text-contents">Deco chair</div></closet-text>
+                        <closet-text style="width:100%;font-size:25px;color:rgb(30,30,30);font-weight:bold;"><div class="closet-text-contents">$ 525</div></closet-text>
+                    </div>
+                </div>
+
+                <div style="flex:1;width:24%;margin:10px;position:relative;overflow:hidden;display:-webkit-flex;flex-direction:column;vertical-align:top;">
+                    <div style="width:100%;flex:0.8;"></div>
+                    <div class="text-box" style="text-align: center;flex:0.2;margin:10px;">
+                        <closet-text style="width:100%;font-weight:bold;font-size:30px;color:rgb(142,142,142);line-height:27px"><div class="closet-text-contents">A new design 2015</div></closet-text>
+                        <closet-text style="width:100%;font-size:25px;color:rgb(30,30,30);font-weight:bold;"><div class="closet-text-contents">$ 1100</div></closet-text>
+                    </div>
+                </div>
+
+                <div style="flex:1;width:24%;margin:10px;position:relative;overflow:hidden;display:-webkit-flex;flex-direction:column;vertical-align:top;">
+                    <div style="width:100%;flex:0.8;"></div>
+                    <div class="text-box" style="flex:0.2;text-align: center;margin:10px;">
+                        <closet-text style="width:100%;font-weight:bold;font-size:30px;color:rgb(142,142,142);line-height:27px"><div class="closet-text-contents">Sea bag</div></closet-text>
+                        <closet-text style="width:100%;font-size:25px;color:rgb(30,30,30);font-weight:bold;"><div class="closet-text-contents">$ 25</div></closet-text>
+                    </div>
+                </div>
+            </div>
+            <div style="flex:1; display:flex;">
+
+                <div style="flex:1;width:24%;margin:10px;position:relative;overflow:hidden;display:-webkit-flex;flex-direction:column;vertical-align:top;">
+                    <div style="width:100%;flex:0.8;"></div>
+                    <div class="text-box" style="flex:0.2;text-align: center;margin:10px;">
+                        <closet-text style="width:100%;font-weight:bold;font-size:30px;color:rgb(142,142,142);line-height:27px"><div class="closet-text-contents">Nice expo</div></closet-text>
+                        <closet-text style="width:100%;font-size:25px;color:rgb(30,30,30);font-weight:bold;"><div class="closet-text-contents">$ 33</div></closet-text>
+                    </div>
+                </div>
+
+                <div style="flex:1;width:24%;margin:10px;position:relative;overflow:hidden;display:-webkit-flex;flex-direction:column;vertical-align:top;">
+                    <div style="width:100%;flex:0.8;"></div>
+                    <div class="text-box" style="flex:0.2;text-align: center;margin:10px;">
+                        <closet-text style="width:100%;font-weight:bold;font-size:30px;color:rgb(142,142,142);line-height:27px"><div class="closet-text-contents">Lamp 2015</div></closet-text>
+                        <closet-text style="width:100%;font-size:25px;color:rgb(30,30,30);font-weight:bold;"><div class="closet-text-contents">$ 42</div></closet-text>
+                    </div>
+                </div>
+
+                <div style="flex:1;width:24%;margin:10px;position:relative;overflow:hidden;display:-webkit-flex;flex-direction:column;vertical-align:top;">
+                    <div style="width:100%;flex:0.8;"></div>
+                    <div class="text-box" style="flex:0.2;text-align: center;margin:10px;">
+                        <closet-text style="width:100%;font-weight:bold;font-size:30px;color:rgb(142,142,142);line-height:27px"><div class="closet-text-contents">Rider 2015</div></closet-text>
+                        <closet-text style="width:100%;font-size:25px;color:rgb(30,30,30);font-weight:bold;"><div class="closet-text-contents">$ 356</div></closet-text>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </closet-section>
+    <closet-section style="height:130px;background-color:rgb(16, 16, 16);flex: none;">
+        <div style="height:100%;width:100%;display:flex;position:relative;-webkit-justify-content: center;-webkit-flex-direction:column;">
+            <div style="display:table;width:100%;top:0;left:0;max-width:1050px;margin-left:auto;margin-right:auto;  ">
+                <div style="text-align:center;display:table-cell;vertical-align:middle;position:relative;">
+                    <div style="vertical-align:middle;margin-right:20px;margin-left:20px;display:inline-block;">
+                        <closet-text style="margin:10px 20px 0px 20px;display:inline-block;">
+                            <div class="closet-text-contents" style="color:rgb(124, 124, 124);font-size:17px;text-align:left;line-height:0.9em;">
+                                <b>The backyard shop.</b>
+                            </div>
+                        </closet-text>
+                    </div>
+                    <br>
+                    <closet-text style="display:inline-block;max-width:inherit;text-align:center;margin:0 20px;">
+                        <div class="closet-text-contents" style="font-size:10px;color:rgb(142,142,142);">
+                            All rights reserved 2015
+                        </div>
+                    </closet-text>
+                    <br>
+                    <div style="text-align:center;display:block;">
+                        <div style="margin:10px 5px 10px 5px;display:inline-block;">
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/facebook.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/twitter.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/linkedin.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/youtube.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/pinterest.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                            <div style="width:30px;height:30px;display:inline-block;background-image:url(resources/images/instagram.png);background-size:100% auto;background-position:center;background-repeat:no-repeat;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </closet-section>
+</closet-page>
+</body>
+</html>

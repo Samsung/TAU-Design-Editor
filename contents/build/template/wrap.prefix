@@ -1,0 +1,31 @@
+(function(factory) {
+
+  var root = window !== "undefined" ? window : this;
+
+  if (typeof define === 'function' && define.amd) {
+
+    define(['jquery', 'exports'], function($, exports) {
+      exports = factory(root, $);
+      return exports;
+    });
+
+  // Next for Node.js or CommonJS. jQuery may not be needed as a module.
+  } else if ( typeof module === "object" && typeof module.exports === "object" ) {
+
+    var $ = require('jquery');
+    module.exports = global.document ?
+      factory(root, $) :
+      function(w, $) {
+        if ( !w.document ) {
+          throw new Error( "dress requires a window with a document" );
+        }
+        return factory(w, $);
+      };
+
+  // Finally, as a browser global.
+  } else {
+    root.dress = factory(root, (root.jQuery || root.Zepto || root.ender || root.$));
+  }
+
+}(function(root, $) {
+'use strict';

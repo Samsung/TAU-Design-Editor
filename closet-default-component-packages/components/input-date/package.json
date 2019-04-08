@@ -1,0 +1,27 @@
+{
+  "label": "Input date",
+  "selector": "input[type=date], input[type=month]",
+  "attachable": true,
+  "displayOrderWeight": 1100,
+  "type": "standalone-component",
+  "resources": {
+    "css": [
+      "./styles/input-date.css"
+    ],
+    "icon": {
+        "mobile": "./input-date-mobile.png",
+        "tv": "./input-date-mobile.png",
+        "wearable": "./input-date-wearable.png"
+    }
+  },
+  "template": "<input type=\"month\" data-role=\"button\">",
+  "snippet": [
+    {
+      "snippet": "<input type=\"month\" data-role=\"button\">",
+      "displayText": "inputDate",
+      "description": "Pick up date."
+    }
+  ],
+  "resizable": true,
+  "draggable": true
+}

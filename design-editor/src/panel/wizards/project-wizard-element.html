@@ -1,0 +1,38 @@
+<div class="block active">
+    <span class="inline-block highlight-info">Closet Package Wizard</span>
+    <div class="block">
+        <div class="column">
+        <h2>Closet Project Name</h2>
+        <atom-text-editor mini class="pw-project-name"></atom-text-editor>
+            </div>
+        <div class="column">
+        <h2 class="inline-block">Closet Project Path&nbsp&nbsp<span class="icon icon-file-directory"></span></h2>
+        <closet-file-picker></closet-file-picker>
+            </div>
+        <h2>Closet Project Profile</h2>
+        <closet-grouped-button class="closet-grouped-button block btn-group" selected-index="0">
+            <button class="btn closet-grouped-button-item">Wearable</button>
+            <button class="btn closet-grouped-button-item">Mobile</button>
+            <button class="btn closet-grouped-button-item">Fit2</button>
+        </closet-grouped-button>
+    </div>
+</div>
+    <h2>Closet Project Templates</h2>
+    <div class="block closet-template-set-view">
+        <div class="closet-template-category-wrapper">
+            <closet-pw-category></closet-pw-category>
+        </div>
+        <div class="closet-template-thumbnail-wrapper">
+            <closet-pw-thumbnail></closet-pw-thumbnail>
+        </div>
+    </div>
+<div class="block">
+    <div class="pw-float-right">
+        <label class="use-existing-window-label">
+            <input type="checkbox" class="use-existing-window-chk"/>
+            Open with existing window
+        </label>
+        <button class="btn pw-accept-btn">Accept</button>
+        <button class="btn pw-cancel-btn">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<style >
+  input[type="checkbox"].favorite.custom-checkbox::before {
+      background: black;
+      -webkit-mask-image: url(images/play.svg);
+  }
+
+  input[type="checkbox"].favorite.custom-checkbox::after {
+      background: black;
+      -webkit-mask-image: url(images/pause.svg);
+  }
+
+  input[type="checkbox"].favorite.custom-checkbox:checked::before {
+      transform: scale(0)
+  }
+
+  input[type="checkbox"].favorite.custom-checkbox:not(:checked)::before {
+      transform: scale(1);
+      transition: transform 300ms, 300ms, 300ms;
+  }
+</style>

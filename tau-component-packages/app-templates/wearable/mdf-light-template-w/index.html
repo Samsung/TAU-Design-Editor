@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<title>Circular UI</title>
+	<link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.min.css">
+	<link rel="stylesheet" media="all and (-tizen-geometric-shape: circle)"
+		  href="lib/tau/wearable/theme/default/tau.circle.min.css">
+	<!-- load theme file for your application -->
+</head>
+<body>
+	<div class="ui-page" id="light-page">
+		<header>
+			<h2 class="ui-title">Light Template</h2>
+		</header>
+		<div class="ui-content">
+			<ul class="ui-listview">
+				<li class="li-has-toggle">
+					<label>
+						Light
+						<div class="ui-toggleswitch">
+							<input type="checkbox" class="ui-switch-input">
+							<div class="ui-switch-button"></div>
+						</div>
+					</label>
+				</li>
+				<li><a href="dimmer.html" id="brightness-label">
+					Brightness: 60%</a></li>
+				<li>Color Temperature: 200K</li>
+			</ul>
+		</div>
+	</div>
+	<script src="app.js"></script>
+	<script type="text/javascript" src="lib/tau/wearable/js/tau.min.js"></script>
+</body>
+</html>

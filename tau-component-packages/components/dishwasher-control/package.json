@@ -1,0 +1,28 @@
+{
+  "label": "Dishwasher",
+  "selector": ".ui-dishwasher-control",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 1000,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./dishwasher-control.png",
+      "tv": "./dishwasher-control.png",
+      "wearable": "./dishwasher-control.png"
+    }
+  },
+  "template": "<div class=\"ui-dishwasher-control\"><div class=\"ui-dishwasher-control-circle ui-dishwasher-control-circle-run\"></div></div>",
+  "generator": {
+    "constructor": "tau.widget.DishwasherControl",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

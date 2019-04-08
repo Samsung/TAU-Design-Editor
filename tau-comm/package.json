@@ -1,0 +1,27 @@
+{
+  "name": "taucomm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/tcomm-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./build.config.js --mode production",
+    "build-dev": "webpack --config ./build.config.js --mode development",
+    "watch-dev": "webpack -w --config ./build.config.js --mode development"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "dgram-browserify": "0.0.13",
+    "event-emitter": "^0.3.5",
+    "webpack": "^4.11.1",
+    "ws": "^5.2.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.0.3"
+  }
+}

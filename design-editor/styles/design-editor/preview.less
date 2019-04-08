@@ -1,0 +1,367 @@
+closet-preview-element {
+    display:block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index:2;
+}
+
+.closet-preview-container {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transform-origin: top left;
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    &.closet-preview-profile-wearable::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 115px;
+        top: -90px;
+        left: 0;
+        background-image: url(../styles/images/preview-top.png);
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+        z-index: -1;
+    }
+
+    &.closet-preview-profile-wearable::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 115px;
+        bottom: -87px;
+        left: 0;
+        background-image: url(../styles/images/preview-bottom.png);
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+        z-index: -1;
+    }
+}
+.closet-preview-clip-border {
+    width: 100%;
+    height: 100%;
+    border: 15px solid #B3B3B3;
+    box-sizing: content-box;
+    margin-left: -15px;
+    margin-top: -15px;
+    background-color: #000;
+    .closet-preview-shape-circle & {
+        border-radius: 50%;
+    }
+}
+.closet-preview-clip {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.closet-preview-profile-wearable .closet-preview-clip {
+    -webkit-clip-path: circle();
+}
+
+
+.closet-preview-profile-mobile .closet-preview-clip {
+    overflow-y: scroll;
+}
+
+.closet-preview-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: auto;
+}
+
+// Animations
+
+closet-preview-element .closet-toolbar-container-element {
+    position: absolute;
+    left: -50px;
+    top: 0;
+    transition: transform 150ms ease-out;
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+    border-right: 1px solid #181a1f;
+}
+
+.closet-preview-mode-active {
+    .closet-container.full.design-view-active {
+        display: none;
+    }
+
+    closet-preview-element .closet-toolbar-container-element {
+        transform: translate3d(100%, 0, 0);
+        transition-delay: 150ms;
+    }
+}
+
+.closet-panel-container-left,
+.closet-panel-container-right,
+.closet-panel-container-top,
+.closet-panel-container-bottom,
+.closet-panel-container-middle {
+    transition: transform 300ms ease-out, opacity 300ms;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 150ms;
+}
+
+.closet-preview-mode-active {
+    closet-preview-element {
+        z-index: 1000;
+    }
+}
+
+.closet-preview-mode {
+    display: flex;
+
+    .closet-container.full {
+        z-index:1;
+        .closet-panel-container-top {
+            transform: translate3d(0, -100%, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-left {
+            transform: translate3d(-100%, 0, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-bottom {
+            transform: translate3d(0, 100%, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-right {
+            transform: translate3d(100%, 0, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-middle {
+            opacity: 0;
+        }
+    }
+
+}
+
+.closet-preview-mode-active .closet-preview-container {
+    opacity: 1;
+}
+
+
+
+//------------------ INTERACTION VIEW
+closet-interaction-view-element {
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    flex: 1;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.closet-interaction-view-tools {
+    position: absolute;
+    display: block;
+    z-index: 100;
+    margin: 5px 0 0 10px;
+
+    .ui-button {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-color: #cacacc;
+        border-radius: 5px;
+
+        i {
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+        i:active {
+            color: white;
+        }
+        &:hover {
+            background-color: #bdbdbf;
+        }
+    }
+}
+
+.closet-interaction-view-container {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    opacity: 0;
+    transform-origin: top left;
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
+    float: left;
+    margin-top: 40px;
+
+    &.closet-preview-profile-tv {
+        width: 1920px;
+        height: 1080px;
+        transform: scale(0.4);
+    }
+
+    &.closet-preview-profile-mobile {
+        width: 480px;
+        height: 800px;
+        transform: scale(0.8);
+    }
+
+    &.closet-preview-profile-wearable {
+        width: 360px;
+        height: 360px;
+        transform: scale(1);
+    }
+
+    &.closet-preview-profile-wearable::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 115px;
+        top: -90px;
+        left: 0;
+        background-image: url(../styles/images/preview-top.png);
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+        z-index: -1;
+    }
+
+    &.closet-preview-profile-wearable::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 115px;
+        bottom: -87px;
+        left: 0;
+        background-image: url(../styles/images/preview-bottom.png);
+        background-size: 100% 100%;
+        background-position: 50% 50%;
+        z-index: -1;
+    }
+}
+.closet-interaction-view-clip-border {
+    width: 100%;
+    height: 100%;
+    border: 15px solid #B3B3B3;
+    box-sizing: border-box;
+    background-color: #000;
+    .closet-preview-shape-circle & {
+        border-radius: 50%;
+    }
+}
+.closet-interaction-view-clip {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.closet-preview-profile-wearable .closet-preview-clip {
+    -webkit-clip-path: circle();
+}
+
+
+.closet-preview-profile-mobile .closet-preview-clip {
+    overflow-y: scroll;
+}
+
+.closet-interaction-view-frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: auto;
+}
+
+// Animations
+
+closet-interaction-view-element .closet-toolbar-container-element {
+    position: absolute;
+    left: -50px;
+    top: 0;
+    transition: transform 150ms ease-out;
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+    border-right: 1px solid #181a1f;
+}
+
+.closet-interaction-view-mode-active {
+    .closet-container.full.design-view-active {
+        display: none;
+    }
+
+    closet-interaction-view-element .closet-toolbar-container-element {
+        transform: translate3d(100%, 0, 0);
+        transition-delay: 150ms;
+    }
+}
+
+.closet-panel-container-left,
+.closet-panel-container-right,
+.closet-panel-container-top,
+.closet-panel-container-bottom,
+.closet-panel-container-middle {
+    transition: transform 300ms ease-out, opacity 300ms;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 150ms;
+}
+
+.closet-interaction-view-mode-active {
+    closet-interaction-view-element {
+        z-index: 1000;
+    }
+}
+
+.closet-interaction-view-mode {
+    .closet-container.full {
+        z-index:1;
+        .closet-panel-container-top {
+            transform: translate3d(0, -100%, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-left {
+            transform: translate3d(-100%, 0, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-bottom {
+            transform: translate3d(0, 100%, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-right {
+            transform: translate3d(100%, 0, 0);
+            transition-delay: 0ms;
+        }
+
+        .closet-panel-container-middle {
+            opacity: 0;
+        }
+    }
+
+}
+
+.closet-interaction-view-mode-active .closet-interaction-view-container {
+    opacity: 1;
+}

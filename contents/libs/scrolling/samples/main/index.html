@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * { user-drag: none;-moz-user-select: none;-webkit-user-drag: none; }
+        body { overflow:hidden;margin: 0;padding: 0;background-color: rgb(217, 217, 217); }
+        select { border: solid 1px #999;color: #333;padding: 6px;background-color: #dddddd; }
+        button { border: solid 1px #999;color: #333;padding: 7px;background-color: #dddddd; }
+        select:hover { cursor: pointer; }
+        button:hover { color: #ffffff;background-color: rgb(80, 80, 80);cursor: pointer; }
+        select:focus, button:focus { outline:0; }
+
+        #DemoListTypeContainer { margin: 5px;float: left; }
+        #DemoToolsContainer { margin: 5px;float: left; }
+        #DemoSample {  }
+        .clear { clear: both; }
+    </style>
+</head>
+<body class="no-select no-drug">
+</body>
+    <div id="DemoToolsPanel">
+        <div id="DemoListTypeContainer">
+            <select id="DemoListType">
+                <option value="cover-flow" selected>Cover Flow</option>
+                <option value="list">List</option>
+                <option value="list-zoomable">List Zoomable</option>
+                <option value="turnable">Turnable</option>
+            </select>
+        </div>
+        <div id="DemoToolsContainer">
+            <div id="DemoCoverFlowTools" style="display: none;">
+                <button id="CoverFlowStackMinus">Stack -</button>
+                <button id="CoverFlowStackPlus">Stack +</button>
+                <button id="CoverFlowElementMinus">Element -</button>
+                <button id="CoverFlowElementPlus">Element +</button>
+                <button id="CoverFlowDirection">Direction</button>
+            </div>
+            <div id="DemoListTools" style="display: none;">
+                <button id="ListStackMinus">Stack -</button>
+                <button id="ListStackPlus">Stack +</button>
+                <button id="ListElementPlus">Element +</button>
+                <button id="ListZDistanceMinus">Z Distance -</button>
+                <button id="ListZDistancePlus">Z Distance +</button>
+            </div>
+            <div id="DemoListZoomableTools" style="display: none;">
+                <button id="ListZoomableStackMinus">Stack -</button>
+                <button id="ListZoomableStackPlus">Stack +</button>
+                <button id="ListZoomableElementPlus">Element +</button>
+                <button id="ListZoomableDirection">Direction</button>
+                <button id="ListZoomableZoomDirectionMinus">Zoom Direction -</button>
+                <button id="ListZoomableZoomDirectionPlus">Zoom Direction +</button>
+                <button id="ListZoomableZoomValueMinus">Zoom Value -</button>
+                <button id="ListZoomableZoomValuePlus">Zoom Value +</button>
+            </div>
+            <div id="DemoTurnableTools" style="display: none;">
+                <button id="TurnableMinus">Stack -</button>
+                <button id="TurnablePlus">Stack +</button>
+                <button id="TurnableElementPlus">Element +</button>
+                <button id="TurnableDirection">Direction</button>
+                <button id="TurnableUseOpacity">Use Opacity</button>
+                <button id="TurnableRotation">Rotation</button>
+                <button id="TurnableSide">Side</button>
+                <button id="TurnableNumberOfItemsMinus">Number Of Items -</button>
+                <button id="TurnableNumberOfItemsPlus">Number Of Items +</button>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="DemoSample" style="height: 100vh;"></div>
+    <script type="text/javascript" src="../../node_modules/bezier-easing/build.js"></script>
+    <script type="text/javascript" src="../../dist/scrolling.js"></script>
+    <script type="text/javascript" src="images.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+</html>

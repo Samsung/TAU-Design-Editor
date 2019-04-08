@@ -1,0 +1,42 @@
+{
+  "label": "Dropdown Menu",
+  "selector": "select:not([data-role='slider']):not([data-role='range']):not([data-role='toggleswitch']):not(.ui-toggleswitch):not(.ui-slider),select.ui-select-menu:not([data-role='slider']):not([data-role='range']):not([data-role='toggleswitch']),.ui-dropdownmenu",
+  "baseElementSelector": "select:not([data-role='slider']):not([data-role='range']):not([data-role='toggleswitch']):not(.ui-toggleswitch):not(.ui-slider),select.ui-select-menu:not([data-role='slider']):not([data-role='range']):not([data-role='toggleswitch'])",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 800,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./iot-dropdown.png",
+      "wearable": "./wearable-dropdown.png",
+      "tv": "./iot-dropdown.png"
+    }
+  },
+  "template": "<select data-native-menu=\"false\" data-inline=\"true\"></select>",
+  "generator": {
+    "constructor": "tau.widget.DropdownMenu",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "parent-modifiers": [
+    {
+      "selector": "li",
+      "className": "ui-li-has-dropdownmenu"
+    }
+  ],
+  "attributes": {
+    "data-items": {
+      "label": "Menu items",
+      "type": {
+        "name": "string-list"
+      }
+    }
+  },
+  "draggable": true,
+  "new": true
+}

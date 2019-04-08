@@ -1,0 +1,32 @@
+.default-size-style() {
+    width : 100%;
+    height : 100%;
+    min-width : 320px;
+    min-height : 320px;
+    max-width : 360px;
+    max-height : 360px;
+}
+
+.default-background-image-style () {
+    background-repeat : no-repeat;
+    background-position : 50% 50%;
+    background-size : auto auto;
+}
+
+
+closet-analog-watch {
+    display : block;
+    z-index: 102;
+    .default-size-style();
+
+    .closet-analog-watch-element {
+        position : absolute;
+        width : 100%;
+        height : 100%;
+        .default-background-image-style();
+    }
+
+    .closet-analog-watch-bg-image {
+        background-size : 100% 100%;
+    }
+}

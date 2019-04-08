@@ -1,0 +1,12 @@
+{
+  "profile": "wearable",
+  "category": "TAU",
+  "thumbnail": "thumbnail.png",
+  "label": "Basic",
+  "libraries": [
+    "tau/wearable",
+    "closet",
+    "circle-helper.js",
+    "jquery.js"
+  ]
+}

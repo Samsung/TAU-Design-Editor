@@ -1,0 +1,47 @@
+{
+  "label": "Checkbox",
+  "selector": ":not(.ui-toggleswitch) > input[type=checkbox]:not(.ui-slider-switch-input):not([data-role=toggleswitch]):not(.ui-toggleswitch), input[type=checkbox]:not(.ui-toggleswitch)",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 400,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-checkbox.png",
+      "tv": "./mobile-checkbox.png",
+      "wearable": "./checkbox.png"
+    }
+  },
+  "template": "<input type=\"checkbox\"/>",
+  "generator": {
+    "constructor": "tau.widget.Checkbox",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "wrapContent": "<label></label>",
+  "snippet": [
+    {
+      "snippet": "<input type=\"checkbox\" name=\"${5:mycheck}\" id=\"${3:check-test}\" checked=\"${2:checked}\"/>\n<label for=\"${4:check-test}\">${1:Checkbox}</label>",
+      "displayText": "tauCheckbox",
+      "description": "The checkbox component shows on the screen a list of options where 1 or more can be selected."
+    },
+    {
+      "snippet": "<input type=\"radio\" name=\"${4:radioset}\" id=\"${2:radio-1}\" />\n<label for=\"${3:radio-1}\">${1:Radio}</label>",
+      "displayText": "tauRadioBtn",
+      "description": "The radio button component shows a list of options on the screen where only 1 option can be selected."
+    }
+  ],
+  "resizable": true,
+  "draggable": true,
+  "parent-modifiers": [
+    {
+      "selector": "li",
+      "className": "li-has-checkbox"
+    }
+  ]
+}

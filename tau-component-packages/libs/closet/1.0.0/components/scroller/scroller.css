@@ -1,0 +1,5 @@
+closet-scroller img {
+  user-drag: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+}

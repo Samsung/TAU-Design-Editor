@@ -1,0 +1,28 @@
+{
+  "label": "StatusCircle",
+  "selector": ".ui-status-circle",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 900,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-status-circle.png",
+      "tv": "./mobile-status-circle.png",
+      "wearable": "./mobile-status-circle.png"
+    }
+  },
+  "template": "<div class=\"ui-status-circle\"><div class=\"ui-status-circle-status\">Good</div><div class=\"ui-status-circle-place\">INDOOR</div></div>",
+  "generator": {
+    "constructor": "tau.widget.StatusCircle",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

@@ -1,0 +1,28 @@
+{
+  "label": "Popup Content",
+  "selector": ".ui-popup-content",
+  "resources": {
+    "css": "../../tau/theme/tau.css"
+  },
+  "attachable": false,
+  "type": "container-component",
+  "constraint": [
+    "box",
+    "bottom-button",
+    "checkbox",
+    "processing",
+    "radio",
+    "toggleswitch",
+    "text",
+    "closet-image",
+    "sectionchanger",
+    "listview",
+    "selector",
+    "iot-contextmenu",
+    "button",
+    "input-text",
+    "input-password",
+    "input-date",
+    "input-number"
+  ]
+}

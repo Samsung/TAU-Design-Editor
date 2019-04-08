@@ -1,0 +1,67 @@
+{
+  "label": "Page",
+  "selector": ".ui-page",
+  "constraint": [
+    "div",
+    "popup",
+    "header",
+    "bottom-button",
+    "page-indicator"
+  ],
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js"
+  },
+  "attachable": false,
+  "type": "container-component",
+  "class": [
+    {
+      "text": "ui-page-active",
+      "description": "Indicates active page",
+      "version": "mobile"
+    }
+  ],
+  "attributes": {
+    "data-enable-page-scroll": {
+      "label": "Enable Scroller",
+      "type": {
+        "name": "checkbox",
+        "option": {
+          "checked": "true"
+        }
+      }
+    }
+  },
+  "styles": [
+    {
+      "icon": "./styles/page-iot.png",
+      "name": "IoT",
+      "template": "<div class=\"ui-page ui-page-iot\"><div class=\"ui-content\"></div></div>"
+    }
+  ],
+  "data": [
+    {
+      "option": "enable-page-scroll",
+      "values": [
+        {
+          "snippet": "${1:false}",
+          "leftLabelHTML": "boolean",
+          "description": "disable scroller"
+        }
+      ],
+      "version": "wearable@2.3.1",
+      "description": "enable or disable scroller"
+    }
+  ],
+  "events": [
+    "pagebeforecreate",
+    "pagecreate",
+    "pagebeforeshow",
+    "pageshow",
+    "pagebeforehide",
+    "pagehide",
+    "pagechange"
+  ]
+}

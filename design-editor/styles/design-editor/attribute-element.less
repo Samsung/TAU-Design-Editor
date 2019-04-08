@@ -1,0 +1,334 @@
+closet-attribute-element,
+.closet-property,
+.panel-draggable {
+    .closet-attribute-element-content {
+        overflow: auto;
+
+    }
+
+    .closet-property-list-title {
+        &.panel-heading {
+            padding: 0;
+
+            .closet-property-header {
+                .closet-property-anchor {
+                    display: inline-block;
+                    overflow: hidden;
+                    > span.closet-property-list-title-icon {
+                        padding: 10px;
+                    }
+                    > span {
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 5px 0 5px 0;
+        margin-bottom: 0;
+
+        li.closet-additional-attribute {
+            display: none;
+        }
+        
+        .empty-styles {
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+    li {
+        display: block;
+        position: relative;
+        padding-left: 100px;
+        padding-right: 10px;
+        margin-bottom: 7px;
+
+        .closet-attribute-label {
+            display: block;
+            top: 0;
+            left: 0;
+            width: 90px;
+            min-width: 90px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 10px;
+        }
+
+        input,
+        select {
+            color: rgb(215, 218, 224);
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .closet-style-element-list {
+        .closet-element-styles-list {
+            .styles-icon {
+                width: 80%;
+                position: relative;
+                left: 50%;
+                transform: translate(-50%);
+                margin-top: 15px;
+                box-sizing: content-box;
+            }
+            .styles-name {
+                font-size: 15px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+
+.panel-draggable {
+    .closet-property-list-title {
+        cursor: move;
+
+        .closet-property-header {
+            .closet-property-anchor {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &.undocked {
+        width: 300px;
+        max-height: 270px;
+        background: #1F1F1F;
+        border: solid 1px #3C3C3C;
+        color: #a8a8a8;
+
+        .closet-property-list-title {
+            z-index: 2;
+        }
+
+        ul.closet-property-list {
+            max-height: 225px;
+            z-index: 1;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    }
+}
+
+
+.closet-property-list-title {
+    cursor: pointer;
+
+    .closet-property-header {
+        .closet-property-list-title-icon {
+            width: 20px;
+        }
+    }
+}
+
+.closet-property-list {
+    -webkit-transition-property: max-height, padding;
+    -webkit-transition-duration:  300ms;
+    max-height: 3000px;
+    overflow: hidden;
+    margin: 0;
+
+}
+
+.closet-property-list-close {
+    max-height: 0 !important;
+    padding: 0 !important;
+}
+
+.closet-attribute-box-model-list,
+.closet-attribute-dimension-position-list,
+.closet-attribute-background-list,
+.closet-attribute-flex-list,
+.closet-attribute-element-list,
+.closet-attribute-color-opacity-list,
+.closet-property-list {
+
+    li {
+        margin-bottom: 10px;
+        padding-left: 10px;
+        color: @text-color-highlight;
+        font-size: 1.15em;
+        line-height: 2em;
+
+        .closet-attribute-common-label {
+            display: inline-block;
+            margin-right: 5px;
+            margin-left: 10px;
+            width: 38px;
+            color: @text-color;
+        }
+        .closet-attribute-common-label-long {
+            display: inline-block;
+            margin-right: 5px;
+            margin-left: 10px;
+            min-width: 120px;
+            color: @text-color;
+        }
+
+        .closet-attribute-common-textbox {
+            display: inline-block;
+            max-height: none;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+            border-radius: 3px;
+            border: 1px solid @input-border-color;
+            background-color: @input-background-color;
+            min-width: 35px;
+            max-width: 62px;
+            margin-right: 5px;
+            height: 27px;
+        }
+
+        .closet-attribute-common-textbox.long-controls {
+            max-width: 124px;
+            width: 124px;
+        }
+
+        .closet-attribute-common-select {
+            width: 38px;
+            padding: 0;
+        }
+
+        .closet-attribute-common-border-style {
+            max-width: 80px;
+        }
+
+        .closet-attribute-common-border-style-long {
+            max-width: 130px;
+        }
+
+        .closet-attribute-common-border-style-max-long {
+            max-width: 100%;
+        }
+
+        .closet-attribute-common-icon {
+            width: 16px;
+        }
+    }
+
+    .closet-attribute-common-marginBox-container {
+        height: 170px;
+        margin-top: 30px;
+
+        .closet-attribute-common-box-label {
+            position: absolute;
+            height: 20px;
+            padding-left: 5px;
+            color: @text-color;
+
+        }
+
+        .closet-attribute-common-marginBox {
+            width: 250px;
+            height: 150px;
+            margin-left: 20px;
+            background-color: #525252;
+            display: inline-block;
+            position: absolute;
+        }
+
+        .closet-attribute-common-paddingBox {
+            width: 160px;
+            height: 85px;
+            background-color: #474747;
+            display: inline-block;
+            position: absolute;
+            -webkit-transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+            border: dashed thin @input-border-color;
+        }
+
+        .closet-attribute-common-box-input{
+            width: 35px;
+            height: 20px;
+            line-height: 15px;
+            font-size: 1em;
+            position: absolute;
+            padding-left: .1em;
+            text-align: center;
+            border: 1px solid @input-border-color;
+            background-color: @input-background-color;
+
+        }
+
+        .closet-attribute-common-box-top{
+            -webkit-transform: translate(-50%, 20%);
+            left: 50%;
+        }
+
+        .closet-attribute-common-box-right{
+            -webkit-transform: translate(-10%, -50%);
+            right: 0;
+            top: 50%;
+        }
+
+        .closet-attribute-common-box-bottom{
+            -webkit-transform: translate(-50%, -20%);
+            bottom: 0;
+            left: 50%;
+        }
+
+        .closet-attribute-common-box-left{
+            -webkit-transform: translate(10%, -50%);
+            top: 50%;
+        }
+    }
+}
+
+.closet-text-element-title {
+    display: block;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    padding-left: 15px;
+    margin: 0;
+    font-size: 15px;
+    background-color: @panel-heading-background-color;
+    border-bottom: 1px solid @panel-heading-border-color;
+    color: @text-color;
+}
+
+.closet-behavior-last {
+    border-bottom: solid 1px #282c34;
+    padding-bottom: 10px;
+}
+
+.closet-attribute-st-params {
+    .closet-attribute-text-label {
+        font-size: 13px;
+        font-weight: bold;
+        border-radius: 5px;
+        background-color: #172690;
+        text-align: center;
+        padding: 2px 4px;
+        &-read-only {
+            background-color: #166109;
+        }
+    }
+    .closet-attribute-description {
+        font-size: 13px;
+        line-height: normal;
+    }
+    .closet-attribute-enum {
+        font-size: 13px;
+        span {
+            padding: 0 5px;
+            color: #85a4c1;
+        }
+        span ~ span {
+            border-left: 1px solid white;
+        }
+    }
+}
+

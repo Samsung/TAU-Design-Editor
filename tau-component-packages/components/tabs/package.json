@@ -1,0 +1,33 @@
+{
+    "label": "Tabs",
+    "selector": "[data-role='tabs'], .ui-tabs",
+    "attachable": true,
+    "type": "container-component",
+    "displayOrderWeight": 900,
+    "resources": {
+        "css": [
+            "../../tau/theme/tau.min.css",
+            "../../tau/theme/tau.circle.min.css"
+        ],
+        "js": "../../tau/tau.min.js",
+        "icon": {
+            "mobile": "./tabs.png",
+            "tv": "./tabs.png",
+            "wearable": "./tabs.png"
+        }
+    },
+    "constraint": [
+        "section-changer",
+        "section"
+    ],
+    "template": "<div class=\"ui-tabs\"><div class=\"ui-tabbar ui-tabbar-static\"><ul><li class=\"ui-li-anchor\"><a href=\"#\" class=\"ui-tab-active\">Tab 1</a></li><li class=\"ui-li-anchor\"><a href=\"#\">Tab 2</a></li></ul></div><div class=\"ui-section-changer\"><div><section class=\"ui-section-active\"></section><section></section></div></div></div>",
+    "generator": {
+        "constructor": "tau.widget.Tabs",
+        "parameter": {
+            "options": {}
+        }
+    },
+    "device-profile": ["mobile"],
+    "resizable": false,
+    "draggable": true
+}

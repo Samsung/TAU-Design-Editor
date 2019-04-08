@@ -1,0 +1,18 @@
+# label for component panel
+'label': 'Video'
+
+# component resource files
+'resources':
+    'js': ['video.js']
+    'css': 'video.css'
+
+# attribute of component
+'attributes':
+    'src':
+        'label': 'Video Src'
+        'value': ''
+        'type':
+            'name':  'file'
+            'option':
+                'extension':
+                    ['mp4', 'ogg']

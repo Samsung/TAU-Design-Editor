@@ -1,0 +1,59 @@
+{
+  "label": "Dimmer",
+  "selector": ".ui-dimmer",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 2000,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-dimmer.png",
+      "wearable": "./mobile-dimmer.png",
+      "tv": "./mobile-dimmer.png"
+    }
+  },
+  "template": "<div class=\"ui-dimmer\"><span class=\"ui-dimmer-text\"></span></div>",
+  "generator": {
+    "constructor": "tau.widget.Dimmer",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "options": [
+    {
+      "label": "Value",
+      "name": "value",
+      "values": "50"
+    },
+    {
+      "label": "Min Value",
+      "name": "min",
+      "values": "0"
+    },
+    {
+      "label": "Max Value",
+      "name": "max",
+      "values": "100"
+    },
+    {
+      "label": "Widget Style",
+      "name": "bulb",
+      "values": [
+        {
+          "value": false, 
+          "label": "Doughnut"
+        },
+        {
+          "value": true, 
+          "label": "Lightbulb"
+        }
+      ]
+    }
+  ],
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

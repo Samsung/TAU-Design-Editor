@@ -1,0 +1,30 @@
+{
+  "label": "toggleslider",
+  "selector": ".ui-toggle-container, .ui-iot-toggleslider, .ui-iot-toggleswitch, .ui-toggleslider-base",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 2100,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./toggleslider.png",
+      "tv": "./toggleslider.png",
+      "wearable": "./toggleslider.png"
+    }
+  },
+  "template": "<input type=\"checkbox\" class=\"ui-toggleswitch ui-iot-toggleswitch\" data-appearance=\"slider\">",
+  "generator": {
+    "constructor": "tau.widget.ToggleSwitch",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "wrapContent": "<label></label>",
+  "resizable": false,
+  "draggable": true
+}
+

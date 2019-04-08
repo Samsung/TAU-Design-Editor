@@ -1,0 +1,33 @@
+{
+    "label": "Input Text",
+    "selector": "input[type=text]",
+    "attachable": true,
+    "displayOrderWeight": 900,
+    "type": "standalone-component",
+    "resources": {
+      "css": [
+        "./styles/input-text.css"
+      ],
+      "icon": {
+          "wearable": "./input-text.png",
+          "mobile": "./input-text-mobile.png",
+          "tv": "./input-text-mobile.png"
+      }
+    },
+    "generator": {
+      "constructor": "tau.widget.TextInput",
+      "parameter": {
+        "options": {}
+      }
+    },
+    "template": "<input type=\"text\"/>",
+    "snippet": [
+      {
+        "snippet": "<input type=\"text\" name=\"${5:mytext}\" id=\"${3:text-test}\"/>\n<label for=\"${4:text-test}\">${1:InputText}</label>",
+        "displayText": "inputText",
+        "description": "Enter your text."
+      }
+    ],
+    "resizable": true,
+    "draggable": true
+  }

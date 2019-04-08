@@ -1,0 +1,9 @@
+{
+  "name": "paragraph",
+  "label": "Paragraph",
+  "selector": "p",
+  "attachable": false,
+  "resizable": true,
+  "draggable": true,
+  "textEditable": true
+}

@@ -1,0 +1,90 @@
+<span class="closet-assistant-wizard-title inline-block highlight-info">JavaScript Assistant Wizard</span>
+<div class="closet-assistant-wizard-type block">
+    <closet-grouped-button class="closet-grouped-button block btn-group closet-task-group" selected-index="0">
+        <button class="btn closet-grouped-button-item instance-btn selected">Selector</button>
+        <button class="btn closet-grouped-button-item tau-widget-btn" {{#notTAUWidget}}disabled{{/notTAUWidget}}>TAU Widget</button>
+        <button class="btn closet-grouped-button-item event-listener-btn">Event Listener</button>
+        <!-- <button class="btn closet-grouped-button-item page-transition-btn">Page Transition</button> -->
+    </closet-grouped-button>
+</div>
+<div class="closet-assistant-wizard-body block instance-block setting-block">
+    <div class="closet-assistant-wizard-editor label-editor-wrapper">
+        <div class="closet-assistant-wizard-row-wrapper">
+            <span class="closet-assistant-wizard-label">Variable Name</span>
+            <input type="text" class="native-key-bindings instance-name closet-assistant-wizard-input">
+        </div>
+    </div>
+</div>
+<div class="closet-assistant-wizard-body block tau-widget-block setting-block">
+    <div class="closet-assistant-wizard-editor">
+        <div class="closet-assistant-wizard-row-wrapper">
+            <span class="closet-assistant-wizard-label">Variable Name</span>
+            <input type="text" class="native-key-bindings tau-widget-name closet-assistant-wizard-input">
+        </div>
+        <div class="closet-assistant-wizard-row-wrapper">
+            <span class="closet-assistant-wizard-label">Widget Options</span>
+        </div>
+        <div class="block closet-assistant-wizard-scrollable-wrapper">
+            <div class="closet-assistant-wizard-option-group">
+            {{#options}}
+                <button class="btn closet-assistant-wizard-option-item" data-option-name="{{name}}" data-option-default="{{value}}">
+                    {{name}}
+                </button>
+            {{/options}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="closet-assistant-wizard-body block event-listener-block setting-block">
+    <div class="closet-assistant-wizard-editor">
+        <div class="closet-assistant-wizard-row-wrapper">
+            <span class="closet-assistant-wizard-label">Type</span>
+            <select class="event-type closet-assistant-wizard-select">
+                {{#events}}
+                <option value="{{.}}">{{.}}</option>
+                {{/events}}
+            </select>
+            <input type="text" class="native-key-bindings event-type-custom closet-assistant-wizard-input">
+            <span class="closet-assistant-wizard-label"><input type="checkbox" class="closet-checkbox closet-input-manually">Custom</span>
+        </div>
+        <div class="closet-assistant-wizard-row-wrapper">
+            <span class="closet-assistant-wizard-label">Action Preset</span>
+        </div>
+        <div class="closet-assistant-wizard-row-wrapper block btn-group closet-action-preset-group">
+            <button class="btn closet-grouped-button-item selected" data-preset-name="none">None</button>
+            <button class="btn closet-grouped-button-item" data-preset-name="page-transition">Page Transition</button>
+            <button class="btn closet-grouped-button-item" data-preset-name="popup-open">Popup Open</button>
+        </div>
+        <div class="closet-assistant-wizard-preset-wrapper">
+            <div class="closet-assistant-wizard-preset preset-none active"></div>
+            <div class="closet-assistant-wizard-preset preset-page-transition">
+                <div class="closet-assistant-wizard-row-wrapper">
+                    <span class="closet-assistant-wizard-label">Page</span>
+                    <select class="closet-exist-page-names closet-assistant-wizard-select" focus><option>Loading...</option></select>
+                </div>
+                <div class="closet-assistant-wizard-row-wrapper">
+                    <span class="closet-assistant-wizard-label">Transition</span>
+                    <select class="page-transition-name closet-assistant-wizard-select">
+                        <option value="">none</option>
+                        <option value="pop" selected>default style</option>
+                        <option value="pop">Pop</option>
+                        <option value="slideup">Slide Up</option>
+                    </select>
+                </div>
+            </div>
+            <div class="closet-assistant-wizard-preset preset-popup-open"></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="closet-assistant-wizard-footer block accept-btn">
+    <div class="closet-assistant-wizard-row-wrapper closet-assistant-wizard-common-option">
+        <span class="closet-assistant-wizard-label"><input type="checkbox" class="closet-checkbox closet-using-exist-instance">Use Exist Var</span>
+        <select class="closet-assistant-wizard-select closet-exist-instance-list"></select>
+    </div>
+    <div class="pw-float-right">
+        <button class="btn aw-accept-btn">Accept</button>
+        <button class="btn aw-cancel-btn">Cancel</button>
+    </div>
+</div>

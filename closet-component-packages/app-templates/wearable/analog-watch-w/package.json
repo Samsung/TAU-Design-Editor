@@ -1,0 +1,11 @@
+{
+  "profile": "wearable",
+  "category": "watchface",
+  "thumbnail": "thumbnail1.png",
+  "label": "Analog Watch",
+  "libraries": [
+    "closet",
+    "jquery.js",
+    "tau.animation.min.js"
+  ]
+}

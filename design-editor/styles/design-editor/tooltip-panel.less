@@ -1,0 +1,108 @@
+tooltip-panel {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    min-height: 60px;
+    min-width: 200px;
+    max-width: 75%;
+    visibility: hidden;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    -webkit-transition: all 500ms;
+    -moz-transition: all 500ms;
+    -o-transition: all 500ms;
+    transition: all 500ms;
+
+    &.show {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    &.info {
+        .tooltip-panel-content {
+            .tooltip-panel-icon {
+                &::before {
+                    content: "\f129";
+                }
+            }
+        }
+    }
+
+    &.warning {
+        .tooltip-panel-content {
+            .tooltip-panel-icon {
+                &::before {
+                    content: "\f12a";
+                }
+            }
+        }
+    }
+
+    &.error {
+        .tooltip-panel-content {
+            .tooltip-panel-icon {
+                &::before {
+                    content: "\f12a";
+                }
+            }
+        }
+    }
+
+    .tooltip-panel-header {
+        font-weight: bold;
+        font-size: 14px;
+        padding: 5px 10px;
+        background: #1D1D1D;
+        color: #5D5F60;
+    }
+
+    .tooltip-panel-container {
+        padding: 10px;
+        color: #eee;
+        font-size: 1.2em;
+
+        .tooltip-panel-close {
+            position: absolute;
+            top: 0;
+            right: 2px;
+            width: 20px;
+            font-size: 20px;
+            line-height: 20px;
+            padding: 3px;
+            text-align: center;
+            color: #8E8E8E;
+        }
+
+        > .tooltip-panel-content {
+            display: flex;
+
+            .tooltip-panel-icon {
+                margin: auto 0;
+                padding: 10px 20px 10px 10px;
+                font-size: 40px;
+                text-align: center;
+            }
+
+            .tooltip-panel-text {
+                display: flex;
+                margin: 10px 15px 10px 0;
+                text-align: left;
+                justify-content: center;
+                align-content: center;
+                flex-direction: column;
+            }
+        }
+    }
+
+    .tooltip-panel-progress {
+        height: 3px;
+        width: 100%;
+        background-color: #8E8E8E;
+        -webkit-transition: width 1s linear;
+        -moz-transition: width 1s linear;
+        -o-transition: width 1s linear;
+        transition: width 1s linear;
+    }
+}

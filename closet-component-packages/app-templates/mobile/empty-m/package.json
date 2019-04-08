@@ -1,0 +1,11 @@
+{
+  "profile": "mobile",
+  "category": "Empty",
+  "thumbnail": "thumbnail.png",
+  "label": "Empty",
+  "libraries": [
+    "closet",
+    "jquery.js",
+    "tau.animation.min.js"
+  ]
+}

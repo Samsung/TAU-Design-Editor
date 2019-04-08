@@ -1,0 +1,38 @@
+<span class="device-profile inline-block">
+    profile:
+    <select id="statusTauProfile">
+        <option value="mobile">mobile</option>
+        <option value="tv">tv</option>
+        <option value="wearable">wearable</option>
+        <!-- @TODO disabled for now //-->
+        <!--
+        <option value="fit2">fit2</option>
+        //-->
+    </select>
+</span>
+<span class="inline-block">
+    device:
+    <select id="statusDevices">
+        <option value="">(custom)</option>
+    </select>
+</span>
+<span class="device-shape inline-block" id="shape">
+    shape:
+    <select id="statusScreenShape">
+        <option value="circle">circle</option>
+        <option value="rectangle">rectangle</option>
+    </select>
+</span>
+<span class="screen-size inline-block">
+    size:
+    <input id="statusScreenWidth" type="number" value="{{width}}" class="native-key-bindings" />
+    <span id="rectangleOnly">x
+    <input id="statusScreenHeight" type="number" value="{{height}}" class="native-key-bindings" />
+        </span>
+</span>
+<span class="screen-ratio inline-block">
+    zoom:
+    <input id="statusScreenRatio" type="number" value="{{ratio}}" min="10" max="300" class="native-key-bindings" /> %
+</span>
+<span class="btn" id="fit100">100%</span>
+<span class="btn" id="fitToScreen">fit to screen</span>

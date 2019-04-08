@@ -1,0 +1,21 @@
+{
+  "label": "Processing",
+  "selector": ".ui-processing",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 1600,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-processing.png",
+      "tv": "./mobile-processing.png",
+      "wearable": "./processing.png"
+    }
+  },
+  "template": "<div class=\"ui-processing\"></div>",
+  "draggable": true
+}

@@ -1,0 +1,25 @@
+{
+  "label": "List item image",
+  "selector": ".ui-li-image",
+  "attachable": false,
+  "type": "tau-component",
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./ui-chart.png"
+    }
+  },
+  "template": "",
+  "options": [
+    {
+      "label": "Source",
+      "name" : "src",
+      "values": ""
+    }
+  ],
+  "draggable": false,
+  "new": false
+}
