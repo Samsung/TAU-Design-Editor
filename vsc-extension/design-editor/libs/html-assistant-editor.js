@@ -1,11 +1,12 @@
-const utils = require('../../../design-editor/src/utils/utils');
+const utils = require('../../../design-editor/src/utils/utils').default;
 const fsExtra = require('./fs-extra');
+const path = require('path');
 
 
 class HTMLAssistantEditorElement {
     constructor() {
         this._isOpened = false;
-        this._tempFileName = '.html-assistant-tmp';
+        this._tempFileName = 'html-assistant-tmp.txt';
     }
 
     open(htmlText) {
@@ -23,16 +24,11 @@ class HTMLAssistantEditorElement {
     }
 
     close() {
-        fsExtra.deleteFile(this._tempFileName, (error) => {
-            if (error) {
-                console.error(error);
-            } else {
-                window.parent.postMessage({
-                    type: 'CLOSE_EDITOR'
-                }, '*');
-                this._isOpened = false;
-            }
-        });
+        window.parent.postMessage({
+            type: 'CLOSE_EDITOR'
+        }, '*');
+        this._isOpened = false;
+        fsExtra.deleteFile(this._tempFileName);
     }
 
     isOpened() {
@@ -40,8 +36,13 @@ class HTMLAssistantEditorElement {
     }
 
     getEditorContent() {
-        return new Promise((reject, resolve) => {
-            fsExtra.readFile(this._tempFileName, null, (error, result) => {
+        const fullPath = path.resolve(
+            utils.checkGlobalContext('globalData').projectId,
+            this._tempFileName
+        );
+
+        return new Promise((resolve, reject) => {
+            fsExtra.readFile(fullPath, null, (error, result) => {
                 if (error) {
                     reject(error);
                 }

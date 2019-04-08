@@ -18,9 +18,9 @@ function __fetchHelper(url, options, type, callback) {
     };
 
     return fetch(url, Object.assign({headers}, options))
-        .then(response => (type === 'text' ? response.text() : response.json()))
-        .then(content => callback(undefined, content))
-        .catch(err => callback(err, undefined));
+        .then(response => callback && (type === 'text' ? response.text() : response.json()))
+        .then(content => callback && callback(undefined, content))
+        .catch(err => callback && callback(err, undefined));
 }
 
 /**
@@ -46,7 +46,7 @@ function deleteFile(path, callback) {
         method: 'DELETE'
     };
 
-    __fetchHelper(path, options, 'json', callback);
+    __fetchHelper(utils.urlJoin(fileEndpoint, path), options, 'json', callback);
 }
 
 /**
