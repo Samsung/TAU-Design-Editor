@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<title>Circular UI</title>
+	<link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.min.css">
+	<link rel="stylesheet" media="all and (-tizen-geometric-shape: circle)" href="lib/tau/wearable/theme/default/tau.circle.min.css">
+	<!-- load theme file for your application -->
+</head>
+<body>
+	<div id="brightness-page" class="ui-page" data-enable-page-scroll="false">
+		<header>
+			<h2 class="ui-title">Brightness</h2>
+		</header>
+		<div class="ui-content">
+			<div class="result"></div>
+			<progress class="ui-circle-progress" data-thickness="20" data-size="140" max="100"
+					  value="60" data-rel="back"></progress>
+		</div>
+		<script src="dimmer.js"></script>
+	</div>
+	<script type="text/javascript" src="lib/tau/wearable/js/tau.min.js"></script>
+</body>
+</html>

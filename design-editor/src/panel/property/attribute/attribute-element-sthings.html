@@ -1,0 +1,26 @@
+<li>
+    <div>Smart Things capability</div>
+    <select name="capability"
+            class="closet-attribute-common-textbox closet-attribute-common-border-style-max-long closet-attribute-st-device">
+            <option value=""></option>
+            {{#capabilities}}<option value="{{name}}" {{_selected}}>{{title}}</option>{{/capabilities}}
+    </select>
+    <div>Capability parameters</div>
+    <ul class="closet-attribute-st-params">
+        {{#params}}
+        <li>
+            <input type="checkbox" name="{{name}}" {{_checked}}/>
+            {{name}}
+            <span class="closet-attribute-text-label">{{property.type}}</span>
+            {{#property.readOnly}}<span class="closet-attribute-text-label closet-attribute-text-label-read-only">read only</span>{{/property.readOnly}}
+            {{#_isEnum}}
+            <div class="closet-attribute-enum">values: 
+                {{#property.enum}}<span>{{.}}</span>{{/property.enum}}
+                <button>fill options</button>
+            </div>
+            {{/_isEnum}}
+            <div class="closet-attribute-common-label-long closet-attribute-description">{{property.description}}</div>
+        </li>
+        {{/params}}
+    </ul>
+</li>

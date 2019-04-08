@@ -1,0 +1,116 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+// Import font awesome
+@import "../styles/fontawesome/less/font-awesome.less";
+
+@font-face {
+  font-family: 'Font Awesome';
+  font-weight: normal;
+  font-style: normal;
+  src: url('../styles/fontawesome/fonts/fontawesome-webfont.woff') format('woff');
+}
+
+.closet-preview-mode {
+    overflow: hidden;
+}
+
+.fa {
+  font-family: 'Font Awesome';
+}
+
+.ui-resizable-handle {
+    position: absolute;
+    font-size: 0.1px;
+    display: block;
+}
+
+.ui-resizable-n {
+    cursor: n-resize;
+    height: 7px;
+    width: 100%;
+    top: -5px;
+    left: 0;
+}
+.ui-resizable-s {
+    cursor: s-resize;
+    height: 7px;
+    width: 100%;
+    bottom: -5px;
+    left: 0;
+}
+.ui-resizable-e {
+    cursor: e-resize;
+    width: 7px;
+    right: -5px;
+    top: 0;
+    height: 100%;
+}
+.ui-resizable-w {
+    cursor: w-resize;
+    width: 7px;
+    left: -5px;
+    top: 0;
+    height: 100%;
+}
+.ui-resizable-se {
+    cursor: se-resize;
+    width: 12px;
+    height: 12px;
+    right: 1px;
+    bottom: 1px;
+}
+.ui-resizable-sw {
+    cursor: sw-resize;
+    width: 9px;
+    height: 9px;
+    left: -5px;
+    bottom: -5px;
+}
+.ui-resizable-nw {
+    cursor: nw-resize;
+    width: 9px;
+    height: 9px;
+    left: -5px;
+    top: -5px;
+}
+.ui-resizable-ne {
+    cursor: ne-resize;
+    width: 9px;
+    height: 9px;
+    right: -5px;
+    top: -5px;
+}
+
+.closet-component-drag-helper {
+    pointer-events: none;
+    position: absolute;
+    opacity : 0.7;
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 50% 50%;
+    margin: 6px 15px 15px;
+    overflow: hidden;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: translateX(-40px) translateY(-50px);
+    border: 1px solid #eee;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-corner {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    box-shadow: 0 0 0 4px #5D5F60 inset;
+    border: 2px solid transparent;
+}

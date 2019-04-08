@@ -1,0 +1,27 @@
+{
+  "label": "Input Password",
+  "selector": "input[type=password]",
+  "attachable": true,
+  "displayOrderWeight": 1000,
+  "type": "standalone-component",
+  "resources": {
+    "css": [
+      "./styles/input-password.css"
+    ],
+    "icon": {
+        "wearable": "./input-password.png",
+        "mobile": "./input-password-mobile.png",
+        "tv": "./input-password-mobile.png"
+    }
+  },
+  "template": "<input type=\"password\"/>",
+  "snippet": [
+    {
+      "snippet": "<input type=\"password\" name=\"${4:mypassword}\" id=\"${2:password-test}\"/>\n<label for=\"${3:password-test}\">${1:InputPassword}</label>",
+      "displayText": "inputPassword",
+      "description": "Enter your text."
+    }
+  ],
+  "resizable": true,
+  "draggable": true
+}

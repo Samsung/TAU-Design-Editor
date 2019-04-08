@@ -1,0 +1,28 @@
+{
+  "label": "SoundIndicator",
+  "selector": ".ui-sound-indicator",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 1100,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./ui-sound-indicator.png",
+      "tv": "./ui-sound-indicator.png",
+      "wearable": "./ui-sound-indicator.png"
+    }
+  },
+  "template": "<div class=\"ui-sound-indicator\"><div class=\"ui-sound-indicator-pic\"></div><div class=\"ui-sound-indicator-title\">Title</div><div class=\"ui-sound-indicator-name\">CP name</div></div>",
+  "generator": {
+    "constructor": "tau.widget.SoundIndicator",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../../dist/1.0.0/dress.closet.full.css">
+    <script type="text/javascript" src="../../../bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../../../libs/tau.animation.min.js"></script>
+    <script type="text/javascript">
+        window.tau.animation.SimpleMixin($.fn);
+    </script>
+    <script type="text/javascript" src="../../../dist/1.0.0/dress.closet.full.js"></script>
+    <script>
+        window.addEventListener("load", function() {
+            console.debug("document loaded!");
+        });
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.debug("DOM fully loaded and parsed");
+        });
+    </script>
+</head>
+<body>
+    <closet-section>safasfe</closet-section>
+</body>
+</html>

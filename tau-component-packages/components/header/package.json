@@ -1,0 +1,57 @@
+{
+  "label": "Header",
+  "selector": ".ui-header,header",
+  "attachable": true,
+  "type": "container-component",
+  "displayOrderWeight": 200,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-header.png",
+      "tv": "./mobile-header.png",
+      "wearable": "./header.png"
+    }
+  },
+  "template": "<header class=\"ui-header\"><h2 class=\"ui-title\">Header</h2></header>",
+  "constraint": [
+      "toggleswitch",
+      "iot-contextmenu",
+      "box",
+      "button"
+  ],
+  "section": "header",
+  "class": [
+    {
+      "text": "ui-has-more",
+      "description": "Header has more button",
+      "version": "wearable@2.3.1"
+    },
+    {
+      "text": "ui-more",
+      "description": "Button for menu with icon in header",
+      "selector": " .ui-btn",
+      "version": "wearable@2.3.1"
+    },
+    {
+      "text": "ui-icon-detail",
+      "description": "Icon style for menu button",
+      "selector": " .ui-btn.ui-more",
+      "version": "wearable@2.3.1"
+    },
+    {
+      "text": "ui-icon-overflow",
+      "description": "Icon style for menu button",
+      "selector": " .ui-btn.ui-more",
+      "version": "wearable@2.3.1"
+    },
+    {
+      "text": "ui-icon-selectall",
+      "description": "Icon style for menu button",
+      "selector": " .ui-btn.ui-more",
+      "version": "wearable@2.3.1"
+    }
+  ]
+}

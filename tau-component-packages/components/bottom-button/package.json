@@ -1,0 +1,38 @@
+{
+  "label": "Bottom Button",
+  "selector": "footer.ui-footer.ui-bottom-button, .ui-popup-footer.ui-bottom-button>.ui-btn,tau-button.ui-footer",
+  "type": "container-component",
+  "displayOrderWeight": 300,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-bottom-button.png",
+      "tv": "./mobile-bottom-button.png",
+      "wearable": "./bottom-button.png"
+    }
+  },
+  "template": "<footer class=\"ui-footer ui-bottom-button ui-fixed\"><button class=\"ui-btn\">Button</button></footer>",
+  "section": "footer",
+  "class": [
+    {
+      "text": "ui-fixed",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-footer",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-bottom-button",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-popup-footer",
+      "version": "wearable"
+    }
+  ]
+}

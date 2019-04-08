@@ -1,0 +1,30 @@
+.info-bar {
+  color: @text-color-subtle;
+  display: block;
+  background-color: @background-color-highlight;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding : 10px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  .id-field{
+    color: @text-color-warning;
+  }
+
+  .tag-field{
+    color: @text-color;
+    font-weight: bold;
+  }
+
+  .class-field{
+    color: @text-color-success;
+  }
+  .parent-info {
+    cursor: pointer;
+    display: inline-block;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

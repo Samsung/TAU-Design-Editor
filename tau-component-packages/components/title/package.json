@@ -1,0 +1,33 @@
+{
+  "label": "Title",
+  "selector": ".ui-header > h1,h2",
+  "attachable": true,
+  "textEditable": true,
+  "type": "component",
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+        "mobile": "./header.png",
+        "tv": "./header.png"
+    }
+  },
+  "template": "<h2 class=\"ui-title\">Header</h2>",
+  "section": "header",
+  "class": [
+    {
+      "text": "ui-title",
+      "description": "Title",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-sub-title",
+      "description": "Subtitle",
+      "version": "wearable",
+      "selector": "> span"
+    }
+  ]
+}

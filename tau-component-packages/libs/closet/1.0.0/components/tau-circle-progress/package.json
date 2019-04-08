@@ -1,0 +1,13 @@
+{
+  "label": "Progress",
+  "selector": "closet-tau-circle-progress",
+  "attachable": false,
+  "type": "standalone-component",
+  "altSelector": true,
+  "resources": {
+    "js": "tau-circle-progress.js",
+    "css": "./tau-circle-progress.css",
+    "icon": "./resources/progress.png"
+  },
+  "template": "<closet-tau-circle-progress class=\"using-alternative-selector\" max=\"100\" value=\"20\"></closet-tau-circle-progress>"
+}

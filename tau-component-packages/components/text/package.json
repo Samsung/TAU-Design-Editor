@@ -1,0 +1,36 @@
+{
+  "name": "text",
+  "label": "Text",
+  "selector": "span",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 100,
+  "template": "<span style=\"min-width: 10px; min-height: 1em; display: inline-block;\">Text</span>",
+  "resizable": true,
+  "draggable": true,
+  "textEditable": true,
+  "constraints": [
+      "iot-contextmenu"
+  ],
+  "resources": {
+    "icon": {
+      "wearable": "./text.png" ,
+      "mobile": "./mobile-text.png",
+      "tv": "./mobile-text.png"
+    }
+  },
+  "class": [
+    {
+      "text": "ui-processing-text",
+      "description": "Description about progress",
+      "version": "wearable"
+    }
+  ],
+  "styles": [
+    {
+      "icon": "./styles/processing.png",
+      "name": "processing description",
+      "template": "<span class=\"ui-processing-text\">{{mainText}}</span>"
+    }
+  ]
+}

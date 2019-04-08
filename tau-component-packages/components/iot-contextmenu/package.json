@@ -1,0 +1,36 @@
+{
+  "label": "IoT Contextmenu",
+  "selector": ".ui-iot-contextmenu",
+  "attachable": true,
+  "resizable": false,
+  "type": "iot-component",
+  "displayOrderWeight": 1300,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-iot-contextmenu.png",
+      "wearable": "./mobile-iot-contextmenu.png",
+      "tv": "./mobile-iot-contextmenu.png"
+    }
+  },
+  "template": "<span class=\"ui-iot-contextmenu\" data-items=\"Option1,Option 2\"></span>",
+  "generator": {
+    "constructor": "tau.widget.Contextmenu",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "attributes": {
+      "data-items": {
+          "label": "Menu items",
+          "type": {
+              "name": "string-list"
+          }
+      }
+  },
+  "draggable": true,
+  "new": true
+}

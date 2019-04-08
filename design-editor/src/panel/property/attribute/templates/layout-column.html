@@ -1,0 +1,15 @@
+Column number
+<select value="{{options.columnNumber}}" data-index="{{_index}}"
+     name="columnNumber_{{_index}}" class="closet-attribute-common-textbox closet-attribute-common-border-style-long">
+    <option value="2" {{_selected.columnNumber_2}}>2</option>
+    <option value="3" {{_selected.columnNumber_3}}>3</option>
+    <option value="4" {{_selected.columnNumber_4}}>4</option>
+    <option value="5" {{_selected.columnNumber_5}}>5</option>
+</select>
+<br/>
+Column gap
+<select value="{{options.columnGap}}" data-index="{{_index}}"
+     name="columnGap_{{_index}}" class="closet-attribute-common-textbox closet-attribute-common-border-style-long">
+    <option {{_selected.columnGap_true}}>true</option>
+    <option {{_selected.columnGap_false}}>false</option>
+</select>

@@ -1,0 +1,33 @@
+{
+    "label": "Input Number",
+    "selector": "input[type=number]",
+    "attachable": true,
+    "displayOrderWeight": 800,
+    "type": "standalone-component",
+    "resources": {
+      "css": [
+        "./styles/input-number.css"
+      ],
+      "icon": {
+          "wearable": "./input-number.png",
+          "mobile": "./input-number-mobile.png",
+          "tv": "./input-number-mobile.png"
+      }
+    },
+    "generator": {
+      "constructor": "tau.widget.TextInput",
+      "parameter": {
+        "options": {}
+      }
+    },
+    "template": "<input type=\"number\"/>",
+    "snippet": [
+      {
+        "snippet": "<input type=\"number\" name=\"${5:mytext}\" id=\"${3:text-test}\"/>\n<label for=\"${4:text-test}\">${1:InputText}</label>",
+        "displayText": "inputNumber",
+        "description": "Enter your number."
+      }
+    ],
+    "resizable": true,
+    "draggable": true
+  }

@@ -1,0 +1,13 @@
+{
+  "profile": "wearable",
+  "category": "TAU",
+  "thumbnail": "thumbnail.png",
+  "label": "Empty TAU + Closet",
+  "libraries": [
+    "tau",
+    "closet",
+    "jquery.js",
+    "tau.animation.min.js",
+    "circle-helper.js"
+  ]
+}

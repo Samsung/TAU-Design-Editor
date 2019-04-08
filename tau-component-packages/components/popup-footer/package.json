@@ -1,0 +1,65 @@
+{
+  "label": "Popup Footer",
+  "selector": ".ui-popup-footer",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 1300,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css",
+      "styles/style.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "images": [
+      "./styles/images/tw_ic_popup_btn_check.png",
+      "./styles/images/tw_ic_popup_btn_delete.png"
+    ],
+    "icon": {
+      "mobile": "./styles/popup-footer.png",
+      "tv": "./styles/popup-footer.png",
+      "wearable": "./styles/popup-button.png"
+    }
+  },
+  "constraints": [
+      "iot-contextmenu"
+  ],
+  "template": "<div class=\"ui-popup-footer ui-bottom-button\">\n    <a class=\"ui-btn\" data-rel=\"back\">\n        <span>OK</span>\n    </a>\n</div>",
+  "parent-constraint": [
+    "popup"
+  ],
+  "styles": [
+    {
+      "icon": "./styles/popup-button.png",
+      "name": "popup bottom",
+      "template": "<div class=\"ui-popup-footer ui-bottom-button\">\n    <a id=\"1btnPopup-cancel\" href=\"#\" class=\"ui-btn btn-icon-check\" data-rel=\"back\">Check</a>\n</div>"
+    },
+    {
+      "icon": "./styles/popup-two-buttons.png",
+      "name": "two popup footer buttons",
+      "template": "<div class=\"ui-popup-footer ui-side-button ui-grid-col-2\">\n    <a id=\"2btnPopup-cancel\" href=\"#\" class=\"ui-btn btn-icon-cancel\" data-rel=\"back\">Cancel</a>\n    <a id=\"2btnPopup-ok\" href=\"#\" class=\"ui-btn btn-icon-check\" data-rel=\"back\">OK</a>\n</div>"
+    }
+  ],
+  "class": [
+    {
+      "text": "ui-popup-footer",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-popup-footer",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-side-button",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-grid-col-2",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-grid-col-2",
+      "version": "mobile"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "label": "Video",
+  "selector": "video",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 1900,
+  "template": "<video width=\"200px\" height=\"150px\" controls><source src=\"\" type=\"\"></video>",
+  "resizable": true,
+  "draggable": true,
+  "resources": {
+    "icon": {
+      "wearable": "./resources/wearable-video-tag.png",
+      "mobile": "./resources/mobile-video-tag.png",
+      "tv": "./resources/mobile-video-tag.png"
+    }
+  },
+  "attributes": {
+    "src": {
+      "label": "Video Src",
+      "type": {
+        "name": "file",
+        "option": {
+          "extensions": [
+            "mp4",
+            "avi",
+            "wmv"
+          ]
+        }
+      }
+    }
+  }
+}

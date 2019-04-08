@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<!--
+    Template contains one page.
+    Page contains:
+        - Section Changer widget - change sections in rotate/swipe
+        - Page Indicator Widget - inform about current section
+-->
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <link rel="stylesheet" href="./libs/tau/wearable/theme/default/tau.css">
+    <link rel="stylesheet" href="./libs/tau/wearable/theme/default/tau.circle.min.css">
+
+    <title>Tizen Web IDE - Template - Tizen Web UI Framework - SportActivities</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="libs/closet/1.0.0/dress.closet.full.css">
+    <script type="text/javascript" src="./libs/jquery.js"></script>
+    <script type="text/javascript" src="./libs/closet/1.0.0/components/dress.closet.js"></script>
+    <script type="text/javascript" src="./libs/closet/1.0.0/components/image/image.js"></script>
+</head>
+
+<body>
+<div id="pageIndicatorCirclePage" class="ui-page" data-enable-page-scroll="false">
+    <div id="pageIndicator" class="ui-page-indicator"></div>
+
+    <div id="hsectionchanger" class="ui-content">
+        <!-- section changer has only one child. -->
+        <div>
+            <section>
+                <div class="big green">2929</div>
+                <div>/6000</div>
+                <div>steps</div>
+            </section>
+            <section>
+                <div>walk</div>
+                <div class="green"><span class="big">22</span>min</div>
+                <div>yesterday</div>
+                <div class="button-container">
+                    <button class="ui-btn ui-btn-icon ui-btn-icon-only btn-green btn-add"></button>
+                </div>
+            </section>
+            <section>
+                <div>water</div>
+                <div class="big green">2</div>
+                <div>glasses</div>
+                <div class="button-container">
+                    <button class="ui-btn ui-btn-icon ui-btn-icon-only btn-green btn-add"></button>
+                </div>
+            </section>
+            <section>
+                <div>coffee</div>
+                <div class="big green">3</div>
+                <div>cups</div>
+                <div class="button-container">
+                    <button class="ui-btn ui-btn-icon ui-btn-icon-only btn-green btn-add"></button>
+                </div>
+            </section>
+            <section>
+                settings
+                <div class="button-container ">
+                    <button class="ui-btn ui-btn-icon ui-btn-icon-only btn-green btn-setting"></button>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!--
+    Main application.
+-->
+<script src="js/main.js"></script>
+<script type="text/javascript" src="./libs/tau/wearable/js/tau.js"
+        data-build-remove="false"></script>
+<script type="text/javascript" data-closet-ref="true" src="./js/app.js"></script>
+<script type="text/javascript" src="libs/circle-helper.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+.item-views {
+    &.design-editor-active {
+        > .closet-container {
+            display: flex !important;
+            visibility: visible;
+        }
+    }
+
+    &:not(.design-editor-active) {
+        > .closet-container {
+            display: none;
+            visibility: hidden;
+        }
+    }
+}
+
+
+.closet-container {
+    position: absolute;
+    top:0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: stretch;
+    overflow: hidden;
+
+    .closet-panel-container-middle {
+        opacity: 0;
+    }
+
+    &.full {
+        width: 100%;
+        height: 100%;
+        .closet-panel-container {
+            width: auto;
+            height: auto;
+            opacity: 1;
+        }
+        .closet-panel-container-middle,
+        .closet-panel-container-right  {
+            display: flex;
+        }
+        .closet-panel-container-top,
+        .closet-panel-container-bottom{
+            display: block;
+        }
+
+        .closet-panel-container-left {
+            display: flex;
+            flex-direction: row;
+            closet-panel.closet-editor-panel-visible {
+                flex: 0;
+            }
+            closet-panel.closet-editor-panel-visible:first-child {
+                flex: 50px 0 0;
+            }
+        }
+    }
+
+    .closet-panel-container-right closet-panel.closet-editor-panel-visible {
+        width: 330px;
+
+        &.hidden {
+            width: 0;
+        }
+    }
+
+    .closet-panel-container-center {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+    }
+    .closet-panel-container-bottom {
+        flex: 0;
+        .closet-editor-panel-visible {
+            width: 100%;
+        }
+    }
+
+    .closet-panel-container-middle {
+        flex: 1;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .closet-panel-container-right {
+        overflow: hidden;
+    }
+
+
+    .panel-heading {
+        border-color: @inset-panel-border-color;
+        border-bottom: 1px solid @panel-heading-border-color;
+        background-color: @panel-heading-background-color;
+        font-weight: normal;
+        color: @text-color;
+        padding: 10px;
+        margin: 0;
+
+        &.closet-attribute-list-title {
+            span::before {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    closet-panel {
+        background-color: @app-background-color;
+        transition-property: width, height, opacity;
+        transition-duration: 500ms;
+        transition-timing-function: ease-in;
+        overflow: visible;
+        display: block;
+        height: 0;
+        width: 0;
+        &.closet-editor-panel-visible {
+            width: auto;
+            height: auto;
+        }
+        &.modal {
+            background-color: transparent;
+        }
+    }
+}
+
+.closet-container.full .closet-panel-container-left closet-panel.assistant-panel {
+    overflow: hidden;
+    flex: 1;
+    &.closet-editor-panel-visible {
+        width: 600px;
+        overflow: hidden;
+        flex: 1;
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "label": "Scroller",
+  "selector": ".ui-scroller",
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js"
+  }
+}

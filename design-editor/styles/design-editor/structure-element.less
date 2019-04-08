@@ -1,0 +1,39 @@
+closet-structure-element {
+    //transform: translateX(0);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    background-color: @app-background-color;
+    border-top: 1px solid #111;
+    flex-direction: column;
+    .closet-structure-element-title {
+        display: block;
+        flex: 1;
+        max-height: 42px;
+        height: 42px;
+        line-height: 42px;
+        padding-left: 15px;
+        margin: 0;
+        font-size: 15px;
+        background-color: @panel-heading-background-color;
+        border-bottom: 1px solid @panel-heading-border-color;
+        color: @text-color;
+        flex: 0 0 42px;
+    }
+
+    .list-item {
+        position: relative;
+        font-size: 13px;
+        span.item-name {
+            display: inline-block;
+            width: 90%;
+        }
+        i.fa {
+            margin-right: 10px;
+        }
+
+    }
+    li.item-selected {
+        background-color: @background-color-selected;
+    }
+}

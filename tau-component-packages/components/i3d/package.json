@@ -1,0 +1,25 @@
+{
+    "name": "i3d",
+    "label": "Interactive 3D Model",
+    "selector": ".ui-i3d",
+    "attachable": true,
+    "type": "interactive-container-component",
+    "displayOrderWeight": 200,
+    "resources": {
+      "icon": {
+        "mobile": "./i3d.png",
+        "wearable": "./i3d.png",
+        "tv": "./i3d.png"
+      }
+    },
+    "attributes": {
+        "src": {
+            "label": "src",
+            "type": "src"
+        }
+    },
+    "template": "<div class=\"ui-i3d\"></div>",
+    "resizable": true,
+    "draggable": true,
+    "new": true
+}

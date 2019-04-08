@@ -1,0 +1,27 @@
+<html>
+<head>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/tau.animation.min.js"></script>
+    <script type="text/javascript">
+        window.tau.animation.SimpleMixin($.fn);
+    </script>
+    <script type="text/javascript" src="libs/closet/1.0.0/dress.closet.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/closet/1.0.0/dress.closet.full.css">
+</head>
+<body style="width:100%;height:100%;">
+<closet-page id="page-2_quiz_tiger-1" behaviors="%5B%7B%22event%22%3A%22click%22%2C%22target%22%3A%22%23button1%22%2C%22functionName%22%3A%22goto%22%2C%22parameters%22%3A%7B%22pageId%22%3A%22page-1_quiz_intro-0%22%7D%7D%2C%7B%22event%22%3A%22click%22%2C%22target%22%3A%22%23button2%22%2C%22functionName%22%3A%22goto%22%2C%22parameters%22%3A%7B%22pageId%22%3A%22page-3_quiz_rabbit-2%22%7D%7D%5D" style="justify-content: center; align-items: center; background-image: url(./resources/images/bg_1.jpg); background-color: rgba(0, 0, 0, 0); background-size: 100% 100%; background-repeat: no-repeat;" class="closet-component">
+    <div style="position:absolute;top:100px; left:50px;display:-webkit-flex;width:100%;">
+        <closet-text style="left: -8px; top: -58px;">
+            <div class="closet-text-contents" style="font-size:65px;font-weight:bold;font-family: 'AmaticSC';color:rgb(138, 43, 43);">Animal Quiz   </div>
+        </closet-text>
+        <closet-text id="page-title-1" style="left: 40px; top: -70px; visibility: visible;" class="closet-component">
+            <div class="closet-text-contents" style="font-size: 100px; font-weight: bold; color: rgb(15, 21, 51);"><span style="font-family: Consolas;">Who is this animal?</span></div>
+        </closet-text>
+    </div>
+    <closet-image id="okay11"  src="resources/images/okay.png" style="border-radius: 0%; z-index: 100; position: absolute; left: 309px; top: 819px; width: 398px; background-color: initial;"></closet-image>
+    <closet-image id="nope11"  src="resources/images/nope.png" style="border-radius: 0%; z-index: 100; position: absolute; left: 1091px; top: 817px; width: 401px; background-color: initial;"></closet-image>
+    <closet-button id="button1" class="closet-component" bg-image="resources/images/leftbutton.png" bg-color="rgba(125,125,125,0)" style="border-radius: 0%; z-index: 100; position: absolute; left: 22px; top: 971px; height: 82px; width: 96px;"></closet-button>
+    <closet-button id="button2" class="closet-component" bg-image="resources/images/rightbutton.png" bg-color="rgba(125,125,125,0)" style="border-radius: 0%; z-index: 100; position: absolute; left: 1732px; top: 968px; height: 86px; width: 94px;"></closet-button>
+</closet-page>
+</body>
+</html>

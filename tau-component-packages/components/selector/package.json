@@ -1,0 +1,134 @@
+{
+  "label": "Selector",
+  "type": "container-component",
+  "displayOrderWeight": 700,
+  "resources": {
+    "css": "../tau/theme/tau.css",
+    "icon": {
+        "mobile": "./selector.png",
+        "tv": "./selector.png",
+        "wearable": "./selector.png"
+    }
+  },
+  "selector": ".ui-selector",
+  "attachable": true,
+  "template": "<div class=\"ui-selector\"><div class=\"ui-item\"></div></div>",
+  "generator": {
+    "constructor": "tau.widget.Selector",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "constraint": [
+    "selectoritem"
+  ],
+  "version": "wearable-circle",
+  "data": [
+    {
+      "option": "item-selector",
+      "values": [
+        {
+          "text": ".ui-item",
+          "description": "default selector for children"
+        },
+        {
+          "snippet": "${1:string}",
+          "description": "selector of children"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "selector for items"
+    },
+    {
+      "option": "indicator-selector",
+      "values": [
+        {
+          "text": ".ui-selector-indicator",
+          "description": "default selector for indicator"
+        },
+        {
+          "snippet": "${1:string}",
+          "description": "selector of indicator"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "selector for indicator"
+    },
+    {
+      "option": "indicator-arrow-selector",
+      "values": [
+        {
+          "text": ".ui-selector-indicator-arrow",
+          "description": "default selector for arrow"
+        },
+        {
+          "snippet": "${1:string}",
+          "description": "selector of arrow"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "selector for arrow"
+    },
+    {
+      "option": "item-degree",
+      "values": [
+        {
+          "text": "30",
+          "description": "degree value by default"
+        },
+        {
+          "snippet": "${1:value}",
+          "description": "degree value"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "each item degree"
+    },
+    {
+      "option": "item-radius",
+      "values": [
+        {
+          "text": "-1",
+          "description": "radius value by default"
+        },
+        {
+          "snippet": "${1:value}",
+          "description": "radius between center to items"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "each item degree"
+    },
+    {
+      "option": "max-item-number",
+      "values": [
+        {
+          "text": "11",
+          "description": "max items by default"
+        },
+        {
+          "snippet": "${1:value}",
+          "description": "max items"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "max items number on one layer"
+    },
+    {
+      "option": "indicator-auto-control",
+      "values": [
+        {
+          "text": "true",
+          "description": "auto control by default"
+        },
+        {
+          "text": "false",
+          "description": "control indicator manually"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "auto control switch"
+    }
+  ],
+  "class": []
+}

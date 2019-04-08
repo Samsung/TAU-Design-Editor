@@ -1,0 +1,102 @@
+{
+  "label": "Graph",
+  "selector": ".ui-iot-graph",
+  "attachable": true,
+  "resizable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 1400,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./ui-chart.png",
+      "tv": "./ui-chart.png",
+      "wearable": "./wearable-chart.png"
+    }
+  },
+  "externalResources": [
+    {
+      "src": "./libs/tau/libs/d3.min.js",
+      "attributes": {
+        "charset": "utf-8"
+      }
+    },
+    "./libs/tau/libs/tauCharts.min.js",
+    "./libs/tau/libs/tauCharts.min.css"
+  ],
+  "template": "<div class=\"ui-iot-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>",
+  "generator": {
+    "constructor": "tau.widget.Graph",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "options": [
+    {
+      "label": "Graph type",
+      "name" : "graph",
+      "values": [
+        {
+          "value": "stacked-bar",
+          "label": "stacked bar"
+        },
+        {
+          "value": "line",
+          "label": "line"
+        },
+        {
+          "value": "scatterplot",
+          "label": "scatter plot"
+        },
+        {
+          "value": "stacked-area",
+          "label": "stacked area"
+        },
+        {
+          "value": "bar",
+          "label": "bar"
+        }
+      ]
+    },
+    {
+      "label": "Graph color",
+      "name" : "color",
+      "values": "#000000"
+    },
+    {
+      "label": "Graph X axis label",
+      "name" : "xlabel",
+      "values": ""
+    },
+    {
+      "label": "Graph Y axis label",
+      "name" : "ylabel",
+      "values": ""
+    },
+    {
+      "label": "Graph X initial value",
+      "name" : "xinit",
+      "values": ""
+    },
+    {
+      "label": "Graph Y initial value",
+      "name" : "yinit",
+      "values": ""
+    }
+  ],
+  "styles": [
+    {
+      "icon": "./styles/time-series-chart.png",
+      "name": "Time series",
+      "template": "<div class=\"ui-iot-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>"
+    }, {
+      "icon": "./styles/bar-chart.png",
+      "name": "Multiple series bar chart",
+      "template":"<div class=\"ui-iot-graph\" data-mode=\"continuous\" data-graph=\"bar\" data-color=\"#FF0000,#00FF00\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"order\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value='[{\"x\":1,\"y\":15,\"label\":\"series 1\"},{\"x\":1,\"y\":8,\"label\":\"series 2\"},{\"x\":2,\"y\":18,\"label\":\"series 1\"},{\"x\":2,\"y\":20,\"label\":\"series 2\"},{\"x\":3,\"y\":0,\"label\":\"series 1\"},{\"x\":3,\"y\":9,\"label\":\"series 2\"},{\"x\":4,\"y\":12,\"label\":\"series 1\"},{\"x\":4,\"y\":19,\"label\":\"series 2\"}]'></div>"
+    }
+  ],
+  "draggable": true,
+  "new": true
+}

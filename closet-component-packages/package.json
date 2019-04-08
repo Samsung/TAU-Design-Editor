@@ -1,0 +1,21 @@
+{
+    "name": "closet-component-packages",
+    "main": "main",
+    "version": "1.0.0",
+    "description": "Dress Default Components",
+    "keywords": [],
+    "repository": "http://suprem.sec.samsung.net/gerrit/owe/fwk",
+    "license": "MIT",
+    "engines": {
+        "atom": ">=1.0.0 <2.0.0"
+    },
+    "dependencies": {
+    },
+    "consumedServices": {
+        "closet": {
+            "versions": {
+                "1.0.0": "consumeCloset"
+            }
+        }
+    }
+}

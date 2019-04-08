@@ -1,0 +1,83 @@
+{
+  "label": "Progress",
+  "selector": ".ui-circle-progress, .ui-progress",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 1500,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-progress.png",
+      "tv": "./mobile-progress.png",
+      "wearable": "./progress.png"
+    }
+  },
+  "template": "<progress class=\"ui-circle-progress\" max=\"100\" value=\"20\"></progress>",
+  "snippet": [
+    {
+      "snippet": "<progress class=\"ui-circle-progress\" id=\"${3:circle-progress}\" max=\"${1:100}\" value=\"${2:20}\"></progress>",
+      "widget": "Progress",
+      "displayText": "tauProgressBar",
+      "description": "Shows a control that indicates the progress percentage of an on-going operation by circular shape."
+    }
+  ],
+  "data": [
+    {
+      "option": "min",
+      "values": [
+        {
+          "snippet": "${1:0}",
+          "leftLabelHTML": "number",
+          "description": "set min value of progress"
+        }
+      ],
+      "version": "wearable@2.3.1",
+      "description": "make button inline"
+    },
+    {
+      "option": "size",
+      "values": [
+        {
+          "snippet": "${1:0}",
+          "leftLabelHTML": "number|full|large|medium|small"
+        }
+      ],
+      "version": "wearable@2.3.1"
+    },
+    {
+      "option": "thickness",
+      "values": [
+        {
+          "snippet": "${1:0}",
+          "leftLabelHTML": "number"
+        }
+      ],
+      "version": "wearable@2.3.1"
+    },
+    {
+      "option": "container-class-name",
+      "values": [
+        {
+          "snippet": "${1:0}",
+          "leftLabelHTML": "string"
+        }
+      ],
+      "version": "wearable@2.3.1"
+    }
+  ],
+  "generator": {
+    "constructor": "tau.widget.CircleProgressBar",
+    "parameter": {
+      "options": {}
+    },
+    "options": {
+      "containerClassName": "null",
+      "size": "full",
+      "thickness": "null"
+    }
+  }
+}

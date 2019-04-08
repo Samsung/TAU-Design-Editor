@@ -1,0 +1,35 @@
+{
+  "label": "Radio",
+  "selector": "input[type=radio]",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 500,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-radio.png",
+      "tv": "./mobile-radio.png",
+      "wearable": "./radio.png"
+    }
+  },
+  "template": "<input type=\"radio\"/>",
+  "generator": {
+    "constructor": "tau.widget.Radio",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "wrapContent": "<label></label>",
+  "resizable": true,
+  "draggable": true,
+  "parent-modifiers": [
+    {
+      "selector": "li",
+      "className": "li-has-radio"
+    }
+  ]
+}

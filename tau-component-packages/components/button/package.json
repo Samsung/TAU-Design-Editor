@@ -1,0 +1,256 @@
+{
+  "label": "Button",
+  "selector": ".ui-btn,button,tau-button",
+  "generator": {
+    "constructor": "tau.widget.Button",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css",
+      "styles/style.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "images": [
+      "./styles/images/b_more_option_delete_icon.png",
+      "./styles/images/b_more_option_human_icon.png",
+      "./styles/images/b_more_option_show_on_device_icon.png",
+      "./styles/images/b_option_icon_call.png",
+      "./styles/images/b_option_icon_contacts.png",
+      "./styles/images/b_option_icon_message.png",
+      "./styles/images/b_option_list_icon_action.png",
+      "./styles/images/b_option_list_icon_delete.png",
+      "./styles/images/b_option_list_icon_enter.png",
+      "./styles/images/b_option_list_icon_share.png",
+      "./styles/images/tw_ic_button_delete_holo_dark.png",
+      "./styles/images/tw_ic_button_share_holo_dark.png",
+      "./styles/images/tw_ic_button_showonphone_holo_dark.png",
+      "./styles/images/tw_ic_popup_btn_check.png",
+      "./styles/images/tw_ic_popup_btn_delete.png",
+      "./styles/images/tw_toast_popup_delete.png",
+      "./styles/images/tw_toast_popup_fail.png"
+    ],
+    "icon": {
+      "wearable": "./button.png",
+      "mobile": "./mobile-button.png",
+      "tv": "./mobile-button.png"
+    }
+  },
+  "type": "standalone-component",
+  "displayOrderWeight": 300,
+  "template": "<button class=\"ui-btn\">Button</button>",
+  "snippet": [
+    {
+      "snippet": "<button class=\"ui-btn\">${1:Button}</button>",
+      "displayText": "tauBtn",
+      "description": "The button component shows on the screen a control that you can use to generate an action event when it is pressed and released."
+    },
+    {
+      "snippet": "<input type=\"button\" class=\"ui-btn ui-inline\" value=\"${1:Button}\" />",
+      "displayText": "tauBtnInline",
+      "description": "Inline button."
+    },
+    {
+      "snippet": "<a href=\"#\" class=\"ui-btn ui-multiline ui-inline\">${1:A Button<br/>Icon}</a>",
+      "displayText": "tauBtnMultiline",
+      "description": "Multi-line text button"
+    },
+    {
+      "snippet": "<button type=\"button\" class=\"ui-btn\" disabled=\"${2:disabled}\">${1:Button disabled}</button>",
+      "displayText": "tauBtnDisabled",
+      "description": "Disabled button",
+      "version": "wearable@2.3.1"
+    }
+  ],
+  "data": [
+    {
+      "option": "inline",
+      "values": [
+        {
+          "text": "true",
+          "description": "make button width fit to content"
+        },
+        {
+          "text": "false",
+          "description": "make button width 100% of container"
+        }
+      ],
+      "version": "wearable@2.3.1",
+      "description": "make button inline"
+    },
+    {
+      "option": "icon",
+      "values": [
+        {
+          "text": "false",
+          "description": "make button width 100% of container"
+        }
+      ],
+      "description": "define icon",
+      "version": "wearable@*"
+    },
+    "disabled",
+    {
+      "option": "style",
+      "values": [
+        {
+          "text": "circle",
+          "description": "button will be have circle shape"
+        },
+        {
+          "text": "nobg",
+          "description": "disable background color of button"
+        }
+      ],
+      "version": "mobile@*"
+    },
+    {
+      "option": "iconpos",
+      "values": [
+        "left",
+        "right",
+        "bottom",
+        "top"
+      ],
+      "version": "all@2.3.1",
+      "description": "define position of icon"
+    }
+  ],
+  "class": [
+    {
+      "text": "ui-multiline",
+      "description": "Do multiline button"
+    },
+    {
+      "text": "ui-inline",
+      "description": "Do inline button"
+    },
+    "ui-default",
+    "ui-btn-icon",
+    {
+      "text": "ui-color-red",
+      "description": "Change background color of button to red",
+      "leftLabelHTML": "<span style=\"background-color: red;\">&nbsp;</span>",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-color-orange",
+      "description": "Change background color of button to orange",
+      "leftLabelHTML": "<span style=\"background-color: orange;\">&nbsp;</span>",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-color-green",
+      "description": "Change background color of button to green",
+      "leftLabelHTML": "<span style=\"background-color: green;\">&nbsp;</span>",
+      "version": "wearable"
+    },
+    "ui-btn-icon-only",
+    "ui-btn-circle",
+    {
+      "text": "ui-btn-nobg",
+      "version": "mobile",
+      "description": "Button without changed background"
+    },
+    {
+      "text": "ui-state-disabled",
+      "description": "Disabled button"
+    },
+    {
+      "text": "ui-more",
+      "description": "More button"
+    },
+    {
+      "text": "ui-icon-overflow",
+      "description": "Icon overflow"
+    }
+  ],
+  "resizable": true,
+  "draggable": true,
+  "styles": [
+    {
+      "icon": "./styles/circle-button.png",
+      "name": "Circle buttom",
+      "template": "<button data-inline=\"true\" data-icon=\"add\" data-style=\"circle\" class=\"ui-btn\"></button>"
+    },
+    {
+      "icon": "./styles/left-header-button.png",
+      "name": "Left header button",
+      "template": "<button data-icon=\"add\" class=\"ui-btn ui-btn-left\"></button>",
+      "parent-selector": ".ui-header"
+    },
+    {
+      "icon": "./styles/right-header-button.png",
+      "name": "Right header button",
+      "template": "<button data-icon=\"add\" class=\"ui-btn ui-btn-right\"></button>",
+      "parent-selector": ".ui-header"
+    }
+  ],
+  "attributes": {
+    "data-icon": {
+      "label": "Icon",
+      "type": {
+        "name": "select"
+      },
+      "list": [
+        { "value": "", "label": "", "checkSelected": true },
+        { "value": "arrow-l", "label": "arrow-l" },
+        { "value": "arrow-r", "label": "arrow-r" },
+        { "value": "arrow-u", "label": "arrow-u" },
+        { "value": "arrow-d", "label": "arrow-d" },
+        { "value": "delete", "label": "delete" },
+        { "value": "check", "label": "check" },
+        { "value": "gear", "label": "gear" },
+        { "value": "refresh", "label": "refresh" },
+        { "value": "forward", "label": "forward" },
+        { "value": "back", "label": "back" },
+        { "value": "grid", "label": "grid" },
+        { "value": "info", "label": "info" },
+        { "value": "home", "label": "home" },
+        { "value": "alert", "label": "alert" }
+      ]
+    },
+    "data-iconpos": {
+      "label": "Icon position",
+      "type": {
+        "name": "select"
+      },
+      "list": [
+        { "value": "", "label": "", "checkSelected": true },
+        { "value": "left", "label": "left"},
+        { "value": "right", "label": "right" },
+        { "value": "top", "label": "top" },
+        { "value": "bottom", "label": "bottom" },
+        { "value": "notext", "label": "notext" }
+      ]
+    },
+    "data-style": {
+      "label": "Style",
+      "type": {
+        "name": "select"
+      },
+      "list": [
+        { "value": "", "label": "", "checkSelected": true },
+        { "value": "circle", "label": "circle" },
+        { "value": "nobg", "label": "nobg" }
+      ]
+    },
+    "data-inline": {
+      "label": "Inline",
+      "value": false,
+      "type": {
+        "name": "checkbox"
+      }
+    },
+    "data-disabled": {
+      "label": "Disabled",
+      "value": false,
+      "type": {
+        "name": "checkbox"
+      }
+    }
+  }
+}

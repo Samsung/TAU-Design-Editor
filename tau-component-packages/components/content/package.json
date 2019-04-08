@@ -1,0 +1,93 @@
+{
+  "label": "Content",
+  "selector": ".ui-content",
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+        "mobile": "./content.png",
+        "wearable": "./content.png",
+        "tv": "./content.png"
+    }
+  },
+  "attachable": false,
+  "resizable": false,
+  "draggable": false,
+  "type": "container-component",
+  "constraint": [
+    "audio",
+    "box",
+    "bottom-button",
+    "button",
+    "checkbox",
+    "listview",
+    "processing",
+    "closet-tau-circle-progress",
+    "radio",
+    "toggleswitch",
+    "text",
+    "sectionchanger",
+    "input-text",
+    "input-number",
+    "input-password",
+    "input-date",
+    "more-button",
+    "selector",
+    "dimmer",
+    "slider",
+    "i3d",
+    "iot-contextmenu",
+    "closet-image",
+    "audio-controls",
+    "coverflow",
+    "dropdownmenu",
+    "graph",
+    "progress",
+    "remotecontroller-channel",
+    "remotecontroller-volume",
+    "remotecontroller-mute",
+    "remotecontroller-power",
+    "color-temperature",
+    "sound-indicator",
+    "status-panel",
+    "status-circle",
+    "temperature-control",
+    "dishwasher-control",
+    "tabs",
+    "video",
+    "anchor",
+    "tabs"
+  ],
+  "childrenLocation": {
+    "mobile": ".ui-scrollview-view"
+  },
+  "class": [
+    {
+      "text": "ui-grid-col-1",
+      "description": "Defines the buttons inside column width as 100% of the screen",
+      "version": "wearable@2.3.1",
+      "selector": " div:not(.ui-grid-col-1):not(.ui-grid-col-2):not(.ui-grid-col-3):not(.ui-grid-row)"
+    },
+    {
+      "text": "ui-grid-col-2",
+      "description": "Defines the buttons inside column width as 50% of the screen",
+      "version": "wearable@2.3.1",
+      "selector": " div:not(.ui-grid-col-1):not(.ui-grid-col-2):not(.ui-grid-col-3):not(.ui-grid-row)"
+    },
+    {
+      "text": "ui-grid-col-3",
+      "description": "Defines the buttons inside column width as 50% of the screen",
+      "version": "wearable@2.3.1",
+      "selector": " div:not(.ui-grid-col-1):not(.ui-grid-col-2):not(.ui-grid-col-3):not(.ui-grid-row)"
+    },
+    {
+      "text": "ui-grid-row",
+      "description": "Arranges the buttons inside in a row",
+      "version": "wearable@2.3.1",
+      "selector": " div:not(.ui-grid-col-1):not(.ui-grid-col-2):not(.ui-grid-col-3):not(.ui-grid-row)"
+    }
+  ]
+}

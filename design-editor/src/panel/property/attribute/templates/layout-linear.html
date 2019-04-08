@@ -1,0 +1,13 @@
+Direction
+<select value="{{options.direction}}" data-index="{{_index}}"
+     name="direction_{{_index}}" class="closet-attribute-common-textbox closet-attribute-common-border-style-long">
+    <option value="vertical" {{_selected.direction_vertical}}>vertical</option>
+    <option value="horizontal" {{_selected.direction_horizontal}}>horizontal</option>
+</select>
+<br/>
+Horizontal fill
+<select value="{{options.fill}}" data-index="{{_index}}"
+     name="fill_{{_index}}" class="closet-attribute-common-textbox closet-attribute-common-border-style-long">
+    <option {{_selected.fill_true}}>true</option>
+    <option {{_selected.fill_false}}>false</option>
+</select>

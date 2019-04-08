@@ -1,0 +1,29 @@
+{
+  "name": "tau-component-packages",
+  "main": "main",
+  "version": "1.0.0",
+  "description": "TAU Components",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "http://suprem.sec.samsung.net/gerrit/owe/fwk"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {},
+  "consumedServices": {
+    "closet": {
+      "versions": {
+        "1.0.0": "consumeCloset"
+      }
+    }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "tau-component-packages@1.0.0",
+  "scripts": {},
+  "_shasum": "04ac2625a8edb92756180098d739d9055b0d865d",
+  "_from": "..\\tau-component-packages",
+  "_resolved": "file:..\\tau-component-packages"
+}

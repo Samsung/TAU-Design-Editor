@@ -1,0 +1,28 @@
+{
+  "label": "Color Temperature",
+  "selector": ".ui-colortemperature",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 800,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./color-temperature.png",
+      "wearable": "./color-temperature.png",
+      "tv": "./color-temperature.png"
+    }
+  },
+  "template": "<div class=\"ui-colortemperature\"></div>",
+  "generator": {
+    "constructor": "tau.widget.ColorTemperature",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

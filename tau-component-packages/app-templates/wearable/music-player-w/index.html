@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,user-scalable=no"/>
+    <link rel="stylesheet"  href="./libs/tau/wearable/theme/default/tau.css">
+    <link rel="stylesheet" href="./libs/tau/wearable/theme/default/tau.circle.min.css">
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/closet/1.0.0/dress.closet.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/closet/1.0.0/dress.closet.full.css">
+    <title>Tizen Web IDE - Template - Tizen Web UI Framework - Music Player</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+
+<body>
+    <div class="ui-page ui-page-active music-player" data-enable-page-scroll="false" id="player">
+        <div class="ui-content">
+            <div class="cover"></div>
+            <progress class="ui-circle-progress" max="100" value="0"></progress>
+            <div class="controls">
+                <button class="ui-btn prev">|&lt;&lt;</button>
+                <button class="ui-btn play on-pause"></button>
+                <button class="ui-btn next">&gt;&gt;|</button>
+            </div>
+        </div>
+        <footer class="ui-footer ui-bottom-button ui-fixed">
+            <button class="ui-btn track">Track name</button>
+        </footer>
+    </div>
+    <script type="text/javascript" src="./libs/tau/wearable/js/tau.js"
+            data-build-remove="false"></script>
+    <script src="js/main.js"></script>
+    <script type="text/javascript" data-closet-ref="true"
+            src="./js/app.js"></script>
+    <script type="text/javascript" src="libs/circle-helper.js"></script>
+</body>
+</html>

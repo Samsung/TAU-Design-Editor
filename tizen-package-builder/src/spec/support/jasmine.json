@@ -1,0 +1,9 @@
+{
+  "spec_dir": "src",
+  "spec_files": [
+    "**/*.spec.js"
+  ],
+  "helpers": [
+    "helpers/nodeDefineJasmineUnderTest.js"
+  ]
+}

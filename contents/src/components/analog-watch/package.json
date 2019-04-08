@@ -1,0 +1,151 @@
+{
+  "label": "Analog Watch",
+  "selector": [
+    "closet-analog-watch"
+  ],
+  "resources": {
+    "js": [
+      "analog-watch.js"
+    ],
+    "css": "analog-watch.css",
+    "images": {
+      "src": "resources/",
+      "dest": "resources/"
+    }
+  },
+  "attributes": {
+    "bg-image": {
+      "label": "Background Image",
+      "type": {
+        "name": "file",
+        "option": {
+          "extension": [
+            "jpg",
+            "png"
+          ]
+        }
+      },
+      "value": "none"
+    },
+    "hour-hand": {
+      "label": "Hour Hand Image",
+      "type": {
+        "name": "file",
+        "option": {
+          "extension": [
+            "jpg",
+            "png"
+          ]
+        }
+      },
+      "value": "none"
+    },
+    "minute-hand": {
+      "label": "Minute Hand Image",
+      "type": {
+        "name": "file",
+        "option": {
+          "extension": [
+            "jpg",
+            "png"
+          ]
+        }
+      },
+      "value": "none"
+    },
+    "second-hand": {
+      "label": "Second Hand Image",
+      "type": {
+        "name": "file",
+        "option": {
+          "extension": [
+            "jpg",
+            "png"
+          ]
+        }
+      },
+      "value": "none"
+    },
+    "center-cap": {
+      "label": "Center Cap Image",
+      "type": {
+        "name": "file",
+        "option": {
+          "extension": [
+            "jpg",
+            "png"
+          ]
+        }
+      },
+      "value": "none"
+    },
+    "smooth": {
+      "label": "Smooth",
+      "type": "checkbox",
+      "value": "false"
+    }
+  },
+  "behaviors": {
+    "events": {
+      "clock.second": {
+        "label": "Every Seconds"
+      },
+      "clock.minute": {
+        "label": "Every Minute"
+      }
+    },
+    "functions": {
+      "show": {
+        "label": "Appear",
+        "parameter": {
+          "effect": {
+            "label": "Effects",
+            "type": {
+              "name": "string-icon-list",
+              "option": {
+                "list": [
+                  {
+                    "name": "fadeIn",
+                    "label": "Fade"
+                  },
+                  {
+                    "name": "slideInUp",
+                    "label": "Up"
+                  },
+                  {
+                    "name": "slideInDown",
+                    "label": "Down"
+                  },
+                  {
+                    "name": "bounceInLeft",
+                    "label": "Left"
+                  },
+                  {
+                    "name": "bounceInRight",
+                    "label": "Right"
+                  },
+                  {
+                    "name": "zoomIn",
+                    "label": "Zoom"
+                  }
+                ]
+              }
+            },
+            "value": "none",
+            "exec": true
+          },
+          "duration": {
+            "label": "Duration",
+            "type": "time",
+            "value": "300ms"
+          },
+          "delay": {
+            "label": "Delay",
+            "type": "time",
+            "value": "0ms"
+          }
+        }
+      }
+    }
+  }
+}

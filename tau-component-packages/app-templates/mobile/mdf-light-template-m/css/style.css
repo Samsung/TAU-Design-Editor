@@ -1,0 +1,5 @@
+.ui-page-iot header>.ui-btn.ui-btn-left.ui-btn-icon.btn-icon-back::after {
+	background-color: #1F9FB9;
+	-webkit-mask-image: url(./images/core_icon_back.png);
+	mask-image: url(./images/core_icon_back.png);
+}

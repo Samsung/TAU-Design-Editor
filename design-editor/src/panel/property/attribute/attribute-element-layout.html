@@ -1,0 +1,25 @@
+{{#layouts}}
+<li>
+    <span class="closet-attribute-common-label">Profil</span>
+    <select name="profiles_{{_index}}"
+            data-index="{{_index}}"
+            class="closet-attribute-common-textbox closet-attribute-common-border-style-long closet-attribute-layout-profile">
+            <option {{_selected.profile_all}}>all</option>
+            <option {{_selected.profile_mobile}}>mobile</option>
+            <option {{_selected.profile_tv}}>tv</option>
+    </select>
+    <select name="layouts_{{_index}}"
+            data-index="{{_index}}"
+            class="closet-attribute-common-textbox closet-attribute-common-border-style-long closet-attribute-layout-type">
+        <option value="linear" {{_selected.layout_linear}}>linear</option>
+        <option value="column" {{_selected.layout_column}}>column</option>
+    </select>
+    <button class="btn closet-attribute-layout-profile-delete" data-index="{{_index}}">x</button>
+</li>
+<li class="closet-attribute-layout-options" data-index="{{_index}}">{{{optionsHTML}}}</li>
+</li>
+<hr>
+{{/layouts}}
+<li>
+    <button class="closet-attribute-layout-profile-add">Add</button>
+</li>

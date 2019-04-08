@@ -1,0 +1,17 @@
+{
+  "name": "brackets-design-editor",
+  "description": "Content of iframe with design editor",
+  "license": "MIT",
+  "repository": "http://suprem.sec.samsung.net/gerrit/owe/fwk",
+  "version": "0.0.1",
+  "dependencies": {
+    "browserify-fs": "^1.0.0",
+    "jquery": "^2.2.3",
+    "jquery-ui": "1.10.5",
+    "js-beautify": "^1.6.2",
+    "mustache": "^2.2.1",
+    "path-browserify": "0.0.0",
+    "systemjs": "^0.19.26",
+    "vm-browserify": "*"
+  }
+}

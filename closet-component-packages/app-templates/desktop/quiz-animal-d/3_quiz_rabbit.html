@@ -1,0 +1,40 @@
+<html>
+<head>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/tau.animation.min.js"></script>
+    <script type="text/javascript">
+        window.tau.animation.SimpleMixin($.fn);
+    </script>
+    <script type="text/javascript" src="libs/closet/1.0.0/dress.closet.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/closet/1.0.0/dress.closet.full.css">
+</head>
+<body style="width:100%;height:100%;">
+<closet-page id="page-3_quiz_rabbit-2" behaviors="%5B%7B%22event%22%3A%22click%22%2C%22target%22%3A%22%23button3%22%2C%22functionName%22%3A%22goto%22%2C%22parameters%22%3A%7B%22pageId%22%3A%22page-2_quiz_tiger-1%22%7D%7D%5D" style="-webkit-justify-content: center;-webkit-align-items: center;background-image:url(./resources/images/bg.jpg); background-repeat:no-repeat; background-size:100% 100%;">
+    <div style="position:absolute;top:100px; left:50px;display:-webkit-flex;width:100%;">
+        <closet-text style="left: -8px; top: -58px;">
+            <div class="closet-text-contents" style="font-size:65px;font-weight:bold;font-family: 'AmaticSC';color:rgb(138, 43, 43);">Animal Quiz   </div>
+        </closet-text>
+        <closet-text id="title-2" style="font-family: Consolas;left: 18px; top: -68px;">
+            <div class="closet-text-contents" style="font-family: Consolas;font-size:100px;font-weight:bold;;color:rgb(15, 21, 51);">Who is not a rabbit?</div>
+        </closet-text>
+    </div>
+    <closet-poll-list id="poll-list-2" answer="3" list-type="decimal" style="position: absolute; left: 721px; top: 825px; list-style: decimal; font-family: Consolas; font-size: 45px;">
+        <li class="closet-poll-list-item" style="height:60px;">Picture 1</li>
+        <li class="closet-poll-list-item" style="height:60px;">Picture 2</li>
+        <li class="closet-poll-list-item" style="height:60px;">Picture 3</li>
+        <li class="closet-poll-list-item" style="height:60px;">Picture 4</li>
+    </closet-poll-list>
+    <closet-image src="resources/images/rabbit1.jpg" style="border-radius: 0%; z-index: 100; position: absolute;  left: 288px; top: 174px; width: 576px; height: 300px; background-color: initial;"></closet-image>
+    <closet-image src="resources/images/rabbit3.jpg" style="border-radius: 0%; z-index: 100; position: absolute; left: 905px; top: 174px; width: 576px; height: 300px; background-color: initial;"></closet-image>
+    <closet-image src="resources/images/dog1.jpg" style="border-radius: 0%; z-index: 100; position: absolute; left: 288px; top: 496px; width: 576px; height: 300px; background-color: initial;"></closet-image>
+    <closet-image src="resources/images/rabbit2.jpg" style="border-radius: 0%; z-index: 100; position: absolute; left: 905px; top: 496px; width: 576px; height: 300px; background-color: initial;"></closet-image>
+    <closet-image id="okay-1" behaviors="%5B%7B%22event%22%3A%22correct.answer%22%2C%22target%22%3A%22%23poll-list-2%22%2C%22functionName%22%3A%22animate%22%2C%22parameters%22%3A%7B%22effect%22%3A%22rubberBand%22%2C%22duration%22%3A%22300ms%22%2C%22delay%22%3A%220ms%22%7D%7D%5D" src="resources/images/okay.png" style="border-radius: 0%; z-index: 100; position: absolute; left: 273px; top: 832px; width: 398px; background-color: initial;"></closet-image>
+    <closet-image id="nope-1" behaviors="%5B%7B%22event%22%3A%22wrong.answer%22%2C%22target%22%3A%22%23poll-list-2%22%2C%22functionName%22%3A%22animate%22%2C%22parameters%22%3A%7B%22effect%22%3A%22rubberBand%22%2C%22duration%22%3A%22300ms%22%2C%22delay%22%3A%220ms%22%7D%7D%5D" src="resources/images/nope.png" style="border-radius: 0%; z-index: 100; position: absolute; left: 1098px; top: 832px; width: 401px; background-color: initial;"></closet-image>
+    <closet-text id="closet-text-14497483308720" class="closet-component" style="z-index:120;position: absolute; left: 301.5px; top: 196px;"><div class="closet-text-contents"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">Picture 1</span></div></closet-text>
+    <closet-text id="closet-text-14497483308721" class="closet-component" style="z-index:120;position: absolute; left: 925.5px; top: 196px;"><div class="closet-text-contents"><span style="color: rgb(23, 0, 0); background-color: rgb(255, 255, 255);">Picture 2</span></div></closet-text>
+    <closet-text id="closet-text-14497483308722" class="closet-component" style="z-index:120;position: absolute; left: 301.5px; top: 514px;"><div class="closet-text-contents"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);">Picture 3</span></div></closet-text>
+    <closet-text id="closet-text-14497483308723" class="closet-component" style="z-index:120;position: absolute; left: 925.5px; top: 514px;"><div class="closet-text-contents"><span style="color: rgb(0, 0, 0); background-color: rgb(252, 245, 245);">Picture 4</span></div></closet-text>
+    <closet-button id="button3" class="closet-component" bg-image="resources/images/leftbutton.png" bg-color="rgba(125,125,125,0)" style="border-radius: 0%; z-index: 100; position: absolute; left: 22px; top: 971px; height: 82px; width: 96px;"></closet-button>
+</closet-page>
+</body>
+</html>

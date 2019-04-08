@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,user-scalable=no"/>
+	<link rel="stylesheet"  href="./lib/tau/mobile/theme/default/tau.css">
+	<link rel="stylesheet"  href="./css/style.css">
+	<script type="text/javascript" src="./lib/tau/mobile/js/tau.js"></script>
+	<title>Tizen Web IDE - Template - Tizen - Tizen Web UI Framework - Single-Page</title>
+</head>
+<body>
+<div class="ui-page ui-page-iot" id="light-template-page">
+	<header>
+		<a class="ui-btn ui-btn-left ui-btn-icon btn-icon-back" data-rel="back"></a>
+		<input type="checkbox" name="toggle-1" id="toggle-1" class="ui-toggleswitch">
+		<div class="ui-title-text-sub">Home - Living Room</div>
+		<h1 class="ui-title-text-main">Light</h1>
+	</header>
+	<div class="ui-content">
+		<ul class="ui-listview ui-colored-list">
+			<li class="ui-li-anchor ui-iot-title">Dimmer</li>
+			<li class="ui-li-anchor">
+				<div class="ui-dimmer" id="dimmer">
+				</div>
+			</li>
+			<li class="ui-group-index">Dimmer</li>
+			<li class="ui-li-static">
+				<input id="slider" name="mySlider1" type="range" value="0" min="0" max="100">
+			</li>
+			<li class="ui-li-flex ui-li-multilines">
+				<span class="ui-li-area ui-li-area-a">
+					<span class="ui-li-text">
+						<span>Color temperature</span>
+					</span>
+					<span class="ui-li-text-2">
+						<span>200k</span>
+					</span>
+				</span>
+			</li>
+		</ul>
+	</div>
+<script src="light.js"></script>
+</div><!-- /page -->
+</body>
+</html>

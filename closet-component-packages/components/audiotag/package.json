@@ -1,0 +1,35 @@
+{
+  "label": "Audio",
+  "selector": "audio",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 1800,
+  "template": "<audio controls><source src=\"\" type=\"\"></audio>",
+  "resizable": true,
+  "draggable": true,
+  "resources": {
+    "icon": {
+      "wearable": "./resources/wearable-audio-tag.png" ,
+      "mobile": "./resources/mobile-audio-tag.jpg",
+      "tv": "./resources/mobile-audio-tag.jpg"
+    }
+  },
+  "attributes": {
+    "src": {
+      "label": "Audio Src",
+      "type": {
+        "name": "file",
+        "option": {
+          "extensions": [
+            "mp3",
+            "wav",
+            "ogg",
+            "aac",
+            "wma",
+            "flac"
+          ]
+        }
+      }
+    }
+  }
+}

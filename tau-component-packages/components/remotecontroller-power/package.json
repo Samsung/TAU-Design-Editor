@@ -1,0 +1,28 @@
+{
+  "label": "Remote Controller Power",
+  "selector": ".ui-remotecontroller-power",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 600,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./remote_controller_power.png",
+      "tv": "./remote_controller_power.png",
+      "wearable": "./remote_controller_power.png"
+    }
+  },
+  "template": "<div class=\"ui-remotecontroller-power\"></div>",
+  "generator": {
+    "constructor": "tau.widget.RemoteControllerPower",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

@@ -1,0 +1,263 @@
+{
+  "label": "Popup",
+  "type": "standalone-component",
+  "displayOrderWeight": 1200,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-popup.png",
+      "tv": "./mobile-popup.png",
+      "wearable": "./popup.png"
+    }
+  },
+  "selector": "[data-role=\"popup\"], .ui-popup, tau-popup",
+  "template": "<div class=\"ui-popup\"><div class=\"ui-popup-content\"><span>Popup Content</span></div></div>",
+  "parent-constraint": [
+    "page"
+  ],
+  "constraint": [
+    "popup-content",
+    "popup-footer"
+  ],
+  "active-class": "ui-popup-active",
+  "display": {
+    "show": {
+      "constructor": "tau.widget.Popup",
+      "method": "open",
+      "options": {
+        "transition": "none"
+      }
+    },
+    "hide": {
+      "constructor": "tau.widget.Popup",
+      "method": "close",
+      "options": {
+        "transition": "none"
+      }
+    },
+    "events": {
+      "onShow": "popupshow",
+      "onHide": "popuphide"
+    }
+  },
+  "snippet": [],
+  "data": [
+    {
+      "option": "full-size",
+      "values": [
+        {
+          "text": "true",
+          "description": "make popup size 100% of container"
+        },
+        {
+          "text": "false",
+          "description": "make popup matched to content"
+        }
+      ],
+      "version": "wearable@2.3.1",
+      "description": "define the size of popup on screen"
+    },
+    {
+      "option": "enable-popup-scroll",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "wearable@2.3.1",
+      "description": "enable scrolling in popup"
+    },
+    {
+      "option": "transition",
+      "values": [
+        "none",
+        {
+          "snippet": "${1:string}",
+          "description": "name of transition"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "set transition in popup"
+    },
+    {
+      "option": "position-to",
+      "values": [
+        "window",
+        {
+          "snippet": "${1:string}",
+          "description": "id of element"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "set position of popup"
+    },
+    {
+      "option": "dismissible",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "overlay",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "header",
+      "values": [
+        "true",
+        "false",
+        {
+          "snippet": "${1:string}",
+          "description": "contant"
+        }
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "footer",
+      "values": [
+        "true",
+        "false",
+        {
+          "snippet": "${1:string}",
+          "description": "content"
+        }
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "content",
+      "values": [
+        "true",
+        "false",
+        {
+          "snippet": "${1:string}",
+          "description": "content"
+        }
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "overlay-class",
+      "values": [
+        {
+          "snippet": "${1:string}",
+          "description": "class name"
+        }
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "close-link-selector",
+      "values": [
+        {
+          "snippet": "${1:string}",
+          "description": "selector"
+        }
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "history",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "all@2.3.1"
+    }
+  ],
+  "class": [
+    {
+      "text": "ui-popup-toast",
+      "description": "Change style of popup to toast popup"
+    },
+    {
+      "text": "ui-popup-toast-graphic",
+      "description": "Toast popup with graphic",
+      "version": "wearable@2.3.1"
+    },
+    {
+      "text": "ui-popup-moremenu",
+      "description": "Change style of popup to More Menu popup",
+      "version": "mobile@2.3.1"
+    },
+    {
+      "text": "ui-popup-listview",
+      "description": "Popup with listview inside",
+      "version": "mobile@2.3.1"
+    },
+    {
+      "text": "horizontal-ctxpopup",
+      "description": "Context popup positioned horizontally",
+      "version": "mobile@2.3.1"
+    },
+    {
+      "text": "ui-popup-header",
+      "description": "Selector for header of popup",
+      "selector": " > div:not(.ui-popup-header):not(.ui-popup-content):not(.ui-popup-footer)"
+    },
+    {
+      "text": "ui-popup-content",
+      "description": "Selector for content of popup",
+      "selector": " > div:not(.ui-popup-header):not(.ui-popup-content):not(.ui-popup-footer)"
+    },
+    {
+      "text": "ui-popup-footer",
+      "description": "Selector for footer of popup",
+      "selector": " > div:not(.ui-popup-header):not(.ui-popup-content):not(.ui-popup-footer)"
+    },
+    {
+      "text": "popup-2line-title",
+      "description": "Popup with 2-lines header",
+      "selector": " > .ui-popup-header",
+      "version": "mobile@2.3.1"
+    },
+    {
+      "text": "popup-content-padding",
+      "description": "Extra padding around content of popup",
+      "selector": " > .ui-popup-content",
+      "version": "mobile@2.3.1"
+    },
+    {
+      "text": "ui-popup-checkbox-label",
+      "description": "Change style of checkbox in popup",
+      "selector": " > .ui-popup-content ul > li > label"
+    },
+    {
+      "text": "ui-grid-col-2",
+      "description": "Footer with 2 buttons inside",
+      "selector": " > .ui-popup-footer"
+    },
+    {
+      "text": "ui-side-button",
+      "description": "Footer with side button in circular devices",
+      "selector": "> .ui-popup-footer",
+      "version": "wearable@2.3.1",
+      "leftLabelHTML": "circular"
+    },
+    {
+      "text": "ui-bottom-button",
+      "description": "Footer with bottom button in circular devices",
+      "selector": " > .ui-popup-footer",
+      "version": "wearable@2.3.1",
+      "leftLabelHTML": "circular"
+    }
+  ],
+  "events": [
+    "popupbeforecreate",
+    "popupcreate",
+    "popupbeforehide",
+    "popuphide",
+    "popupbeforeshow",
+    "popupshow"
+  ]
+}

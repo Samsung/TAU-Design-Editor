@@ -1,0 +1,27 @@
+.height-with-line-height (@height) {
+    height : @height;
+    line-height : @height;
+}
+
+@color-bg-default : rgba(238, 238, 238, 0.7);
+@color-bg-hover : rgb(186, 186, 186);
+
+closet-poll-list {
+    display : inline-block;
+    min-width : 250px;
+    min-height : 50px;
+    height : auto;
+    width : auto;
+    font-size : 30px;
+    color : #333;
+    list-style : none;
+
+    .closet-poll-list-item {
+        .height-with-line-height(50px);
+        padding : 2px 5px;
+
+        &:hover {
+            background-color : @color-bg-hover;
+        }
+    }
+}

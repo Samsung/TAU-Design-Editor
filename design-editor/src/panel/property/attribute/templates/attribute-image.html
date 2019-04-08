@@ -1,0 +1,46 @@
+
+<li id="srcImageChoose">
+    <span class="closet-attribute-common-label-long">src</span>
+    <input type="file" id="srcImageFile" />
+</li>
+<li id="srcImageShow">
+    <span class="closet-attribute-common-label-long">src</span>
+    <input type="text" id="srcImageValue" readonly="readonly" class="closet-attribute-common-textbox">
+    <button id="srcImageClear">Remove</button>
+</li>
+<li class="image-filter">
+    <span class="closet-attribute-label">Preset Filters</span>
+    <closet-type-image-filter name="filterPreset" class="closet-attribute-type">
+        <button class="closet-image-filter-btn aden" name="aden">Aden</button>
+        <button class="closet-image-filter-btn brooklyn" name="brooklyn">Brooklyn</button>
+        <button class="closet-image-filter-btn earlybird" name="earlybird">Earlybird</button>
+        <button class="closet-image-filter-btn gingham" name="gingham">Gingham</button>
+        <button class="closet-image-filter-btn hudson" name="hudson">Hudson</button>
+        <button class="closet-image-filter-btn inkwell" name="inkwell">Inkwell</button>
+        <button class="closet-image-filter-btn lofi" name="lofi">Lofi</button>
+        <button class="closet-image-filter-btn mayfair" name="mayfair">Mayfair</button>
+    </closet-type-image-filter>
+</li>
+<li><span class="closet-attribute-label">brightness</span>
+    <input class="closet-attr-range" type="range" name="brightness" min="0" max="200" defaultvalue="100" dataunit="%">
+</li>
+<li><span class="closet-attribute-label">contrast</span>
+    <input class="closet-attr-range" type="range" name="contrast" min="0" max="200" defaultvalue="100" dataunit="%">
+</li>
+<li><span class="closet-attribute-label">saturate</span>
+    <input class="closet-attr-range" type="range" name="saturate" min="0" max="100" defaultvalue="100" dataunit="%">
+</li>
+<li>
+    <span class="closet-attribute-label">sepia</span>
+    <input class="closet-attr-range" type="range" name="sepia" min="0" max="100" defaultvalue="0" dataunit="%">
+</li>
+<li><span class="closet-attribute-label">grayscale</span>
+    <input class="closet-attr-range" type="range" name="grayscale" min="0" max="100" defaultvalue="" dataunit="%">
+</li>
+<li><span class="closet-attribute-label">hue rotate</span>
+    <input class="closet-attr-range" type="range" name="hue-rotate" min="0" max="360" defaultvalue="" dataunit="deg">
+</li>
+<li>
+<li><span class="closet-attribute-label">opacity</span>
+    <input class="closet-attr-range" type="range" name="opacity" min="0" max="1" step="0.05" defaultvalue="1">
+</li>

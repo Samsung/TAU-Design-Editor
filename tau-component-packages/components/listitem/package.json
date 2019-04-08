@@ -1,0 +1,235 @@
+{
+  "label": "Listitem",
+  "selector": ".ui-listview li",
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-listitem-w.jpg",
+      "tv": "./mobile-list.png",
+      "wearable": "./wearable-listitem-c.png"
+    }
+  },
+  "template": "<li class=\"ui-snap-listview-item\"><span>List Item</span></li>",
+  "buildParentSelector": ".ui-listview",
+  "type": "container-component",
+  "displayOrderWeight": 600,
+  "constraint": [
+    "audio",
+    "text",
+    "closet-image",
+    "checkbox",
+    "button",
+    "radio",
+    "toggleswitch",
+    "processing",
+    "input-text",
+    "input-password",
+    "input-date",
+    "input-number",
+    "slider",
+    "dimmer",
+    "dropdownmenu",
+    "status-panel",
+    "temperature-control",
+    "color-temperature",
+    "coverflow",
+    "remotecontroller-channel",
+    "remotecontroller-mute",
+    "remotecontroller-power",
+    "remotecontroller-volume",
+    "audio-controls",
+    "status-circle",
+    "sound-indicator",
+    "i3d",
+    "flipbook",
+    "dishwasher-control",
+    "graph",
+    "iot-contextmenu",
+    "box",
+    "video",
+    "anchor",
+    "box"
+  ],
+  "styles": [
+    {
+      "icon": "./styles/mobile-ct.png",
+      "name": "Color Temperature",
+      "template": "<li class=\"ui-snap-listview-item\"><div class=\"ui-colortemperature\"></div></li>"
+    }, {
+      "icon": "./styles/mobile/2lines-image.png",
+      "name": "2 lines with image",
+      "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div style=\"background-color: #f0f0f0;\" alt=\"icon\" class=\"ui-li-area ui-li-area-b ui-li-image\"></div></li>"
+    }, {
+      "icon": "./styles/mobile/2lines-big-image.png",
+      "name": "2 lines with big image",
+      "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div style=\"background-color: rgb(240, 240, 240); background-size: 100%; width: 190px; height: 140px;\" alt=\"icon\" class=\"ui-li-area ui-li-area-b ui-li-image\"></div></li>"
+    }, {
+      "icon": "./styles/mobile/2lines-image-checkbox.png",
+      "name": "2 lines with image & checkbox",
+      "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div alt=\"circle-icon\" class=\"ui-li-area ui-li-area-b ui-li-circle-image\"></div><input class=\"ui-li-area-c\" type=\"checkbox\" name=\"c1line-check2\" /></li>"
+    },
+    {
+      "icon": "./styles/mobile/ui-expandable.png",
+      "name": "Expandable with title",
+      "template": "<li class=\"ui-expandable\"><h1>List item</h1><div class=\"ui-box\" style=\"min-width: 30px; min-height: 30px;\"></div></li>"
+    }
+  ],
+  "class": [
+    {
+      "text": "ui-li-anchor",
+      "version": "mobile"
+    },
+    {
+      "text": "li-text-sub",
+      "description": "Subtext for item",
+      "selector": " > *",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-li-sub-text",
+      "description": "Subtext for item ",
+      "selector": " > *",
+      "version": "wearable"
+    },
+    {
+      "text": "li-has-right-btn",
+      "description": "Item with button on the right",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-right-circle-btn",
+      "description": "Item with circular button on the right",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-thumb",
+      "description": "Item with thumbnail on the left",
+      "version": "mobile"
+    },
+    {
+      "text": "li-thumb",
+      "description": "Thumbnail inside item",
+      "selector": ".li-has-thumb > *",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-checkbox",
+      "description": "Item with checkbox",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-radio",
+      "description": "Item with radio button",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-progress",
+      "description": "Item with progressbar",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-multiline",
+      "description": "Item with multilines",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-text-sub2",
+      "description": "Second subtext for multiline item positioned under the first one",
+      "selector": ".li-has-multiline > *",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-text-sub3",
+      "description": "Subtext for multiline item positioned on the right",
+      "selector": ".li-has-multiline > *",
+      "version": "mobile"
+    },
+    {
+      "text": "li-has-2line",
+      "description": "Item with 2 lines",
+      "version": "wearable"
+    },
+    {
+      "text": "li-has-3-lines",
+      "description": "Item with 3 lines",
+      "version": "mobile"
+    },
+    {
+      "text": "li-icon-sub",
+      "description": "",
+      "selector": " .li-text-sub > *",
+      "version": "mobile"
+    },
+    {
+      "text": "li-icon-sub",
+      "description": "",
+      "selector": " .li-text-sub3 > *",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-li-static",
+      "description": "",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-expandable",
+      "description": "Expandable item",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-group-index",
+      "description": "Divider item",
+      "version": "mobile"
+    },
+    {
+      "text": "ui-listview-divider",
+      "description": "List divider",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-marquee",
+      "description": "Marquee item",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-marquee-gradient",
+      "description": "Marquee item with blurry effect",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-li-has-action-icon",
+      "description": "Item with action icon",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-action-text",
+      "description": "Text for action item",
+      "selector": ".ui-li-has-action-icon > *",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-action-setting",
+      "description": "Setting icon for action item",
+      "selector": ".ui-li-has-action-icon > *",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-action-delete",
+      "description": "Delate icon for action item",
+      "selector": ".ui-li-has-action-icon > *",
+      "version": "wearable"
+    },
+    {
+      "text": "ui-action-add",
+      "description": "Adding icon for action item",
+      "selector": ".ui-li-has-action-icon > *",
+      "version": "wearable"
+    }
+  ],
+  "resizable": true,
+  "draggable": true
+}

@@ -1,0 +1,28 @@
+{
+  "label": "AudioControls",
+  "selector": ".ui-iot-audiocontrols",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 300,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./ui-audio-controls.png",
+      "wearable": "./ui-audio-controls.png",
+      "tv": "./ui-audio-controls.png"
+    }
+  },
+  "template": "<div class=\"ui-iot-audiocontrols\" id=\"example-audiocontrols-id\"></div>",
+  "generator": {
+    "constructor": "tau.widget.AudioControls",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

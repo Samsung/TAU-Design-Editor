@@ -1,0 +1,103 @@
+/*
+The styles for buttons are partially copied from atom framework
+*/
+.btn {
+    color: #9da5b4;
+    text-shadow: none;
+    border: 1px solid #181a1f;
+    background-color: #353b45;
+    background-image: linear-gradient(#3a3f4b, #353b45);
+    height: 31px;
+    padding: 0 0.8em;
+    font-size: 1em;
+    line-height: 2em;
+    border-radius: 3px;
+    z-index: 0;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-user-select: none;
+}
+.btn:hover {
+    background-color: #3a3f4b;
+}
+.btn.selected,
+.btn.selected:hover {
+    z-index: 1;
+    background-color: #528bff;
+    background-image: none; 
+}
+.btn.btn-xs,
+.btn-group-xs > .btn {
+    padding: 2.5px 5px;
+    font-size: 10px;
+    height: auto;
+    line-height: 1.3em;
+}
+.btn.btn-sm,
+.btn-group-sm > .btn {
+    padding: 2.5px 5px;
+    height: auto;
+    line-height: 1.3em;
+}
+.btn.btn-lg,
+.btn-group-lg > .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+    height: auto;
+    line-height: 1.3em;
+}
+.btn-group > .btn {
+    border-left: 1px solid #181a1f;
+    border-right: 1px solid #181a1f;
+}
+.btn-group > .btn:first-child {
+    border-left: none;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.btn-group > .btn:last-child,
+.btn-group > .btn.selected:last-child,
+.btn-group > .dropdown-toggle {
+    border-right: none;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.btn-toolbar > .btn-group + .btn-group,
+.btn-toolbar > .btn-group + .btn,
+.btn-toolbar > .btn + .btn {
+    float: none;
+    display: inline-block;
+    margin-left: 0;
+}
+.btn-toolbar > * {
+    margin-right: 5px;
+}
+.btn-toolbar > *:last-child {
+    margin-right: 0;
+}
+.icon::before {
+    margin-right: 5px;
+}
+a.icon,
+button.icon {
+    text-decoration: none;
+    color: #9da5b4;
+}
+a.icon:hover,
+button.icon:hover {
+    color: #d7dae0;
+}
+a {
+    cursor: pointer;
+    color: #d7dae0;
+}
+a:hover {
+    color: #d7dae0;
+    text-decoration: underline;
+}

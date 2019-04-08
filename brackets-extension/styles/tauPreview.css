@@ -1,0 +1,20 @@
+/* Toolbar icon */
+#tau-preview-icon {
+    -webkit-mask-image: url(images/fa-desktop.png);
+    background-color: #bbb;
+}
+
+#tau-preview-icon.active {
+    background-color: #91cc41;
+}
+
+#panel-tau-preview {
+    position: relative;
+    // TODO: fix calculating height for this panel
+    height: -webkit-calc(100% - 37px) !important;
+    height: calc(100% - 37px) !important;
+}
+
+#panel-tau-preview-frame {
+    border: none;
+}

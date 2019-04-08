@@ -1,0 +1,28 @@
+{
+  "label": "Remote Controller volume",
+  "selector": ".ui-remotecontroller-volume",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 700,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./remote_controller_volume.png",
+      "tv": "./remote_controller_volume.png",
+      "wearable": "./remote_controller_volume.png"
+    }
+  },
+  "template": "<div class=\"ui-remotecontroller-volume\"></div>",
+  "generator": {
+    "constructor": "tau.widget.RemoteControllerVolume",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

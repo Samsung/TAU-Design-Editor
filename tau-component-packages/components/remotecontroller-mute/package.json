@@ -1,0 +1,28 @@
+{
+  "label": "Remote Controller Mute",
+  "selector": ".ui-remotecontroller-mute",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 500,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./remote_controller_mute.png",
+      "tv": "./remote_controller_mute.png",
+      "wearable": "./remote_controller_mute.png"
+    }
+  },
+  "template": "<div class=\"ui-remotecontroller-mute\"></div>",
+  "generator": {
+    "constructor": "tau.widget.RemoteControllerMute",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

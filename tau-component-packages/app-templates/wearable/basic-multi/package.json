@@ -1,0 +1,14 @@
+{
+  "profile": "wearable,mobile,fit2",
+  "category": "TAU",
+  "thumbnail": "thumbnail.png",
+  "label": "Basic Multi",
+  "libraries": [
+    "tau/fit2",
+    "tau/wearable",
+    "tau/mobile",
+    "closet",
+    "circle-helper.js",
+    "jquery.js"
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "label": "SectionChanger",
+  "type": "container-component",
+  "displayOrderWeight": 600,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-section.png",
+      "tv": "./mobile-section.png",
+      "wearable": "./sectionchanger.png"
+    }
+  },
+  "selector": "[data-role=section-changer], .ui-section-changer",
+  "template": "<div class=\"ui-section-changer\"><div><section><span>Section 1</span></section></div></div>",
+  "constraint": [
+    "section"
+  ],
+  "generator": {
+    "constructor": "tau.widget.SectionChanger",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "attributes": {
+    "data-orientation": {
+      "label": "Orientation",
+      "widget-option": true,
+      "value": "horizontal",
+      "type": {
+        "name": "text"
+      }
+    },
+    "data-circular": {
+      "label": "Circular",
+      "widget-option": true,
+      "value": false,
+      "type": {
+        "name": "checkbox"
+      }
+    },
+    "data-use-bouncing-effect": {
+      "label": "Use Bouncing Effect",
+      "widget-option": true,
+      "value": false,
+      "type": {
+        "name": "checkbox"
+      }
+    },
+    "data-items": {
+      "label": "Items",
+      "widget-option": true,
+      "value": "section",
+      "type": {
+        "name": "text"
+      }
+    },
+    "data-active-class": {
+      "label": "Active Class",
+      "widget-option": true,
+      "value": "section-active",
+      "type": {
+        "name": "text"
+      }
+    },
+    "data-fill-content": {
+      "label": "Fill Content",
+      "widget-option": true,
+      "value": true,
+      "type": {
+        "name": "checkbox"
+      }
+    }
+  },
+  "data": [
+    {
+      "option": "orientation",
+      "values": [
+        {
+          "text": "horizontal"
+        },
+        {
+          "text": "vertical"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "orientation of widget"
+    },
+    {
+      "option": "circular",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "all@2.3.1",
+      "description": "style of widget"
+    },
+    {
+      "option": "use-bouncing-effect",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "items",
+      "values": [
+        "section",
+        {
+          "snippet": "${1:string}",
+          "description": "selector if children"
+        }
+      ],
+      "version": "all@2.3.1",
+      "description": "set position of popup"
+    },
+    {
+      "option": "active-class",
+      "values": [
+        "ui-section-active",
+        {
+          "snippet": "${1:string}",
+          "description": "class name"
+        }
+      ],
+      "version": "all@2.3.1"
+    },
+    {
+      "option": "fill-content",
+      "values": [
+        "true",
+        "false"
+      ],
+      "version": "all@2.3.1",
+      "description": "declare to section tag width to fill content or not"
+    }
+  ],
+  "class": [],
+  "events": [
+    "sectionchange"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "label": "Anchor",
+    "selector": "a",
+    "attachable": false,
+    "type": "standalone-component",
+    "resources": {
+        "icon": {
+            "wearable": "./anchor.png",
+            "mobile": "./anchor.png",
+            "tv": "./anchor.png"
+        }
+    },
+    "template": "<a href=\"#\">Link</a>",
+    "resizable": true,
+    "draggable": false,
+    "textEditable": true,
+    "constraint": [
+        "text"
+    ]
+}

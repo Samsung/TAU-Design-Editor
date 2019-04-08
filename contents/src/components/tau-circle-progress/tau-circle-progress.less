@@ -1,0 +1,87 @@
+closet-tau-circle-progress {
+    display: block;
+    width: 100vw;
+    height: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    /***************************************************************************
+                      circle progress bar
+    ***************************************************************************/
+    .ui-progressbar .ui-progressbar-value .ui-progressbar-value-left {
+        border: 0.8125rem solid rgba(18, 180, 255, 1);
+    }
+    .ui-progressbar .ui-progressbar-value .ui-progressbar-value-right {
+        border: 0.8125rem solid rgba(18, 180, 255, 1);
+    }
+    .ui-progressbar .ui-progressbar-bg {
+        border: 0.8125rem solid rgba(8, 81, 115, 1);
+    }
+    .ui-progressbar.ui-progressbar-small .ui-progressbar-value .ui-progressbar-value-left,
+    .ui-progressbar.ui-progressbar-small .ui-progressbar-value .ui-progressbar-value-right {
+        border: 0.3125rem solid rgba(18, 180, 255, 1);
+    }
+    .ui-progressbar.ui-progressbar-small .ui-progressbar-bg {
+        border: 0.3125rem solid rgba(8, 81, 115, 1);
+    }
+    .ui-progressbar.ui-progressbar-full {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vw;
+    }
+    .ui-progressbar.ui-progressbar-large {
+        width: 6.25rem;
+        height: 6.25rem;
+    }
+    .ui-progressbar.ui-progressbar-medium {
+        width: 5.25rem;
+        height: 5.25rem;
+    }
+    .ui-progressbar.ui-progressbar-small {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    .ui-progressbar {
+        position: relative;
+        display: inline-block;
+        pointer-events: none;
+    }
+    .ui-progressbar .ui-progressbar-value.ui-progressbar-half {
+        clip: rect(auto, auto, auto, auto);
+    }
+    .ui-progressbar .ui-progressbar-value.ui-progressbar-half .ui-progressbar-value-right {
+        -webkit-transform: rotate(180deg);
+    }
+    .ui-progressbar .ui-progressbar-value {
+        clip: rect(0, 1em, 1em, 0.5em);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    .ui-progressbar .ui-progressbar-value .ui-progressbar-value-left {
+        border: 8px solid rgba(55, 161, 237, 1);
+        border-radius: 50%;
+        clip: rect(0, 0.5em, 1em, 0);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+    .ui-progressbar .ui-progressbar-value .ui-progressbar-value-right {
+        border: 8px solid rgba(55, 161, 237, 1);
+        border-radius: 50%;
+        clip: rect(0, 0.5em, 1em, 0);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    .ui-progressbar .ui-progressbar-bg {
+        border: 8px solid rgba(71, 71, 71, 1);
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "profile": "fit2",
+  "category": "TAU",
+  "thumbnail": "thumbnail.png",
+  "label": "Basic",
+  "libraries": [
+    "tau/fit2",
+    "closet",
+    "circle-helper.js",
+    "jquery.js"
+  ]
+}

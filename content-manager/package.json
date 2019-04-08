@@ -1,0 +1,16 @@
+{
+  "name": "content-manager",
+  "version": "1.0.0",
+  "description": "@TODO",
+  "main": "src/main.js",
+  "repository": "http://suprem.sec.samsung.net/gerrit/owe/fwk",
+  "dependencies": {
+    "async": "latest",
+    "jquery": "latest"
+  },
+  "devDependencies": {
+  },
+  "author": "@TODO",
+  "license": "MIT",
+  "browserify": { "transform": [ "babelify" ] }
+}

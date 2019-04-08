@@ -1,0 +1,28 @@
+{
+  "label": "Remote Controller channel",
+  "selector": ".ui-remotecontroller-channel",
+  "attachable": true,
+  "type": "iot-component",
+  "displayOrderWeight": 400,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./remote_controller_channel.png",
+      "tv": "./remote_controller_channel.png",
+      "wearable": "./remote_controller_channel.png"
+    }
+  },
+  "template": "<div class=\"ui-remotecontroller-channel\"></div>",
+  "generator": {
+    "constructor": "tau.widget.RemoteControllerChannel",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "draggable": true,
+  "resizable": true,
+  "new": true
+}

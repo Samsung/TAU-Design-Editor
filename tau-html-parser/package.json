@@ -1,0 +1,20 @@
+{
+  "name": "tau-html-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/tau-linter-provider",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha tests/unit/",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "tau-component-packages": "file:../tau-component-packages"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}

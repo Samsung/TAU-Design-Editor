@@ -1,0 +1,37 @@
+{
+  "label": "Slider",
+  "selector": "input[type=range], .ui-slider",
+  "baseElementSelector": "input[type=range]",
+  "attachable": true,
+  "type": "standalone-component",
+  "displayOrderWeight": 700,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./slider.png",
+      "tv": "./slider.png",
+      "wearable": "./slider-wearable.png"
+    }
+  },
+  "template": "<input type=\"range\" value=\"50\" min=\"0\" max=\"100\" />",
+  "generator": {
+    "constructor": "tau.widget.Slider",
+    "parameter": {
+      "options": {}
+    }
+  },
+  "attributes": {
+      "data-toggle": {
+          "label": "Toggle selector",
+          "type": {
+              "name": "text"
+          }
+      }
+  },
+  "resizable": true,
+  "draggable": true
+}

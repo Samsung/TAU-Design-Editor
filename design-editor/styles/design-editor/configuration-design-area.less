@@ -1,0 +1,65 @@
+configuration-design-area {
+    display: block;
+
+    & > * {
+        display: inline-block;
+        color: @text-color;
+        line-height: 1.8
+    }
+
+    input {
+        color: @text-color;
+        border: 0 none;
+        background-color: transparent;
+        text-align: center;
+
+        &:focus {
+            color: @text-color-highlight;
+            background-color: @input-background-color;
+            border: 1px soid @input-border-color;
+        }
+
+        &::-webkit-inner-spin-button,
+        &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+            margin: 0;
+        }
+    }
+
+    select {
+        color: @text-color;
+        border: 0 none;
+        background-color: transparent;
+        background-image: none;
+        text-align: center;
+        appearance: none;
+
+        &:focus {
+            color: @text-color-highlight;
+            background-color: @input-background-color;
+            border: 1px soid @input-border-color;
+        }
+    }
+
+    .screen-size input {
+        width: 30px;
+    }
+
+    .screen-ratio input {
+        width: 25px;
+    }
+
+    .screen-ratio, .device-radius {
+        position: relative;
+        padding-left: 12px;
+    }
+}
+
+.status-bar configuration-design-area.inline-block {
+    max-width: none;
+    margin: 0 1em;
+    .inline-block {
+        vertical-align: middle;
+    }
+}

@@ -1,0 +1,419 @@
+closet-animation-container {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  cursor: default;
+  border-left: 1px solid #181a1f;
+  user-select: none;
+  -webkit-user-select: none;
+  transition-property: max-height, height;
+  transition-duration: 100ms;
+  max-height: 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10000;
+
+  &.closet-animation-container-hidden {
+    max-height: 0;
+  }
+
+  .animation-resize-handle {
+    height: 8px;
+    cursor: ns-resize;
+    flex: 0;
+  }
+  .closet-animation-element-title {
+    display: block;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    padding-left: 15px;
+    margin: 0;
+    font-size: 15px;
+    background-color: @panel-heading-background-color;
+    border-bottom: 1px solid @panel-heading-border-color;
+    color: @text-color;
+    flex: 0;
+
+    button {
+      margin: 8px;
+      font-size: 11px;
+    }
+
+    button.switch-animation {
+      float: right;
+    }
+
+    button.closet-animation-add {
+      float: right;
+      margin-left: 100px;
+    }
+  }
+  .closet-animation-block {
+    position: relative;
+    z-index: 0;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-height: 150px;
+  }
+
+  .animation-resize-handle {
+    width: 100%;
+    height: 8px;
+    position: absolute;
+    top: -5px;
+    left: 0;
+    bottom: 0;
+    cursor: ns-resize;
+    z-index: 3;
+  }
+
+  closet-animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    cursor: default;
+    border-left: 1px solid @panel-heading-border-color;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  .closet-animation-block {
+    position: relative;
+    display: flex;
+    flex: 1;
+    z-index: 0;
+    overflow-x: visible;
+    overflow-y: auto;
+
+    /*navigator for entires in timeline*/
+    .closet-animation-element-container {
+      width: 200px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      .closet-animation-element-control {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex: 0;
+        div.closet-animation-status {
+          color: @text-color;
+          width: 200px;
+          padding-left: 10px;
+          border-left: none;
+          line-height: 24px;
+          position: relative;
+          z-index: 1;
+          background-color: @panel-heading-background-color;
+          > button {
+            float: right;
+            margin: 1px;
+            padding: 0;
+            color: @text-color;
+            width: 23px;
+            height: 22px;
+            border: 0;
+            background-color: transparent;
+          }
+          .closet-animation-time {
+            color: white;
+            display: inline-block;
+          }
+          .closet-animation-footer-time-limit {
+             background-color: @panel-heading-background-color;
+             border: none;
+             width: 50px;
+             text-align: center;
+             user-select: initial;
+             -webkit-user-select: initial;
+           }
+        }
+      }
+      .closet-animation-element-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex-shrink: 1;
+        flex-grow: 1;
+        flex-basis: 20px;
+        overflow: hidden;
+        > div {
+          height: 24px;
+          > div.closet-animation-block-name,
+          > div.closet-animation-block-event {
+            color: @text-color;
+            width: 200px;
+            padding-left: 10px;
+            border-left: none;
+            line-height: 24px;
+            position: relative;
+            z-index: 1;
+            background-color: @panel-heading-background-color;
+            > button {
+              float: right;
+              margin: 1px;
+              padding: 0;
+              color: @text-color;
+              width: 23px;
+              height: 22px;
+              border: 0;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+
+    .closet-animation-timeline-container {
+      width: 0;
+      flex-grow: 1;
+      flex-shrink: 1;
+      overflow: hidden;
+      position: relative;
+      .closet-animation-timeline {
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+
+        .closet-animation-timeline-inner {
+          display: block;
+          flex-grow: 0;
+          flex-shrink: 0;
+          flex-basis: 24px;
+          overflow-x: hidden;
+          overflow-y: visible;
+          > div {
+            width: 100px;
+            display: inline-block;
+            padding-left: 5px;
+            height: 24px;
+            border-right: 1px solid @panel-heading-border-color;
+            border-bottom: 1px solid @panel-heading-border-color;
+          }
+        }
+
+        /*vertical indicator*/
+        .closet-animation-timeline-line {
+          flex: 1;
+          overflow-x: hidden;
+          overflow-y: auto;
+          background: @background-color-success;
+          width: 1px;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 10;
+        }
+
+        .closet-animation-element-time {
+          list-style: none;
+          padding: 0;
+          margin-bottom: 0;
+          overflow: auto;
+          flex: 1;
+          > div {
+            height: 24px;
+            position: relative;
+
+            > div {
+              width: 20px;
+              display: inline-block;
+              height: 100%;
+            }
+            > button.eventElement {
+              background-color: transparent;
+              position: absolute;
+              border: 0;
+              top: 5px;
+            }
+            > button.labelElement {
+              background-color: transparent;
+              position: absolute;
+              border: 0;
+              top: -5px;
+            }
+          }
+          li.block-time div div div:first-child,
+          div.block-element div:first-child {
+            border-left: 1px solid @panel-heading-border-color;
+          }
+          div.block-element div {
+            border-right: 1px solid @panel-heading-border-color;
+            border-bottom: 1px solid @panel-heading-border-color;
+            &.animation-section {
+              background-color: @background-color-info;
+              border-right-color: @background-color-info;
+              &.animation-start {
+                border-left: solid 3px @background-color-success;
+                &.animation-start-active {
+                  border-left: solid 3px @background-color-warning;
+                }
+              }
+              &.animation-end {
+                border-right: solid 3px @background-color-success;
+                &.animation-end-active {
+                  border-right: solid 3px @background-color-warning;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .closet-animation-element-list:after {
+      content: " ";
+      background: @background-color-success;
+      width: 5px;
+      height: 100%;
+      position: absolute;
+      top: 10px;
+      left: -20px;
+      z-index: 10;
+      margin-bottom: 0;
+    }
+  }
+  .closet-animation-block {
+    overflow: visible;
+    display: flex;
+    flex-direction: row;
+    .closet-animation-keyframes {
+      position: relative;
+      width: 80%;
+      white-space: nowrap;
+      overflow-x: auto;
+
+      .closet-animation-keyframes-container {
+        display: inline-block;
+      }
+
+      .closet-animation-iframe-container {
+        width: 120px;
+        height: 120px;
+        margin: 15px;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: middle;
+
+        .closet-animation-iframe-layer {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+
+          &.closet-animation-iframe-layer-active {
+            border: 1px solid @background-color-success;
+          }
+        }
+        iframe {
+          position: absolute;
+          top: -120px;
+          left: -120px;
+          border: none;
+          width: 360px;
+          height: 360px;
+          transform: scale(0.33, 0.33);
+          z-index: 1;
+          opacity: 0;
+          transition: opacity 1s;
+        }
+      }
+
+      .closet-animation-keyframe-divider {
+        overflow: hidden;
+        display: inline-block;
+        width: 60px;
+        padding: 0;
+        text-align: center;
+        vertical-align: middle;
+        opacity: 0;
+        transition: opacity 1s;
+
+        input[type=text] {
+          width: 30px;
+          padding-left: 0.5em;
+          padding-right: 0.5em;
+          border-radius: 3px;
+          border: 1px solid #181a1f;
+          background-color: #1b1d23;
+          text-align: right;
+        }
+
+        select {
+          color: #9da5b4;
+          border: 0 none;
+          background-color: transparent;
+          background-image: none;
+          text-align: center;
+          appearance: none;
+        }
+      }
+
+      .closet-animation-keyframe-divider-time {
+        white-space: nowrap;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .closet-animation-keyframes-add {
+        text-align: center;
+        vertical-align: middle;
+        margin-right: 30px;
+      }
+    }
+
+    .closet-animations-container {
+      width: 20%;
+      border-left: solid 1px #282c34;
+      > div {
+        padding: 1em;
+        margin: 0 0 1px 1px;
+        color: #9da5b4;
+        background: #282c34;
+
+        .closet-animation-group-remove{
+          float: right;
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          cursor: pointer;
+          &:after {
+            font: normal normal normal @fa-font-size-base/@fa-line-height-base FontAwesome; // shortening font declaration
+            font-size: inherit; // can't have font-size inherit on line above, so need to override
+            text-rendering: auto; // optimizelegibility throws things off #1094
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            content: @fa-var-trash;
+          }
+        }
+
+        &.selected {
+          background: #9da5b4;
+          color: #282c34;
+        }
+      }
+    }
+  }
+}
+
+.animation-empty-info {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 200%;
+  color: #9da5b4;
+}
