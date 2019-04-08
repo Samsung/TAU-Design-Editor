@@ -1,0 +1,69 @@
+{
+  "label": "Button",
+  "selector": [
+    "closet-button"
+  ],
+  "resources": {
+    "js": "button.js",
+    "css": "button.css"
+  },
+  "attributes": {
+    "button-text": {
+      "label": "Text",
+      "type": "text"
+    },
+    "bg-color": {
+      "label": "BG Color",
+      "type": "color"
+    },
+    "bg-image": {
+      "label": "BG Image",
+      "type": {
+        "name": "file",
+        "option": {
+          "extensions": [
+            "jpg",
+            "png"
+          ]
+        }
+      }
+    },
+    "text-size": {
+      "label": "Font Size",
+      "type": {
+        "name": "range",
+        "option": {
+          "min": "0",
+          "max": "100",
+          "step": "1"
+        }
+      }
+    },
+    "text-color": {
+      "label": "Font Color",
+      "type": "color"
+    },
+    "radius": {
+      "label": "radius",
+      "type": {
+        "name": "range",
+        "option": {
+          "min": "0",
+          "max": "50",
+          "step": "1"
+        }
+      }
+    },
+    "opacity": {
+      "label": "opacity",
+      "type": {
+        "name": "range",
+        "option": {
+          "min": "0",
+          "max": "1.0",
+          "step": "0.01"
+        }
+      }
+    }
+  }
+}

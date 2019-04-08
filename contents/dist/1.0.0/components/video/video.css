@@ -1,0 +1,9 @@
+closet-video {
+  width: 700px;
+  height: 500px;
+}
+closet-video .closet-video-player {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}

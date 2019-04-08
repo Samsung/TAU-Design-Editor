@@ -1,0 +1,10 @@
+.idea
+.buildpath
+.project
+dist
+node_modules
+npm-debug.log
+lib
+!atom-autocomplete-tizen/lib
+bower_components
+

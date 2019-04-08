@@ -1,0 +1,8 @@
+closet-section {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  background-color: #ffffff;
+  -webkit-flex: 1;
+  display: flex;
+}
