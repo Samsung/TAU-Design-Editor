@@ -14,8 +14,8 @@ const Sentences = {
     querySelector: 'document.getElementById(\'{{id}}\')',
     listener: [
         '{{instance}}.addEventListener(\'{{type}}\', function(event) {',
-        '\t{{{content}}}{{^content}}',
-        '\t//::write down yourown handler in here::{{/content}}',
+        '\t{{{content}}}{{^content}}{{/content}}',
+        '\t//::write down yourown handler in here::',
         ' })'
     ],
     pageTransition: 'tau.changePage(\'{{url}}\', {transition: \'{{transition}}\'});',
@@ -35,11 +35,12 @@ class AssistantCodeGenerator {
     /**
      * Constructor
      */
-    constructor() {
+    constructor(lineEnding) {
         /**
          * This map is necessery to get information about previously used items
          */
         this._elementInstancePair = new WeakMap();
+        this._lineEnding = lineEnding;
     }
 
     /**
@@ -48,11 +49,9 @@ class AssistantCodeGenerator {
      * @returns {string}
      * @private
      */
-    static _generateCompleteSentence(sentenceBody) {
-        sentenceBody = Array.isArray(sentenceBody) 
-            ? sentenceBody[sentenceBody.length - 1] += ';'
-            : sentenceBody + ';';
-        return sentenceBody;
+    _generateCompleteSentence(sentenceBody) {
+        sentenceBody = (Array.isArray(sentenceBody)) ? sentenceBody.join(this._lineEnding) : sentenceBody;
+        return`${sentenceBody};`;
     }
 
     /**
@@ -131,20 +130,20 @@ class AssistantCodeGenerator {
      * @private
      */
     _generateTAUWidgetVariable(options) {
-        return ((options.options && Object.keys(options.options).length > 0) 
-            ? Mustache.render(Sentences.tauWidgetWithOptions, options).map(item => item.replace(/&#39;/g, '\''))
-            : (Mustache.render(Sentences.tauWidget, options))).replace(/&#39;/g, '\'');
+        let code = ((options.options && (Object.keys(options.options).length > 0)) 
+            ? Sentences.tauWidgetWithOptions.map(item => Mustache.render(item, options)).join(this._lineEnding)
+            : (Mustache.render(Sentences.tauWidget, options)));
+        return code.replace(/&#39;/g, '\'');
     }
 
     /**
      * Generate widget options as a multiline string
      * @param {Array} options array of options
-     * @param {string} [endline='\n'] endline style: \n or \r\n
      * @returns {string}
      * @private
      */
-    _generateWidgetOptionSentence(options, endline = '\n') {
-        return options.reduce((previous, current) => previous + `\t${current[0]}: ${(current[1])}${endline}`, '');
+    _generateWidgetOptionSentence(options) {
+        return options.reduce((previous, current) => previous + `\t${current[0]}: ${(current[1])}${this._lineEnding}`, '');
     }
 
     /**
@@ -202,7 +201,7 @@ class AssistantCodeGenerator {
      * @param {Object} info Information object from wizard
      * @returns {Array} Code for event Listener
      */
-    getEventListener(element, info) {
+    getEventListener(element, info, model) {
         var instanceList = this._getValueFromMap(this._elementInstancePair, element),
             instance,
             listener;
@@ -212,9 +211,10 @@ class AssistantCodeGenerator {
                 instance = info.name;
             }
         } else {
-            instance = this._generateQuerySelector(element);
+            instance = this._generateQuerySelector(element, model);
         }
-        listener = Mustache.render(Sentences.listener, info);
+        
+        listener = Sentences.listener.map((item) => Mustache.render(item, info));
         return this._generateCompleteSentence(instance + listener);
     }
 
@@ -276,14 +276,6 @@ class AssistantCodeGenerator {
      */
     _getValueFromMap(map, key) {
         return map.get(key) || [];
-    }
-
-    static initialize() {
-        var instance;
-        if (!instance) {
-            instance = new AssistantCodeGenerator();
-        }
-        return instance;
     }
 }
 
