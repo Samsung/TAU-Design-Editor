@@ -4,7 +4,7 @@ import fs from 'fs';
 import $ from 'jquery';
 import {AssistantViewElement} from './assistant-view-element';
 import {AssistantWizardElement} from './assistant-wizard';
-import {AssistantCodeGenerator} from './assistant-code-generator';
+import {AssistantCodeGenerator} from '../../../../design-editor/src/system/assistant/assistant-code-generator';
 import {eventEmitter, EVENTS} from '../../../../design-editor/src/events-emitter';
 import pathUtils from '../../../../design-editor/src/utils/path-utils';
 import utils from '../../../../design-editor/src/utils/utils';
@@ -19,15 +19,17 @@ const DEFAULT_GRAMMAR = 'source.js';
 class AssistantViewManager {
     /**
      * Constructor
+     *
+     * Brackets API does not support line-endigs customization
+     * @link https://github.com/adobe/brackets/issues/10106
      */
     constructor() {
-        this._codeGenerator = new AssistantCodeGenerator();
+        this._codeGenerator = new AssistantCodeGenerator('\r\n');
 
         this._assistantElement = new AssistantViewElement();
         this._assistantCodeWizard = new AssistantWizardElement();
 
         this._closetDesignEditor = null;
-
         this._insertRow = 0;
         this._insertColumn = 0;
         this._isInsertCursorPosInfoExist = false;
@@ -164,6 +166,7 @@ class AssistantViewManager {
      * @private
      */
     _insertCode(codeBlock) {
+
         this._assistantElement.$el.focus();
 
         if (this._isInsertCursorPosInfoExist) {
