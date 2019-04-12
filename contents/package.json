@@ -32,5 +32,8 @@
     "xml2js": "^0.4.8"
   },
   "author": "Hyunkook Cho <hk0713.cho@samsung.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "bower install && grunt build"
+  }
 }

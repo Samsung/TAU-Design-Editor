@@ -8,9 +8,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint -c .eslintrc.js . && jscs .",
-    "lintfix": "eslint -c .eslintrc.js . --fix",
-    "postinstall": "/bin/sh ./update-local-deps.sh",
-    "postupdate": "/bin/sh ./update-local-deps.sh"
+    "lintfix": "eslint -c .eslintrc.js . --fix"
   },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
