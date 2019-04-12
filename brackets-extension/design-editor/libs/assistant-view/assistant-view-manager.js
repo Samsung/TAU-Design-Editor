@@ -130,21 +130,22 @@ class AssistantViewManager {
      * @private
      */
     _onWizardAccepted(codeInfo) {
+        const model = this._closetDesignEditor.getModel();
         switch (codeInfo.type) {
         case 'instance':
-            this._insertCode(this._codeGenerator.getInstance(codeInfo.element, codeInfo.info, this._closetDesignEditor));
+            this._insertCode(this._codeGenerator.getInstance(codeInfo.element, codeInfo.info, model));
             break;
         case 'tau-widget':
-            this._insertCode(this._codeGenerator.getTAUWidget(codeInfo.element, codeInfo.info, this._closetDesignEditor));
+            this._insertCode(this._codeGenerator.getTAUWidget(codeInfo.element, codeInfo.info, model));
             break;
         case 'listener':
-            this._insertCode(this._codeGenerator.getEventListener(codeInfo.element, codeInfo.info, this._closetDesignEditor));
+            this._insertCode(this._codeGenerator.getEventListener(codeInfo.element, codeInfo.info, model));
             break;
         case 'transition':
-            this._insertCode(this._codeGenerator.getPageTransition(codeInfo.element, codeInfo.info, this._closetDesignEditor));
+            this._insertCode(this._codeGenerator.getPageTransition(codeInfo.element, codeInfo.info, model));
             break;
         case 'popup':
-            this._insertCode(this._codeGenerator.getPopupOpen(codeInfo.element, codeInfo.info, this._closetDesignEditor));
+            this._insertCode(this._codeGenerator.getPopupOpen(codeInfo.element, codeInfo.info, model));
         }
     }
 
