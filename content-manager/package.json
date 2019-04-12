@@ -8,9 +8,12 @@
     "async": "latest",
     "jquery": "latest"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "author": "@TODO",
   "license": "MIT",
-  "browserify": { "transform": [ "babelify" ] }
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
 }
