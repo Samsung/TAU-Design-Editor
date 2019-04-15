@@ -3,7 +3,7 @@
 import fs from 'fs';
 import $ from 'jquery';
 import {AssistantViewElement} from './assistant-view-element';
-import {AssistantWizardElement} from './assistant-wizard';
+import {AssistantWizardElement} from '../../../../design-editor/src/panel/assistant/assistant-wizard';
 import {AssistantCodeGenerator} from '../../../../design-editor/src/system/assistant/assistant-code-generator';
 import {eventEmitter, EVENTS} from '../../../../design-editor/src/events-emitter';
 import pathUtils from '../../../../design-editor/src/utils/path-utils';
@@ -65,28 +65,6 @@ class AssistantViewManager {
     }
 
     /**
-     * Store code
-     * @param {Object} options
-     * @private
-     */
-    _storeCodeInsertLocationInfo(options) {
-        if (options) {
-            if (options.row) {
-                this._insertRow = options.row;
-                this._isInsertCursorPosInfoExist = true;
-            }
-
-            if (options.column) {
-                this._insertColumn = options.column;
-                this._isInsertCursorPosInfoExist = true;
-            }
-
-        } else {
-            this._isInsertCursorPosInfoExist = false;
-        }
-    }
-
-    /**
      * Clear code
      * @private
      */
@@ -95,80 +73,14 @@ class AssistantViewManager {
     }
 
     /**
-     * Open assistant code wizard
-     * @param options
-     * @private
-     */
-    _onOpenAssistantCodeWizard(options/* element */) {
-        var cursorPos,
-            designEditor;
-
-        if (!this.isOpened()) {
-            return;
-        }
-
-        if (!options) {
-            options = {};
-        }
-
-        designEditor = this._closetDesignEditor;
-
-        options.element = options.element || designEditor.getSelectedElement();
-
-        cursorPos = this._assistantElement.getCursorPosition();
-
-        options.row = options.row || cursorPos.row;
-        options.column = options.column || cursorPos.column;
-
-        if (options.element) {
-            this._storeCodeInsertLocationInfo(options);
-            this._assistantCodeWizard.open($(options.element), this._codeGenerator.getInstanceListFromMap(options.element));
-        }
-    }
-
-    /**
-     * Accept in wizard
-     * @param {Object} codeInfo
-     * @private
-     */
-    _onWizardAccepted(codeInfo) {
-        const model = this._closetDesignEditor.getModel();
-        switch (codeInfo.type) {
-        case 'instance':
-            this._insertCode(this._codeGenerator.getInstance(codeInfo.element, codeInfo.info, model));
-            break;
-        case 'tau-widget':
-            this._insertCode(this._codeGenerator.getTAUWidget(codeInfo.element, codeInfo.info, model));
-            break;
-        case 'listener':
-            this._insertCode(this._codeGenerator.getEventListener(codeInfo.element, codeInfo.info, model));
-            break;
-        case 'transition':
-            this._insertCode(this._codeGenerator.getPageTransition(codeInfo.element, codeInfo.info, model));
-            break;
-        case 'popup':
-            this._insertCode(this._codeGenerator.getPopupOpen(codeInfo.element, codeInfo.info, model));
-        }
-    }
-
-    /**
-     * Bind events
-     * @private
-     */
-    _bindEvents() {
-        eventEmitter.on(EVENTS.OpenAssistantWizard, this._onOpenAssistantCodeWizard.bind(this));
-        eventEmitter.on(EVENTS.AssistantWizardAccepted, this._onWizardAccepted.bind(this));
-    }
-
-    /**
      * Insert code
      * @param {string} codeBlock
-     * @private
      */
-    _insertCode(codeBlock) {
-
+    insertCode(codeBlock) {
+        const cursorPosition = this._assistantElement.getCursorPosition();
         this._assistantElement.$el.focus();
-
+        this._insertRow = cursorPosition.row;
+        this._insertColumn = cursorPosition.column;
         if (this._isInsertCursorPosInfoExist) {
             this._assistantElement.setCursorPosition([this._insertRow || 0, this._insertColumn || 0]);
         }

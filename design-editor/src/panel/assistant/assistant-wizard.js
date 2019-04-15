@@ -8,6 +8,7 @@ import editor from '../../editor';
 import {appManager} from '../../app-manager';
 import {DressElement} from '../../utils/dress-element';
 import {eventEmitter, EVENTS} from '../../events-emitter';
+import pathUtils from '../../utils/path-utils';
 
 const CompositeDisposable = editor.CompositeDisposable,
     INPUT_CLASS_LIST = [
@@ -107,7 +108,7 @@ class AssistantWizard extends DressElement {
             this._setInitialStringToInput();
             this._setUsingExistInstance(!!(existInstanceList.length));
             this._setInstanceList(existInstanceList);
-            this._updateFileList(editor.project.getPaths()[0]);
+            this._updateFileList(pathUtils.createProjectPath());
 
             $el.parent().addClass('closet-assistant-wizard-panel');
 

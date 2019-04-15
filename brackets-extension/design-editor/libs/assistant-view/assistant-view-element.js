@@ -144,21 +144,11 @@ class AssistantView extends DressElement {
             lineNumber,
             textEditorElement = this._$textEditorEl && this._$textEditorEl[0] || null;
 
-        if (textEditorElement && textEditorElement.shadowRoot) {
-            // atom version
-            pointedElement = textEditorElement.shadowRoot.elementFromPoint(event.clientX, event.clientY);
-            $lineElement = AssistantView._getSelectableItem(pointedElement, ['div.line']);
-            if ($lineElement) {
-                lineNumber = $lineElement.attr('data-screen-row');
-                this._$textEditorEl.focus();
-            }
-        } else {
-            // brackets version
-            pointedElement = document.elementFromPoint(event.clientX, event.clientY);
-            $lineElement = AssistantView._getSelectableItem(pointedElement, ['.CodeMirror-code > div']);
-            if ($lineElement) {
-                lineNumber = $lineElement.parent().children().index($lineElement[0]);
-            }
+        // brackets version
+        pointedElement = document.elementFromPoint(event.clientX, event.clientY);
+        $lineElement = AssistantView._getSelectableItem(pointedElement, ['.CodeMirror-code > div']);
+        if ($lineElement) {
+            lineNumber = $lineElement.parent().children().index($lineElement[0]);
         }
 
         if ($lineElement) {
