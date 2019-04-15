@@ -1,7 +1,7 @@
 'use babel';
 
 /**
- *  Manages asssistant view feature.
+ *  Manages asssistant view feature for VSCode.
  */
 class AssistantViewManager {
     /**
@@ -12,7 +12,7 @@ class AssistantViewManager {
     }
 
     /**
-     * Open
+     * Opens VSCode card with JS file
      * @param {DesignEditor} closetDesignEditor
      * @param {string} scriptPath
      */
@@ -24,7 +24,7 @@ class AssistantViewManager {
     }
 
     /**
-     * Close
+     * Close card
      */
     close() {
         window.parent.postMessage({
@@ -34,11 +34,23 @@ class AssistantViewManager {
     }
 
     /**
-     * Is open?
+     * Check if card is opened
      * @returns {boolean}
      */
     isOpened() {
         return this._isOpened;
+    }
+
+    /**
+     * Insert code to the opened editor
+     * @param  {string} code
+     */
+    insertCode(code) {
+        window.parent.postMessage({
+            type: 'INSERT_CODE',
+            code
+        }, '*');
+        console.log('Insert code', code);
     }
 }
 

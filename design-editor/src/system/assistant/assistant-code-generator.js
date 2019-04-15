@@ -1,6 +1,5 @@
 'use babel';
 
-import $ from 'jquery';
 import Mustache from 'mustache';
 import {EVENTS, eventEmitter} from '../../../../design-editor/src/events-emitter';
 
@@ -12,20 +11,18 @@ import {EVENTS, eventEmitter} from '../../../../design-editor/src/events-emitter
 const Sentences = {
     variable: 'var {{varName}} = ',
     querySelector: 'document.getElementById(\'{{id}}\')',
-    listener: [
-        '{{instance}}.addEventListener(\'{{type}}\', function(event) {',
-        '\t{{{content}}}{{^content}}{{/content}}',
-        '\t//::write down yourown handler in here::',
-        ' })'
-    ],
+    listener: `{{instance}}.addEventListener(\'{{type}}\', function(event) {
+        {{{content}}}{{^content}}{{/content}}
+        //::write down yourown handler in here::
+        })`,
+
     pageTransition: 'tau.changePage(\'{{url}}\', {transition: \'{{transition}}\'});',
     popupOpen: 'tau.openPopup(\'\');',
     tauWidget: 'var {{varName}} = {{constructorName}}({{targetElement}});',
-    tauWidgetWithOptions: [
-        'var {{varName}} = {{constructorName}}({{targetElement}}, {',
-        '\t{{options}}',
-        '});'
-    ]
+    tauWidgetWithOptions: `var {{varName}} = {{constructorName}}({{targetElement}}, {
+        {{options}}
+        });`
+    
 };
 
 /**
@@ -35,7 +32,7 @@ class AssistantCodeGenerator {
     /**
      * Constructor
      */
-    constructor(lineEnding) {
+    constructor(lineEnding = '\n') {
         /**
          * This map is necessery to get information about previously used items
          */
@@ -50,8 +47,7 @@ class AssistantCodeGenerator {
      * @private
      */
     _generateCompleteSentence(sentenceBody) {
-        sentenceBody = (Array.isArray(sentenceBody)) ? sentenceBody.join(this._lineEnding) : sentenceBody;
-        return`${sentenceBody};`;
+        return`${sentenceBody};${this._lineEnding}`;
     }
 
     /**
@@ -74,17 +70,16 @@ class AssistantCodeGenerator {
      * @returns {string} created or existed id attribute of element
      * @private
      */
-    _addIDIfnotExists($element, model) {
-        let elementId = $element.attr('id');
+    _addIDIfnotExists(element, model) {
+        let elementId = element.attr('id');
 
         if (!elementId) {
             elementId = this._generateId();
-            $element.attr('id', elementId);
-            model.updateAttribute($element.attr('data-id'), 'id', elementId);
+            element.attr('id', elementId);
+            model.updateAttribute(element.attr('data-id'), 'id', elementId);
             eventEmitter.emit(EVENTS.ReplaceCodeView);
-        } else {
-            model.updateAttribute($element.attr('data-id'), 'id', elementId);
         }
+        model.updateAttribute(element.attr('data-id'), 'id', elementId);
 
         return elementId;
     }
@@ -97,12 +92,9 @@ class AssistantCodeGenerator {
      * @private
      */
     _generateQuerySelector(element, model) {
-        const $element = $(element),
-            option = {
-                id: this._addIDIfnotExists($element, model)
-            };
-
-        return (Mustache.render(Sentences.querySelector, option));
+        return (Mustache.render(Sentences.querySelector, {
+            id: this._addIDIfnotExists(element, model)
+        }));
     }
 
     /**
@@ -130,8 +122,8 @@ class AssistantCodeGenerator {
      * @private
      */
     _generateTAUWidgetVariable(options) {
-        let code = ((options.options && (Object.keys(options.options).length > 0)) 
-            ? Sentences.tauWidgetWithOptions.map(item => Mustache.render(item, options)).join(this._lineEnding)
+        const code = ((options.options && Object.keys(options.options).length) 
+            ? Mustache.render(Sentences.tauWidgetWithOptions, options)
             : (Mustache.render(Sentences.tauWidget, options)));
         return code.replace(/&#39;/g, '\'');
     }
@@ -143,7 +135,10 @@ class AssistantCodeGenerator {
      * @private
      */
     _generateWidgetOptionSentence(options) {
-        return options.reduce((previous, current) => previous + `\t${current[0]}: ${(current[1])}${this._lineEnding}`, '');
+        return options.reduce(
+            (previous, current) => previous + `\t${current[0]}: ${(current[1])}${this._lineEnding}`, 
+            ''
+        );
     }
 
     /**
@@ -155,8 +150,8 @@ class AssistantCodeGenerator {
      * @returns {string|Array}
      */
     getInstance(element, info = {}, model) {
-        var existedInstance = this._getValueFromMap(this._elementInstancePair, element),
-            result;
+        const existedInstance = this._getValueFromMap(this._elementInstancePair, element);
+        let result;
 
         if (!(existedInstance.length && info.useExist)) {
             if (info.name) {
@@ -202,8 +197,8 @@ class AssistantCodeGenerator {
      * @returns {Array} Code for event Listener
      */
     getEventListener(element, info, model) {
-        var instanceList = this._getValueFromMap(this._elementInstancePair, element),
-            instance,
+        const instanceList = this._getValueFromMap(this._elementInstancePair, element);
+        let instance,
             listener;
 
         if (info.useExist) {
@@ -214,7 +209,7 @@ class AssistantCodeGenerator {
             instance = this._generateQuerySelector(element, model);
         }
         
-        listener = Sentences.listener.map((item) => Mustache.render(item, info));
+        listener = Mustache.render(Sentences.listener, info);
         return this._generateCompleteSentence(instance + listener);
     }
 
@@ -257,14 +252,10 @@ class AssistantCodeGenerator {
      * @private
      */
     _setValueToMap(map, key, value) {
-        var stored = this._getValueFromMap(map, key);
+        const stored = this._getValueFromMap(map, key);
 
-        if (!stored.length) {
-            map.set(key, [value]);
-        } else {
-            stored.push(value);
-            map.set(key, stored);
-        }
+        stored.push(value);
+        map.set(key, stored);
     }
 
     /**
