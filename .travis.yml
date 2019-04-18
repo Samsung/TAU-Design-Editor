@@ -1,0 +1,10 @@
+language: node_js
+node_js: 
+  - "10"
+
+jobs:
+  include:
+    - stage: "WATT"
+      script: npm run build-watt-dev
+    - stage: "VSC"
+      script: npm run build-vsc-dev
