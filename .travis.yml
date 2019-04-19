@@ -1,3 +1,7 @@
+os: 
+  - linux
+  - windows
+
 language: node_js
 node_js: 
   - "10"
@@ -5,6 +9,11 @@ node_js:
 jobs:
   include:
     - stage: "WATT"
-      script: npm run build-watt-dev
-    - stage: "VSC"
-      script: npm run build-vsc-dev
+      script: npm run build-watt 1> /dev/null
+      os: linux
+    - stage: "VSC-LINUX"
+      script: npm run build-vsc 1> /dev/null
+      os: linux
+    - stage: "VSC-WINDOWS"
+      script: npm run build-vsc 1> /dev/null
+      os: windows
