@@ -33,8 +33,6 @@ class AssistantViewManager {
         this._insertRow = 0;
         this._insertColumn = 0;
         this._isInsertCursorPosInfoExist = false;
-
-        this._bindEvents();
     }
 
     /**
