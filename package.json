@@ -36,11 +36,11 @@
     "webpack-cli": ">=2.0.13"
   },
   "subPackages": [
+    "contents",
     "closet-component-packages",
     "closet-default-component-packages",
     "content-manager",
     "tau-component-packages",
-    "contents",
     "design-editor"
   ],
   "repository": {
