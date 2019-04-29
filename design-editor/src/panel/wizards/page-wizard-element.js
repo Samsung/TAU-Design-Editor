@@ -12,6 +12,7 @@ import {StateManager} from '../../system/state-manager'
 import {} from './components/thumbnail-element';
 import {} from './components/file-picker-element';
 import {} from './components/text-editor-element';
+import pathUtils from '../../utils/path-utils';
 
 const CompositeDisposable = editor.CompositeDisposable;
 const notificationManager = editor.notifications;
@@ -98,7 +99,7 @@ class PageWizard extends DressElement {
      */
     openPageWizard() {
         var self = this,
-            projectPath = editor.project.getPaths()[0];
+            projectPath = pathUtils.createProjectPath();
 
         this._projectPath = projectPath;
         this._projectProfile = StateManager.get('screen').profile;

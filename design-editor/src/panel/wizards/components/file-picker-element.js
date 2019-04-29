@@ -16,36 +16,32 @@ var classes = {
     DEFAULT_FILE_EXPLORER_TEXT: 'closet-file-picker-text'
 };
 
-if (window.atom) {
-    remote = require('remote');
+BracketsProjectManager = brackets.getModule('project/ProjectManager');
 
-    dialog = (remote && remote.require && remote.require('dialog')) || null;
-    BrowserWindow = (remote && remote.require && remote.require('browser-window')) || null;
-}
 
-if (!window.atom && brackets) {
-    BracketsProjectManager = brackets.getModule('project/ProjectManager');
-}
-
-// brackets
 /**
- * Get directions
- * @param {Function} onSuccess
- * @returns {boolean|*}
+ * Get all directories from project
+ * @param {function} onSuccess - success callback
  */
-function getDirectories(onSuccess) {
-    var promise = BracketsProjectManager.getAllFiles();
-
-    promise.done((files) => {
-        var previous = '',
-            directories = files.map(file => file.parentPath).filter((dir) => { // remove duplicates
-                var result = previous !== dir;
-                previous = dir;
-                return result;
+function getDirectories(onSuccess = () => {} ) {
+    BracketsProjectManager
+    .getAllFiles()
+    .then((files) => {
+        const directories = files
+            .map(file => file.parentPath)
+            .filter((dir, index, array) => { // remove duplicates
+                return array.indexOf(dir) == index;
+            })
+            .sort((a, b) => {
+                const slashPattern = new RegExp(/\//, 'g');
+                return (a.match(slashPattern) || [] ).length - (b.match(slashPattern) || [] ).length;
             });
-        if (typeof onSuccess === 'function') {
-            onSuccess(directories);
-        }
+
+        onSuccess(directories);
+
+    })
+    .catch((err) => {
+        throw err;
     });
 }
 
@@ -74,54 +70,10 @@ class FilePicker extends HTMLDivElement {
     }
 
     /**
-     * On click in atom callback
-     * @private
-     */
-    _atomOnClick() {
-        var self = this,
-            parentWindow = process.platform === 'darwin' ?
-                null :
-                BrowserWindow.getFocusedWindow(),
-            $blind = $(document.createElement('div')).css({
-                position: 'absolute',
-                width: '200%',
-                height: '200%',
-                left: 0,
-                top: 0,
-                zIndex: 9998
-            });
-
-        $blind.appendTo(document.body);
-        dialog.showOpenDialog(parentWindow, {
-            properties: ['openDirectory']
-        }, (directoryPath) => {
-            if (directoryPath !== undefined) {
-                if ($.isArray(directoryPath)) {
-                    directoryPath = directoryPath[0];
-                }
-                self.path = directoryPath;
-            }
-            $blind.remove();
-        });
-    }
-
-    /**
-     * On click in brackets callback
-     * @private
-     */
-    _bracketsOnClick() {
-        console.log('onClick');
-    }
-
-    /**
      * On click callback
      */
     onClick() {
-        if (window.atom) {
-            this._atomOnClick();
-        } else {
-            this._bracketsOnClick();
-        }
+        console.log('onClick');
     }
 
     /**
@@ -143,37 +95,28 @@ class FilePicker extends HTMLDivElement {
             self = this,
             option;
 
-        if (window.atom) {
-            $textElement = $(document.createElement(editor.selectors.textEditor));
-            self._textElement = $textElement[0];
-            $(self).append($textElement);
-            $textElement
-                .attr('mini', true)
-                .addClass(classes.DEFAULT_FILE_EXPLORER_TEXT);
-        } else {
-            self._selectPath = document.createElement('select');
-            self._selectPath.addEventListener('change', () => {
-                self._customPath.value = self._selectPath.value;
-                self.path = self._customPath.value;
-            });
-            self._customPath = document.createElement('input');
-            self._customPath.addEventListener('change', () => {
-                self._selectPath.value = self._customPath.value;
-                self.path = self._customPath.value;
-            });
-            // fill select
-            $(self).append(self._selectPath);
-            $(self).append(self._customPath);
+        self._selectPath = document.createElement('select');
+        self._selectPath.addEventListener('change', () => {
+            self._customPath.value = self._selectPath.value;
+            self.path = self._customPath.value;
+        });
+        self._customPath = document.createElement('input');
+        self._customPath.addEventListener('change', () => {
+            self._selectPath.value = self._customPath.value;
+            self.path = self._customPath.value;
+        });
+        // fill select
+        $(self).append(self._selectPath);
+        $(self).append(self._customPath);
 
-            getDirectories((directories) => {
-                directories.forEach((dir) => {
-                    option = document.createElement('option');
-                    option.value = dir;
-                    option.innerText = dir;
-                    self._selectPath.appendChild(option);
-                });
+        getDirectories((directories) => {
+            directories.forEach((dir) => {
+                option = document.createElement('option');
+                option.value = dir;
+                option.innerText = dir;
+                self._selectPath.appendChild(option);
             });
-        }
+        });
     }
 
     /**
@@ -190,12 +133,9 @@ class FilePicker extends HTMLDivElement {
      */
     setPath(path) {
         this.options.path = path;
-        if (window.atom) {
-            this._textElement.getModel().setText(path);
-        } else {
-            this._selectPath.value = path;
-            this._customPath.value = path;
-        }
+
+        this._selectPath.value = path;
+        this._customPath.value = path;
     }
 }
 
