@@ -1,158 +1,19 @@
 {
   "label": "Image",
-  "selector": "closet-image",
+  "selector": "img.ui-picture",
   "attachable": true,
-  "type": "common-component",
-  "template": "<closet-image></closet-image>",
+  "type": "standalone-component",
+  "displayOrderWeight": 200,
+  "template": "<img class=\"ui-picture\" src=\"\" alt=\"\"  style=\"height: 100px;\">",
   "resizable": true,
   "draggable": true,
   "resources": {
     "js": "image.js",
     "css": "image.css",
-    "icon": "./resources/img.png"
-  },
-  "attributes": {
-    "src": {
-      "label": "Image Src",
-      "type": {
-        "name": "file",
-        "option": {
-          "extensions": [
-            "jpg",
-            "png"
-          ]
-        }
-      }
-    },
-    "filter-preset": {
-      "label": "Preset Filters",
-      "type": {
-        "name": "image-filter",
-        "option": {
-          "list": [
-            {
-              "name": "aden",
-              "label": "Aden"
-            },
-            {
-              "name": "brooklyn",
-              "label": "Brooklyn"
-            },
-            {
-              "name": "earlybird",
-              "label": "Earlybird"
-            },
-            {
-              "name": "gingham",
-              "label": "Gingham"
-            },
-            {
-              "name": "hudson",
-              "label": "Hudson"
-            },
-            {
-              "name": "inkwell",
-              "label": "Inkwell"
-            },
-            {
-              "name": "lofi",
-              "label": "Lofi"
-            },
-            {
-              "name": "mayfair",
-              "label": "Mayfair"
-            }
-          ]
-        }
-      }
-    },
-    "brightness": {
-      "label": "brightness",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "2",
-          "step": "0.1"
-        }
-      }
-    },
-    "contrast": {
-      "label": "contrast",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "10",
-          "step": "0.1"
-        }
-      }
-    },
-    "saturate": {
-      "label": "saturate",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "10",
-          "step": "0.1"
-        }
-      }
-    },
-    "sepia": {
-      "label": "sepia",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "1",
-          "step": "0.1"
-        }
-      }
-    },
-    "grayscale": {
-      "label": "grayscale",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "10",
-          "step": "0.1"
-        }
-      }
-    },
-    "hue-rotate": {
-      "label": "hue rotate",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "360",
-          "step": "1"
-        }
-      }
-    },
-    "radius": {
-      "label": "radius",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "50",
-          "step": "1"
-        }
-      }
-    },
-    "opacity": {
-      "label": "opacity",
-      "type": {
-        "name": "range",
-        "option": {
-          "min": "0",
-          "max": "1.0",
-          "step": "0.01"
-        }
-      }
+    "icon": {
+      "mobile": "./resources/img-mobile.png",
+      "tv": "./resources/img-mobile.png",
+      "wearable": "./resources/img.png"
     }
   }
 }
