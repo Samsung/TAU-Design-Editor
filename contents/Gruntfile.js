@@ -153,16 +153,6 @@ module.exports = function (grunt) {
             }
         },
 
-        cson: {
-            modules: {
-                expand: true,
-                cwd: srcPath,
-                src: [path.join('components', '**/*.cson')],
-                dest: distPath,
-                ext: '.json'
-            }
-        },
-
         'string-replace': {
             version: {
                 options: {
@@ -229,7 +219,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-cson');
 
     grunt.registerTask('install', ['bower', 'build']);
 
