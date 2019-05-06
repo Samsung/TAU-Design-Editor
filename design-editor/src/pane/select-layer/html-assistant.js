@@ -51,7 +51,8 @@ class HTMLAssistant {
 	 * @param {function} callback
 	 */
 	toggle(callback) {
-		if (this._htmlAssistantEditor.isOpened()) {
+		const opened = this._htmlAssistantEditor.isOpened();
+		if (opened) {
 			Promise.resolve(this._htmlAssistantEditor.getEditorContent())
 				.then((content) => {
 					this.setSelectedContent(content);
@@ -62,7 +63,7 @@ class HTMLAssistant {
 		} else {
 			this._htmlAssistantEditor.open(this.getSelectedContent(this.element));
 		}
-		callback(this._htmlAssistantEditor.isOpened())
+		callback(opened);
 	}
 
 	_bindEvents () {
