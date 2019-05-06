@@ -148,7 +148,7 @@ class StageManager {
     _toggleHTMLAssistant() {
         this._htmlAssistant.toggle((opened) => {
             console.log('HTML Assistant toggle', opened);
-            if (opened) {
+            if (!opened) {
                 this._toolbarContainerElement.turnOnControl(this._toolbarControls.INSTANT_EDIT);
             } else {
                 this._toolbarContainerElement.turnOffControl(this._toolbarControls.INSTANT_EDIT);
