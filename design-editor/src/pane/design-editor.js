@@ -253,56 +253,6 @@ class Model {
         return originalElementId;
     }
 
-    importTAUComm(networks) {
-        let tauCommCfg;
-        let tauCommScr;
-        let tauCommChanged = false;
-        networks.forEach((network) => {
-            let host = network.addr + ':9581';
-            if (this._tauCommHosts.indexOf(host) < 0) {
-                this._tauCommHosts.push(host);
-                tauCommChanged = true;
-            }
-        });
-
-        if (tauCommChanged) {
-            const head = this._DOM.querySelector('head');
-            const tauCommHostsStr = 'var TAUCOMM_HOSTS = ' + JSON.stringify(this._tauCommHosts) + ';';
-            tauCommCfg = head.querySelector('script[data-tau-comm-config]');
-            if (!tauCommCfg) {
-                tauCommCfg = this._DOM.createElement('script');
-                tauCommCfg.setAttribute('data-tau-comm-config', true);
-                // make sure the tauCommCfg is a top level of the document
-                if (head.firstElementChild) {
-                    head.insertBefore(tauCommCfg, head.firstElementChild);
-                } else {
-                    head.appendChild(tauCommCfg);
-                }
-            }
-
-            if (tauCommCfg.innerHTML.trim() !== tauCommHostsStr) {
-                tauCommCfg.innerHTML = tauCommHostsStr;
-                this.dirty();
-            }
-
-            /**
-             * @TODO adding libs to project temporary disabled
-             * as it causes serious hard conflicts in project
-             *
-            tauCommScr = head.querySelector('script[data-tau-comm]');
-            if (!tauCommScr) {
-                tauCommScr = this._DOM.createElement('script');
-                tauCommScr.setAttribute('type', 'text/javascript');
-                tauCommScr.setAttribute('data-tau-comm', true);
-                tauCommScr.setAttribute('src', 'libs/tau-comm.js');
-
-                projectManager.createLibFromTemplate('tau-comm.js');
-                head.appendChild(tauCommScr);
-            }
-            **/
-        }
-    }
-
     /**
      * Import behaviours from html file
      */
