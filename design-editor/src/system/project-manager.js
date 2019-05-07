@@ -109,7 +109,7 @@ class ProjectManager {
                             callback();
                         }
                     });
-                }, 'text');        
+                }, 'text');
             } else {
                 console.log('File: ' + name + ' already exists in destination.');
             }
@@ -264,7 +264,7 @@ class ProjectManager {
      * @param {Function} callback
      */
     getPageNames(callback) {
-        fs.readdir(pathUtils.createProjectURL("/"), (err, files) => {
+        fs.readdir(pathUtils.createProjectPath("/"), (err, files) => {
             callback(files.filter(file => file.match(/\.html$/)));
         });
     }
