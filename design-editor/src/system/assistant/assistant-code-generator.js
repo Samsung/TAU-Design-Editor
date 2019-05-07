@@ -221,7 +221,7 @@ class AssistantCodeGenerator {
      */
     getPageTransition(element, info, model) {
         info.content = Mustache.render(Sentences.pageTransition, info);
-        return this.getEventListener(element, info);
+        return this.getEventListener(element, info, model);
     }
 
     /**
@@ -232,7 +232,7 @@ class AssistantCodeGenerator {
      */
     getPopupOpen(element, info, model) {
         info.content = Mustache.render(Sentences.popupOpen);
-        return this.getEventListener(element, info);
+        return this.getEventListener(element, info, model);
     }
 
     /**
