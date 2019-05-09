@@ -1,6 +1,6 @@
 {
   "name": "design-editor",
-  "version": "0.3.31",
+  "version": "0.4.0",
   "description": "TAU Design editor",
   "main": ".",
   "scripts": {
