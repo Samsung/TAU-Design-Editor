@@ -23,8 +23,9 @@ import editor from '../editor';
 import {TooltipElement} from '../panel/tooltip-element';
 import {Devices} from '../system/devices';
 import utils from "../utils/utils";
+import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
-import path from 'path';
+import path, {relative} from 'path';
 
 const KEY_CODE = {
     DELETE: 46
@@ -106,7 +107,8 @@ class DesignEditor extends DressElement {
      * @param {string} path
      * @param {string} uri
      */
-    update(model, stringHTML, path, uri, networks) {
+    update(model, stringHTML, path, state, networks) {
+        var uri = state && pathUtils.joinPaths(state.basePath, relative('/projects/', state.fileUrl));
         console.log('design-editor-element.update', path, uri);
         var serverPath;
         /*
@@ -130,16 +132,13 @@ class DesignEditor extends DressElement {
         console.log('basePath', editor.project.getPaths());
 
         if (!stringHTML) {
-            if (this._model) {
-                stringHTML = this._model.export(true, null);
-            } else {
-                stringHTML = this._stringHTML || '';
-            }
+            stringHTML = this._model ? this._model.export(true, null) : (this._stringHTML || '');
         }
 
         this._stringHTML = stringHTML;
         this._uri = uri;
         this._path = path || basePath;
+        this._basePath = basePath.replace(/\\/g, '/') + '/';
 
         let profile = this.screenConfig.profile;
         console.log('profile in screen configuration: ' + profile);
@@ -172,7 +171,6 @@ class DesignEditor extends DressElement {
         }
 
         **/
-
         this._$iframe.attr('src', uri);
 
         // fill model document by HTML
@@ -180,14 +178,18 @@ class DesignEditor extends DressElement {
 
         this._model = model;
 
-        getAppConfig(appURI).then((res) => {
+        const configPath = (() => {
+            const catalogName = this.getBasePath().split('/').filter(elem => elem.length)[0];
+            return `/${catalogName}`;
+        })();
+
+        getAppConfig(configPath).then((res) => {
             const matches = /<tizen:profile[^"]+"([^"]+)[^>]+>/gi.exec(res.text);
             let configProfile = profile;
             if (matches && matches[1]) {
                 console.log('profile found in config.xml: ' + matches[1]);
                 configProfile = matches[1];
             }
-
             // init model, add data-id attributes
             if (!model.isInit()) {
                 console.log('model initializing');
@@ -220,10 +222,9 @@ class DesignEditor extends DressElement {
                         console.error('could not modify config.xml', err);
                     });
             }
-            this._basePath = basePath.replace(/\\/g, '/') + '/';
 
             //@TODO: this needs to be fixed
-            let finalBase = basePath + serverPath;
+            let finalBase = pathUtils.joinPaths(this.getBasePath(), serverPath);
             const globalData = utils.checkGlobalContext('globalData');
             if (window.vscode && globalData.host) {
                 console.log('finalBase:', globalData.host + serverPath);

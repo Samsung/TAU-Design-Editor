@@ -652,7 +652,6 @@ class Model {
         this.dirty();
     }
 
-
     /**
      * Move element
      * @param {string} id

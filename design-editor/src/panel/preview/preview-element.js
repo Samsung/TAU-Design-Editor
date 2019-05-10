@@ -46,7 +46,7 @@ class Preview extends DressElement {
      */
     _render(contents, basePath, uri, position, callback) {
         var self = this,
-            projectURL = path.createProjectURL(path.getFileName(uri, true), true);
+            projectURL = uri;//path.createProjectURL(path.getFileName(uri, true), true);
 
         this.createFromTemplate(TEMPLATE_PATH, {
             callback: () => {
