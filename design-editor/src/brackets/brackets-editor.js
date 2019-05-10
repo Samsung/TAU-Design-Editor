@@ -169,11 +169,10 @@ class BracketsEditor {
         const model = modelManager.update(state.fileUrl, true);
 
         console.log('update with state', state);
-        element.update(model, data, state.basePath, state.fileUrl, state.networks);
+        element.update(model, data, state.basePath, state, state.networks);
     }
 }
 
 const bracketsEditor = BracketsEditor.getInstance().initialize();
 
 export {BracketsEditor, bracketsEditor};
-
