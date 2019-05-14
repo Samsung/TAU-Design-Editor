@@ -222,9 +222,6 @@ class DesignEditor extends DressElement {
             }
             this._basePath = basePath.replace(/\\/g, '/') + '/';
 
-            if (networks) {
-                model.importTAUComm(networks);
-            }
             //@TODO: this needs to be fixed
             let finalBase = basePath + serverPath;
             const globalData = utils.checkGlobalContext('globalData');

@@ -7,3 +7,6 @@ npm-debug.log
 lib
 !atom-autocomplete-tizen/lib
 bower_components
+closet-component-packages/libs/closet
+prepare_DE.log
+

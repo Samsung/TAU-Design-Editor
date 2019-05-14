@@ -52,7 +52,6 @@ module.exports = {
     },
     'pageTemplate': {
         'empty-m': 'page-templates/mobile/page-empty',
-        'iot-empty-m': 'page-templates/mobile/page-iot-empty',
         'header-m': 'page-templates/mobile/page-header',
         'footer-m': 'page-templates/mobile/page-footer',
         'header-footer-m': 'page-templates/mobile/page-header-footer',

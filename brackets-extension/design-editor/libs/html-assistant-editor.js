@@ -101,7 +101,7 @@ class HTMLAssistantEditor extends DressElement {
 
     layout(x, y) {
         var width = this.$el.innerWidth(),
-            max = editor.isAtom() ? 300 : 15;
+            max = 55;
 
         this.$el.css({
             left: Math.max(x - width, max),
