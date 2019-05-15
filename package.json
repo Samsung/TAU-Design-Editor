@@ -4,6 +4,7 @@
   "description": "TAU Design editor",
   "main": ".",
   "scripts": {
+    "lint": "lint-diff $TRAVIS_COMMIT_RANGE",
     "test": "exit 0",
     "build-watt": "webpack --config tools/build.watt.config.js --config-name production",
     "build-watt-dev": "webpack --config tools/build.watt.config.js --config-name development",
@@ -31,6 +32,7 @@
     "eslint-plugin-react": "^7.11.1",
     "grunt": "^1.0.3",
     "less-loader": "^4.1.0",
+    "lint-diff": "^1.2.1",
     "subpackage": "^1.1.0",
     "webpack": ">=2.7.0",
     "webpack-cli": ">=2.0.13"

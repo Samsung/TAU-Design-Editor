@@ -8,6 +8,9 @@ node_js:
 
 jobs:
   include:
+    - stage: test
+      name: "Lint commit"
+      script: npm run lint
     - stage: "WATT"
       script: npm run build-watt 1> /dev/null
       os: linux
