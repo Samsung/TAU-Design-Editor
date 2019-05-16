@@ -33,6 +33,16 @@ npm run build-watt
 ```
 npm run build-vsc
 ```
+### Features
+- Drag&Drop the widget
+![](docs/Dragwidget.gif)
+- Preview
+![](docs/Preview.gif)
+- Structure Element
+![](docs/Structure.gif)
+- Newpage
+![](docs/Newpage.gif)
+
 ### Coding style tests
 
 Project has defined eslint rules (.eslintrc.js)
