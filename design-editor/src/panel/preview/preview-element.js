@@ -3,64 +3,62 @@
 import {StateManager} from '../../system/state-manager';
 import {DressElement} from '../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
-import path from "../../utils/path-utils";
+import pathUtils from "../../utils/path-utils";
+import fs from 'fs-extra';
+import path from 'path';
 
 const TEMPLATE_PATH = '/panel/preview/preview-element.html';
+
+/**
+ * Responsible for live-preview feature
+ * @module Preview 
+ */
 class Preview extends DressElement {
     /**
-     * Create callback
+     * Actions trigerred when Preview element is created 
+     * On Design Editor launching
      */
     onCreated() {
-        var self = this;
         this.eventsListeners = {};
     }
 
     /**
-     * attached callback
+     * Actions trigerred when preview mode is started
      */
     onAttached() {
-        var self = this;
-        self.eventsListeners.previewElementToolbarBackward = self.onClickBackward.bind(self);
-        eventEmitter.on(EVENTS.PreviewElementToolbarBackward, self.eventsListeners.previewElementToolbarBackward);
+        this.eventsListeners.previewElementToolbarBackward = this.onClickBackward.bind(this);
+        eventEmitter.on(EVENTS.PreviewElementToolbarBackward, this.eventsListeners.previewElementToolbarBackward);
     }
 
     /**
-     * detached callback
+     * Actions trigerred when preview mode is stopped
      */
     onDetached() {
-        var self = this;
-        if (self.eventsListeners.previewElementToolbarBackward) {
-            eventEmitter.removeListener(EVENTS.PreviewElementToolbarBackward, self.eventsListeners.previewElementToolbarBackward);
-            self.eventsListeners.previewElementToolbarBackward = null;
+        fs.deleteFile(this.previewPath);
+        if (this.eventsListeners.previewElementToolbarBackward) {
+            eventEmitter.removeListener(EVENTS.PreviewElementToolbarBackward, this.eventsListeners.previewElementToolbarBackward);
+            this.eventsListeners.previewElementToolbarBackward = null;
         }
     }
 
     /**
-     * Render
-     * @param {string} contents
-     * @param {string} basePath
-     * @param {string} uri
+     * Render preview screen in Design Editor
+     * @param {string} contents - full content of edited HTML file
+     * @param {string} basePath - 
      * @param {number} position
      * @param {Function} callback
      * @private
      */
-    _render(contents, basePath, uri, position, callback) {
-        var self = this,
-            projectURL = uri;//path.createProjectURL(path.getFileName(uri, true), true);
-
+    _render(contents, uri, position, callback) {
+        this.previewPath = this.createPreviewDocument(contents, path.dirname(uri));
         this.createFromTemplate(TEMPLATE_PATH, {
             callback: () => {
-                var $elem,
-                    $frame,
-                    iframeDocument;
+                const $frame = this.$el.find('.closet-preview-frame');
 
-                $frame = self.$el.find('.closet-preview-frame');
+                this.setProfileStyle(position, $frame);
 
-                self.setProfileStyle(position, $frame);
-
-                $frame.one('load', self.scrollIframe.bind(self, position, callback, $frame));
-
-                $frame.attr('src', projectURL);
+                $frame.one('load', this.scrollIframe.bind(this, position, callback, $frame));
+                $frame.attr('src', this.previewPath);
             }
         });
     }
@@ -78,7 +76,7 @@ class Preview extends DressElement {
         if ($targetFrame && editor) {
             contents = editor.getModel().export(false, null);
             position.scroll = $targetFrame.contents().find('.ui-scroller').scrollTop();
-            this._render(contents, editor.getBasePath(), editor.getURI(), position, callback);
+            this._render(contents, editor.getURI(), position, callback);
         }
     }
 
@@ -140,6 +138,12 @@ class Preview extends DressElement {
             event.keyName = 'back';
             contentDoc.body.dispatchEvent(event);
         }
+    }
+
+    createPreviewDocument(contents, location) {
+        const filePath = pathUtils.joinPaths(location, 'temporary-preview.html')
+        fs.writeFile(filePath, contents, (err) => {throw err});
+        return filePath;
     }
 }
 
