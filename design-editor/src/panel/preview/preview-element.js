@@ -3,9 +3,10 @@
 import {StateManager} from '../../system/state-manager';
 import {DressElement} from '../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
-import pathUtils from "../../utils/path-utils";
+import pathUtils from '../../utils/path-utils';
 import fs from 'fs-extra';
 import path from 'path';
+import { promisify } from 'util';
 
 const TEMPLATE_PATH = '/panel/preview/preview-element.html';
 
@@ -14,6 +15,7 @@ const TEMPLATE_PATH = '/panel/preview/preview-element.html';
  * @module Preview 
  */
 class Preview extends DressElement {
+
     /**
      * Actions trigerred when Preview element is created 
      * On Design Editor launching
@@ -34,7 +36,7 @@ class Preview extends DressElement {
      * Actions trigerred when preview mode is stopped
      */
     onDetached() {
-        fs.deleteFile(this.previewPath);
+        fs.deleteFile(this.fsPath);
         if (this.eventsListeners.previewElementToolbarBackward) {
             eventEmitter.removeListener(EVENTS.PreviewElementToolbarBackward, this.eventsListeners.previewElementToolbarBackward);
             this.eventsListeners.previewElementToolbarBackward = null;
@@ -43,14 +45,15 @@ class Preview extends DressElement {
 
     /**
      * Render preview screen in Design Editor
-     * @param {string} contents - full content of edited HTML file
-     * @param {string} basePath - 
-     * @param {number} position
-     * @param {Function} callback
+     * @param {string} contents full content of edited HTML file
+     * @param {string} basePath absolute path starting from project root
+     * @param {string} uri absolute path to renered file
+     * @param {number} position project position for scroll
+     * @param {function} callback 
      * @private
      */
-    _render(contents, uri, position, callback) {
-        this.previewPath = this.createPreviewDocument(contents, path.dirname(uri));
+    _render(contents, basePath, uri, position, callback) {
+        const preview = this.createPreviewDocument(contents, path.dirname(path.relative(basePath, uri)));
         this.createFromTemplate(TEMPLATE_PATH, {
             callback: () => {
                 const $frame = this.$el.find('.closet-preview-frame');
@@ -58,15 +61,20 @@ class Preview extends DressElement {
                 this.setProfileStyle(position, $frame);
 
                 $frame.one('load', this.scrollIframe.bind(this, position, callback, $frame));
-                $frame.attr('src', this.previewPath);
+                preview
+                    .then((previewPath) => {
+                        $frame.attr('src', previewPath);
+                    }).catch((err) => {
+                        console.error(err);
+                    });
             }
         });
     }
 
     /**
-     * Show
-     * @param {Editor} editor
-     * @param {Function} callback
+     * Show preview mode
+     * @param {Editor} editor editor instance
+     * @param {Function} callback 
      */
     show({editor, callback}) {
         var $targetFrame = editor && editor.getDesignViewIframe(),
@@ -76,13 +84,13 @@ class Preview extends DressElement {
         if ($targetFrame && editor) {
             contents = editor.getModel().export(false, null);
             position.scroll = $targetFrame.contents().find('.ui-scroller').scrollTop();
-            this._render(contents, editor.getURI(), position, callback);
+            this._render(contents, editor.getBasePath(), editor.getURI(), position, callback);
         }
     }
 
     /**
-     * Scroll iframe
-     * @param {number} position
+     * Scroll iframe to proper position
+     * @param {Object} position
      * @param {Function} callback
      * @param {jQuery} $frame
      */
@@ -140,10 +148,20 @@ class Preview extends DressElement {
         }
     }
 
+    /**
+     * Add temporary document for preview content
+     * @param {string} contents whole HTML code of currently edited document
+     * @param {string} location path to directory where 
+     * currently edited HTML file exists
+     * @returns {string} absolute path to temporary file
+     */
     createPreviewDocument(contents, location) {
-        const filePath = pathUtils.joinPaths(location, 'temporary-preview.html')
-        fs.writeFile(filePath, contents, (err) => {throw err});
-        return filePath;
+        const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
+            writeFile = promisify(fs.writeFile);
+        this.fsPath = pathUtils.createProjectPath(relativePathToFile);
+        return writeFile(this.fsPath, contents).then(() => {
+            return pathUtils.createProjectPath(relativePathToFile, true);
+        }).catch((err) => {throw err;});
     }
 }
 
