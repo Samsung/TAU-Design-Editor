@@ -6,10 +6,6 @@
   "keywords": [],
   "repository": "http://suprem.sec.samsung.net/gerrit/owe/fwk",
   "license": "MIT",
-  "scripts": {
-    "lint": "eslint -c .eslintrc.js . && jscs .",
-    "lintfix": "eslint -c .eslintrc.js . --fix"
-  },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
@@ -34,8 +30,6 @@
     "babel-polyfill": "^6.9.1",
     "babelify": "^7.3.0",
     "browserify": "^13.1.0",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^3.1.0",
     "express": "^4.14.0",
     "express-browserify": "^1.0.2",
     "glob": "^7.0.5",
