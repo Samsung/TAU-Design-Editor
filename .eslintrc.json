@@ -1,4 +1,5 @@
 {
+    "root": true,
     "env": {
         "browser": true,
         "commonjs": true,
@@ -29,10 +30,13 @@
         "prefer-arrow-callback": "error",
         "prefer-template": "error",
         "no-unused-expressions": "error",
-        "max-len": ["error", {"code": 80}],
+        "max-len": ["error", {"code": 120}],
         "no-multiple-empty-lines": "error",
         "no-trailing-spaces": "error",
         "eol-last":"error",
         "lines-between-class-members":"error"
-        }
+        },
+        "parserOptions": {
+            "sourceType": "module"
+        }   
 }
