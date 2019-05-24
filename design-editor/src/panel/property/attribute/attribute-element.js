@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use babel';
 
 import fs from 'fs';
@@ -526,11 +527,11 @@ class Attribute extends DressElement {
             const reader = new FileReader();
             reader.addEventListener('loadend', event => {
                 if (event.target.readyState === FileReader.DONE) {
-                    const dir = window.top.globalData.fileUrl.replace(/[^\/]+$/gi, '');
+                    const dir = utils.checkGlobalContext('globalData').fileUrl.replace(/[^\/]+$/gi, '');
                     const writepath = (dir + '/images/' + file.name).replace(/\/+/gi, '/');
                     const readpath = ('images/' + file.name).replace(/\/+/gi, '/');
 
-                    window.top.writeFile(
+                    utils.checkGlobalContext('writeFile')(
                         writepath,
                         event.target.result,
                         {
