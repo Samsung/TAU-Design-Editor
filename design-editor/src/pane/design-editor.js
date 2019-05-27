@@ -272,8 +272,8 @@ class Model {
 	 * Prevent activation library if unnecesery
 	 */
 	_initBehaviorState() {
-		for(const i in this._behaviorstate) {
-			if(typeof this._behaviorstate[i] == 'object') {
+		for (const i in this._behaviorstate) {
+			if (typeof this._behaviorstate[i] == 'object') {
 				this._behaviorstate[i].element = this._DOM.querySelector(this._behaviorstate[i].selector);
 			}
 		}
@@ -284,7 +284,7 @@ class Model {
 	}
 
 	initBehaviors() {
-		if(!this._behaviorstate.active) {
+		if (!this._behaviorstate.active) {
 			const behaviorRunner = this._libraryCreator
 				.createLibrary('behaviour.js', this._behaviorstate.runner.element);
 			this.behaviorConfig = this._libraryCreator
@@ -420,7 +420,7 @@ class Model {
 				img = [...new Set(style.textContent.match(imgPattern))],
 				selector = [...new Set(style.textContent.match(classpattern))];
 			if (color.length !== 0) {
-				for(let i = 0; i < color.length; i++) {
+				for (let i = 0; i < color.length; i++) {
 					this._checkbox[selector[i]] = {
 						color: color[i].trim(),
 						imgDisabled: img ? img[2 * i] : undefined,

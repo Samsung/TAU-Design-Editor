@@ -18,6 +18,7 @@ class JSLibrary extends Library {
 	constructor(fileName, script) {
 		super(fileName);
 		this.element = script || this.createHTMLElement();
+		this.type = 'application/javascript';
 	}
 
 	/**
@@ -26,8 +27,8 @@ class JSLibrary extends Library {
 	 */
 	createHTMLElement() {
 		this.element = this.element || document.createElement('script');
-		this.setAttribute('type', 'application/javascript');
-		if(this._fileName) {
+		this.setAttribute('type', this.type);
+		if (this._fileName) {
 			this.setAttribute('src', this.getAbsolutePath());
 		}
 		return this.element;
@@ -35,7 +36,7 @@ class JSLibrary extends Library {
 
 
 	insertLibContent(callback) {
-		if(this._fileName) {
+		if (this._fileName) {
 			this.copyLibFile(callback);
 		} else {
 			this.element.textContent = this.content;

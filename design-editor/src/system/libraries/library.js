@@ -51,7 +51,6 @@ class Library {
 	 */
 	getAbsolutePath() {
 		const name = this._fileName || '';
-		console.log(Library.getLibrariesRoot());
 		return pathUtils.joinPaths(Library.getLibrariesRoot(), name);
 	}
 
@@ -80,7 +79,7 @@ class Library {
 
 	copyLibFile(callback) {
 		fs.exists(this.getAbsolutePath(), (exists) => {
-			if(!exists) {
+			if (!exists) {
 				this.getTemplateContent()
 					.then((text) => {
 						return writeFile(this.getAbsolutePath(), text);
