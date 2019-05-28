@@ -7,22 +7,22 @@ let _instance = null;
 const INTERNAL_ID_ATTRIBUTE = 'data-id';
 
 function isElementElementSelectable($element, componentPackage, filter) {
-	return (
-		$element.length &&
-        $element.attr(INTERNAL_ID_ATTRIBUTE) &&
-        ElementDetector._isSelectable(componentPackage, filter)
-	);
+	return $element.length
+	&& $element.attr(INTERNAL_ID_ATTRIBUTE)
+	&& ElementDetector._isSelectable(componentPackage, filter);
 }
 
 class ElementDetector {
-
+	/**
+     * Constructor
+     */
 	constructor() {
 		this._componentPackages = packageManager.getPackages(Package.TYPE.COMPONENT);
 	}
 
 	/**
-     * Return instance (it's a singleton)
-     * @returns {ElementDetector}
+     * Return instance
+     * @returns {*}
      */
 	static getInstance() {
 		if (_instance === null) {
@@ -40,9 +40,7 @@ class ElementDetector {
      * @protected
      */
 	static _isSelectable(pack, filter) {
-		return pack && (
-			!filter || filter === Package.TYPE.COMPONENT || filter === pack.options.type
-		);
+		return pack && (!filter || filter === Package.TYPE.COMPONENT || pack.options.type === filter);
 	}
 
 	/**
@@ -59,26 +57,24 @@ class ElementDetector {
 			found = false;
 
 		if ($currentTarget.length && !$currentTarget.is('.lock, .lock *')) {
-
-			while (!found && $currentTarget && $currentTarget.length) {
+			do {
 				matchedPackage = this._componentPackages.getPackageByElement($currentTarget);
 				if (isElementElementSelectable($currentTarget, matchedPackage, filter)) {
 					found = true;
+					break;
 				} else if (matchedPackage && matchedPackage.options.baseElementSelector) {
 					$baseElement = $currentTarget.find(matchedPackage.options.baseElementSelector);
-
 					if (isElementElementSelectable($baseElement, matchedPackage, filter)) {
 						baseElement = $baseElement.get(0);
 						// copy internal ID on wrapper element
 						$currentTarget.attr(INTERNAL_ID_ATTRIBUTE, $baseElement.attr(INTERNAL_ID_ATTRIBUTE));
 						found = true;
+						break;
 					}
 				}
-				$currentTarget = $currentTarget.parent();
-			}
+			} while (found === false && ($currentTarget = $currentTarget.parent()) && $currentTarget.length);
 
 		}
-
 		return found ? {
 			$element: $currentTarget,
 			package: matchedPackage,
