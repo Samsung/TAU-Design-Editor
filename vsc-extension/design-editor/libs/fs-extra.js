@@ -1,4 +1,5 @@
 const utils = require('../../../design-editor/src/utils/utils').default;
+const path = require('path');
 
 const fsEndpoint = utils.urlJoin(window.location.origin, 'fs');
 const fileEndpoint = utils.urlJoin(fsEndpoint, 'file');
@@ -16,6 +17,11 @@ function __fetchHelper(url, options, type, callback) {
         'Content-Type': 'application/json',
         'Accept': type === 'text' ? 'text/html' : 'application/json'
     };
+
+	if (options['Content-Type'] !== undefined) {
+		headers['Content-Type'] = options['Content-Type'];
+		delete options['Content-Type'];
+	}
 
     return fetch(url, Object.assign({headers}, options))
         .then(response => callback && (type === 'text' ? response.text() : response.json()))
@@ -92,10 +98,60 @@ function makeDir(path, callback) {
 function writeFile(path, data, callback) {
     const options = {
         method: 'POST',
-        body: JSON.stringify({name: path, data})
+		body: data,
+		'Content-Type': checkFileExt(path)
     };
 
     __fetchHelper(fileEndpoint, options, 'text', callback);
+}
+
+/**
+ * Returns extension of the file which should be send on a server
+ *
+ * @param {String} path given path
+ */
+
+function checkFileExt(filePath) {
+	const pathExt = path.extname(filePath);
+	switch (pathExt) {
+	case '.css':
+		return 'text/css';
+	case '.html':
+		return 'text/html';
+	case '.js':
+		return 'text/javascript';
+	case '.jpeg':
+	case '.jpg':
+		return 'image/jpeg';
+	case '.gif':
+		return 'image/gif';
+	case '.png':
+		return 'image/png';
+	case '.tiff':
+		return 'image/tiff';
+	case '.svg':
+		return 'image/svg+xml';
+	case '.aac':
+		return 'audio/aac';
+	case '.mp3':
+		return 'audio/mpeg';
+	case '.oga':
+		return 'audio/ogg';
+	case '.wav':
+		return 'audio/wav';
+	case '.avi':
+		return 'video/x-msvideo';
+	case '.mpeg':
+		return 'video/mpeg';
+	case '.ogv':
+		return 'video/ogg';
+	case '.3gp':
+		return 'video/3gpp';
+	case '.json':
+		return 'application/json';
+	default:
+		return 'text/plain';
+	}
 }
 
 /**
