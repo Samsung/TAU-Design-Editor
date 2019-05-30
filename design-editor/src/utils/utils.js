@@ -54,12 +54,12 @@ export default {
 		timeoutThreshold = timeoutThreshold || 2500;
 
 		const timeoutTriggerPromise = new Promise((_, reject) => {
-            const timeoutId = setTimeout(() => {
-                clearTimeout(timeoutId);
-                reject(new Error(`Timed out in ${timeoutThreshold} ms.`));
-            }, timeoutThreshold);
+			const timeoutId = setTimeout(() => {
+				clearTimeout(timeoutId);
+				reject(new Error(`Timed out in ${timeoutThreshold} ms.`));
+			}, timeoutThreshold);
 		});
 
-		return Promise.race(timeoutTriggerPromise, promise);
+		return Promise.race([timeoutTriggerPromise, promise]);
 	}
 }
