@@ -18,8 +18,15 @@ export default {
 		const projectPath = this.createProjectPath(filePath, addProjectId);
 		return new URL(projectPath, origin);
 	},
+	/**
+	 * Returns full path for resource specified by filePath
+	 * @param {string} filePath - path of the resource
+	 * @param {boolean} addProjectId - add id after 'projects' in path
+	 * (for paths resolved by WATT)
+	 * @returns {string} full path for resource specified by filePath
+	 */
 	createProjectPath(filePath = '', addProjectId) {
-		const projectId = utils.checkGlobalContext('globalData').projectId;
+		const { projectId } = utils.checkGlobalContext('globalData');
 		return this.joinPaths(labels.getProjectRoot(projectId, addProjectId), filePath);
 	},
 
