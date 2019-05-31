@@ -102,7 +102,6 @@ class Behavior extends DressElement {
      */
 	_onClickAdd() {
 		const model = appManager.getActiveDesignEditor().getModel();
-		model.initBehaviors();
 		this.createFromTemplate(BEHAVIOUR_ITEM_TEMPLATE_PATH, {
 			before: this._$list.find('.li-add-button'),
 			callback: ($content) => {

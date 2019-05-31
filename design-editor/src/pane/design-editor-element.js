@@ -22,7 +22,7 @@ import {componentGenerator} from './component-generator';
 import editor from '../editor';
 import {TooltipElement} from '../panel/tooltip-element';
 import {Devices} from '../system/devices';
-import utils from "../utils/utils";
+import utils from '../utils/utils';
 import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
 import path, {relative} from 'path';
