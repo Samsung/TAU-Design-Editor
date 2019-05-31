@@ -72,7 +72,8 @@ const relativeAliases = [
 	['jquery', 'design-editor/node_modules/jquery/dist/jquery.js'],
 	['jquery-ui', 'design-editor/node_modules/jquery-ui/jquery-ui.js'],
 	['assistant-view', 'vsc-extension/design-editor/libs/assistant-view-manager.js'],
-	['html-assistant-editor', 'vsc-extension/design-editor/libs/html-assistant-editor.js']
+	['html-assistant-editor', 'vsc-extension/design-editor/libs/html-assistant-editor.js'],
+	['@', 'vsc-extension/design-editor']
 ];
 
 const production = {

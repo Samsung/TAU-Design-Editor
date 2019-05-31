@@ -55,7 +55,8 @@ const relativeAliases = [
 	['jquery', 'design-editor/node_modules/jquery/dist/jquery.js'],
 	['jquery-ui', 'design-editor/node_modules/jquery-ui/jquery-ui.js'],
 	['assistant-view', 'brackets-extension/design-editor/libs/assistant-view/assistant-view-manager.js'],
-	['html-assistant-editor', 'brackets-extension/design-editor/libs/html-assistant-editor.js']
+	['html-assistant-editor', 'brackets-extension/design-editor/libs/html-assistant-editor.js'],
+	['@', 'brackets-extension/design-editor']
 ];
 
 const production = {
