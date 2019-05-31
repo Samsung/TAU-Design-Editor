@@ -1,8 +1,9 @@
+// @ts-nocheck
 'use babel';
 
 import path from 'path';
 import labels from 'labels';
-import utils from './utils'
+import utils from './utils';
 
 const origin = window.location.origin || '';
 
@@ -13,12 +14,12 @@ export default {
 	 * @param {string} filePath relative path to file
 	 * @returns {URL} url to file
 	 */
-	createProjectURL(filePath = "", addProjectId) {
+	createProjectURL(filePath = '', addProjectId) {
 		const projectPath = this.createProjectPath(filePath, addProjectId);
 		return new URL(projectPath, origin);
 	},
-	createProjectPath(filePath = "", addProjectId) {
-		const projectId = utils.checkGlobalContext('globalData').projectId
+	createProjectPath(filePath = '', addProjectId) {
+		const projectId = utils.checkGlobalContext('globalData').projectId;
 		return this.joinPaths(labels.getProjectRoot(projectId, addProjectId), filePath);
 	},
 
@@ -54,4 +55,4 @@ export default {
 		return ext ? path.basename(pathName) : path.basename(pathName, path.extname(pathName));
 	}
 
-}
+};

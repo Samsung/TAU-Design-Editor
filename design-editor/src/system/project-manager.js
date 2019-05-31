@@ -8,7 +8,6 @@ import $ from 'jquery';
 import editor from '../editor';
 import {EVENTS, eventEmitter} from '../events-emitter';
 import {appManager} from '../app-manager';
-import utils from '../utils/utils';
 import pathUtils from '../utils/path-utils';
 
 const PROJECT_INFO_FILE_NAME = 'config.xml';
@@ -42,7 +41,7 @@ class ProjectManager {
 	createLibFromTemplate(name, callback) {
 		const projectPath = this.getActiveProjectInfo().projectPath,
 			src = `${appManager.getAppPath().src  }/templates/${  name}`,
-			dst = `${projectPath  }/libs/${  name}`;
+			dst = `${projectPath  }/lib/${  name}`;
 
 		console.log(`[GET] createLibFromTemplate: ${  src  } ...`);
 
