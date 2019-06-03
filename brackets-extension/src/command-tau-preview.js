@@ -37,6 +37,7 @@ define(function (require, exports, module) {
         toggleCmd,
         visible = false,
         realVisibility = false,
+        isRemoteSample = false,
         commandPreference = null;
 
     function _calcScrollPos() {
@@ -345,6 +346,9 @@ define(function (require, exports, module) {
             // Insert CSS for this extension
             ExtensionUtils.loadStyleSheet(module, '../styles/tauPreview.css');
 
+            // Check if sample was opened using /demos API.
+            isRemoteSample = PreferencesManager.getViewState('projectType') === 'demo' ? true : false;
+
             // Add toolbar icon
             $icon = $('<a>')
                 .attr({
@@ -354,6 +358,7 @@ define(function (require, exports, module) {
                 .css({
                     display: 'none'
                 })
+                .addClass(isRemoteSample ? 'previewMode' : 'editMode')
                 .click(_toggleVisibility)
                 .appendTo($('#main-toolbar .buttons'));
 

@@ -1,7 +1,14 @@
 /* Toolbar icon */
 #tau-preview-icon {
-    -webkit-mask-image: url(images/fa-desktop.png);
     background-color: #bbb;
+}
+
+#tau-preview-icon.editMode {
+    -webkit-mask-image: url(images/fa-desktop.png)
+}
+
+#tau-preview-icon.previewMode {
+    -webkit-mask-image: url(images/fa-play.png)
 }
 
 #tau-preview-icon.active {
