@@ -61,7 +61,7 @@ module.exports = class DocumentManager {
 			fsExtra.readFile(fullPath, undefined, (error, content) => {
 				if (error) reject(error);
 				resolve(content);
-			})
+			});
 		});
 	}
 };
