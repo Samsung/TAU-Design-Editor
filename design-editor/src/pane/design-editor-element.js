@@ -388,7 +388,7 @@ class DesignEditor extends DressElement {
 			Hide: this._onHideElement,
 			ChangeProfile: this._onChangeProfile,
 			ChangeShape: this._onChangeShape,
-			SaveFile: this._onSaveFile
+			DocumentSave: this._onSaveFile
 		};
 
 		Object.keys(this._callback).forEach(callbackName => {
@@ -505,7 +505,7 @@ class DesignEditor extends DressElement {
 		eventEmitter.removeListener(EVENTS.StyleInserted, this._callback.StyleInserted);
 		eventEmitter.removeListener(EVENTS.Show, this._callback.Show);
 		eventEmitter.removeListener(EVENTS.Hide, this._callback.Hide);
-		eventEmitter.removeListener(EVENTS.DocumentSave, this._callback.SaveFile);
+		eventEmitter.removeListener(EVENTS.DocumentSave, this._callback.DocumentSave);
 	}
 
 	/**
