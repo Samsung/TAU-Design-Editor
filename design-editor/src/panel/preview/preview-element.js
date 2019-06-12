@@ -39,7 +39,10 @@ class Preview extends DressElement {
 	onDetached() {
 		fs.deleteFile(this.fsPath);
 		if (this.eventsListeners.previewElementToolbarBackward) {
-			eventEmitter.removeListener(EVENTS.PreviewElementToolbarBackward, this.eventsListeners.previewElementToolbarBackward);
+			eventEmitter.removeListener(
+				EVENTS.PreviewElementToolbarBackward,
+				this.eventsListeners.previewElementToolbarBackward
+			);
 			this.eventsListeners.previewElementToolbarBackward = null;
 		}
 	}
@@ -75,6 +78,7 @@ class Preview extends DressElement {
 					.then((previewPath) => {
 						$frame.attr('src', previewPath);
 					}).catch((err) => {
+						// eslint-disable-next-line no-console
 						console.error(err);
 					});
 			}
@@ -87,9 +91,9 @@ class Preview extends DressElement {
 	 * @param {Function} callback
 	 */
 	show({editor, callback}) {
-		var $targetFrame = editor && editor.getDesignViewIframe(),
-			position = ($targetFrame && $targetFrame[0].getBoundingClientRect()) || {top: 0, left: 0},
-			contents = '';
+		const $targetFrame = editor && editor.getDesignViewIframe(),
+			position = ($targetFrame && $targetFrame[0].getBoundingClientRect()) || {top: 0, left: 0};
+		let contents = '';
 
 		if ($targetFrame && editor) {
 			contents = editor.getModel().export(false, null);
@@ -117,36 +121,36 @@ class Preview extends DressElement {
 	 * @param  {jQuery} $frame
 	 */
 	setProfileStyle(position, $frame) {
-	  var $elem = this.$el.find('.closet-preview-container'),
-		  screenConfig = StateManager.get('screen', {}),
-		  ratio = screenConfig.ratio,
-		  styles = {
-			  width: screenConfig.width + 'px',
-			  height: screenConfig.height + 'px',
-			  transform: 'scale(' + ratio + ') translate(-50% -50%)'
-		  };
+		const $elem = this.$el.find('.closet-preview-container'),
+			screenConfig = StateManager.get('screen', {}),
+			ratio = screenConfig.ratio,
+			styles = {
+				width: `${screenConfig.width}px`,
+				height: `${screenConfig.height}px`,
+				transform: `scale(${ratio}) translate(-50% -50%)`
+			};
 
-	  if (position.top) {
-		  styles.top = position.top;
-		  styles.left = position.left;
-		  styles.transform = 'scale(' + ratio + ')';
-	  }
+		if (position.top) {
+			styles.top = position.top;
+			styles.left = position.left;
+			styles.transform = `scale(${ratio})`;
+		}
 
-	  $elem.addClass('closet-preview-shape-' + screenConfig.shape)
-		  .removeClass('closet-preview-profile-mobile')
-		  .removeClass('closet-preview-profile-wearable')
-		  .addClass('closet-preview-profile-' + screenConfig.profile)
-		  .css(styles);
+		$elem.addClass(`closet-preview-shape-${screenConfig.shape}`)
+			.removeClass('closet-preview-profile-mobile')
+			.removeClass('closet-preview-profile-wearable')
+			.addClass(`closet-preview-profile-${screenConfig.profile}`)
+			.css(styles);
 
-	  $frame.contents().find('head').append();
+		$frame.contents().find('head').append();
 	}
 
 	/**
 	 * Click backward callback
 	 */
 	onClickBackward() {
-		var contentDoc = this.$el.find('.closet-preview-frame')[0].contentDocument,
-			event;
+		const contentDoc = this.$el.find('.closet-preview-frame')[0].contentDocument;
+		let event;
 
 		if (contentDoc) {
 			event = new CustomEvent('tizenhwkey', {
