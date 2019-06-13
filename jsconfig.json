@@ -1,5 +1,5 @@
 {
-    "exclude": ["node_modules"],
+    "exclude": ["node_modules", "dist", "contents"],
     "compilerOptions": {
         "paths": {
             "@/*": ["./design-editor/src/*"]

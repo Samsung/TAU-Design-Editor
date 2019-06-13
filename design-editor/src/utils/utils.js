@@ -3,7 +3,7 @@
 const path = require('path');
 const url = require('url');
 
-export default {
+module.exports = {
 	/**
 	* Gets global variable name depends if it is in window or window.top
  	* @param  {string} variableName global variable name
@@ -62,4 +62,4 @@ export default {
 
 		return Promise.race([timeoutTriggerPromise, promise]);
 	}
-}
+};

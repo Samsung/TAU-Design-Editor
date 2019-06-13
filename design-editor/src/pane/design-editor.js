@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 'use babel';
 
 import $ from 'jquery';
 import {projectManager} from '../system/project-manager';
 import {EVENTS, eventEmitter} from '../events-emitter';
 import {StateManager} from '../system/state-manager';
+import LibraryCreator from '../system/libraries/library-creator';
 import utils from '../utils/utils';
 import pathUtils from '../utils/path-utils';
 
@@ -221,22 +223,23 @@ function convertFromUpperCase(letter) {
 }
 
 class Model {
-    /**
+	/**
      * Constructor
      */
-    constructor() {
-        this._DOM = null;
-        this._history = [];
-        this._undoHistory = [];
-        this._keyframes = {};
-        this._keyframeId = null;
-        this._animations = [];
-        this._animationGroups = new Map();
-        this._behaviors = {};
-        this._tauCommHosts = [];
-        this._checkbox = {};
-        this._dirty = false;
-    }
+	constructor() {
+		this._DOM = null;
+		this._history = [];
+		this._undoHistory = [];
+		this._keyframes = {};
+		this._keyframeId = null;
+		this._animations = [];
+		this._animationGroups = new Map();
+		this._behaviors = {};
+		this._tauCommHosts = [];
+		this._checkbox = {};
+		this._dirty = false;
+		this._creator = new LibraryCreator();
+	}
 
     /**
      * Generate id
@@ -939,7 +942,8 @@ class Model {
         //     this._DOM.head.appendChild(rtypeScript);
         // }
 
-        this._DOM.body.appendChild(scriptRunner);
+		this._DOM.body.appendChild(scriptRunner);
+		this.addLibrary('helper.js');
         for (const [key, value] of this._animationGroups) {
             styleContent += this.exportAnimationName(key, value.animations);
         }
@@ -980,6 +984,21 @@ class Model {
 
         return removeDataId(this._DOM.cloneNode(true)).documentElement.outerHTML;
     }
+
+	addLibrary(libraryName) {
+		const helper = this._creator.createLibrary(libraryName);
+		if (!this._DOM.querySelector(helper.getSelector())) {
+			this._DOM.head.appendChild(
+				helper.createHTMLElement(
+					utils.checkGlobalContext('globalData').fileUrl
+				)
+			);
+		}
+		helper.insertLibContent(() => {
+			// eslint-disable-next-line no-console
+			console.log(`[OK] File ${libraryName} copied!`);
+		});
+	}
 
     /**
      * Export HTML

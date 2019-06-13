@@ -93,10 +93,9 @@ class Preview extends DressElement {
 	show({editor, callback}) {
 		const $targetFrame = editor && editor.getDesignViewIframe(),
 			position = ($targetFrame && $targetFrame[0].getBoundingClientRect()) || {top: 0, left: 0};
-		let contents = '';
 
 		if ($targetFrame && editor) {
-			contents = editor.getModel().export(false, null);
+			const contents = editor.getModel().export(false, null);
 			position.scroll = $targetFrame.contents().find('.ui-scroller').scrollTop();
 			this._render(contents, editor.getBasePath(), editor.getURI(), position, callback);
 		}
