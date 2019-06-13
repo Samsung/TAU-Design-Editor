@@ -1,6 +1,6 @@
 {
   "label": "Graph",
-  "selector": ".ui-iot-graph",
+  "selector": ".ui-graph",
   "attachable": true,
   "resizable": true,
   "type": "standalone-component",
@@ -26,7 +26,7 @@
     "./libs/tau/libs/tauCharts.min.js",
     "./libs/tau/libs/tauCharts.min.css"
   ],
-  "template": "<div class=\"ui-iot-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>",
+  "template": "<div class=\"ui-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>",
   "generator": {
     "constructor": "tau.widget.Graph",
     "parameter": {
@@ -90,11 +90,11 @@
     {
       "icon": "./styles/time-series-chart.png",
       "name": "Time series",
-      "template": "<div class=\"ui-iot-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>"
+      "template": "<div class=\"ui-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>"
     }, {
       "icon": "./styles/bar-chart.png",
       "name": "Multiple series bar chart",
-      "template":"<div class=\"ui-iot-graph\" data-mode=\"continuous\" data-graph=\"bar\" data-color=\"#FF0000,#00FF00\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"order\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value='[{\"x\":1,\"y\":15,\"label\":\"series 1\"},{\"x\":1,\"y\":8,\"label\":\"series 2\"},{\"x\":2,\"y\":18,\"label\":\"series 1\"},{\"x\":2,\"y\":20,\"label\":\"series 2\"},{\"x\":3,\"y\":0,\"label\":\"series 1\"},{\"x\":3,\"y\":9,\"label\":\"series 2\"},{\"x\":4,\"y\":12,\"label\":\"series 1\"},{\"x\":4,\"y\":19,\"label\":\"series 2\"}]'></div>"
+      "template":"<div class=\"ui-graph\" data-mode=\"continuous\" data-graph=\"bar\" data-color=\"#FF0000,#00FF00\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"order\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value='[{\"x\":1,\"y\":15,\"label\":\"series 1\"},{\"x\":1,\"y\":8,\"label\":\"series 2\"},{\"x\":2,\"y\":18,\"label\":\"series 1\"},{\"x\":2,\"y\":20,\"label\":\"series 2\"},{\"x\":3,\"y\":0,\"label\":\"series 1\"},{\"x\":3,\"y\":9,\"label\":\"series 2\"},{\"x\":4,\"y\":12,\"label\":\"series 1\"},{\"x\":4,\"y\":19,\"label\":\"series 2\"}]'></div>"
     }
   ],
   "draggable": true,
