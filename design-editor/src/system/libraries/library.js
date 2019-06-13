@@ -31,8 +31,8 @@ class Library {
 	 * @static
 	 * @returns {string} path to main folder with libs
 	 */
-	static getLibrariesRoot() {
-		return pathUtils.createProjectPath(LIB_DIRECTORY);
+	static getLibrariesRoot(addHash) {
+		return pathUtils.createProjectPath(LIB_DIRECTORY, addHash);
 	}
 
 	/**
@@ -49,9 +49,9 @@ class Library {
 	 * Gets absolute path started from the project root
 	 * @returns {string} absolute path to specific lib
 	 */
-	getAbsolutePath() {
+	getAbsolutePath(addHash) {
 		const name = this._fileName || '';
-		return pathUtils.joinPaths(Library.getLibrariesRoot(), name);
+		return pathUtils.joinPaths(Library.getLibrariesRoot(addHash), name);
 	}
 
 	/**
@@ -106,6 +106,14 @@ class Library {
 	 */
 	insertLibContent() {
 		throw new Error('Method insertLibContent has to be implemented');
+	}
+
+	/**
+	 * Gets element selector
+	 * @abstract
+	 */
+	getSelector() {
+		throw new Error('Method getSelector should be implemented');
 	}
 }
 

@@ -240,8 +240,8 @@ class DesignEditor extends DressElement {
 				iframeDocument.write(
 					this._model.getHTML()
 						.replace('<html', '<html data-project="closet"')
-						.replace(/(<head[^>]*>)/, '$1<base href="' + finalBase +
-							'/" data-project-path="true"><style>.using-alternative-selector{opacity:0.4;}</style>')
+						.replace(/(<head[^>]*>)/, `$1<base href="${  this.getBasePath()
+						}/" data-project-path="true"><style>.using-alternative-selector{opacity:0.4;}</style>`)
 				);
 				iframeDocument.close();
 
