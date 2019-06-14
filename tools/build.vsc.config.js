@@ -72,7 +72,8 @@ const relativeAliases = [
 	['jquery', 'design-editor/node_modules/jquery/dist/jquery.js'],
 	['jquery-ui', 'design-editor/node_modules/jquery-ui/jquery-ui.js'],
 	['assistant-view', 'vsc-extension/design-editor/libs/assistant-view-manager.js'],
-	['html-assistant-editor', 'vsc-extension/design-editor/libs/html-assistant-editor.js']
+	['html-assistant-editor', 'vsc-extension/design-editor/libs/html-assistant-editor.js'],
+	['@', 'vsc-extension/design-editor']
 ];
 
 const production = {
@@ -98,18 +99,7 @@ const production = {
 					{
 						loader: 'babel-loader',
 						options: {
-							plugins: [
-								'transform-es2015-parameters',
-								'transform-es2015-spread',
-								'transform-es2015-arrow-functions',
-								'transform-es2015-block-scoped-functions',
-								'transform-es2015-block-scoping',
-								'check-es2015-constants',
-								'transform-es2015-destructuring',
-								'transform-es2015-literals',
-								'transform-es2015-shorthand-properties',
-								'transform-es2015-template-literals'
-							]
+							presets: ['@babel/preset-env'],
 						}
 					}
 				]
@@ -170,18 +160,7 @@ const development = {
 					{
 						loader: 'babel-loader',
 						options: {
-							plugins: [
-								'transform-es2015-parameters',
-								'transform-es2015-spread',
-								'transform-es2015-arrow-functions',
-								'transform-es2015-block-scoped-functions',
-								'transform-es2015-block-scoping',
-								'check-es2015-constants',
-								'transform-es2015-destructuring',
-								'transform-es2015-literals',
-								'transform-es2015-shorthand-properties',
-								'transform-es2015-template-literals'
-							],
+							presets: ['@babel/preset-env'],
 							compact: false,
 							comments: true
 						}
