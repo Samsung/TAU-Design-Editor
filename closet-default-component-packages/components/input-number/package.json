@@ -1,6 +1,7 @@
 {
     "label": "Input Number",
-    "selector": "input[type=number]",
+    "selector": "input[type=number], .ui-text-input-container.ui-text-input-type-number",
+    "baseElementSelector": "input[type=number]",
     "attachable": true,
     "displayOrderWeight": 800,
     "type": "standalone-component",
@@ -20,10 +21,10 @@
         "options": {}
       }
     },
-    "template": "<input type=\"number\"/>",
+    "template": "<input type=\"number\" data-outside-div=\"true\"/>",
     "snippet": [
       {
-        "snippet": "<input type=\"number\" name=\"${5:mytext}\" id=\"${3:text-test}\"/>\n<label for=\"${4:text-test}\">${1:InputText}</label>",
+        "snippet": "<input type=\"number\" data-outside-div=\"true\" name=\"${5:mytext}\" id=\"${3:text-test}\"/>\n<label for=\"${4:text-test}\">${1:InputText}</label>",
         "displayText": "inputNumber",
         "description": "Enter your number."
       }
