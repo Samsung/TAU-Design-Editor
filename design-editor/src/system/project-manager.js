@@ -40,7 +40,7 @@ class ProjectManager {
      */
 	createLibFromTemplate(name, callback) {
 		const projectPath = this.getActiveProjectInfo().projectPath,
-			src = `${appManager.getAppPath().src  }/templates/${  name}`,
+			src = `${appManager.getAppPath().src  }/templates/${name}`,
 			dst = `${projectPath  }/lib/${  name}`;
 
 		console.log(`[GET] createLibFromTemplate: ${  src  } ...`);

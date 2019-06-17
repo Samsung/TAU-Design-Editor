@@ -1,4 +1,4 @@
-const utils = require('../../../design-editor/src/utils/utils').default;
+const utils = require('../../../design-editor/src/utils/utils');
 
 const fsEndpoint = utils.urlJoin(window.location.origin, 'fs');
 const fileEndpoint = utils.urlJoin(fsEndpoint, 'file');

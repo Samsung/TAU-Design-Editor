@@ -170,11 +170,19 @@ class Preview extends DressElement {
 	 */
 	createPreviewDocument(contents, location) {
 		const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
-			writeFile = promisify(fs.writeFile);
+			writeFile = promisify(fs.writeFile),
+			parsedContents = this._parseBeforePreview(contents);
 		this.fsPath = pathUtils.createProjectPath(relativePathToFile);
-		return writeFile(this.fsPath, contents).then(() => {
-			return pathUtils.createProjectPath(relativePathToFile, true);
-		}).catch((err) => {throw err;});
+
+		return writeFile(this.fsPath, parsedContents)
+			.then(() => {
+				return pathUtils.createProjectPath(relativePathToFile, true);
+			}).catch((err) => {throw err;});
+	}
+
+	_parseBeforePreview(htmlText) {
+		return htmlText
+			.replace(/media="all and \(-tizen-geometric-shape: circle\)"/, '');
 	}
 }
 
