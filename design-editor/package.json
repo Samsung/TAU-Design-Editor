@@ -19,67 +19,6 @@
     "mustache": "latest"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-core": "^6.4.0",
-    "babel-eslint": "^4.1.6",
-    "babel-istanbul": "^0.6.0",
-    "babel-istanbul-loader": "0.0.1",
-    "babel-jscs": "^2.0.5",
-    "babel-loader": "^6.2.1",
-    "babel-plugin-add-module-exports": "^0.1.2",
-    "babel-polyfill": "^6.9.1",
-    "babelify": "^7.3.0",
-    "browserify": "^13.1.0",
-    "express": "^4.14.0",
-    "express-browserify": "^1.0.2",
-    "glob": "^7.0.5",
-    "isparta": "^4.0.0",
-    "istanbul": "gotwarlost/istanbul.git#source-map",
-    "jasmine-core": "^2.4.1",
-    "jscs": "^2.11.0",
-    "jspm": "^0.16.41",
-    "jspm-watch": "^0.2.5",
-    "karma": "^0.13.19",
-    "karma-babel-preprocessor": "^6.0.1",
-    "karma-browserify": "^5.1.0",
-    "karma-chrome-launcher": "^0.2.2",
-    "karma-commonjs": "^1.0.0",
-    "karma-coverage": "douglasduteil/karma-coverage#next",
-    "karma-html-reporter": "^0.2.7",
-    "karma-jasmine": "^0.3.6",
-    "karma-jspm": "^2.2.0",
-    "karma-junit-reporter": "^1.1.0",
-    "karma-qunit": "^1.1.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.7.0",
-    "loader-utils": "^0.2.12",
-    "path-browserify": "0.0.0",
-    "qunitjs": "^1.23.1",
-    "rimraf": "^2.5.0",
-    "watchify": "^3.7.0",
-    "webpack": "^1.12.11"
-  },
-  "providedServices": {
-    "closet": {
-      "versions": {
-        "1.0.0": "provideCloset"
-      }
-    }
-  },
-  "consumedServices": {
-    "status-bar": {
-      "versions": {
-        "^1.0.0": "consumeStatusBar"
-      }
-    }
-  },
-  "jspm": {
-    "configFile": "test/config.js",
-    "dependencies": {},
-    "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "core-js": "npm:core-js@^1.1.4"
-    }
+    "path-browserify": "^1.0.0"
   }
 }
