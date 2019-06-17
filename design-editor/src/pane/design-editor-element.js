@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use babel';
 /**
  * Module for design editor working space
@@ -26,7 +27,7 @@ import utils from '../utils/utils';
 import {removeMediaQueryConstraints} from '../utils/iframe';
 import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
-import path, {relative, join} from 'path';
+import path, {relative} from 'path';
 
 const KEY_CODE = {
 	DELETE: 46
@@ -55,8 +56,8 @@ const getAppConfig = (app_path) => {
 const changeAppProfile = (app_path, profile) => {
 	return new Promise((resolve, reject) => {
 		getAppConfig(app_path).then((res) => {
-			console.log('changing profile to: ' + profile + ' in ' + res.file);
-			const text = res.text.replace(/<tizen:profile[^>]+>/gi, '<tizen:profile name="' + profile + '"/>');
+			console.log(`changing profile to: ${  profile  } in ${  res.file}`);
+			const text = res.text.replace(/<tizen:profile[^>]+>/gi, `<tizen:profile name="${  profile  }"/>`);
 			fs.writeFile(res.file, text, (err) => {
 				if (err) {
 					reject(err);
@@ -78,11 +79,12 @@ const changeAppProfile = (app_path, profile) => {
  */
 function toggleParentModifications($element, componentPackage, forceState) {
 	return new Promise((resolve) => {
-		var modifiers = componentPackage.options['parent-modifiers'],
-			$parents = $();
+		const modifiers = componentPackage.options['parent-modifiers'];
+		let $parents = $();
+
 		if (modifiers !== undefined) {
 			modifiers.forEach((modifier) => {
-				var $parent = $element.closest(modifier.selector),
+				const $parent = $element.closest(modifier.selector),
 					className = modifier.className;
 				if ($parent.length > 0) {
 					if (className !== undefined) {
@@ -109,27 +111,27 @@ class DesignEditor extends DressElement {
 	 * @param {string} path
 	 * @param {string} uri
 	 */
-	update(model, stringHTML, path, state, networks) {
-		var uri = state && pathUtils.joinPaths(state.basePath, relative('/projects/', state.fileUrl));
+	update(model, stringHTML, path, state) {
+		let uri = state && pathUtils.joinPaths(state.basePath, relative('/projects/', state.fileUrl));
 		console.log('design-editor-element.update', path, uri);
-		var serverPath;
 
 		/*
 		 * iframe(design view) should be re-constructed when switch the edit mode. Because code view was changed.
 		 * But, If HTML String insert to iframe only used innerHTML, javascript code don't operate automatically.
 		 * So, we need to use another method that is open, write, close document mechanism.
-		 * However, this method has problem too. It is path problem. So we need to set base path before write a new HTML string.
+		 * However, this method has problem too.
+		 * It is path problem. So we need to set base path before write a new HTML string.
 		 */
 		// create empty document wich will be store a model
 
 		path = path || this._path;
 		uri = uri || this._uri;
-		serverPath = uri.replace(/[^\/]+$/, '').replace(/^\/projects/, '');
+		const serverPath = uri.replace(/[^/]+$/, '').replace(/^\/projects/, '');
 		model = model || this._model;
 
 		const documentForModel = document.implementation.createHTMLDocument(''),
 			// iframe document
-			iframeDocument = this._$iframe[0].contentWindow && this._$iframe[0].contentWindow.document,
+			iframeDocument = this._$iframe[0].contentDocument,
 			basePath = path || editor.project.getPaths()[0];
 
 		console.log('basePath', editor.project.getPaths());
@@ -141,39 +143,13 @@ class DesignEditor extends DressElement {
 		this._stringHTML = stringHTML;
 		this._uri = uri;
 		this._path = path || basePath;
-		this._basePath = basePath.replace(/\\/g, '/') + '/';
+		this._basePath = `${basePath.replace(/\\/g, '/')  }/`;
 
 		let profile = this.screenConfig.profile;
-		console.log('profile in screen configuration: ' + profile);
+		console.log(`profile in screen configuration: ${  profile}`);
 
-		let appURI = uri.replace(/\/[^\/]+$/gi, '');
+		const appURI = uri.replace(/\/[^/]+$/gi, '');
 
-		/**
-		 * @TODO changing tau source is disabled for now
-
-		if (profile === 'tv') { //@TODO this needs to be removed
-			profile = 'mobile';
-		}
-
-		stringHTML = stringHTML.replace(/<link rel="stylesheet" href="libs\/tau\/[a-z0-9]*\/theme\/default\/tau.(min.)?css">/g, '');
-		stringHTML = stringHTML.replace('</head>', '<link rel="stylesheet" href="libs/tau/' + this.screenConfig.profile + '/theme/default/tau.css"></head>');
-
-		stringHTML = stringHTML.replace(/<script type="text\/javascript" src="libs\/tau\/[a-z0-9]*\/js\/tau.(min.)?js"><\/script>/g, '');
-		stringHTML = stringHTML.replace('</head>', '<script type="text/javascript" src="libs/tau/' + this.screenConfig.profile + '/js/tau.js"></script></head>');
-
-		if (this.screenConfig.shape === 'rectangle') {
-					stringHTML = stringHTML.replace('<link rel="stylesheet" href="libs/tau/wearable/theme/default/tau.circle.min.css">', '');
-				stringHTML = stringHTML.replace('<script type="text/javascript" src="js/circle-helper.js"></script>', '');
-		} else {
-				if (stringHTML.indexOf('<link rel="stylesheet" href="libs/tau/wearable/theme/default/tau.circle.min.css">') === -1) {
-				stringHTML = stringHTML.replace('</head>', '<link rel="stylesheet" href="libs/tau/wearable/theme/default/tau.circle.min.css"></head>');
-			}
-			if (stringHTML.indexOf('<script type="text/javascript" src="js/circle-helper.js"></script>') === -1) {
-				stringHTML = stringHTML.replace('</head>', '<script type="text/javascript" src="js/circle-helper.js"></script></head>');
-			}
-		}
-
-		**/
 		this._$iframe.attr('src', uri);
 
 		// fill model document by HTML
@@ -190,7 +166,7 @@ class DesignEditor extends DressElement {
 			const matches = /<tizen:profile[^"]+"([^"]+)[^>]+>/gi.exec(res.text);
 			let configProfile = profile;
 			if (matches && matches[1]) {
-				console.log('profile found in config.xml: ' + matches[1]);
+				console.log(`profile found in config.xml: ${  matches[1]}`);
 				configProfile = matches[1];
 			}
 			// init model, add data-id attributes
@@ -200,13 +176,13 @@ class DesignEditor extends DressElement {
 
 				this.screenConfig.profile = profile = configProfile;
 				if (profile && !this.screenConfig.device) {
-					let def = this.screenConfig.device = Devices.getDefaultDevice(profile);
+					const def = this.screenConfig.device = Devices.getDefaultDevice(profile);
 					if (def) {
 						Devices.fillDeviceConfig(profile, def, this.screenConfig);
 					}
 				}
 
-				console.log('setting screen profile to: ' + profile);
+				console.log(`setting screen profile to: ${  profile}`);
 				StateManager.set('screen', this.screenConfig);
 
 				eventEmitter.emit(EVENTS.RequestChangeProfile, profile);
@@ -214,14 +190,14 @@ class DesignEditor extends DressElement {
 					eventEmitter.emit(EVENTS.RequestChangeDevice, this.screenConfig.device);
 				}
 			} else {
-				console.log('updating model, new profile: ' + profile);
+				console.log(`updating model, new profile: ${  profile}`);
 				this._model.update(documentForModel);
 
 				changeAppProfile(appURI, profile)
-					.then(function (config) {
+					.then(() => {
 						console.log('config.xml successfuly changed');
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						console.error('could not modify config.xml', err);
 					});
 			}
@@ -236,13 +212,19 @@ class DesignEditor extends DressElement {
 			if (iframeDocument) {
 				// fill HTML to iframe and run TAU
 				console.log('writing model', this._model.getDOM(), 'to iframe document', iframeDocument);
-				iframeDocument.open('text/htmlreplace');
-				iframeDocument.write(
-					this._model.getHTML()
-						.replace('<html', '<html data-project="closet"')
-						.replace(/(<head[^>]*>)/, `$1<base href="${  this.getBasePath()
-						}/" data-project-path="true"><style>.using-alternative-selector{opacity:0.4;}</style>`)
-				);
+				iframeDocument.open();
+				const htmlContent = this._model.getHTML()
+					.replace('<html', '<html data-project="closet"')
+					.replace(/(<head[^>]*>)/,
+						`
+							$1
+							<base href="${finalBase}/" data-project-path="true">
+							<style>.using-alternative-selector{opacity:0.4;}</style>
+						`
+					)
+					.replace(/media="all and \(-tizen-geometric-shape: circle\)"/, '');
+
+				iframeDocument.write(htmlContent);
 				iframeDocument.close();
 
 				//@TODO: this needs to be fixed
@@ -251,7 +233,7 @@ class DesignEditor extends DressElement {
 					this._updateIFrameHeight();
 					iframeDocument.querySelector('base').setAttribute('href', finalBase);
 					// "pageshow" event is triggered by TAU then TAU shoud be exists in iframe scope
-					let tau = iframeDocument.defaultView.tau
+					const tau = iframeDocument.defaultView.tau;
 
 					// fix data-ids for contained widgets
 					const components = packageManager.getPackages(Package.TYPE.COMPONENT);
@@ -267,7 +249,7 @@ class DesignEditor extends DressElement {
 									widget = tau.engine.instanceWidget(widgetEl, name);
 								}
 								if (widget) {
-									let container = widget.getContainer();
+									const container = widget.getContainer();
 									// if component root element is not widget element
 									// then the root element is a container
 									// and data-ids should be moved
@@ -343,8 +325,8 @@ class DesignEditor extends DressElement {
 	 * Create callback
 	 */
 	onCreated() {
-		var self = this,
-			snapGuides = null;
+		const self = this;
+		let snapGuides = null;
 
 		this.defaults = {
 			uri: ''
@@ -401,7 +383,7 @@ class DesignEditor extends DressElement {
 		});
 
 		this.$el.on('click', (event) => {
-			var $target = $(event.target);
+			const $target = $(event.target);
 
 			if ($target.is(self._$scroller)) {
 				self._onDeselectedElement();
@@ -472,7 +454,7 @@ class DesignEditor extends DressElement {
 		console.log('desing-editor-element._onSaveFile');
 		const saveToFile = utils.checkGlobalContext('saveToFile');
 		if (saveToFile) {
-			saveToFile(function () {
+			saveToFile(() => {
 				console.log('file saved!');
 			}, !loud);
 			this.update();
@@ -540,18 +522,18 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_updateIFrameHeight() {
-		var screenConfig = this.screenConfig,
+		const screenConfig = this.screenConfig,
 			screenWidth = parseInt(screenConfig.width, 10),
 			screenHeight = parseInt(screenConfig.height, 10),
 			screenRatio = screenConfig.ratio,
 			scrollElement = this._$iframe.contents().find(this._iFrameContentScrollerSelector)[0],
 			scrollDistance = (scrollElement && scrollElement.scrollHeight - scrollElement.clientHeight) || 0,
 			style = {
-				width: screenWidth + 'px',
-				height: screenHeight + 'px',
-				transform: 'scale3d(' + screenRatio + ',' + screenRatio + ',' + screenRatio + ') translate(-50%)',
+				width: `${screenWidth  }px`,
+				height: `${screenHeight  }px`,
+				transform: `scale3d(${  screenRatio  },${  screenRatio  },${  screenRatio  }) translate(-50%)`,
 				'mask-image': screenConfig.shape === 'circle' ?
-					'radial-gradient(circle, #fff ' + (screenWidth / 2) + 'px, transparent ' + (screenHeight / 2) + 'px)'
+					`radial-gradient(circle, #fff ${  screenWidth / 2  }px, transparent ${  screenHeight / 2  }px)`
 					: 'none'
 			};
 
@@ -560,15 +542,15 @@ class DesignEditor extends DressElement {
 
 		this._$iframe.css(
 			$.extend(style, {
-				top: '-webkit-calc((50% - ' + ((screenHeight * screenRatio) / 2) + 'px) + ' +
-				this._$scroller.scrollTop() + 'px)'
+				top: `-webkit-calc((50% - ${  (screenHeight * screenRatio) / 2  }px) + ${
+					this._$scroller.scrollTop()  }px)`
 			})
 		);
 
 		this._$iframeDummy.css(
 			$.extend(style, {
-				top: '-webkit-calc((100% - ' + (screenHeight * screenRatio) + 'px) + ' +
-					scrollDistance + 'px)'
+				top: `-webkit-calc((100% - ${  screenHeight * screenRatio  }px) + ${
+					scrollDistance  }px)`
 			})
 		);
 	}
@@ -585,7 +567,7 @@ class DesignEditor extends DressElement {
 	 * Show
 	 */
 	show() {
-		var self = this;
+		const self = this;
 		if (this.isContentsLoaded) {
 			// this._selectDefaultElement();
 		} else {
@@ -595,7 +577,9 @@ class DesignEditor extends DressElement {
 		this._updateGridRulerLayout();
 		this._observeResize = setInterval(() => {
 			if (self._lastSize) {
-				if (self._lastSize.width !== self.$el.parent().outerWidth() || self._lastSize.height !== self.$el.parent().outerHeight()) {
+				if (self._lastSize.width !== self.$el.parent().outerWidth() ||
+					self._lastSize.height !== self.$el.parent().outerHeight()) {
+
 					self._layout();
 					self._updateGridRulerLayout();
 					self._selectLayer.makeHoverScroller();
@@ -637,9 +621,9 @@ class DesignEditor extends DressElement {
 	 * @private element
 	 */
 	_refreshTAUWidget(id) {
-		let element = this._getElementById(id),
-			tau = this._$iframe[0].contentWindow && this._$iframe[0].contentWindow.tau,
-			widgetInstance;
+		const element = this._getElementById(id),
+			tau = this._$iframe[0].contentWindow && this._$iframe[0].contentWindow.tau;
+		let widgetInstance;
 
 		if (tau) {
 			widgetInstance = tau.engine.getBinding(element[0]);
@@ -686,7 +670,7 @@ class DesignEditor extends DressElement {
 	 * @returns {jQuery}
 	 */
 	_getElementById(id) {
-		return this._$iframe.contents().find('[' + INTERNAL_ID_ATTRIBUTE + '=' + id + ']');
+		return this._$iframe.contents().find(`[${  INTERNAL_ID_ATTRIBUTE  }=${  id  }]`);
 	}
 
 	/**
@@ -696,8 +680,8 @@ class DesignEditor extends DressElement {
 	 * @param {string} value style new value
 	 */
 	_onStyleChanged(id, name, value) {
-		var bigRegexp = /[A-Z]/g;
-		this._getElementById(id).css(name.replace(bigRegexp, c => '-' + c.toLowerCase()), value);
+		const bigRegexp = /[A-Z]/g;
+		this._getElementById(id).css(name.replace(bigRegexp, c => `-${  c.toLowerCase()}`), value);
 		this._requiredSyncSelector = true;
 		requestAnimationFrame(this._syncSelector.bind(this));
 	}
@@ -710,7 +694,7 @@ class DesignEditor extends DressElement {
 	 * @param {string} previousId id of inserted element
 	 */
 	_onElementInserted(parentId, id, content, previousId) {
-		var $parent = null,
+		let $parent = null,
 			$previous = null,
 			$guideElement = null,
 			contentDoc = null,
@@ -744,7 +728,7 @@ class DesignEditor extends DressElement {
 		// @todo - disabled because tau-id was propagated to source code
 		//          but why this argument was copied, it need verified
 		//if ($(generatedElement).attr('id')) {
-			//this._model.updateAttribute(id, 'id', $(generatedElement).attr('id'));
+		//this._model.updateAttribute(id, 'id', $(generatedElement).attr('id'));
 		//    $(generatedElement).attr('id', '');
 		//}
 
@@ -755,39 +739,39 @@ class DesignEditor extends DressElement {
 			if (packageInfo.options.altSelector) {
 				this._selectLayer.attachAlternativeSelector(generatedElement);
 			}
-			var externalResources = packageInfo.options.externalResources;
+			const externalResources = packageInfo.options.externalResources;
 			if (externalResources) {
-				var dom = this._model._DOM;
-				externalResources.forEach(function (scriptData) {
-					var fileSrc = scriptData;
-					var attributes = {};
+				const dom = this._model._DOM;
+				externalResources.forEach((scriptData) => {
+					let fileSrc = scriptData;
+					let attributes = {};
 
 					if (typeof scriptData === 'object') {
 						fileSrc = scriptData.src;
 						attributes = scriptData.attributes;
 					}
 
-					var fileExtension = fileSrc.match(/[^.]+$/)[0];
-					var resource;
+					const fileExtension = fileSrc.match(/[^.]+$/)[0];
+					let resource;
 
 					// check if resources already exists
 					switch (fileExtension) {
-						case 'js' :
-							if (!dom.head.querySelector('script[src="' + fileSrc +'"]')) {
-								var resource = document.createElement('script');
-								resource.setAttribute('src', fileSrc);
-							}
-							break;
-						case 'css' :
-							if (!dom.head.querySelector('link[href="' + fileSrc +'"]')) {
-								var resource = document.createElement('link');
-								resource.setAttribute('href', fileSrc);
-								resource.setAttribute('rel', 'stylesheet');
-							}
-							break;
+					case 'js' :
+						if (!dom.head.querySelector(`script[src="${  fileSrc }"]`)) {
+							resource = document.createElement('script');
+							resource.setAttribute('src', fileSrc);
+						}
+						break;
+					case 'css' :
+						if (!dom.head.querySelector(`link[href="${  fileSrc }"]`)) {
+							resource = document.createElement('link');
+							resource.setAttribute('href', fileSrc);
+							resource.setAttribute('rel', 'stylesheet');
+						}
+						break;
 					}
 					if (resource) {
-						Object.keys(attributes).forEach(function (key) {
+						Object.keys(attributes).forEach((key) => {
 							resource.setAttribute(key, attributes[key]);
 						});
 						dom.head.appendChild(resource);
@@ -803,9 +787,12 @@ class DesignEditor extends DressElement {
 	 * Callback for event script insert
 	 * @param {string} dest
 	 */
-	_onScriptInserted(dest) {
+	_onScriptInserted(/*dest*/) {
 		// @TODO remove security exception on insert
-		// this._$iframe.contents().find('head').append($('<script>').attr('type', 'text/javascript').attr('src', dest));
+		// this._$iframe.contents().find('head')
+		// 	.append($('<script>')
+		// 	.attr('type', 'text/javascript')
+		// 	.attr('src', dest));
 	}
 
 	/**
@@ -821,43 +808,43 @@ class DesignEditor extends DressElement {
 	 * @param {number} id
 	 */
 	_onElementDeleted(id) {
-		var element = this._getElementById(id);
+		const element = this._getElementById(id);
 
 		element.remove();
 
-		var packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
-		var externalResources = packageInfo.options.externalResources;
+		const packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
+		const externalResources = packageInfo.options.externalResources;
 		if (externalResources) {
-			var dom = this._model._DOM;
-			 // check if exists other elements indicated type
+			const dom = this._model._DOM;
+			// check if exists other elements indicated type
 			if (!dom.querySelector(packageInfo.options.selector)) {
 				// remove unnecesary resources
-				externalResources.forEach(function (scriptData) {
-					var fileSrc = scriptData;
+				externalResources.forEach((scriptData) => {
+					let fileSrc = scriptData;
 
 					if (typeof scriptData === 'object') {
 						fileSrc = scriptData.src;
 					}
 
-					var fileExtension = fileSrc.match(/[^.]+$/)[0];
-
+					const fileExtension = fileSrc.match(/[^.]+$/)[0];
+					let scripts, css;
 					switch (fileExtension) {
-						case 'js' :
-							var scripts = [].slice.call(dom.querySelectorAll('script[src]'));
-							scripts.forEach(function (resource) {
-								if (resource.getAttribute('src').indexOf(fileSrc) > -1) {
-									dom.head.removeChild(resource);
-								}
-							});
-							break;
-						case 'css' :
-							var css = [].slice.call(dom.querySelectorAll('link[href]'));
-							css.forEach(function (resource) {
-								if (resource.getAttribute('href').indexOf(fileSrc) > -1) {
-									dom.head.removeChild(resource);
-								}
-							});
-							break;
+					case 'js' :
+						scripts = [].slice.call(dom.querySelectorAll('script[src]'));
+						scripts.forEach((resource) => {
+							if (resource.getAttribute('src').indexOf(fileSrc) > -1) {
+								dom.head.removeChild(resource);
+							}
+						});
+						break;
+					case 'css' :
+						css = [].slice.call(dom.querySelectorAll('link[href]'));
+						css.forEach((resource) => {
+							if (resource.getAttribute('href').indexOf(fileSrc) > -1) {
+								dom.head.removeChild(resource);
+							}
+						});
+						break;
 					}
 				});
 			}
@@ -940,8 +927,8 @@ class DesignEditor extends DressElement {
 	 * @param {number} elementId
 	 */
 	_onSelectedElement(elementId) {
-		var $element;
-		console.log("_onSelectedElement", elementId);
+		let $element;
+		console.log('_onSelectedElement', elementId);
 
 		if (this.isVisible()) {
 			$element = this._getElementById(elementId);
@@ -957,7 +944,7 @@ class DesignEditor extends DressElement {
 	 * @param {number} elementId
 	 */
 	_onDeselectedElement(elementId) {
-		var $element = this._getElementById(elementId);
+		const $element = this._getElementById(elementId);
 
 		if ($element.length > 0) {
 			this._selectLayer.hideSelector($element);
@@ -971,7 +958,7 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_onScroll() {
-		var x = this._$scroller.scrollLeft(),
+		const x = this._$scroller.scrollLeft(),
 			y = this._$scroller.scrollTop();
 		this._setEditorScroll(x, y);
 	}
@@ -1020,7 +1007,7 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_setEditorScroll(x, y) {
-		var screenHeight = parseInt(this.screenConfig.height, 10),
+		const screenHeight = parseInt(this.screenConfig.height, 10),
 			screenRatio = this.screenConfig.ratio;
 
 		this._gridLayer.scroll(x, y);
@@ -1030,7 +1017,7 @@ class DesignEditor extends DressElement {
 		// get positions of selectLayout and iframe not to be effected from scroll position so that it will be stuck
 		// at the same position.
 		this._selectLayer.setScroll(x, y);
-		this._$iframe.css('top', '-webkit-calc((50% - ' + ((screenHeight * screenRatio) / 2) + 'px) + ' + y + 'px)');
+		this._$iframe.css('top', `-webkit-calc((50% - ${  (screenHeight * screenRatio) / 2  }px) + ${  y  }px)`);
 
 		// synchronize scrollTop of the element inside iframe with the scroller of the design-editor
 		this._$iframe.contents().find(this._iFrameContentScrollerSelector).scrollTop(y);
@@ -1046,7 +1033,7 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_layout() {
-		var screenConfig = this.screenConfig,
+		const screenConfig = this.screenConfig,
 			adjustedWidth = screenConfig.width * screenConfig.ratio,
 			adjustedHeight = screenConfig.height * screenConfig.ratio;
 
@@ -1058,9 +1045,9 @@ class DesignEditor extends DressElement {
 		this._selectLayer.screenShape = screenConfig.shape;
 
 		$(this._selectLayer).css({
-			width: adjustedWidth + 'px',
-			height: adjustedHeight + 'px',
-			top: '-webkit-calc((50% - ' + ((screenConfig.height * screenConfig.ratio) / 2) + 'px))'
+			width: `${adjustedWidth  }px`,
+			height: `${adjustedHeight  }px`,
+			top: `-webkit-calc((50% - ${  (screenConfig.height * screenConfig.ratio) / 2  }px))`
 		});
 		this._selectLayer.makeHoverScroller();
 	}
@@ -1070,7 +1057,7 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_updateGridRulerLayout() {
-		var offset = this._$iframe.position(),
+		const offset = this._$iframe.position(),
 			screenConfig = this.screenConfig;
 
 		this._gridLayer.setLayout(offset, screenConfig.ratio);
@@ -1083,7 +1070,7 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_selectDefaultElement() {
-		var page = this._$iframe.contents().find('closet-page, .ui-page');
+		const page = this._$iframe.contents().find('closet-page, .ui-page');
 		if (!elementSelector.select(page.attr(INTERNAL_ID_ATTRIBUTE))) {
 			elementSelector.unSelect();
 		}
@@ -1103,7 +1090,7 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_onKeyDown(event) {
-		var selectedElementId = elementSelector.getSelectedElementId(),
+		const selectedElementId = elementSelector.getSelectedElementId(),
 			selectedElement = this._getElementById(selectedElementId),
 			info = this.getUIInfo(selectedElement);
 
@@ -1123,12 +1110,12 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_deleteElement(info) {
-		var $element,
-			ownerDoc,
-			selectedComponentPackage;
+		let $element;
+		// ownerDoc,
+		// selectedComponentPackage;
 
 		return new Promise((resolve) => {
-			var self = this;
+			const self = this;
 			if (self.$el.is(':visible')) {
 
 				if (info) {
@@ -1138,13 +1125,13 @@ class DesignEditor extends DressElement {
 				}
 
 				if ($element) {
-					ownerDoc = $element[0].ownerDocument;
+					// ownerDoc = $element[0].ownerDocument;
 
-					selectedComponentPackage = info.package;
+					// selectedComponentPackage = info.package;
 
 					toggleParentModifications($element, info.package, 2).then(($parents) => {
 						$parents.each((index, parent) => {
-							var $localParent = $(parent);
+							const $localParent = $(parent);
 							self._model.updateAttribute(
 								$localParent.data('id'),
 								'class',
@@ -1175,16 +1162,17 @@ class DesignEditor extends DressElement {
 	 * @param {HTMLElement} element
 	 */
 	insertComponent(event, componentPackageInfo, element) {
-		var self = this,
-			$content = this._$iframe.contents(),
-			$guideElement = $content.find('.closet-guide-element'),
-			$parent = null,
-			packages,
+		const self = this,
+			$content = this._$iframe.contents();
+
+		let packages,
 			sParentPackage,
 			parentId = '',
-			elementId = '';
+			elementId = '',
+			$parent = null,
+			$guideElement = $content.find('.closet-guide-element');
 
-		console.log("insertComponent");
+		console.log('insertComponent');
 		this._selectLayer.hideHighlighter();
 
 		if (componentPackageInfo.options['parent-constraint']) {
@@ -1208,17 +1196,27 @@ class DesignEditor extends DressElement {
 
 			// $guideElement.prev() is always guideline element
 			if (!element) {
-				elementId = this._model.insert(parentId, componentPackageInfo, $guideElement.prev().attr(INTERNAL_ID_ATTRIBUTE));
+				elementId = this._model.insert(
+					parentId,
+					componentPackageInfo,
+					$guideElement.prev().attr(INTERNAL_ID_ATTRIBUTE)
+				);
 			} else {
-				elementId = this._model.move($(element).attr(INTERNAL_ID_ATTRIBUTE), parentId, $guideElement.prev().attr(INTERNAL_ID_ATTRIBUTE));
+				elementId = this._model.move(
+					$(element).attr(INTERNAL_ID_ATTRIBUTE),
+					parentId,
+					$guideElement.prev().attr(INTERNAL_ID_ATTRIBUTE)
+				);
 			}
-			$guideElement = $parent.find('[data-id=' + elementId + ']'); // find guide element again as inserting new content replaces the old one
+
+			// find guide element again as inserting new content replaces the old one
+			$guideElement = $parent.find(`[data-id=${  elementId  }]`);
 
 			// modifier after insertion, the direct parent has to have an id
 			toggleParentModifications($guideElement, componentPackageInfo, 1).then(($parents) => {
-				var wrapContent = componentPackageInfo.options.wrapContent;
+				const wrapContent = componentPackageInfo.options.wrapContent;
 				$parents.each((index, parent) => {
-					var $localParent = $(parent);
+					const $localParent = $(parent);
 					self._model.updateAttribute(
 						$localParent.data('id'),
 						'class',
@@ -1246,23 +1244,16 @@ class DesignEditor extends DressElement {
 	 * @private
 	 */
 	_convertEditorPosToContentPos(options/* pointerPosition, offset, ratio*/) {
-		var x,
-			y,
-			offsetX,
-			offsetY,
-			ratio;
-
 		if (!options) {
 			options = {offset: {}};
 		}
 
-		offsetX = options.offsetX || options.offset.left || 0;
-		offsetY = options.offsetY || options.offset.top || 0;
-
-		ratio = options.ratio || 1;
-
-		x = (options.pointX - offsetX) / ratio;
-		y = (options.pointY - offsetY) / ratio;
+		const
+			offsetX = options.offsetX || options.offset.left || 0,
+			offsetY = options.offsetY || options.offset.top || 0,
+			ratio = options.ratio || 1,
+			x = (options.pointX - offsetX) / ratio,
+			y = (options.pointY - offsetY) / ratio;
 
 		return {
 			x: x,
@@ -1286,7 +1277,7 @@ class DesignEditor extends DressElement {
 	 * @param {jQuery|HTMLElement} container
 	 */
 	showHighlighter(container) {
-		var $container = $(container);
+		const $container = $(container);
 		if ($container) {
 			if ($container.length) {
 				this._selectLayer.showHighlighter($container[0]);
@@ -1309,14 +1300,13 @@ class DesignEditor extends DressElement {
 	 * @returns {HTMLElement}
 	 */
 	getElementInfoFromIFrame(pointPosition) {
-		var $doc = this._$iframe.contents(),
+		const
+			$doc = this._$iframe.contents(),
 			displayRatio = StateManager.get('screen', {}).ratio,
-			pos,
 			positionOffset = this._$iframe.offset(),
-			iframe = this._$iframe[0],
-			elementsFromPoint;
+			iframe = this._$iframe[0];
 
-		pos = this._convertEditorPosToContentPos(
+		const pos = this._convertEditorPosToContentPos(
 			{
 				pointX: pointPosition[0],
 				pointY: pointPosition[1],
@@ -1326,7 +1316,7 @@ class DesignEditor extends DressElement {
 			}
 		);
 
-		elementsFromPoint = $doc[0].elementsFromPoint(pos.x, pos.y)
+		const elementsFromPoint = $doc[0].elementsFromPoint(pos.x, pos.y)
 			.filter((element) => element.getAttribute(INTERNAL_ID_ATTRIBUTE));
 
 		return {
@@ -1365,9 +1355,12 @@ class DesignEditor extends DressElement {
 	 * @returns {*}
 	 */
 	getComputedStyle(elementId) {
-		var $element = this._getElementById(elementId),
-			computedStyles = null,
+		const
+			$element = this._getElementById(elementId),
 			styles = {};
+
+		let computedStyles = null;
+
 		if ($element.length) {
 			computedStyles = this._$iframe[0].contentWindow.getComputedStyle($element[0]);
 			for (let i = 0; i < computedStyles.length; i += 1) {

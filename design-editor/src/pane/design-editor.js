@@ -944,6 +944,7 @@ class Model {
 
 		this._DOM.body.appendChild(scriptRunner);
 		this.addLibrary('helper.js');
+		this.addLibrary('circle-helper.js');
         for (const [key, value] of this._animationGroups) {
             styleContent += this.exportAnimationName(key, value.animations);
         }
