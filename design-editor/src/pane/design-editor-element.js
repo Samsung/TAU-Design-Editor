@@ -102,6 +102,19 @@ function toggleParentModifications($element, componentPackage, forceState) {
 	});
 }
 
+/**
+ * Regular expression for find words in uppercase
+ */
+const bigRegexp = /[A-Z]/g;
+
+/**
+ * Method change camel case string to dashed string
+ * eg. simpleStyleProperty -> simple-style-property
+ */
+function camelCaseToDashes(name) {
+	return name.replace(bigRegexp, c => `-${  c.toLowerCase()}`);
+}
+
 class DesignEditor extends DressElement {
 	/**
 	 * Update data
@@ -677,8 +690,9 @@ class DesignEditor extends DressElement {
 	 * @param {string} value style new value
 	 */
 	_onStyleChanged(id, name, value) {
-		const bigRegexp = /[A-Z]/g;
-		this._getElementById(id).css(name.replace(bigRegexp, c => `-${  c.toLowerCase()}`), value);
+		const $element = this._getElementById(id).first();
+
+		$element.css(camelCaseToDashes(name), value);
 		this._requiredSyncSelector = true;
 		requestAnimationFrame(this._syncSelector.bind(this));
 	}

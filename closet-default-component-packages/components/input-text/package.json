@@ -1,6 +1,8 @@
 {
+    "name": "input-text",
     "label": "Input Text",
-    "selector": "input[type=text]",
+    "selector": "input[type=text], .ui-text-input-container.ui-text-input-type-text",
+    "baseElementSelector": "input[type=text]",
     "attachable": true,
     "displayOrderWeight": 900,
     "type": "standalone-component",
@@ -20,10 +22,10 @@
         "options": {}
       }
     },
-    "template": "<input type=\"text\"/>",
+    "template": "<input type=\"text\" data-outside-div=\"true\"/>",
     "snippet": [
       {
-        "snippet": "<input type=\"text\" name=\"${5:mytext}\" id=\"${3:text-test}\"/>\n<label for=\"${4:text-test}\">${1:InputText}</label>",
+        "snippet": "<input type=\"text\" data-outside-div=\"true\" name=\"${5:mytext}\" id=\"${3:text-test}\"/>\n<label for=\"${4:text-test}\">${1:InputText}</label>",
         "displayText": "inputText",
         "description": "Enter your text."
       }
