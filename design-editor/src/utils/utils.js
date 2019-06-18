@@ -61,5 +61,18 @@ module.exports = {
 		});
 
 		return Promise.race([timeoutTriggerPromise, promise]);
+	},
+
+	/**
+	 * Checks if opened project is in demo mode
+	 *
+	 * @param {object} bracketsEditor
+	 * @returns {string} boolean
+	 */
+	isDemoVersion(bracketsEditor) {
+		if (bracketsEditor) {
+			const PreferencesManager = bracketsEditor.getModule('preferences/PreferencesManager');
+			return PreferencesManager.getViewState('projectType') === 'demo';
+		}
 	}
 };
