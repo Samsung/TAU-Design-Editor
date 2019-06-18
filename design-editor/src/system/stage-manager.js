@@ -16,10 +16,11 @@ import {PreviewToolbarElement} from '../panel/preview/preview-toolbar-element';
 // import {InteractionViewElement} from '../panel/preview/interaction-view-element';
 // import {InteractionViewToolbarElement} from '../panel/preview/interaction-view-toolbar-element';
 import {InfoElement} from '../pane/select-layer/info-element';
+import utils from '../utils/utils';
 
-const CompositeDisposable = editor.CompositeDisposable;
-const DESIGN = ViewType.Design;
-const vscode = window.vscode;
+const CompositeDisposable = editor.CompositeDisposable,
+	DESIGN = ViewType.Design,
+	brackets = utils.checkGlobalContext('brackets');
 
 class StageManager {
     /**
@@ -237,7 +238,8 @@ class StageManager {
      */
     _togglePreview(toggleEditor) {
         var $workSpace = $(editor.selectors.workspace),
-            preview = null;
+			preview = null,
+			isDemoVersion = utils.isDemoVersion(brackets);
 
         if (!$workSpace.length) {
             $workSpace = $(document.body);
@@ -258,13 +260,14 @@ class StageManager {
 				}
 			);
 
-            if (window.atom !== undefined) {
-                this._toolbarContainerElementPanel.hide();
-                this._previewElementToolbarPanel.show();
-            } else {
-                $workSpace.children().first().before(this._previewElementToolbar);
-            }
+			if (!isDemoVersion) {
+				$workSpace.children().first().before(this._previewElementToolbar);
+			}
+
         } else {
+			if (isDemoVersion) {
+				return;
+			}
             $workSpace.removeClass('closet-preview-mode-active');
             window.setTimeout(() => {
                 $workSpace.find('closet-preview-element').remove();

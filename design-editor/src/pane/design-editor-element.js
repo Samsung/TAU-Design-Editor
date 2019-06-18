@@ -9,6 +9,7 @@
 import $ from 'jquery';
 import {packageManager, Package} from 'content-manager';
 import {StateManager} from '../system/state-manager';
+import {stageManager} from '../system/stage-manager';
 import {SnapGuideManager} from './snap-guide-manager';
 import {Guide} from './guide';
 import {DressElement} from '../utils/dress-element';
@@ -31,10 +32,11 @@ import path, {relative} from 'path';
 
 const KEY_CODE = {
 	DELETE: 46
-};
-const INTERNAL_ID_ATTRIBUTE = 'data-id';
-const LOCK_CLASS = 'lock';
-const RE_COPY_ATTRIBUTE_TO_CONTAINER = new RegExp('^(data-(?!tau)|st-).*');
+	},
+	INTERNAL_ID_ATTRIBUTE = 'data-id',
+	LOCK_CLASS = 'lock',
+	RE_COPY_ATTRIBUTE_TO_CONTAINER = new RegExp('^(data-(?!tau)|st-).*'),
+	brackets = utils.checkGlobalContext('brackets');
 
 let _instance = null;
 
@@ -276,6 +278,7 @@ class DesignEditor extends DressElement {
 			}
 
 			this._$iframe.one('load', () => {
+				const isDemoVersion = utils.isDemoVersion(brackets);
 				removeMediaQueryConstraints(
 					this._$iframe[0].contentDocument,
 					pathUtils.createProjectPath(serverPath, true)
@@ -284,6 +287,9 @@ class DesignEditor extends DressElement {
 				this._selectLayer.refreshAltSelectors();
 				this._attachAlternativeSelectors(this._$iframe.contents()[0]);
 				this._updateIFrameHeight();
+				if (isDemoVersion) {
+					stageManager._onTogglePreview();
+				}
 				this._$iframe.css('visibility', 'visible');
 				eventEmitter.emit(EVENTS.ActiveEditorUpdated, 1, this);
 			});
