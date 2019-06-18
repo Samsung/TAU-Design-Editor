@@ -23,6 +23,7 @@ import editor from '../editor';
 import {TooltipElement} from '../panel/tooltip-element';
 import {Devices} from '../system/devices';
 import utils from '../utils/utils';
+import {removeMediaQueryConstraints} from '../utils/iframe';
 import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
 import path, {relative, join} from 'path';
@@ -112,6 +113,7 @@ class DesignEditor extends DressElement {
 		var uri = state && pathUtils.joinPaths(state.basePath, relative('/projects/', state.fileUrl));
 		console.log('design-editor-element.update', path, uri);
 		var serverPath;
+
 		/*
 		 * iframe(design view) should be re-constructed when switch the edit mode. Because code view was changed.
 		 * But, If HTML String insert to iframe only used innerHTML, javascript code don't operate automatically.
@@ -292,7 +294,10 @@ class DesignEditor extends DressElement {
 			}
 
 			this._$iframe.one('load', () => {
-				this.removeMediaQueryConstraints();
+				removeMediaQueryConstraints(
+					this._$iframe[0].contentDocument,
+					pathUtils.createProjectPath(serverPath, true)
+				);
 
 				this._selectLayer.refreshAltSelectors();
 				this._attachAlternativeSelectors(this._$iframe.contents()[0]);
@@ -566,17 +571,6 @@ class DesignEditor extends DressElement {
 					scrollDistance + 'px)'
 			})
 		);
-	}
-
-	removeMediaQueryConstraints() {
-		const projectDocument = this._$iframe[0].contentDocument;
-		const linkElement = projectDocument
-			.querySelector('link[media="all and (-tizen-geometric-shape: circle)"]');
-
-		if (linkElement) {
-			linkElement.removeAttribute('media');
-			linkElement.setAttribute('href', join(this.getBasePath(), linkElement.getAttribute('href')));
-		}
 	}
 
 	/**
