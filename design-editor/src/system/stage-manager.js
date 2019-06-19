@@ -155,7 +155,7 @@ class StageManager {
                 this._toolbarContainerElement.turnOffControl(this._toolbarControls.INSTANT_EDIT);
             }
         })
-        
+
     }
     /**
      * Toggle assistant view
@@ -236,10 +236,10 @@ class StageManager {
      * @param toggleEditor
      * @private
      */
-    _togglePreview(toggleEditor) {
-        var $workSpace = $(editor.selectors.workspace),
-			preview = null,
-			isDemoVersion = utils.isDemoVersion(brackets);
+	_togglePreview(toggleEditor) {
+		let $workSpace = $(editor.selectors.workspace),
+			preview = null;
+		const isDemoVersion = utils.isDemoVersion();
 
         if (!$workSpace.length) {
             $workSpace = $(document.body);
