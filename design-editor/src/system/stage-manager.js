@@ -260,8 +260,13 @@ class StageManager {
 				}
 			);
 
-			if (!isDemoVersion) {
-				$workSpace.children().first().before(this._previewElementToolbar);
+			$workSpace.children().first().before(this._previewElementToolbar);
+
+			if (isDemoVersion) {
+				const activatePreviewModeButton = document.getElementsByClassName('preview-toggle');
+				if (activatePreviewModeButton !== undefined) {
+					activatePreviewModeButton[0].style.display = 'none';
+				}
 			}
 
         } else {
