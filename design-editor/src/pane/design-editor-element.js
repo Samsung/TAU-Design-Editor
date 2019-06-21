@@ -152,8 +152,6 @@ class DesignEditor extends DressElement {
 
 		const appURI = uri.replace(/\/[^/]+$/gi, '');
 
-		this._$iframe.attr('src', uri);
-
 		// fill model document by HTML
 		documentForModel.documentElement.innerHTML = stringHTML;
 
@@ -438,7 +436,6 @@ class DesignEditor extends DressElement {
 	 * On ready callback
 	 */
 	onReady() {
-		this._$iframe.attr('src', this.options.uri);
 		this._$iframe.css('visibility', 'hidden');
 	}
 
