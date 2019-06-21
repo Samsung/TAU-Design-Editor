@@ -1,22 +1,33 @@
 // @ts-nocheck
 import Library from './library';
+import {basename, extname} from 'path';
 
 class CSSLibrary extends Library {
 	constructor(fileName, element) {
 		super(fileName);
-		this._element = element || this.createHTMLElement();
+		this._element = element;
 	}
 
 	createHTMLElement() {
-		let element;
 		if (this._fileName) {
-			element = document.createElement('link');
+			this._element = document.createElement('link');
 			this.setAttribute('rel', 'stylesheet');
-			this.setAttribute('hrev', this._fileName);
+			this.setAttribute('hrev', this.getAbsolutePath(true));
+			this.setAttribute(this.createDataAttribute(), '');
 		} else {
-			element = document.createElement('style');
+			this._element = document.createElement('style');
 		}
-		return element;
+		return this._element;
+	}
+
+	createDataAttribute() {
+		const libraryAttributeName = basename(this._fileName, extname(this._fileName))
+			.replace('.', '-');
+		return `data-style-${libraryAttributeName}`;
+	}
+
+	getSelector() {
+		return `link[${this.createDataAttribute()}]`;
 	}
 
 	setAttribute(key, value='') {

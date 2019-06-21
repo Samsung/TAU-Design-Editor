@@ -39,19 +39,6 @@ class JSLibrary extends Library {
 	}
 
 	/**
-	 * Inserts content into library
-	 * both as internal script or copy proper file
-	 * @param  {function} callback callback function after insertion.
-	 */
-	insertLibContent(callback) {
-		if (this._fileName) {
-			this.copyLibFile(callback);
-		} else {
-			this.element.textContent = this.content;
-		}
-	}
-
-	/**
 	 * Set element attribute
 	 * @param {string} key attribute key
 	 * @param {string} value attribute value

@@ -102,11 +102,16 @@ class Library {
 
 
 	/**
-	 * Add library to its destination
-	 * @abstract
+	 * Inserts content into library
+	 * both as internal script or copy proper file
+	 * @param  {function} callback callback function after insertion.
 	 */
-	insertLibContent() {
-		throw new Error('Method insertLibContent has to be implemented');
+	insertLibContent(callback) {
+		if (this._fileName) {
+			this.copyLibFile(callback);
+		} else {
+			this.element.textContent = this.content;
+		}
 	}
 
 	/**

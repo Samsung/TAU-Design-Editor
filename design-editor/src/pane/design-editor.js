@@ -943,6 +943,8 @@ class Model {
         // }
 
 		this._DOM.body.appendChild(scriptRunner);
+		this.addLibrary('tau.circle.css');
+		this.addLibrary('style.circle.css');
 		this.addLibrary('helper.js');
 		this.addLibrary('circle-helper.js');
         for (const [key, value] of this._animationGroups) {
