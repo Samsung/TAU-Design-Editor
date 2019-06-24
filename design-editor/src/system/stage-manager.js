@@ -20,7 +20,7 @@ import utils from '../utils/utils';
 
 const CompositeDisposable = editor.CompositeDisposable,
 	DESIGN = ViewType.Design,
-	brackets = utils.checkGlobalContext('brackets');
+	isDemoVersion = utils.isDemoVersion();
 
 class StageManager {
     /**
@@ -239,13 +239,12 @@ class StageManager {
 	_togglePreview(toggleEditor) {
 		let $workSpace = $(editor.selectors.workspace),
 			preview = null;
-		const isDemoVersion = utils.isDemoVersion();
 
         if (!$workSpace.length) {
             $workSpace = $(document.body);
         }
 
-        if (!$workSpace.hasClass('closet-preview-mode')) {
+		if (!$workSpace.hasClass('closet-preview-mode') || isDemoVersion) {
 			preview = new PreviewElement();
 			$workSpace.children().first().before(preview);
 			preview.show(
@@ -379,7 +378,9 @@ class StageManager {
             // init animation container
             // this._animationContainerElement.initialize(editor);
 
-            panelManager.openPanel({type: 'right', item: this._propertyContainerElement});
+			if (!isDemoVersion) {
+				panelManager.openPanel({type: 'right', item: this._propertyContainerElement});
+			}
             panelManager.openPanel({type: 'bottom', item: this._animationContainerElement});
 
             panelManager.openPanel({type: 'top', item: this._infoElement});

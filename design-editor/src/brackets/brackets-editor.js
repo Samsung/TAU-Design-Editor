@@ -13,7 +13,7 @@ import {BracketsStatusBarElement} from './brackets-status-bar';
 import {ConfigurationDesignAreaElement} from '../panel/configuration-design-area-element';
 import {stageManager} from '../system/stage-manager';
 import {appManager} from '../app-manager';
-
+import utils from '../utils/utils';
 import {DesignEditorElement} from '../pane/design-editor-element';
 import {panelManager} from '../system/panel-manager';
 import {EVENTS, eventEmitter} from '../events-emitter';
@@ -28,7 +28,8 @@ const beautyOptions = {
 	indent_char: ' ',
 	preserve_newlines: false,
 	unformatted: ['a', 'br', 'noscript', 'textarea', 'pre', 'code']
-};
+	},
+	isDemoVersion = utils.isDemoVersion();
 
 let _instance = null;
 let modelManager = null;
@@ -112,6 +113,10 @@ class BracketsEditor {
 
 					fs.readFile(window.top.globalData.fileUrl, 'utf8', (err, data) => {
 						if (err) throw err;
+						if (isDemoVersion) {
+							document.body.classList.add('closet-preview-mode');
+							document.body.classList.add('closet-preview-mode-active');
+						}
 						$('.closet-container').addClass('full design-view-active');
 						self.update(data, window.top.globalData);
 						element.show();
