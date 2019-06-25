@@ -98,7 +98,7 @@ class Library {
 	 * @param {string} value attribute value
 	 */
 	setAttribute(key, value='') {
-		this.addAttribute(key,value);
+		this.addAttribute(key, value);
 		this.element.setAttribute(key, value);
 	}
 

@@ -19,6 +19,10 @@ const plugins = [
 			to: path.resolve(OUTPUT, 'design-editor/node_modules/closet-default-component-packages')
 		},
 		{
+			from: path.resolve(CONTEXT, 'tau-component-packages/libs/tau/wearable/theme/default'),
+			to: path.resolve(OUTPUT, 'design-editor/closet/templates')
+		},
+		{
 			from: path.resolve(CONTEXT, 'closet-component-packages'),
 			to: path.resolve(OUTPUT, 'design-editor/node_modules/closet-component-packages')
 		},
