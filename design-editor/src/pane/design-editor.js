@@ -238,7 +238,7 @@ class Model {
 		this._tauCommHosts = [];
 		this._checkbox = {};
 		this._dirty = false;
-		this._creator = new LibraryCreator();
+		this._libraryCreator = new LibraryCreator();
 	}
 
     /**
@@ -987,7 +987,7 @@ class Model {
     }
 
 	addLibrary(libraryName) {
-		const helper = this._creator.createLibrary(libraryName);
+		const helper = this._libraryCreator.createLibrary(libraryName);
 		if (!this._DOM.querySelector(helper.getSelector())) {
 			this._DOM.head.appendChild(
 				helper.createHTMLElement(

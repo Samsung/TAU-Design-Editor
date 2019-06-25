@@ -64,14 +64,8 @@ class Preview extends DressElement {
 
 				this.setProfileStyle(position, $frame);
 
-				const indexDir = path.dirname(uri);
-
 				$frame.one('load', () => {
 					this.scrollIframe.call(this, position, callback, $frame);
-					removeMediaQueryConstraints(
-						$frame[0].contentDocument,
-						indexDir
-					);
 				});
 
 				preview
@@ -171,18 +165,13 @@ class Preview extends DressElement {
 	createPreviewDocument(contents, location) {
 		const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
 			writeFile = promisify(fs.writeFile),
-			parsedContents = this._parseBeforePreview(contents);
+			parsedContents = removeMediaQueryConstraints(contents);
 		this.fsPath = pathUtils.createProjectPath(relativePathToFile);
 
 		return writeFile(this.fsPath, parsedContents)
 			.then(() => {
 				return pathUtils.createProjectPath(relativePathToFile, true);
 			}).catch((err) => {throw err;});
-	}
-
-	_parseBeforePreview(htmlText) {
-		return htmlText
-			.replace(/media="all and \(-tizen-geometric-shape: circle\)"/, '');
 	}
 }
 

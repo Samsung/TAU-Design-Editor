@@ -1,14 +1,15 @@
 // @ts-nocheck
 'use babel';
-import pathUtils from '../../utils/path-utils';
-import {appManager} from '../../app-manager';
-import {relative, join} from 'path';
+import { relative, join, dirname } from 'path';
 import fs from 'fs-extra';
 import { promisify } from 'util';
 
-const writeFile = promisify(fs.writeFile);
+import pathUtils from '../../utils/path-utils';
+import { appManager } from '../../app-manager';
 
+const writeFile = promisify(fs.writeFile);
 const LIB_DIRECTORY = 'lib';
+
 /**
  * Responsible for js library file created in lib directory
  * @class Library
@@ -42,7 +43,7 @@ class Library {
 	 * @returns {string} relative path according to given in param
 	 */
 	getRelativePath(startFrom) {
-		return relative(startFrom, this.getAbsolutePath());
+		return relative(dirname(startFrom), this.getAbsolutePath());
 	}
 
 	/**

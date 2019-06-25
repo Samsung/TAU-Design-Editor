@@ -213,7 +213,7 @@ class DesignEditor extends DressElement {
 				// fill HTML to iframe and run TAU
 				console.log('writing model', this._model.getDOM(), 'to iframe document', iframeDocument);
 				iframeDocument.open();
-				const htmlContent = this._model.getHTML()
+				let htmlContent = this._model.getHTML()
 					.replace('<html', '<html data-project="closet"')
 					.replace(/(<head[^>]*>)/,
 						`
@@ -221,8 +221,8 @@ class DesignEditor extends DressElement {
 							<base href="${finalBase}/" data-project-path="true">
 							<style>.using-alternative-selector{opacity:0.4;}</style>
 						`
-					)
-					.replace(/media="all and \(-tizen-geometric-shape: circle\)"/, '');
+					);
+				htmlContent = removeMediaQueryConstraints(htmlContent);
 
 				iframeDocument.write(htmlContent);
 				iframeDocument.close();
@@ -276,11 +276,6 @@ class DesignEditor extends DressElement {
 			}
 
 			this._$iframe.one('load', () => {
-				removeMediaQueryConstraints(
-					this._$iframe[0].contentDocument,
-					pathUtils.createProjectPath(serverPath, true)
-				);
-
 				this._selectLayer.refreshAltSelectors();
 				this._attachAlternativeSelectors(this._$iframe.contents()[0]);
 				this._updateIFrameHeight();
