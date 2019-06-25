@@ -2,7 +2,6 @@
 'use babel';
 
 import Library from './library';
-import {basename, extname} from 'path';
 
 /**
  * @classdesc Responsible for JS-Libraries
@@ -17,7 +16,7 @@ class JSLibrary extends Library {
 	 * otherwise it will be script with src=<lib-root>/filename
 	 */
 	constructor(fileName, scriptElement) {
-		super(fileName);
+		super(fileName, scriptElement);
 		this.element = scriptElement;
 		this.type = 'application/javascript';
 	}
@@ -31,29 +30,15 @@ class JSLibrary extends Library {
 	createHTMLElement(currentFile) {
 		this.element = this.element || document.createElement('script');
 		this.setAttribute('type', this.type);
-		if (this._fileName) {
+		if (this.fileName) {
 			this.setAttribute('src', this.getRelativePath(currentFile));
 			this.setAttribute(this.createDataAttribute(), '');
 		}
 		return this.element;
 	}
 
-	/**
-	 * Set element attribute
-	 * @param {string} key attribute key
-	 * @param {string} value attribute value
-	 */
-	setAttribute(key, value='') {
-		this.addAttribute(key,value);
-		this.element.setAttribute(key, value);
-	}
-
-	createDataAttribute() {
-		return `data-${basename(this._fileName, extname(this._fileName))}`;
-	}
-
 	getSelector() {
-		return `script[${this.createDataAttribute()}]`;
+		return `script[src$="${this.fileName}"]`;
 	}
 }
 

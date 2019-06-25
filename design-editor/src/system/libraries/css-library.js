@@ -1,38 +1,42 @@
 // @ts-nocheck
 import Library from './library';
-import {basename, extname} from 'path';
 
+/**
+ * @classdesc Module responsible for CSS Libraries
+ */
 class CSSLibrary extends Library {
+	/**
+	 * @constructor
+	 * @param {string} [fileName] Name of library file
+	 * @param {HTMLLinkElement|HTMLStyleElement} [element] Style or Link element of library
+	 * if empty then it will be style with content inside
+	 * otherwise it will be link with href=<lib-root>/filename
+	 */
 	constructor(fileName, element) {
-		super(fileName);
-		this._element = element;
+		super(fileName, element);
 	}
 
+	/**
+	 * Creates HTML Element for library with basic attributes
+	 * @returns {HTMLStyleElement|HTMLLinkElement} Element for library
+	 */
 	createHTMLElement() {
-		if (this._fileName) {
-			this._element = document.createElement('link');
+		if (this.fileName) {
+			this.element = document.createElement('link');
 			this.setAttribute('rel', 'stylesheet');
-			this.setAttribute('hrev', this.getAbsolutePath(true));
-			this.setAttribute(this.createDataAttribute(), '');
+			this.setAttribute('href', this.getAbsolutePath(true));
 		} else {
-			this._element = document.createElement('style');
+			this.element = document.createElement('style');
 		}
-		return this._element;
+		return this.element;
 	}
 
-	createDataAttribute() {
-		const libraryAttributeName = basename(this._fileName, extname(this._fileName))
-			.replace('.', '-');
-		return `data-style-${libraryAttributeName}`;
-	}
-
+	/**
+	 * get css selector of library element
+	 * @returns {string} css selector of particular library
+	 */
 	getSelector() {
-		return `link[${this.createDataAttribute()}]`;
-	}
-
-	setAttribute(key, value='') {
-		this.addAttribute(key,value);
-		this._element.setAttribute(key, value);
+		return `link[href$="${this.fileName}"]`;
 	}
 }
 
