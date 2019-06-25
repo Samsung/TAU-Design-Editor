@@ -3,17 +3,9 @@
 const path = require('path');
 const utils = require('./utils');
 
-function removeMediaQueryConstraints(documentElement, basePath) {
-	const linkElementArray = documentElement
-		.querySelectorAll('link[media="all and (-tizen-geometric-shape: circle)"]');
-
-	linkElementArray.forEach(linkElement => {
-		linkElement.removeAttribute('media');
-		linkElement.setAttribute(
-			'href',
-			path.join(basePath, linkElement.getAttribute('href'))
-		);
-	});
+function removeMediaQueryConstraints(htmlText) {
+	return htmlText
+		.replace(/media="all and \(-tizen-geometric-shape: circle\)"/g, '');
 }
 
 function correctBase(documentElement) {

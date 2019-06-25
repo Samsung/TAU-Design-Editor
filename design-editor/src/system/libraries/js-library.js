@@ -12,20 +12,19 @@ class JSLibrary extends Library {
 	/**
 	 * @constructor
 	 * @param {string} [fileName] Name of library file
-	 * @param {HTMLScriptElement} [script] Script element of library
+	 * @param {HTMLScriptElement} [scriptElement] Script element of library
 	 * if empty then it will be internal script with content inside
 	 * otherwise it will be script with src=<lib-root>/filename
 	 */
-	constructor(fileName, script) {
+	constructor(fileName, scriptElement) {
 		super(fileName);
-		this.element = script;
+		this.element = scriptElement;
 		this.type = 'application/javascript';
 	}
 
 	/**
 	 * Creating HTMLScriptElement for library
-	 * @TODO Change to relative path on fix
-	 * @param {string} currentFile path to currently opened file
+	 * @param {string} currentFile - path to currently opened file
 	 * @returns {HTMLScriptElement} script element for library
 	 */
 	// eslint-disable-next-line no-unused-vars
@@ -33,9 +32,7 @@ class JSLibrary extends Library {
 		this.element = this.element || document.createElement('script');
 		this.setAttribute('type', this.type);
 		if (this._fileName) {
-			// TODO: uncoment this line when fix
-			// this.setAttribute('src', this.getRelativePath(currentFile));
-			this.setAttribute('src', this.getAbsolutePath(true));
+			this.setAttribute('src', this.getRelativePath(currentFile));
 			this.setAttribute(this.createDataAttribute(), '');
 		}
 		return this.element;
