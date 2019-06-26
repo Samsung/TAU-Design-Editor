@@ -7,8 +7,7 @@ import path from 'path';
 
 import {appManager as AppManager} from '../../../app-manager';
 import {DressElement} from '../../../utils/dress-element';
-import utils from '../../../utils/utils';
-import pathUtils from '../../../utils/path-utils';
+import attributeUtils from '../../../utils/attribute-utils';
 
 const TEMPLATE_FILE = 'panel/property/attribute/templates/attribute-image.html';
 
@@ -169,31 +168,10 @@ class AttributeImage extends DressElement {
 	}
 
 	_onSrcImageChange(event) {
-		const self = this;
-		[].slice.call(event.target.files).forEach(file => {
-			const reader = new FileReader();
-			reader.addEventListener('loadend', event => {
-				if (event.target.readyState === FileReader.DONE) {
-					const
-						filePath = path.join('images', file.name),
-						writepath = pathUtils.createProjectPath(filePath),
-						readpath = pathUtils.createProjectPath(filePath, true);
-
-					utils.checkGlobalContext('writeFile') (
-						writepath,
-						event.target.result, {
-							encoding: 'binary'
-						},
-						() => {
-							AppManager.getActiveDesignEditor()
-								.getModel().updateAttribute(self._selectedElementId, 'src', readpath);
-							self._updateImageSourcePath(readpath);
-						}
-					);
-				}
-			});
-			reader.readAsBinaryString(file);
-		});
+		attributeUtils.setImageSource(event,
+			'src',
+			this._selectedElementId,
+			this._updateImageSourcePath.bind(this));
 	}
 
 	_onSrcImageClear() {
