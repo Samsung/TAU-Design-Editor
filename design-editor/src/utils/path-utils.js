@@ -7,59 +7,57 @@ import utils from './utils';
 
 const origin = window.location.origin || '';
 
-export default {
 
-	/**
-	 * Creates URL for file located in project directory
-	 * @param {string} filePath relative path to file
-	 * @returns {URL} url to file
-	 */
-	createProjectURL(filePath = '', addProjectId) {
-		const projectPath = this.createProjectPath(filePath, addProjectId);
-		return new URL(projectPath, origin);
-	},
-	/**
-	 * Returns full path for resource specified by filePath
-	 * @param {string} filePath - path of the resource
-	 * @param {boolean} addProjectId - add id after 'projects' in path
-	 * (for paths resolved by WATT)
-	 * @returns {string} full path for resource specified by filePath
-	 */
-	createProjectPath(filePath = '', addProjectId) {
-		const { projectId } = utils.checkGlobalContext('globalData');
-		return this.joinPaths(labels.getProjectRoot(projectId, addProjectId), filePath);
-	},
+/**
+ * Creates URL for file located in project directory
+ * @param {string} filePath relative path to file
+ * @returns {URL} url to file
+ */
+export const createProjectURL = (filePath = '', addProjectId) => {
+	const projectPath = this.createProjectPath(filePath, addProjectId);
+	return new URL(projectPath, origin);
+};
 
-	/**
-	 * Smart joining paths - base endpoint from server and relative path to file
-	 * If one folder is end of first and beginning of second path
-	 * then this function can prevent duplication of it.
-	 * @param  {string} basePath - path as endpoint to file
-	 * @param  {string} additionPath - relative path to file
-	 * @returns {string} joined path
-	 */
-	joinPaths(basePath, ...additionalPaths) {
-		const pathToArr = item => item.split(path.sep).filter(item => item !== '');
+/**
+ * Returns full path for resource specified by filePath
+ * @param {string} filePath - path of the resource
+ * @param {boolean} addProjectId - add id after 'projects' in path
+ * (for paths resolved by WATT)
+ * @returns {string} full path for resource specified by filePath
+ */
+export const createProjectPath = (filePath = '', addProjectId) => {
+	const { projectId } = utils.checkGlobalContext('globalData');
+	return this.joinPaths(labels.getProjectRoot(projectId, addProjectId), filePath);
+};
 
-		const [basePathArr, additionalPathsArr] = [
-			basePath,
-			path.join(...additionalPaths)
-		].map(pathToArr);
+/**
+ * Smart joining paths - base endpoint from server and relative path to file
+ * If one folder is end of first and beginning of second path
+ * then this function can prevent duplication of it.
+ * @param  {string} basePath - path as endpoint to file
+ * @param  {string} additionPath - relative path to file
+ * @returns {string} joined path
+ */
+export const joinPaths = (basePath, ...additionalPaths) => {
+	const pathToArr = item => item.split(path.sep).filter(item => item !== '');
 
-		return (basePathArr[basePathArr.length - 1] === additionalPathsArr[0]) ?
-			path.join('/', ...basePathArr, '..', ...additionalPathsArr) :
-			path.join('/', ...basePathArr, ...additionalPathsArr);
-	},
+	const [basePathArr, additionalPathsArr] = [
+		basePath,
+		path.join(...additionalPaths)
+	].map(pathToArr);
+
+	return (basePathArr[basePathArr.length - 1] === additionalPathsArr[0]) ?
+		path.join('/', ...basePathArr, '..', ...additionalPathsArr) :
+		path.join('/', ...basePathArr, ...additionalPathsArr);
+};
 
 
-	/**
-	 * Gets filename from path
-	 * @param  {string} pathName
-	 * @param {boolean} ext  true if returned filename should have extension
-	 * @returns {string} filename with extension
-	 */
-	getFileName(pathName, ext) {
-		return ext ? path.basename(pathName) : path.basename(pathName, path.extname(pathName));
-	}
-
+/**
+ * Gets filename from path
+ * @param  {string} pathName
+ * @param {boolean} ext  true if returned filename should have extension
+ * @returns {string} filename with extension
+ */
+export const getFileName = (pathName, ext) => {
+	return ext ? path.basename(pathName) : path.basename(pathName, path.extname(pathName));
 };

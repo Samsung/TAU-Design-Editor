@@ -3,8 +3,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const CONTEXT = path.resolve(__dirname, '..');
-const {createAliasObject} = require('./webpack-utils')(CONTEXT);
+const {createVSCAliasObject, CONTEXT} = require('./webpack-utils');
 const OUTPUT = path.resolve(CONTEXT, 'dist/vsc');
 const plugins = [
 	new CopyWebpackPlugin([
@@ -58,28 +57,6 @@ const plugins = [
 	])
 ];
 
-const relativeAliases = [
-	['fs', 'vsc-extension/design-editor/libs/fs.js'],
-	['labels', 'vsc-extension/design-editor/labels.js'],
-	['fs-extra', 'vsc-extension/design-editor/libs/fs-extra.js'],
-	['atom', 'vsc-extension/design-editor/libs/atom.js'],
-	['brackets', 'vsc-extension/design-editor/libs/brackets.js'],
-	['remote', 'design-editor/libs/remote.js'],
-	['closet-default-component-packages', 'closet-default-component-packages'],
-	['closet-component-packages', 'closet-component-packages'],
-	['tau-component-packages', 'tau-component-packages'],
-	['content-manager', 'content-manager'],
-	['dress', 'contents/dist/1.0.0/dress.js'],
-	['mustache', 'design-editor/node_modules/mustache/mustache.js'],
-	['path', 'design-editor/node_modules/path-browserify/index.js'],
-	['js-beautify', 'design-editor/node_modules/js-beautify/js/index.js'],
-	['jquery', 'design-editor/node_modules/jquery/dist/jquery.js'],
-	['jquery-ui', 'design-editor/node_modules/jquery-ui/jquery-ui.js'],
-	['assistant-view', 'vsc-extension/design-editor/libs/assistant-view-manager.js'],
-	['html-assistant-editor', 'vsc-extension/design-editor/libs/html-assistant-editor.js'],
-	['@', 'vsc-extension/design-editor']
-];
-
 const production = {
 	name: 'production',
 	context: CONTEXT,
@@ -127,7 +104,7 @@ const production = {
 		]
 	},
 	resolve: {
-		alias: createAliasObject(relativeAliases)
+		alias: createVSCAliasObject
 	},
 	plugins: plugins
 };
@@ -190,7 +167,7 @@ const development = {
 		]
 	},
 	resolve: {
-		alias: createAliasObject(relativeAliases)
+		alias: createVSCAliasObject
 	},
 	plugins: plugins
 };

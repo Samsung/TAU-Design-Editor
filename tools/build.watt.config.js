@@ -2,8 +2,7 @@
 /* global module, __dirname */
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CONTEXT = path.resolve(__dirname, '..');
-const {createAliasObject} = require('./webpack-utils')(CONTEXT);
+const {createWATTAliasObject, CONTEXT} = require('./webpack-utils');
 const OUTPUT = path.resolve(CONTEXT, 'dist/watt');
 const plugins = [
 	new CopyWebpackPlugin([
@@ -39,28 +38,6 @@ const plugins = [
 			to: path.resolve(OUTPUT, 'design-editor/styles')
 		}
 	])
-];
-
-const relativeAliases = [
-	['labels', 'brackets-extension/design-editor/labels.js'],
-	['fs', 'brackets-extension/design-editor/libs/fs-mock.js'],
-	['fs-extra', 'brackets-extension/design-editor/libs/fs-extra.js'],
-	['fs-remote', 'brackets-extension/design-editor/libs/fs-remote.js'],
-	['atom', 'brackets-extension/design-editor/libs/atom.js'],
-	['remote', 'design-editor/libs/remote.js'],
-	['closet-default-component-packages', 'closet-default-component-packages'],
-	['closet-component-packages', 'closet-component-packages'],
-	['tau-component-packages', 'tau-component-packages'],
-	['content-manager', 'content-manager'],
-	['dress', 'contents/dist/1.0.0/dress.js'],
-	['mustache', 'design-editor/node_modules/mustache/mustache.js'],
-	['path', 'design-editor/node_modules/path-browserify/index.js'],
-	['js-beautify', 'design-editor/node_modules/js-beautify/js/index.js'],
-	['jquery', 'design-editor/node_modules/jquery/dist/jquery.js'],
-	['jquery-ui', 'design-editor/node_modules/jquery-ui/jquery-ui.js'],
-	['assistant-view', 'brackets-extension/design-editor/libs/assistant-view/assistant-view-manager.js'],
-	['html-assistant-editor', 'brackets-extension/design-editor/libs/html-assistant-editor.js'],
-	['@', 'brackets-extension/design-editor']
 ];
 
 const production = {
@@ -110,7 +87,7 @@ const production = {
 		]
 	},
 	resolve: {
-		alias: createAliasObject(relativeAliases)
+		alias: createWATTAliasObject
 	},
 	plugins: plugins
 };
@@ -173,7 +150,7 @@ const development = {
 		]
 	},
 	resolve: {
-		alias: createAliasObject(relativeAliases)
+		alias: createWATTAliasObject
 	},
 	plugins: plugins
 };
