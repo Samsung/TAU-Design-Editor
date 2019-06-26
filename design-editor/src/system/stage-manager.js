@@ -20,7 +20,7 @@ import utils from '../utils/utils';
 
 const CompositeDisposable = editor.CompositeDisposable,
 	DESIGN = ViewType.Design,
-	brackets = utils.checkGlobalContext('brackets');
+	isDemoVersion = utils.isDemoVersion();
 
 class StageManager {
     /**
@@ -155,7 +155,7 @@ class StageManager {
                 this._toolbarContainerElement.turnOffControl(this._toolbarControls.INSTANT_EDIT);
             }
         })
-        
+
     }
     /**
      * Toggle assistant view
@@ -236,16 +236,15 @@ class StageManager {
      * @param toggleEditor
      * @private
      */
-    _togglePreview(toggleEditor) {
-        var $workSpace = $(editor.selectors.workspace),
-			preview = null,
-			isDemoVersion = utils.isDemoVersion(brackets);
+	_togglePreview(toggleEditor) {
+		let $workSpace = $(editor.selectors.workspace),
+			preview = null;
 
         if (!$workSpace.length) {
             $workSpace = $(document.body);
         }
 
-        if (!$workSpace.hasClass('closet-preview-mode')) {
+		if (!$workSpace.hasClass('closet-preview-mode') || isDemoVersion) {
 			preview = new PreviewElement();
 			$workSpace.children().first().before(preview);
 			preview.show(
@@ -379,7 +378,9 @@ class StageManager {
             // init animation container
             // this._animationContainerElement.initialize(editor);
 
-            panelManager.openPanel({type: 'right', item: this._propertyContainerElement});
+			if (!isDemoVersion) {
+				panelManager.openPanel({type: 'right', item: this._propertyContainerElement});
+			}
             panelManager.openPanel({type: 'bottom', item: this._animationContainerElement});
 
             panelManager.openPanel({type: 'top', item: this._infoElement});

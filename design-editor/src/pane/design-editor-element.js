@@ -152,8 +152,6 @@ class DesignEditor extends DressElement {
 
 		const appURI = uri.replace(/\/[^/]+$/gi, '');
 
-		this._$iframe.attr('src', uri);
-
 		// fill model document by HTML
 		documentForModel.documentElement.innerHTML = stringHTML;
 
@@ -278,7 +276,6 @@ class DesignEditor extends DressElement {
 			}
 
 			this._$iframe.one('load', () => {
-				const isDemoVersion = utils.isDemoVersion(brackets);
 				removeMediaQueryConstraints(
 					this._$iframe[0].contentDocument,
 					pathUtils.createProjectPath(serverPath, true)
@@ -287,7 +284,7 @@ class DesignEditor extends DressElement {
 				this._selectLayer.refreshAltSelectors();
 				this._attachAlternativeSelectors(this._$iframe.contents()[0]);
 				this._updateIFrameHeight();
-				if (isDemoVersion) {
+				if (utils.isDemoVersion()) {
 					stageManager._onTogglePreview();
 				}
 				this._$iframe.css('visibility', 'visible');
@@ -438,7 +435,6 @@ class DesignEditor extends DressElement {
 	 * On ready callback
 	 */
 	onReady() {
-		this._$iframe.attr('src', this.options.uri);
 		this._$iframe.css('visibility', 'hidden');
 	}
 

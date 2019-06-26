@@ -66,13 +66,12 @@ module.exports = {
 	/**
 	 * Checks if opened project is in demo mode
 	 *
-	 * @param {object} bracketsEditor
 	 * @returns {string} boolean
 	 */
-	isDemoVersion(bracketsEditor) {
-		if (bracketsEditor) {
-			const PreferencesManager = bracketsEditor.getModule('preferences/PreferencesManager');
-			return PreferencesManager.getViewState('projectType') === 'demo';
-		}
+	isDemoVersion() {
+		return this.checkGlobalContext('brackets')
+			.getModule('preferences/PreferencesManager')
+			.getViewState('projectType') === 'demo';
+
 	}
 };
