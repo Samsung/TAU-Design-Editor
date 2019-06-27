@@ -1,14 +1,15 @@
 // @ts-nocheck
 'use babel';
-import pathUtils from '../../utils/path-utils';
-import {appManager} from '../../app-manager';
-import {relative, join} from 'path';
+import { relative, join, dirname } from 'path';
 import fs from 'fs-extra';
 import { promisify } from 'util';
 
-const writeFile = promisify(fs.writeFile);
+import pathUtils from '../../utils/path-utils';
+import { appManager } from '../../app-manager';
 
+const writeFile = promisify(fs.writeFile);
 const LIB_DIRECTORY = 'lib';
+
 /**
  * Responsible for js library file created in lib directory
  * @class Library
@@ -20,9 +21,10 @@ class Library {
 	 * @param {string} [fileName] name of library file with extension
 	 * if not added then element for internal library is given
 	 */
-	constructor(fileName) {
-		this._fileName = fileName;
-		this._attributes = {};
+	constructor(fileName, element) {
+		this.element = element;
+		this.fileName = fileName;
+		this.attributes = {};
 		this.templatePath = join(appManager.getAppPath().src, 'templates', fileName || '');
 	}
 
@@ -42,7 +44,7 @@ class Library {
 	 * @returns {string} relative path according to given in param
 	 */
 	getRelativePath(startFrom) {
-		return relative(startFrom, this.getAbsolutePath());
+		return relative(dirname(startFrom), this.getAbsolutePath());
 	}
 
 	/**
@@ -50,7 +52,7 @@ class Library {
 	 * @returns {string} absolute path to specific lib
 	 */
 	getAbsolutePath(addHash) {
-		const name = this._fileName || '';
+		const name = this.fileName || '';
 		return pathUtils.joinPaths(Library.getLibrariesRoot(addHash), name);
 	}
 
@@ -60,7 +62,7 @@ class Library {
 	 * @param  {string} [value=''] optional attribute value
 	 */
 	addAttribute(key, value='') {
-		this._attributes[key] = value;
+		this.attributes[key] = value;
 	}
 
 	/**
@@ -68,7 +70,7 @@ class Library {
 	 * @returns {Object} all attributes as plain object
 	 */
 	getAttributes() {
-		return this._attributes;
+		return this.attributes;
 	}
 
 	getTemplateContent() {
@@ -90,6 +92,15 @@ class Library {
 		});
 	}
 
+	/**
+	 * Set element attribute
+	 * @param {string} key attribute key
+	 * @param {string} value attribute value
+	 */
+	setAttribute(key, value='') {
+		this.addAttribute(key, value);
+		this.element.setAttribute(key, value);
+	}
 
 	/**
 	 * Creating HTML element for library
@@ -101,11 +112,16 @@ class Library {
 
 
 	/**
-	 * Add library to its destination
-	 * @abstract
+	 * Inserts content into library
+	 * both as internal script or copy proper file
+	 * @param  {function} callback callback function after insertion.
 	 */
-	insertLibContent() {
-		throw new Error('Method insertLibContent has to be implemented');
+	insertLibContent(callback) {
+		if (this.fileName) {
+			this.copyLibFile(callback);
+		} else {
+			this.element.textContent = this.content;
+		}
 	}
 
 	/**

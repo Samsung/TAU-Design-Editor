@@ -238,7 +238,7 @@ class Model {
 		this._tauCommHosts = [];
 		this._checkbox = {};
 		this._dirty = false;
-		this._creator = new LibraryCreator();
+		this._libraryCreator = new LibraryCreator();
 	}
 
     /**
@@ -944,7 +944,10 @@ class Model {
 
 		this._DOM.body.appendChild(scriptRunner);
 		this.addLibrary('helper.js');
-		this.addLibrary('circle-helper.js');
+		if (screen.shape == 'circle') {
+			this.addLibrary('tau.circle.css');
+			this.addLibrary('circle-helper.js');
+		}
         for (const [key, value] of this._animationGroups) {
             styleContent += this.exportAnimationName(key, value.animations);
         }
@@ -987,7 +990,7 @@ class Model {
     }
 
 	addLibrary(libraryName) {
-		const helper = this._creator.createLibrary(libraryName);
+		const helper = this._libraryCreator.createLibrary(libraryName);
 		if (!this._DOM.querySelector(helper.getSelector())) {
 			this._DOM.head.appendChild(
 				helper.createHTMLElement(
