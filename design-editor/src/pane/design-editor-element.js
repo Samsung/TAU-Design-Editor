@@ -30,13 +30,10 @@ import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
 import path, {relative} from 'path';
 
-const KEY_CODE = {
-	DELETE: 46
-	},
+const KEY_CODE = { DELETE: 46 },
 	INTERNAL_ID_ATTRIBUTE = 'data-id',
 	LOCK_CLASS = 'lock',
-	RE_COPY_ATTRIBUTE_TO_CONTAINER = new RegExp('^(data-(?!tau)|st-).*'),
-	brackets = utils.checkGlobalContext('brackets');
+	RE_COPY_ATTRIBUTE_TO_CONTAINER = new RegExp('^(data-(?!tau)|st-).*');
 
 let _instance = null;
 
