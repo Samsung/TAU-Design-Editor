@@ -32,7 +32,6 @@ class JSLibrary extends Library {
 		this.setAttribute('type', this.type);
 		if (this.fileName) {
 			this.setAttribute('src', this.getRelativePath(currentFile));
-			this.setAttribute(this.createDataAttribute(), '');
 		}
 		return this.element;
 	}
