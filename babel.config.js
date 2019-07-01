@@ -1,5 +1,4 @@
-const { createVSCAliasObject } = require('./tools/webpack-utils');
-
+const { createVSCAliasObject, createWATTAliasObject } = require('./tools/webpack-utils');
 
 module.exports = api => {
 	api.cache(false);
@@ -9,7 +8,9 @@ module.exports = api => {
 			[
 				require.resolve('babel-plugin-module-resolver'),
 				{
-					alias: createVSCAliasObject
+					alias: process.env.EDITOR === 'WATT'
+						? createWATTAliasObject
+						: createVSCAliasObject
 				}
 			]
 		]
