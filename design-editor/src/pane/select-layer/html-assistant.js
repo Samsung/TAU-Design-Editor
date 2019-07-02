@@ -1,9 +1,7 @@
 'use babel';
-import {html as beautify} from 'js-beautify';
 import {HTMLAssistantEditorElement} from 'html-assistant-editor';
 import {EVENTS, eventEmitter} from '../../events-emitter';
 import {appManager} from '../../app-manager';
-import utils from '../../utils/utils'
 
 /**
  * Responsible for running of HTML editor of selected component
@@ -31,19 +29,16 @@ class HTMLAssistant {
 	/**
 	 * Setting new content of selected content to model
 	 * @param {string | Promise} content HTML content of edited element
+	 * @returns {Promise} resolves after model is updated with new text
 	 */
 	setSelectedContent(content) {
-		if (typeof content == 'string') {
-				this._model.updateText(this.selectedElementId, content);
-			} else {
-				content
-					.then((item) => {
-						this._model.updateText(this.selectedElementId, item);
-						})
-					.catch((err) => {
-						throw err;
-					})
-			}
+		return Promise.resolve(content)
+			.then((item) => {
+				this._model.updateText(this.selectedElementId, item);
+			})
+			.catch((err) => {
+				throw err;
+			});
 	}
 
 	/**
@@ -54,12 +49,12 @@ class HTMLAssistant {
 		const opened = this._htmlAssistantEditor.isOpened();
 		if (opened) {
 			Promise.resolve(this._htmlAssistantEditor.getEditorContent())
-				.then((content) => {
-					this.setSelectedContent(content);
+				.then(content => this.setSelectedContent(content))
+				.then(() => {
+					this.element = this._model.getElementWithoutId(this.selectedElementId);
 					this._htmlAssistantEditor.close();
 				})
 				.catch(error => console.error(error));
-
 		} else {
 			this._htmlAssistantEditor.open(this.getSelectedContent(this.element));
 		}
@@ -70,14 +65,14 @@ class HTMLAssistant {
 		eventEmitter.on(EVENTS.ElementSelected, (elementId) => {
 			console.log("element selected", elementId);
 			this._model = appManager.getActiveDesignEditor().getModel();
-            this.selectedElementId = elementId;
-			this.element = this._model.getElementWithoutId(elementId);
-        });
+			this.selectedElementId = elementId;
+			this.element = this._model.getElementWithoutId(this.selectedElementId);
+		});
 
 		eventEmitter.on(EVENTS.ElementDeselected, () => {
 			console.log("element deselected");
-				this.selectedElementId = null;
-        });
+			this.selectedElementId = null;
+		});
 	}
 }
 
