@@ -18,13 +18,14 @@ class CSSLibrary extends Library {
 
 	/**
 	 * Creates HTML Element for library with basic attributes
+	 * @param {string} currentPath current file basepath
 	 * @returns {HTMLStyleElement|HTMLLinkElement} Element for library
 	 */
-	createHTMLElement() {
+	createHTMLElement(currentPath) {
 		if (this.fileName) {
 			this.element = document.createElement('link');
 			this.setAttribute('rel', 'stylesheet');
-			this.setAttribute('href', this.getAbsolutePath(true));
+			this.setAttribute('href', this.getRelativePath(currentPath));
 		} else {
 			this.element = document.createElement('style');
 		}
