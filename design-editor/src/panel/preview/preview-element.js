@@ -4,7 +4,9 @@ import {StateManager} from '../../system/state-manager';
 import {DressElement} from '../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
 import pathUtils from '../../utils/path-utils';
+import {checkGlobalContext} from '../../utils/utils';
 import {removeMediaQueryConstraints} from '../../utils/iframe';
+import LibraryCreator from '../../system/libraries/library-creator';
 import fs from 'fs-extra';
 import path from 'path';
 import { promisify } from 'util';
@@ -23,6 +25,7 @@ class Preview extends DressElement {
 	 */
 	onCreated() {
 		this.eventsListeners = {};
+		this.libraryCreator = new LibraryCreator();
 	}
 
 	/**
@@ -165,13 +168,34 @@ class Preview extends DressElement {
 	createPreviewDocument(contents, location) {
 		const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
 			writeFile = promisify(fs.writeFile),
-			parsedContents = removeMediaQueryConstraints(contents);
+			parsedContents = this.addLibrary(removeMediaQueryConstraints(contents));
 		this.fsPath = pathUtils.createProjectPath(relativePathToFile);
 
 		return writeFile(this.fsPath, parsedContents)
 			.then(() => {
 				return pathUtils.createProjectPath(relativePathToFile, true);
 			}).catch((err) => {throw err;});
+	}
+
+	addLibrary(contents) {
+		const libraryName = 'preview-helper.css',
+			library = this.libraryCreator.createLibrary(libraryName),
+			domParser = new DOMParser(),
+			xmlSerializer = new XMLSerializer(),
+			doc = domParser.parseFromString(contents, 'text/html');
+
+		doc.head.appendChild(
+			library.createHTMLElement(
+				checkGlobalContext('globalData').fileUrl
+			)
+		);
+
+		library.insertLibContent(() => {
+			// eslint-disable-next-line no-console
+			console.log(`[OK] Library ${libraryName} copied`);
+		});
+
+		return xmlSerializer.serializeToString(doc);
 	}
 }
 

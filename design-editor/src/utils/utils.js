@@ -11,7 +11,7 @@ const url = require('url');
 */
 export function checkGlobalContext(variableName) {
 	return window[variableName] || window.top[variableName];
-};
+}
 
 /**
  * path.join equivalent for URLs
@@ -29,7 +29,7 @@ export function urlJoin(...urlParts) {
 	];
 
 	return `${baseURL.protocol}//${host}${path.join(...paths)}`;
-};
+}
 
 /**
  * Generates absolute bath for the server
@@ -41,7 +41,7 @@ export function urlJoin(...urlParts) {
 export function generateAbsolutePath(relativePath) {
 	const projectPath = this.checkGlobalContext('globalData').projectPath;
 	return path.join(projectPath, '..', relativePath);
-};
+}
 
 /**
  * Resolves promise passed in parameter if it's resolved within
@@ -61,7 +61,7 @@ export function timeoutPromise(promise, timeoutThreshold) {
 	});
 
 	return Promise.race([timeoutTriggerPromise, promise]);
-};
+}
 
 /**
  * Checks if opened project is in demo mode
@@ -72,7 +72,7 @@ export function isDemoVersion() {
 	return checkGlobalContext('brackets')
 		.getModule('preferences/PreferencesManager')
 		.getViewState('projectType') === 'demo';
-};
+}
 
 export default {
 	checkGlobalContext,
