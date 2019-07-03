@@ -48,13 +48,22 @@ class HTMLAssistant {
 	toggle(callback) {
 		const opened = this._htmlAssistantEditor.isOpened();
 		if (opened) {
-			Promise.resolve(this._htmlAssistantEditor.getEditorContent())
+			new Promise((resolve) => {
+				this._htmlAssistantEditor.close();
+				window.addEventListener('message', ({ data }) => {
+					if (data.type === 'VSCODE_MESSAGE' && data.info === 'EDITOR_CLOSED') {
+						resolve();
+					}
+				});
+			})
+				.then(() => this._htmlAssistantEditor.getEditorContent())
 				.then(content => this.setSelectedContent(content))
 				.then(() => {
 					this.element = this._model.getElementWithoutId(this.selectedElementId);
-					this._htmlAssistantEditor.close();
+					this._htmlAssistantEditor.clean();
 				})
 				.catch(error => console.error(error));
+
 		} else {
 			this._htmlAssistantEditor.open(this.getSelectedContent(this.element));
 		}
