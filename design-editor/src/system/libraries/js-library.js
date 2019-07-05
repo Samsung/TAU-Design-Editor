@@ -23,7 +23,7 @@ class JSLibrary extends Library {
 
 	/**
 	 * Creating HTMLScriptElement for library
-	 * @param {string} currentFile - path to currently opened file
+	 * @param {string} [currentFile] - path to currently opened file
 	 * @returns {HTMLScriptElement} script element for library
 	 */
 	// eslint-disable-next-line no-unused-vars
