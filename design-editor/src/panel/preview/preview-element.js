@@ -168,7 +168,11 @@ class Preview extends DressElement {
 	createPreviewDocument(contents, location) {
 		const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
 			writeFile = promisify(fs.writeFile),
-			parsedContents = this.addLibrary(removeMediaQueryConstraints(contents));
+			parsedContents = this.signMainPage(
+				this.addHelperCSSLibrary(
+					removeMediaQueryConstraints(contents)
+				)
+			);
 		this.fsPath = pathUtils.createProjectPath(relativePathToFile);
 
 		return writeFile(this.fsPath, parsedContents)
@@ -177,7 +181,11 @@ class Preview extends DressElement {
 			}).catch((err) => {throw err;});
 	}
 
-	addLibrary(contents) {
+	/**
+	 * Add CSS helper for styling item only in preview
+	 * @param {string} contents valid HTML string
+	 */
+	addHelperCSSLibrary(contents) {
 		const libraryName = 'preview-helper.css',
 			library = this.libraryCreator.createLibrary(libraryName),
 			domParser = new DOMParser(),
@@ -196,6 +204,23 @@ class Preview extends DressElement {
 		});
 
 		return xmlSerializer.serializeToString(doc);
+	}
+
+	addMainID(contents) {
+		const domParser = new DOMParser(),
+			xmlSerializer = new XMLSerializer(),
+			doc = domParser.parseFromString(contents, 'text/html');
+
+		doc.querySelector('.ui-page').setAttribute('id', 'main');
+		return xmlSerializer.serializeToString(doc);
+	}
+
+	signMainPage(contents) {
+		if (!checkGlobalContext('globalData').mainFile) {
+			checkGlobalContext('globalData').mainFile = checkGlobalContext('globalData').fileUrl;
+			return this.addMainID(contents);
+		}
+		return contents;
 	}
 }
 

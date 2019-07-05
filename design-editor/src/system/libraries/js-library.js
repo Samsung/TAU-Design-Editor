@@ -37,7 +37,7 @@ class JSLibrary extends Library {
 	}
 
 	getSelector() {
-		return `script[src$="${this.fileName}"]`;
+		return `script[src$="/${this.fileName}"]`;
 	}
 }
 
