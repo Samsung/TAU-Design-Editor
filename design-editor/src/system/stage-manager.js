@@ -240,13 +240,13 @@ class StageManager {
 		let $workSpace = $(editor.selectors.workspace),
 			preview = null;
 
-        if (!$workSpace.length) {
-            $workSpace = $(document.body);
-        }
+		if (!$workSpace.length) {
+			$workSpace = $(document.body);
+		}
 
 		if (!$workSpace.hasClass('closet-preview-mode') || isDemoVersion) {
 			preview = new PreviewElement();
-			$workSpace.children().first().before(preview);
+			$workSpace.children().last().before(preview);
 			preview.show(
 				{
 					editor: toggleEditor || null,
@@ -259,33 +259,27 @@ class StageManager {
 				}
 			);
 
-			$workSpace.children().first().before(this._previewElementToolbar);
+			$workSpace.children().last().before(this._previewElementToolbar);
 
 			if (isDemoVersion) {
-				const activatePreviewModeButton = document.getElementsByClassName('preview-toggle');
-				if (activatePreviewModeButton !== undefined) {
-					activatePreviewModeButton[0].style.display = 'none';
+				const activatePreviewModeButton = document
+					.querySelector('closet-preview-element-toolbar .preview-toggle');
+				if (activatePreviewModeButton) {
+					activatePreviewModeButton.style.display = 'none';
 				}
 			}
 
-        } else {
-			if (isDemoVersion) {
-				return;
-			}
-            $workSpace.removeClass('closet-preview-mode-active');
-            window.setTimeout(() => {
-                $workSpace.find('closet-preview-element').remove();
-                $workSpace.removeClass('closet-preview-mode');
-            }, 500);
+		} else {
+			$workSpace.removeClass('closet-preview-mode-active');
+			window.setTimeout(() => {
+				$workSpace.find('closet-preview-element').remove();
+				$workSpace.removeClass('closet-preview-mode');
+			}, 500);
 
-            if (window.atom !== undefined) {
-                this._toolbarContainerElementPanel.show();
-                this._previewElementToolbarPanel.hide();
-            } else {
-                $workSpace.find('closet-preview-element-toolbar').remove();
-            }
-        }
-    }
+			$workSpace.find('closet-preview-element-toolbar').remove();
+		}
+	}
+
 
 	/**
 	 * Toggle preview

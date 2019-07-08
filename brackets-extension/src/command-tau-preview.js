@@ -1,7 +1,8 @@
-/* global $*/
-var brackets = window.brackets || window.top.brackets;
 
-define(function (require, exports, module) {
+/* global define $*/
+const brackets = window.brackets || window.top.brackets;
+
+define((require, exports, module) => {
     var _ = brackets.getModule('thirdparty/lodash'),
         AppInit = brackets.getModule('utils/AppInit'),
         DocumentManager = brackets.getModule('document/DocumentManager'),
@@ -14,7 +15,9 @@ define(function (require, exports, module) {
         WorkspaceManager = brackets.getModule('view/WorkspaceManager'),
         FileViewController  = brackets.getModule('project/FileViewController'),
         CommandManager = brackets.getModule('command/CommandManager'),
-        Commands = brackets.getModule('command/Commands'),
+		Commands = brackets.getModule('command/Commands'),
+		FileSystem = brackets.getModule('filesystem/FileSystem'),
+		ProjectManager = brackets.getModule('project/ProjectManager'),
         supressReloadHackTimer,
         supressReloadHackTimerTTL = 250,
         _documentChange,
@@ -107,7 +110,7 @@ define(function (require, exports, module) {
     }
 
     function _setPanelVisibility(isVisible) {
-        var doc;
+		const doc = DocumentManager.getCurrentDocument();
         console.log('_setPanelVisibility', isVisible, realVisibility);
 
         _setSaveMenuEnabled(isVisible);
@@ -119,7 +122,6 @@ define(function (require, exports, module) {
 
 
         if (isVisible) {
-            doc = DocumentManager.getCurrentDocument();
             console.log('current document', doc);
             if (doc.isDirty) {
                 if(!window.confirm('Unsaved changed will not be reflected in TAU Design Editor')) {
@@ -153,15 +155,24 @@ define(function (require, exports, module) {
 
             panel.show();
         } else {
-            realVisibility = isVisible;
-            $('#editor-holder').css('max-height', '100%');
-            $icon.toggleClass('active');
+			realVisibility = isVisible;
+			$('#editor-holder').css('max-height', '100%');
+			$icon.toggleClass('active');
+			panel.hide();
+			$iframe.hide();
 
-            panel.hide();
-            $iframe.hide();
+			ProjectManager.deleteItem(
+				FileSystem.getFileForPath(`${doc.file.parentPath}temporary-preview.html`)
+			);
 
-            window.saveToFile(() => {}, false);
-        }
+			window.setTimeout(() => {
+				$iframe[0].contentDocument.body.classList.remove('closet-preview-mode-active');
+				$iframe.contents().find('closet-preview-element').off();
+				$iframe.contents().find('closet-preview-element').remove();
+			}, 500);
+
+			window.saveToFile(() => {}, false);
+		}
 
         return isVisible;
     }

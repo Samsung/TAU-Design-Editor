@@ -147,8 +147,6 @@ class DesignEditor extends DressElement {
 		let profile = this.screenConfig.profile;
 		console.log(`profile in screen configuration: ${  profile}`);
 
-		const appURI = uri.replace(/\/[^/]+$/gi, '');
-
 		// fill model document by HTML
 		documentForModel.documentElement.innerHTML = stringHTML;
 
@@ -190,7 +188,7 @@ class DesignEditor extends DressElement {
 				console.log(`updating model, new profile: ${  profile}`);
 				this._model.update(documentForModel);
 
-				changeAppProfile(appURI, profile)
+				changeAppProfile(pathUtils.createProjectPath(''), profile)
 					.then(() => {
 						console.log('config.xml successfuly changed');
 					})
