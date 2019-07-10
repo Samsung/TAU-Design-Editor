@@ -54,6 +54,36 @@ function dragInterval() {
 }
 
 /**
+ * Returns true if version requirement is met, otherwise false.
+ * In case of missing parameters it returns true.
+ * @param {string} currentVersion
+ * @param {string} requiredVersion
+ */
+function _compareVersions(currentVersion, requiredVersion) {
+	if (!currentVersion || !requiredVersion) {
+		return true;
+	}
+
+	const current = currentVersion.split('.').map((s) => parseInt(s));
+	const required = requiredVersion.split('.').map((s) => parseInt(s));
+	const minLength = Math.min(current.length, required.length);
+
+	for (let i = 0; i < minLength; i++) {
+		if (current[i] > required[i]) {
+			return true;
+		} else if (current[i] < required[i]) {
+			return false;
+		}
+	}
+
+	if (current.length > minLength) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
  *
  */
 class Component extends DressElement {
@@ -181,6 +211,8 @@ class Component extends DressElement {
         eventEmitter.on(EVENTS.ChangeShape, self._changeShape.bind(self));
 
         eventEmitter.on(EVENTS.ActiveEditorUpdated, self._onUpdateActiveEditor.bind(self));
+
+		eventEmitter.on(EVENTS.TAULoaded, self._render.bind(self, true));
     }
 
     /**
@@ -251,14 +283,18 @@ class Component extends DressElement {
 
     /**
      * Fill component info at panel
+     * @param {Boolean?} force - force rendering even if last render was done
+     * less than minimum timeout. Default value is false.
      * @private
      */
-    _render() {
+	_render(force) {
         var self = this,
             time = Date.now(),
-            componentsInfoProfile = null;
+			componentsInfoProfile = null;
 
-        if (componentsInfo && time - self._lastRender >= 100) {
+		force = (force === undefined) ? false : force;
+
+		if (componentsInfo && (time - self._lastRender >= 100 || force))  {
             componentsInfoProfile = self._selectComponentsToDeviceProfile(componentsInfo);
             self._getItemTemplate(componentsInfoProfile)
                 .then((template) => {
@@ -266,8 +302,9 @@ class Component extends DressElement {
                     $content.html('');
                     $content.append($(template));
                     self._$componentButtonList = this.$el.find('.' + ITEM_BUTTON_CLASS);
-                    self._setIcon(self._$componentButtonList);
-                    self._setDraggable(self._$componentButtonList);
+					self._setIcon(self._$componentButtonList);
+					self._setDraggable(self._$componentButtonList.filter(
+						':not(.component-disabled), :not(.not-available)'));
                 }, (err) => {
                     throw err;
                 }
@@ -337,13 +374,6 @@ class Component extends DressElement {
                 $(element).css('background-image', 'none')
                     .addClass('closet-component-element-list-item-noicon');
             }
-
-            var baseColor = $(element).css('background-color');
-            $(element).hover(function(){
-                $(element).css('background-color', '#0566c5');
-            }, function() {
-                $(element).css('background-color', baseColor);
-            });
         });
     }
 
@@ -527,20 +557,26 @@ class Component extends DressElement {
     _componentsToOptions(info) {
         var options = {},
             profile = this._profile,
-            shape = this._shape;
+			shape = this._shape,
+			isAvailable;
 
-        const defaultWeight = 10000;
+		const defaultWeight = 10000;
+		const currentTauVersion = StateManager.get('tau-version', undefined);
 
-        Object.keys(info).forEach((id) => {
+		Object.keys(info).forEach((id) => {
             if (info[id].options.attachable !== false && correctVersion(info[id].options.version, profile, shape)) {
                 if (!options[info[id].options.type]) {
                     options[info[id].options.type] = [];
                 }
+
+				isAvailable = _compareVersions(currentTauVersion, info[id].options.since);
                 options[info[id].options.type].push({
                     name: info[id].name,
-                    new: info[id].options.new,
-                    label: info[id].options.label,
-                    weight: info[id].options.displayOrderWeight || defaultWeight
+					new: isAvailable && info[id].options.new,
+					label: info[id].options.label,
+					weight: info[id].options.displayOrderWeight || defaultWeight,
+					isAvailable: isAvailable,
+					availableSince: info[id].options.since
                 });
             }
         });
