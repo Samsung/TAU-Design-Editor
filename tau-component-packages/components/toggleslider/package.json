@@ -25,6 +25,8 @@
   },
   "wrapContent": "<label></label>",
   "resizable": false,
-  "draggable": true
+  "draggable": true,
+  "new": true,
+  "since": "1.1"
 }
 

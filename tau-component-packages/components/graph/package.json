@@ -98,5 +98,6 @@
     }
   ],
   "draggable": true,
-  "new": true
+  "new": true,
+  "since": "1.1"
 }

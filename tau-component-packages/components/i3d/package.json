@@ -21,5 +21,6 @@
     "template": "<div class=\"ui-i3d\"></div>",
     "resizable": true,
     "draggable": true,
-    "new": true
+    "new": true,
+    "since": "1.1"
 }
