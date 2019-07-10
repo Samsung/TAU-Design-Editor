@@ -8,7 +8,7 @@
 </div>
 <ul class="closet-attribute-common-list closet-property-list">
     {{#standalone-component}}
-    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}} {{^isAvailable}}not-available component-disabled{{/isAvailable}}" data-component-name="{{name}}" {{^isAvailable}} data-content="Since TAU {{availableSince}}"{{/isAvailable}}>
         <div class="component-label">
             {{label}}
         </div>
@@ -25,7 +25,7 @@
 </div>
 <ul class="closet-attribute-common-list closet-property-list">
     {{#container-component}}
-    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}} {{^isAvailable}}not-available component-disabled{{/isAvailable}}" data-component-name="{{name}}" {{^isAvailable}} data-content="Since TAU {{availableSince}}"{{/isAvailable}}>
         <div class="component-label">
             {{label}}
         </div>
@@ -42,7 +42,7 @@
 </div>
 <ul class="closet-attribute-common-list closet-property-list">
     {{#interactive-container-component}}
-    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}} {{^isAvailable}}not-available component-disabled{{/isAvailable}}" data-component-name="{{name}}" {{^isAvailable}} data-content="Since TAU {{availableSince}}"{{/isAvailable}}>
         <div class="component-label">
             {{label}}
         </div>
@@ -51,7 +51,7 @@
 </ul>
 <ul class="closet-attribute-common-list closet-property-list">
     {{#hiding-container-component}}
-    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}} {{^isAvailable}}not-available component-disabled{{/isAvailable}}" data-component-name="{{name}}" {{^isAvailable}} data-content="Since TAU {{availableSince}}"{{/isAvailable}}>
         <div class="component-label">
             {{label}}
         </div>
@@ -68,7 +68,7 @@
 </div>
 <ul class="closet-attribute-common-list closet-property-list">
     {{#layout-component}}
-    <li class="closet-component-element-list-item {{#new}}item-new{{/new}}" data-component-name="{{name}}">
+    <li class="closet-component-element-list-item {{#new}}item-new{{/new}} {{^isAvailable}}not-available component-disabled{{/isAvailable}}" data-component-name="{{name}}" {{^isAvailable}} data-content="Since TAU {{availableSince}}"{{/isAvailable}}>
         <div class="component-label">
             {{label}}
         </div>

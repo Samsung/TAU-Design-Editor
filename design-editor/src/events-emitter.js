@@ -94,7 +94,8 @@ const EVENTS = {
 	ChangeImageFilter: 'changeImageFilter',
 	PopupOpened : 'global:Popup.opened',
 	ChangeCapability: 'attributes:change-capability',
-	ChangeCapabilityParam: 'attributes:change-capability-params'
+	ChangeCapabilityParam: 'attributes:change-capability-params',
+	TAULoaded: 'editor:TAU-loaded'
 };
 
 export {EVENTS, eventEmitter};
