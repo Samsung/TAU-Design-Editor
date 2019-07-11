@@ -25,7 +25,7 @@ import editor from '../editor';
 import {TooltipElement} from '../panel/tooltip-element';
 import {Devices} from '../system/devices';
 import utils from '../utils/utils';
-import {removeMediaQueryConstraints} from '../utils/iframe';
+import {removeMediaQueryConstraints, addDoctypeDeclaration} from '../utils/iframe';
 import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
 import path, {relative} from 'path';
@@ -220,6 +220,7 @@ class DesignEditor extends DressElement {
 						`
 					);
 				htmlContent = removeMediaQueryConstraints(htmlContent);
+				htmlContent = addDoctypeDeclaration(htmlContent);
 
 				iframeDocument.write(htmlContent);
 				iframeDocument.close();
