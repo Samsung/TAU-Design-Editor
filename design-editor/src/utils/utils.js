@@ -74,10 +74,19 @@ export function isDemoVersion() {
 		.getViewState('projectType') === 'demo';
 }
 
+/**
+ * Returns a function that performs pipe operation of given functions in order
+ * @param {function} functions Array of functions to call
+ */
+export function pipe (functions) {
+	return functions.reduce((f1, f2) => (a) => f2(f1(a)));
+}
+
 export default {
 	checkGlobalContext,
 	urlJoin,
 	generateAbsolutePath,
 	timeoutPromise,
-	isDemoVersion
+	isDemoVersion,
+	pipe
 };

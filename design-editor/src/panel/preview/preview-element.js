@@ -5,10 +5,11 @@ import {DressElement} from '../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
 import pathUtils from '../../utils/path-utils';
 import {checkGlobalContext} from '../../utils/utils';
-import {removeMediaQueryConstraints} from '../../utils/iframe';
+import {removeMediaQueryConstraints, addDoctypeDeclaration} from '../../utils/iframe';
 import LibraryCreator from '../../system/libraries/library-creator';
 import fs from 'fs-extra';
 import path from 'path';
+import {pipe} from '../../utils/utils';
 import { promisify } from 'util';
 
 const TEMPLATE_PATH = '/panel/preview/preview-element.html';
@@ -168,11 +169,10 @@ class Preview extends DressElement {
 	createPreviewDocument(contents, location) {
 		const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
 			writeFile = promisify(fs.writeFile),
-			parsedContents = this.signMainPage(
-				this.addHelperCSSLibrary(
-					removeMediaQueryConstraints(contents)
-				)
-			);
+			processPipe = pipe([addDoctypeDeclaration, removeMediaQueryConstraints,
+				this.addHelperCSSLibrary.bind(this), this.signMainPage.bind(this)]),
+			parsedContents = processPipe(contents);
+
 		this.fsPath = pathUtils.createProjectPath(relativePathToFile);
 
 		return writeFile(this.fsPath, parsedContents)
