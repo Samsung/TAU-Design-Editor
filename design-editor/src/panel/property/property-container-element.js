@@ -20,36 +20,39 @@ var TAB_TEMPLATE = [
  *
  */
 class PropertyContainer extends DressElement {
-    /**
-     * Create callback
-     */
-    onCreated() {
-        var self = this;
+	/**
+	 * Create callback
+	 */
+	onCreated() {
+		const self = this;
 
-        self.$tab = null;
-        self.propertyElements = null;
-        self._activeTabIndex = 0;
-        self.classList.add('closet-property-container');
-        self._attributeEl = new AttributeElement();
-        self._behaviorEl = new BehaviorElement();
-        self._componentEl = new ComponentElement();
-        self._initializeTab();
-        self.propertyElements = [self._componentEl, self._attributeEl, self._behaviorEl];
-        self._addPropertyElements();
+		self.$tab = null;
+		self.propertyElements = null;
+		self._activeTabIndex = 0;
+		self.classList.add('closet-property-container');
+		self._attributeEl = new AttributeElement();
+		self._behaviorEl = new BehaviorElement();
+		self._componentEl = new ComponentElement();
+		self._initializeTab();
+		self.propertyElements = [self._componentEl, self._attributeEl, self._behaviorEl];
+		self._addPropertyElements();
+		self.elementSelected = false;
 
-        // FIXME: once use this_bindEvents for the below code, clicking tab doesn't work.
-        eventEmitter.on(EVENTS.ElementSelected, () => {
-            self.setActivePropertyTab(self._previousActiveTabIndex === undefined ? 1 : self._previousActiveTabIndex);
-        });
-        eventEmitter.on(EVENTS.ElementDeselected, () => {
-            if (self._activeTabIndex === 0) {
-                return;
-            }
+		// FIXME: once use this_bindEvents for the below code, clicking tab doesn't work.
+		eventEmitter.on(EVENTS.ElementSelected, () => {
+			self.elementSelected = true;
+			self.setActivePropertyTab(self._previousActiveTabIndex === undefined ? 1 : self._previousActiveTabIndex);
+		});
+		eventEmitter.on(EVENTS.ElementDeselected, () => {
+			self.elementSelected = false;
+			if (self._activeTabIndex === 0) {
+				return;
+			}
 
-            self._previousActiveTabIndex = self._activeTabIndex;
-            self.setActivePropertyTab(0);
-        });
-    }
+			self._previousActiveTabIndex = self._activeTabIndex;
+			self.setActivePropertyTab(0);
+		});
+	}
 
     /**
      * Handle event
@@ -196,65 +199,63 @@ class PropertyContainer extends DressElement {
         self.$el.empty().append(self.$tab);
     }
 
-    /**
-     * Add property element
-     * @private
-     */
-    _addPropertyElements() {
-        var self = this,
-            propertyElement,
-            propertyElementLength = self.propertyElements.length,
-            propertyData = {},
-            i = 0;
+	/**
+	 * Add property element
+	 * @private
+	 */
+	_addPropertyElements() {
+		const self = this,
+			propertyElementLength = self.propertyElements.length,
+			propertyData = {};
+		let propertyElement;
 
-        for (i = 0; i < propertyElementLength; i += 1) {
-            propertyElement = self.propertyElements[i];
-            propertyData.title = propertyElement.getElementTitle();
-            self.$tab.append(Mustache.render(TAB_ITEM_TEMPLATE, propertyData));
-            self.$el.append(propertyElement);
-        }
-    }
+		for (let i = 0; i < propertyElementLength; i += 1) {
+			propertyElement = self.propertyElements[i];
+			propertyData.title = propertyElement.getElementTitle();
+			self.$tab.append(Mustache.render(TAB_ITEM_TEMPLATE, propertyData));
+			self.$el.append(propertyElement);
+		}
+	}
 
-    /**
-     * Set active property index
-     * @param index
-     */
-    setActivePropertyTab(index) {
-        var self = this,
-            currentActiveTab = self.$tab.children()[self._activeTabIndex],
-            newActiveTab = self.$tab.children()[index];
+	/**
+	 * Set active property index
+	 * @param index
+	 */
+	setActivePropertyTab(index) {
+		const self = this,
+			currentActiveTab = self.$tab.children()[self._activeTabIndex],
+			newActiveTab = self.$tab.children()[index];
 
-        currentActiveTab.classList.remove('closet-property-container-tab-active');
-        self.propertyElements[self._activeTabIndex].hide();
+		currentActiveTab.classList.remove('closet-property-container-tab-active');
+		self.propertyElements[self._activeTabIndex].hide();
 
-        newActiveTab.classList.add('closet-property-container-tab-active');
-        self.propertyElements[index].show();
-        self._activeTabIndex = index;
-    }
+		newActiveTab.classList.add('closet-property-container-tab-active');
+		self.propertyElements[index].show();
+		self._activeTabIndex = index;
+	}
 
-    /**
-     * Show
-     * @param {string} selectedElementId
-     */
-    show(selectedElementId) {
-        requestAnimationFrame(this._attributeEl.render.bind(this._attributeEl, selectedElementId));
-        requestAnimationFrame(this._behaviorEl.render.bind(this._behaviorEl, selectedElementId));
-    }
+	/**
+	 * Show
+	 * @param {string} selectedElementId
+	 */
+	show(selectedElementId) {
+		requestAnimationFrame(this._attributeEl.render.bind(this._attributeEl, selectedElementId));
+		requestAnimationFrame(this._behaviorEl.render.bind(this._behaviorEl, selectedElementId));
+	}
 
-    /**
-     * On click tab callback
-     * @param {Event} e
-     */
-    onClickTabHandler(e) {
-        var self = this,
-            target = $(e.target),
-            index;
+	/**
+	 * On click tab callback
+	 * @param {Event} event
+	 */
+	onClickTabHandler(event) {
+		const target = event.target;
+		let index;
 
-        if (target.hasClass('closet-property-container-tab-item')) {
-            index = self.$tab.children().index(target);
-            self.setActivePropertyTab(index);
-        }
-    }
+		if (target.classList.contains('closet-property-container-tab-item') && this.elementSelected) {
+			index = [...this.$tab[0].children].indexOf(target);
+			this.setActivePropertyTab(index);
+		}
+	}
 }
 
 const PropertyContainerElement = document.registerElement('closet-property-container-element', PropertyContainer);

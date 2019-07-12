@@ -9,9 +9,9 @@ const url = require('url');
 * @param  {string} variableName global variable name
 * @returns {Object} global variable value
 */
-export const checkGlobalContext = (variableName) => {
+export function checkGlobalContext(variableName) {
 	return window[variableName] || window.top[variableName];
-};
+}
 
 /**
  * path.join equivalent for URLs
@@ -19,7 +19,7 @@ export const checkGlobalContext = (variableName) => {
  * @param {...string} urlParts any number of URL parts
  * @returns {string} URL created out of given parts
  */
-export const urlJoin = (...urlParts) => {
+export function urlJoin(...urlParts) {
 	const baseURL = url.parse(urlParts[0]);
 	const host = baseURL.host;
 
@@ -29,7 +29,7 @@ export const urlJoin = (...urlParts) => {
 	];
 
 	return `${baseURL.protocol}//${host}${path.join(...paths)}`;
-};
+}
 
 /**
  * Generates absolute bath for the server
@@ -38,10 +38,10 @@ export const urlJoin = (...urlParts) => {
  * @param {string} relativePath
  * @returns {string} absolutePath
  */
-export const generateAbsolutePath = relativePath => {
+export function generateAbsolutePath(relativePath) {
 	const projectPath = this.checkGlobalContext('globalData').projectPath;
 	return path.join(projectPath, '..', relativePath);
-};
+}
 
 /**
  * Resolves promise passed in parameter if it's resolved within
@@ -50,7 +50,7 @@ export const generateAbsolutePath = relativePath => {
  * @param {Promise} promise
  * @param {number} timeoutThreshold
  */
-export const timeoutPromise = (promise, timeoutThreshold) => {
+export function timeoutPromise(promise, timeoutThreshold) {
 	timeoutThreshold = timeoutThreshold || 2500;
 
 	const timeoutTriggerPromise = new Promise((_, reject) => {
@@ -61,15 +61,23 @@ export const timeoutPromise = (promise, timeoutThreshold) => {
 	});
 
 	return Promise.race([timeoutTriggerPromise, promise]);
-};
+}
 
 /**
  * Checks if opened project is in demo mode
  *
  * @returns {string} boolean
  */
-export const isDemoVersion = () => {
-	return this.checkGlobalContext('brackets')
+export function isDemoVersion() {
+	return checkGlobalContext('brackets')
 		.getModule('preferences/PreferencesManager')
 		.getViewState('projectType') === 'demo';
+}
+
+export default {
+	checkGlobalContext,
+	urlJoin,
+	generateAbsolutePath,
+	timeoutPromise,
+	isDemoVersion
 };

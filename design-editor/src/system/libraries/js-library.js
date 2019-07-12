@@ -23,7 +23,7 @@ class JSLibrary extends Library {
 
 	/**
 	 * Creating HTMLScriptElement for library
-	 * @param {string} currentFile - path to currently opened file
+	 * @param {string} [currentFile] - path to currently opened file
 	 * @returns {HTMLScriptElement} script element for library
 	 */
 	// eslint-disable-next-line no-unused-vars
@@ -32,13 +32,12 @@ class JSLibrary extends Library {
 		this.setAttribute('type', this.type);
 		if (this.fileName) {
 			this.setAttribute('src', this.getRelativePath(currentFile));
-			this.setAttribute(this.createDataAttribute(), '');
 		}
 		return this.element;
 	}
 
 	getSelector() {
-		return `script[src$="${this.fileName}"]`;
+		return `script[src$="/${this.fileName}"]`;
 	}
 }
 
