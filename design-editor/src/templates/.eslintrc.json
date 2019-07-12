@@ -1,0 +1,12 @@
+{
+	"rules": {
+		"no-var": "off",
+		"prefer-arrow-callback": "off",
+		"quotes": [
+			"error",
+			"double"
+		],
+		"no-undef": "off",
+		"no-empty": "off"
+	}
+}

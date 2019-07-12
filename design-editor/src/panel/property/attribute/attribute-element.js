@@ -13,6 +13,8 @@ import {AttributeInteractiveElement} from './attribute-element-interactive';
 import {AttributeImageElement} from './attribute-element-image';
 import {AttributeCheckboxElement} from './attribute-element-checkbox'
 import editor from '../../../editor';
+import utils from '../../../utils/utils';
+import attributeUtils from '../../../utils/attribute-utils';
 
 const TEMPLATE_FILE_PATH = '/panel/property/attribute/';
 const ATTRIBUTE_ELEMENT_FILE_NAME = 'templates/attribute-element.html';
@@ -483,7 +485,7 @@ class Attribute extends DressElement {
             if (urls.length) {
                 let url = urls[0].replace(/url\(([^\)]+)\)/g, '$1');
                 if (url.length) {
-                    let relative = url.replace(new RegExp('.+' + window.top.globalData.basePath.replace(/\//g, '\/') + '(.+)', 'g'), '$1');
+                    let relative = url.replace(new RegExp('.+' + utils.checkGlobalContext('globalData').basePath.replace(/\//g, '\/') + '(.+)', 'g'), '$1');
                     if (relative.length) {
                         let clean = relative.replace(/\/+/g, '/').replace(/('|")/g, '').trim();
                         this._$backgroundShowLayerInput.val(clean);
@@ -512,39 +514,13 @@ class Attribute extends DressElement {
 
     /**
      * set relative path callback
-     * @param {Event} e
+     * @param {Event} event
      */
-    onSetRelativePathForBackground(e) {
-        var backgroundImage = null,
-            self = this,
-            dataId,
-            pathToProjects = [],
-            slashToBackSlash = '';
-
-        [].slice.call(e.target.files).forEach(file => {
-            const reader = new FileReader();
-            reader.addEventListener('loadend', event => {
-                if (event.target.readyState === FileReader.DONE) {
-                    const dir = window.top.globalData.fileUrl.replace(/[^\/]+$/gi, '');
-                    const writepath = (dir + '/images/' + file.name).replace(/\/+/gi, '/');
-                    const readpath = ('images/' + file.name).replace(/\/+/gi, '/');
-
-                    window.top.writeFile(
-                        writepath,
-                        event.target.result,
-                        {
-                            encoding: 'binary'
-                        },
-                        () => {
-                        AppManager.getActiveDesignEditor()
-                            .getModel().updateStyle(this._selectedElementId, 'backgroundImage', 'url(\"' + readpath + '\")');
-                            this._applyBackgroundImageInfo(readpath);
-                        }
-                    );
-                }
-            });
-            reader.readAsBinaryString(file);
-        });
+	onSetRelativePathForBackground(event) {
+		attributeUtils.setImageSource(event,
+			'backgroundImage',
+			this._selectedElementId,
+			this._applyBackgroundImageInfo.bind(this));
     }
 
     /**

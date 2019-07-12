@@ -1,0 +1,8 @@
+.ui-scroller::-webkit-scrollbar {
+	display: none;
+}
+
+.ui-scroller {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}

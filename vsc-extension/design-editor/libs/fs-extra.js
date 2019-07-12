@@ -1,4 +1,4 @@
-const utils = require('../../../design-editor/src/utils/utils').default;
+const utils = require('../../../design-editor/src/utils/utils');
 
 const fsEndpoint = utils.urlJoin(window.location.origin, 'fs');
 const fileEndpoint = utils.urlJoin(fsEndpoint, 'file');
@@ -12,15 +12,15 @@ const dirEndpoint = utils.urlJoin(fsEndpoint, 'dir');
  * @param {string} type json | text
  */
 function __fetchHelper(url, options, type, callback) {
-    const headers = {
-        'Content-Type': 'application/json',
-        'Accept': type === 'text' ? 'text/html' : 'application/json'
-    };
+	const headers = {
+		'Content-Type': 'application/json',
+		'Accept': type === 'text' ? 'text/html' : 'application/json'
+	};
 
-    return fetch(url, Object.assign({headers}, options))
-        .then(response => callback && (type === 'text' ? response.text() : response.json()))
-        .then(content => callback && callback(undefined, content))
-        .catch(err => callback && callback(err, undefined));
+	return fetch(url, Object.assign({headers}, options))
+		.then(response => callback && (type === 'text' ? response.text() : response.json()))
+		.then(content => callback && callback(undefined, content))
+		.catch(err => callback && callback(err, undefined));
 }
 
 /**
@@ -32,7 +32,7 @@ function __fetchHelper(url, options, type, callback) {
  * @param {Function} callback
  */
 function readFile(path, encoding, callback) {
-    __fetchHelper(path, {}, 'text', callback);
+	__fetchHelper(path, {}, 'text', callback);
 }
 
 /**
@@ -42,11 +42,11 @@ function readFile(path, encoding, callback) {
  * @param {Function} callback
  */
 function deleteFile(path, callback) {
-    const options = {
-        method: 'DELETE'
-    };
+	const options = {
+		method: 'DELETE'
+	};
 
-    __fetchHelper(utils.urlJoin(fileEndpoint, path), options, 'json', callback);
+	__fetchHelper(utils.urlJoin(fileEndpoint, path), options, 'json', callback);
 }
 
 /**
@@ -57,12 +57,12 @@ function deleteFile(path, callback) {
  * @param {Function} callback
  */
 function existsDir(path, callback) {
-    __fetchHelper(
-        utils.urlJoin(dirEndpoint, path),
-        {},
-        'json',
-        callback
-    );
+	__fetchHelper(
+		utils.urlJoin(dirEndpoint, path),
+		{},
+		'json',
+		callback
+	);
 }
 
 /**
@@ -73,12 +73,12 @@ function existsDir(path, callback) {
  * @param {Function} callback
  */
 function makeDir(path, callback) {
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({dirName: path})
-    };
+	const options = {
+		method: 'POST',
+		body: JSON.stringify({dirName: path})
+	};
 
-    __fetchHelper(dirEndpoint, options, 'text', callback);
+	__fetchHelper(dirEndpoint, options, 'text', callback);
 }
 
 /**
@@ -89,13 +89,17 @@ function makeDir(path, callback) {
  * @param {Object} data
  * @param {Function} callback
  */
-function writeFile(path, data, callback) {
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({name: path, data})
-    };
+function writeFile(path, data, callback, additionalOptions = {}) {
+	const options = {
+		method: 'POST',
+		body: JSON.stringify({
+			name: path,
+			data,
+			options: additionalOptions
+		})
+	};
 
-    __fetchHelper(fileEndpoint, options, 'text', callback);
+	__fetchHelper(fileEndpoint, options, 'text', callback);
 }
 
 /**
@@ -106,7 +110,7 @@ function writeFile(path, data, callback) {
  * @param {Function} callback
  */
 function exists(path, callback) {
-    __fetchHelper(utils.urlJoin(fileEndpoint, path), {}, 'json', callback);
+	__fetchHelper(utils.urlJoin(fileEndpoint, path), {}, 'json', callback);
 }
 
 /**
@@ -117,12 +121,12 @@ function exists(path, callback) {
  * @param {Function} callback
  */
 function copy(srcPath, destPath, callback) {
-    const options = {
-        method: 'POST',
-        body: JSON.stringify({src: srcPath, dest: destPath})
-    };
+	const options = {
+		method: 'POST',
+		body: JSON.stringify({src: srcPath, dest: destPath})
+	};
 
-    __fetchHelper(utils.urlJoin(fileEndpoint, 'copy'), options, 'text', callback);
+	__fetchHelper(utils.urlJoin(fileEndpoint, 'copy'), options, 'text', callback);
 }
 
 /**
@@ -133,16 +137,16 @@ function copy(srcPath, destPath, callback) {
  * @param {Function} callback
  */
 function readDir(URL, callback) {
-    __fetchHelper(URL, {}, 'json', callback);
+	__fetchHelper(URL, {}, 'json', callback);
 }
 
 module.exports = {
-    readFile,
-    writeFile,
-    makeDir,
-    existsDir,
-    exists,
-    copy,
-    readdir: readDir,
-    deleteFile
+	readFile,
+	writeFile,
+	makeDir,
+	existsDir,
+	exists,
+	copy,
+	readdir: readDir,
+	deleteFile
 };

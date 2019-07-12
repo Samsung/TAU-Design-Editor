@@ -4,52 +4,56 @@ const path = require('path');
 
 
 class HTMLAssistantEditorElement {
-    constructor() {
-        this._isOpened = false;
-        this._tempFileName = 'html-assistant-tmp.txt';
-    }
+	constructor() {
+		this._isOpened = false;
+		this._tempFileName = 'html-assistant-tmp.txt';
+	}
 
-    open(htmlText) {
-        fsExtra.writeFile(this._tempFileName, htmlText, (error) => {
-            if (error) {
-                console.error(error);
-            } else {
-                window.parent.postMessage({
-                    type: 'OPEN_EDITOR',
-                    file: this._tempFileName
-                }, '*');
-                this._isOpened = true;
-            }
-        });
-    }
+	open(htmlText) {
+		fsExtra.writeFile(this._tempFileName, htmlText, (error) => {
+			if (error) {
+				// eslint-disable-next-line no-console
+				console.error(error);
+			} else {
+				window.parent.postMessage({
+					type: 'OPEN_EDITOR',
+					file: this._tempFileName
+				}, '*');
+				this._isOpened = true;
+			}
+		});
+	}
 
-    close() {
-        window.parent.postMessage({
-            type: 'CLOSE_EDITOR'
-        }, '*');
-        this._isOpened = false;
-        fsExtra.deleteFile(this._tempFileName);
-    }
+	close() {
+		window.parent.postMessage({
+			type: 'CLOSE_EDITOR'
+		}, '*');
+		this._isOpened = false;
+	}
 
-    isOpened() {
-        return this._isOpened;
-    }
+	clean() {
+		fsExtra.deleteFile(this._tempFileName);
+	}
 
-    getEditorContent() {
-        const fullPath = path.resolve(
-            utils.checkGlobalContext('globalData').projectId,
-            this._tempFileName
-        );
+	isOpened() {
+		return this._isOpened;
+	}
 
-        return new Promise((resolve, reject) => {
-            fsExtra.readFile(fullPath, null, (error, result) => {
-                if (error) {
-                    reject(error);
-                }
-                resolve(result);
-            });
-        });
-    }
+	getEditorContent() {
+		const fullPath = path.resolve(
+			utils.checkGlobalContext('globalData').projectId,
+			this._tempFileName
+		);
+
+		return new Promise((resolve, reject) => {
+			fsExtra.readFile(fullPath, null, (error, result) => {
+				if (error) {
+					reject(error);
+				}
+				resolve(result);
+			});
+		});
+	}
 }
 
 export {HTMLAssistantEditorElement};

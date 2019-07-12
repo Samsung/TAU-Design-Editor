@@ -21,8 +21,10 @@
     <script src="./less.js"></script>
     <script>
         window.vscode = true;
-        window.addEventListener('message', (event) => {
-            window.globalData = event.data;
+        window.addEventListener('message', (message) => {
+            if (message.data.type === 'CONFIG') {
+                window.globalData = message.data.payload;
+            }
         });
     </script>
 </head>

@@ -16,10 +16,11 @@ import {PreviewToolbarElement} from '../panel/preview/preview-toolbar-element';
 // import {InteractionViewElement} from '../panel/preview/interaction-view-element';
 // import {InteractionViewToolbarElement} from '../panel/preview/interaction-view-toolbar-element';
 import {InfoElement} from '../pane/select-layer/info-element';
+import utils from '../utils/utils';
 
-const CompositeDisposable = editor.CompositeDisposable;
-const DESIGN = ViewType.Design;
-const vscode = window.vscode;
+const CompositeDisposable = editor.CompositeDisposable,
+	DESIGN = ViewType.Design,
+	isDemoVersion = utils.isDemoVersion();
 
 class StageManager {
     /**
@@ -154,7 +155,7 @@ class StageManager {
                 this._toolbarContainerElement.turnOffControl(this._toolbarControls.INSTANT_EDIT);
             }
         })
-        
+
     }
     /**
      * Toggle assistant view
@@ -235,15 +236,15 @@ class StageManager {
      * @param toggleEditor
      * @private
      */
-    _togglePreview(toggleEditor) {
-        var $workSpace = $(editor.selectors.workspace),
-            preview = null;
+	_togglePreview(toggleEditor) {
+		let $workSpace = $(editor.selectors.workspace),
+			preview = null;
 
         if (!$workSpace.length) {
             $workSpace = $(document.body);
         }
 
-        if (!$workSpace.hasClass('closet-preview-mode')) {
+		if (!$workSpace.hasClass('closet-preview-mode') || isDemoVersion) {
 			preview = new PreviewElement();
 			$workSpace.children().first().before(preview);
 			preview.show(
@@ -258,13 +259,19 @@ class StageManager {
 				}
 			);
 
-            if (window.atom !== undefined) {
-                this._toolbarContainerElementPanel.hide();
-                this._previewElementToolbarPanel.show();
-            } else {
-                $workSpace.children().first().before(this._previewElementToolbar);
-            }
+			$workSpace.children().first().before(this._previewElementToolbar);
+
+			if (isDemoVersion) {
+				const activatePreviewModeButton = document.getElementsByClassName('preview-toggle');
+				if (activatePreviewModeButton !== undefined) {
+					activatePreviewModeButton[0].style.display = 'none';
+				}
+			}
+
         } else {
+			if (isDemoVersion) {
+				return;
+			}
             $workSpace.removeClass('closet-preview-mode-active');
             window.setTimeout(() => {
                 $workSpace.find('closet-preview-element').remove();
@@ -371,7 +378,9 @@ class StageManager {
             // init animation container
             // this._animationContainerElement.initialize(editor);
 
-            panelManager.openPanel({type: 'right', item: this._propertyContainerElement});
+			if (!isDemoVersion) {
+				panelManager.openPanel({type: 'right', item: this._propertyContainerElement});
+			}
             panelManager.openPanel({type: 'bottom', item: this._animationContainerElement});
 
             panelManager.openPanel({type: 'top', item: this._infoElement});

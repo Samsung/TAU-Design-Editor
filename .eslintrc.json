@@ -1,9 +1,11 @@
 {
+    "root": true,
     "env": {
         "browser": true,
         "commonjs": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "mocha": true
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -29,10 +31,14 @@
         "prefer-arrow-callback": "error",
         "prefer-template": "error",
         "no-unused-expressions": "error",
-        "max-len": ["error", {"code": 80}],
+        "max-len": ["error", {"code": 120}],
         "no-multiple-empty-lines": "error",
         "no-trailing-spaces": "error",
         "eol-last":"error",
-        "lines-between-class-members":"error"
+        "lines-between-class-members":"error",
+        "keyword-spacing":"error"
+        },
+        "parserOptions": {
+            "sourceType": "module"
         }
 }

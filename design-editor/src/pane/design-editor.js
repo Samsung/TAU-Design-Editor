@@ -1,9 +1,13 @@
+/* eslint-disable no-console */
 'use babel';
 
 import $ from 'jquery';
 import {projectManager} from '../system/project-manager';
 import {EVENTS, eventEmitter} from '../events-emitter';
 import {StateManager} from '../system/state-manager';
+import LibraryCreator from '../system/libraries/library-creator';
+import utils from '../utils/utils';
+import pathUtils from '../utils/path-utils';
 
 let globalId = 0;
 let newElementId = 0;
@@ -219,22 +223,23 @@ function convertFromUpperCase(letter) {
 }
 
 class Model {
-    /**
+	/**
      * Constructor
      */
-    constructor() {
-        this._DOM = null;
-        this._history = [];
-        this._undoHistory = [];
-        this._keyframes = {};
-        this._keyframeId = null;
-        this._animations = [];
-        this._animationGroups = new Map();
-        this._behaviors = {};
-        this._tauCommHosts = [];
-        this._checkbox = {};
-        this._dirty = false;
-    }
+	constructor() {
+		this._DOM = null;
+		this._history = [];
+		this._undoHistory = [];
+		this._keyframes = {};
+		this._keyframeId = null;
+		this._animations = [];
+		this._animationGroups = new Map();
+		this._behaviors = {};
+		this._tauCommHosts = [];
+		this._checkbox = {};
+		this._dirty = false;
+		this._libraryCreator = new LibraryCreator();
+	}
 
     /**
      * Generate id
@@ -652,7 +657,6 @@ class Model {
         this.dirty();
     }
 
-
     /**
      * Move element
      * @param {string} id
@@ -925,8 +929,8 @@ class Model {
         customstyle.setAttribute('data-style', 'checkbox');
         script.setAttribute('data-closet-behavior', 'true');
         script.setAttribute('type', 'application/json');
-        scriptRunner.setAttribute('data-closet-behavior-runner', 'true');
-        scriptRunner.setAttribute('src', 'libs/behaviour.js');
+		scriptRunner.setAttribute('data-closet-behavior-runner', 'true');
+        scriptRunner.setAttribute('src', pathUtils.createProjectPath('/lib/behaviour.js', true));
         scriptRunner.setAttribute('type', 'text/javascript');
         scriptRunner.setAttribute('defer', 'true');
         this._DOM.head.appendChild(style);
@@ -938,7 +942,12 @@ class Model {
         //     this._DOM.head.appendChild(rtypeScript);
         // }
 
-        this._DOM.body.appendChild(scriptRunner);
+		this._DOM.body.appendChild(scriptRunner);
+		this.addLibrary('helper.js');
+		if (screen.shape == 'circle') {
+			this.addLibrary('tau.circle.css');
+			this.addLibrary('circle-helper.js');
+		}
         for (const [key, value] of this._animationGroups) {
             styleContent += this.exportAnimationName(key, value.animations);
         }
@@ -950,7 +959,7 @@ class Model {
                 if (uiPageDiv) {
                     console.log('detected S-Things bindings!');
                     stscript = document.createElement('script'),
-                    stscript.setAttribute('src', 'libs/sthings.min.js');
+                    stscript.setAttribute('src', '/lib/sthings.min.js');
                     stscript.setAttribute('type', 'text/javascript');
                     stscript.setAttribute('data-closet-sthings', 'true');
                     projectManager.createLibFromTemplate('sthings.min.js');
@@ -979,6 +988,21 @@ class Model {
 
         return removeDataId(this._DOM.cloneNode(true)).documentElement.outerHTML;
     }
+
+	addLibrary(libraryName) {
+		const helper = this._libraryCreator.createLibrary(libraryName);
+		if (!this._DOM.querySelector(helper.getSelector())) {
+			this._DOM.head.appendChild(
+				helper.createHTMLElement(
+					utils.checkGlobalContext('globalData').fileUrl
+				)
+			);
+		}
+		helper.insertLibContent(() => {
+			// eslint-disable-next-line no-console
+			console.log(`[OK] File ${libraryName} copied!`);
+		});
+	}
 
     /**
      * Export HTML

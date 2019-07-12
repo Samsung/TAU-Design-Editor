@@ -11,6 +11,7 @@ import {AssistantWizardElement} from '../../panel/assistant/assistant-wizard';
 import {AssistantCodeGenerator} from './assistant-code-generator';
 
 const JS_TEMPLATE = 'document.getElementById(\'main\').addEventListener(\'pagebeforeshow\', function (event) {\n//::write down your own handler in here::\n\n});\n';
+
 /**
  * @class AssistantManager
  * The highest abstraction layer for Assistant View feature
@@ -32,15 +33,14 @@ class AssistantManager {
     }
 
     /**
-     * Create JS file if not exists 
-     * @param {string} pathName relative path to js-file 
+     * Create JS file if not exists
+     * @param {string} pathName relative path to js-file
      * @param {string} content file content to add while file is created
-     * @param {Function} callback 
+     * @param {Function} callback
      * @private
      */
     _createJSIfNotExists(pathName, callback) {
-        // TODO: Fix fs.exists function 
-        fs.readFile(pathName, 'utf8', (err, exists) => {
+        fs.exists(pathName, (error, exists) => {
             if (exists) {
                 callback();
             } else {
@@ -52,7 +52,7 @@ class AssistantManager {
     }
 
     /**
-     * Gets script path when script name is tha same as 
+     * Gets script path when script name is tha same as
      * currently opened HTML file. If this JS file doesn't exists
      * it creates new one.
      * @param {DesignEditor} closetDesignEditor - Design Editor instance
@@ -60,17 +60,17 @@ class AssistantManager {
      * @private
      */
     _getReferenceableScriptPath() {
-        const fileName = pathUtils.getFileName(utils.checkGlobalContext("globalData").fileUrl),
-            name = `${fileName}.js`;
-        let script = this._getScriptElement(name);
+        const htmlFileUrl = utils.checkGlobalContext("globalData").fileUrl,
+            jsFileName = `${pathUtils.getFileName(htmlFileUrl)}.js`;
+        let script = this._getScriptElement(jsFileName);
 
         if (!script) {
-            console.log('_getReferenceableScriptPath', name, this._model);
-            script = this._createScript(name);
+            console.log('_getReferenceableScriptPath', jsFileName, this._model);
+            script = this._createScript(jsFileName);
             this._model.insert(this._model.getElementByQuery('.ui-page'), script.outerHTML);
         }
 
-        return pathUtils.createProjectPath(name);
+        return htmlFileUrl.replace(/html$/, 'js');
     }
 
     /**
@@ -109,7 +109,7 @@ class AssistantManager {
      * Creates script HTML element
      * @param {string} filePath Path to JS file
      * @returns {HTMLScriptElement} script element with src equal given path
-     * @private 
+     * @private
      */
     _createScript(filePath) {
         const script = document.createElement("script");

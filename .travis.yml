@@ -1,19 +1,30 @@
-os: 
+language: node_js
+cache: npm
+os:
   - linux
   - windows
 
-language: node_js
 node_js: 
   - "10"
 
+script: 
+  - npm run coverage
+
 jobs:
   include:
-    - stage: "WATT"
+    - stage: test
+      name: "Lint"
+      script: npm run lint
+      os: linux
+    - stage: "build"
+      name: "WATT"
       script: npm run build-watt 1> /dev/null
       os: linux
-    - stage: "VSC-LINUX"
+    - stage: "build"
+      name: "VSC - Linux"
       script: npm run build-vsc 1> /dev/null
       os: linux
-    - stage: "VSC-WINDOWS"
+    - stage: "build"
+      name: "VSC - Windows"
       script: npm run build-vsc 1> /dev/null
       os: windows
