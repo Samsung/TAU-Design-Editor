@@ -85,9 +85,11 @@ function makeDir(path, callback) {
  * Writes data to file specified via name argument.
  * Triggers callback afterwards.
  *
- * @param {String} path path starting from the project root
+ * @param {String} path Path starting from the project root
  * @param {Object} data
- * @param {Function} callback
+ * @param {Function} callback Callback function triggered after
+ * the writing to file is done
+ * @param {Object} [additionalOptions]
  */
 function writeFile(path, data, callback, additionalOptions = {}) {
 	const options = {
@@ -100,6 +102,21 @@ function writeFile(path, data, callback, additionalOptions = {}) {
 	};
 
 	__fetchHelper(fileEndpoint, options, 'text', callback);
+}
+
+/**
+ * Synchronous version of writeFile
+ *
+ * @todo implement synchronous version of writeFile
+ * (for now it's here just for WATT compability pourposes)
+ * @param {String} path Path starting from the project root
+ * @param {Object} data
+ * @param {Function} callback Callback function triggered after
+ * the writing to file is done
+ * @param {Object} [additionalOptions]
+ */
+function writeFileSync(path, data, callback, additionalOptions = {}) {
+	writeFile(path, data, callback, additionalOptions);
 }
 
 /**
@@ -143,6 +160,7 @@ function readDir(URL, callback) {
 module.exports = {
 	readFile,
 	writeFile,
+	writeFileSync,
 	makeDir,
 	existsDir,
 	exists,
