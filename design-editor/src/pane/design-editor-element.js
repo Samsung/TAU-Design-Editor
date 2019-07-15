@@ -241,30 +241,9 @@ class DesignEditor extends DressElement {
 							// get matching component for each built widget
 							const component = packages[name.toLowerCase()];
 							if (component) {
-								let widget = tau.engine.getBinding(widgetEl, name);
-								if (!widget) {
-									widget = tau.engine.instanceWidget(widgetEl, name);
-								}
-								if (widget) {
-									const container = widget.getContainer();
-									// if component root element is not widget element
-									// then the root element is a container
-									// and data-ids should be moved
-									if (widgetEl !== container) {
-										if (widgetEl.hasAttribute(INTERNAL_ID_ATTRIBUTE)) {
-											container.setAttribute(
-												INTERNAL_ID_ATTRIBUTE,
-												widgetEl.getAttribute(INTERNAL_ID_ATTRIBUTE)
-											);
-											widgetEl.removeAttribute(INTERNAL_ID_ATTRIBUTE);
-
-											Array.prototype.slice.call(widgetEl.attributes).forEach((attribute) => {
-												if (RE_COPY_ATTRIBUTE_TO_CONTAINER.test(attribute.name)) {
-													container.setAttribute(attribute.name, attribute.value);
-												}
-											});
-										}
-									}
+								const container = this.getContainerByElement(widgetEl);
+								if (container) {
+									this.addAttributesToContainer(widgetEl, container);
 								}
 							}
 						});
@@ -919,6 +898,55 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
+	 * Check if dropped widget has a container
+	 * @param {HTMLElement} element
+	 * @returns {HTMLElement|null}
+	 */
+
+	getContainerByElement(element) {
+		const iframeDocument = this._$iframe[0].contentDocument;
+		const tau = iframeDocument.defaultView.tau;
+		const widgetName = element.getAttribute('data-tau-name');
+		if (tau && widgetName) {
+			// use tau to find a container of element
+			let widget = tau.engine.getBinding(element, widgetName);
+			if (!widget) {
+				widget = tau.engine.instanceWidget(element, widgetName);
+			}
+			if (widget) {
+				const container = widget.getContainer();
+				if (element !== container && element.hasAttribute(INTERNAL_ID_ATTRIBUTE)) {
+					return container;
+				} else {
+					return null;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Set data-id to container and remove from child element
+	 * Add attributes from child element to container
+	 * @param {HTMLElement} element
+	 * @param {HTMLElement} container
+	 * @returns {HTMLElement}
+	 */
+
+	addAttributesToContainer(element, container) {
+		container.setAttribute(
+			INTERNAL_ID_ATTRIBUTE,
+			element.getAttribute(INTERNAL_ID_ATTRIBUTE)
+		);
+		element.removeAttribute(INTERNAL_ID_ATTRIBUTE);
+		Array.prototype.slice.call(element['attributes']).forEach((attribute) => {
+			if (RE_COPY_ATTRIBUTE_TO_CONTAINER.test(attribute.name)) {
+				container.setAttribute(attribute.name, attribute.value);
+			}
+		});
+		return container;
+	}
+
+	/**
 	 * Callback for event select element
 	 * @param {number} elementId
 	 */
@@ -928,6 +956,14 @@ class DesignEditor extends DressElement {
 
 		if (this.isVisible()) {
 			$element = this._getElementById(elementId);
+			const container = this.getContainerByElement($element[0]);
+			if (container) {
+				const updatedContainer = this.addAttributesToContainer(
+					$element[0],
+					container
+				);
+				return requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, updatedContainer));
+			}
 
 			if ($element.length) {
 				requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, $element[0]));
