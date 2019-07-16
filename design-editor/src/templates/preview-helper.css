@@ -1,8 +1,8 @@
-.ui-scroller::-webkit-scrollbar {
+.ui-scroller::-webkit-scrollbar, .ui-scrollview-clip::-webkit-scrollbar {
 	display: none;
 }
 
-.ui-scroller {
+.ui-scroller, .ui-scrollview-clip {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
