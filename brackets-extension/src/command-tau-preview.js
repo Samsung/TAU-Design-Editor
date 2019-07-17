@@ -99,15 +99,15 @@ define((require, exports, module) => {
         }
     }
 
-    function _setSaveMenuEnabled(isDesignEditorVisible) {
-        let saveCommand = CommandManager.get(Commands.FILE_SAVE),
-            saveAllCommand = CommandManager.get(Commands.FILE_SAVE_ALL),
-            saveAsCommand = CommandManager.get(Commands.FILE_SAVE_AS);
+	function _setSaveMenuEnabled(isDesignEditorVisible) {
+		const saveCommand = CommandManager.get(Commands.FILE_SAVE),
+			saveAllCommand = CommandManager.get(Commands.FILE_SAVE_ALL),
+			saveAsCommand = CommandManager.get(Commands.FILE_SAVE_AS);
 
-        saveCommand.setEnabled(!isDesignEditorVisible);
-        saveAllCommand.setEnabled(!isDesignEditorVisible);
-        saveAsCommand.setEnabled(!isDesignEditorVisible);
-    }
+		saveCommand.setEnabled(!isDesignEditorVisible);
+		saveAllCommand.setEnabled(!isDesignEditorVisible);
+		saveAsCommand.setEnabled(!isDesignEditorVisible);
+	}
 
     function _setPanelVisibility(isVisible) {
 		const doc = DocumentManager.getCurrentDocument();
@@ -126,6 +126,7 @@ define((require, exports, module) => {
             if (doc.isDirty) {
                 if(!window.confirm('Unsaved changed will not be reflected in TAU Design Editor')) {
                     console.log('cancelled');
+					_setSaveMenuEnabled(!isVisible);
                     return !isVisible;
                 }
             }
