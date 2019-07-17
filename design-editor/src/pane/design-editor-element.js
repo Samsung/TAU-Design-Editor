@@ -228,8 +228,9 @@ class DesignEditor extends DressElement {
 					console.log('$iframe.pageshow');
 					this._updateIFrameHeight();
 					iframeDocument.querySelector('base').setAttribute('href', finalBase);
-					// "pageshow" event is triggered by TAU then TAU shoud be exists in iframe scope
+					// "pageshow" event is triggered by TAU then TAU should be exists in iframe scope
 					const tau = iframeDocument.defaultView.tau;
+					StateManager.set('tau-version', tau.version);
 
 					// fix data-ids for contained widgets
 					const components = packageManager.getPackages(Package.TYPE.COMPONENT);
@@ -268,6 +269,8 @@ class DesignEditor extends DressElement {
 							}
 						});
 					});
+
+					eventEmitter.emit(EVENTS.TAULoaded, tau.version);
 				});
 			}
 
