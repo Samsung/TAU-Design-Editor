@@ -105,21 +105,6 @@ function writeFile(path, data, callback, additionalOptions = {}) {
 }
 
 /**
- * Synchronous version of writeFile
- *
- * @todo implement synchronous version of writeFile
- * (for now it's here just for WATT compability pourposes)
- * @param {String} path Path starting from the project root
- * @param {Object} data
- * @param {Function} callback Callback function triggered after
- * the writing to file is done
- * @param {Object} [additionalOptions]
- */
-function writeFileSync(path, data, callback, additionalOptions = {}) {
-	writeFile(path, data, callback, additionalOptions);
-}
-
-/**
  * Checks if file specified in name exists,
  * triggers callback afterwards.
  *
@@ -160,7 +145,6 @@ function readDir(URL, callback) {
 module.exports = {
 	readFile,
 	writeFile,
-	writeFileSync,
 	makeDir,
 	existsDir,
 	exists,
