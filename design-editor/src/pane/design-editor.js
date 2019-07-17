@@ -943,7 +943,7 @@ class Model {
         // }
 
 		this._DOM.body.appendChild(scriptRunner);
-		this.addLibrary('helper.js');
+		this.addLibrary('back-button-support.js');
 		if (screen.shape == 'circle') {
 			this.addLibrary('tau.circle.css');
 			this.addLibrary('circle-helper.js');

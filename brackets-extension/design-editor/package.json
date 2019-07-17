@@ -6,8 +6,8 @@
   "version": "0.0.1",
   "dependencies": {
     "browserify-fs": "^1.0.0",
-    "jquery": "^2.2.3",
-    "jquery-ui": "1.10.5",
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
     "js-beautify": "^1.6.2",
     "mustache": "^2.2.1",
     "path-browserify": "0.0.0",
