@@ -1,10 +1,5 @@
-.ui-scroller::-webkit-scrollbar, .ui-scrollview-clip::-webkit-scrollbar {
+*::-webkit-scrollbar {
 	display: none;
-}
-
-.ui-scroller, .ui-scrollview-clip {
-	-ms-overflow-style: none;
-	scrollbar-width: none;
 }
 
 * {
@@ -19,4 +14,7 @@
 	-moz-user-drag: none;
 	-o-user-drag: none;
 	user-drag: none;
+
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }

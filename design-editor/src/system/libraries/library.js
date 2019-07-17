@@ -84,7 +84,7 @@ class Library {
 			if (!exists) {
 				this.getTemplateContent()
 					.then((text) => {
-						return fs.writeFileSync(this.getAbsolutePath(), text);
+						return fs.writeFile(this.getAbsolutePath(), text);
 					})
 					.then(callback)
 					.catch(err => {throw err;});

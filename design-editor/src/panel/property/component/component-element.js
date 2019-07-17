@@ -346,10 +346,11 @@ class Component extends DressElement {
      * @param {string} $itemList
      * @private
      */
-    _setIcon($itemList /* Compnent list*/) {
+	_setIcon($itemList = $([]) /* Compnent list*/) {
         var name,
             options,
             imgPath;
+
         $itemList.each((index, element) => {
             let icon = null;
 
