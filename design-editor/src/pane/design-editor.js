@@ -959,7 +959,7 @@ class Model {
                 if (uiPageDiv) {
                     console.log('detected S-Things bindings!');
                     stscript = document.createElement('script'),
-                    stscript.setAttribute('src', '/lib/sthings.min.js');
+					stscript.setAttribute('src', 'lib/sthings.min.js');
                     stscript.setAttribute('type', 'text/javascript');
                     stscript.setAttribute('data-closet-sthings', 'true');
                     projectManager.createLibFromTemplate('sthings.min.js');
