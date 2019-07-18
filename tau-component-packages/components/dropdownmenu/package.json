@@ -16,7 +16,7 @@
       "tv": "./iot-dropdown.png"
     }
   },
-  "template": "<select data-native-menu=\"false\" data-inline=\"true\"></select>",
+  "template": "<select data-native-menu=\"false\" data-inline=\"true\" data-items=\"Add values\"></select>",
   "generator": {
     "constructor": "tau.widget.DropdownMenu",
     "parameter": {
