@@ -18,7 +18,8 @@
     "closet-image",
     "closet-tau-circle-progress",
     "box",
-    "button"
+    "button",
+    "toggleslider"
   ],
   "selector": ".ui-section-changer section",
   "template": "<section><span>Section</span></section>"
