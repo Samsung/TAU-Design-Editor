@@ -59,7 +59,8 @@
     "tabs",
     "video",
     "anchor",
-    "tabs"
+    "tabs",
+    "toggleslider"
   ],
   "childrenLocation": {
     "mobile": ".ui-scrollview-view"
