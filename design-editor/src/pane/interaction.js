@@ -454,19 +454,49 @@ class Interaction {
      * Set resizable
      */
     setResizable() {
-        var options = ElementDetector.getInstance().detect(this._$contentElement).package.options;
-
-        if (options.resizable === true) {
-            if (this._onEditMode) {
-                this._$selectedLayerElement.resizable({
-                    handles: 'e, s, se',
-                    start: this._onResizeStart.bind(this),
-                    resize: this._onResize.bind(this),
-                    stop: this._onResizeStop.bind(this)
+		const resizedElement = this._$contentElement,
+			options = ElementDetector.getInstance().detect(resizedElement).package.options,
+			resizeOptions = options.resizable;
+		let resizingDirectives = '';
+		if (resizeOptions) {
+			if (this._onEditMode) {
+				if (resizeOptions === true) {
+					// set resizing to all directives when resizeOptions is true
+					resizingDirectives = 'e, s, se';
+				} else {
+					// situation when resizeOptions is an object
+					const hasResizeOptionsFalseValues = Object.keys(resizeOptions).some(
+						prop => !resizeOptions[prop]
+					);
+					if (!hasResizeOptionsFalseValues) {
+						// vertical and horizontal values in resizeOptions objects are true
+						resizingDirectives = 'e, s, se';
+					} else {
+						for (const property in resizeOptions) {
+							if (resizeOptions[property] === true) {
+								switch (property) {
+								// only horizontal value in resizeOptions object is true
+								case 'horizontal':
+									resizingDirectives = 'e';
+									break;
+								// only vertical value in resizeOptions object is true
+								case 'vertical':
+									resizingDirectives = 's';
+									break;
+								}
+							}
+						}
+					}
+				}
+				this._$selectedLayerElement.resizable({
+					handles: resizingDirectives,
+					start: this._onResizeStart.bind(this),
+					resize: this._onResize.bind(this),
+					stop: this._onResizeStop.bind(this)
                 });
             }
-        }
-    }
+		}
+	}
 
     /**
      * Resize start callback
