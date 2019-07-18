@@ -32,6 +32,9 @@
           }
       }
   },
-  "resizable": true,
+  "resizable": {
+    "vertical": false,
+    "horizontal": true
+  },
   "draggable": true
 }
