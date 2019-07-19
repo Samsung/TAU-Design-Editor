@@ -45,7 +45,7 @@ class ProjectManager {
 
 		console.log(`[GET] createLibFromTemplate: ${  src  } ...`);
 
-		fs.exists(dst, (exists) => {
+		fs.exists(dst, (err, exists) => {
 			// if file not exists then create for templates;
 			if (!exists) {
 				$.get(src, (content) => {
@@ -153,7 +153,7 @@ class ProjectManager {
 		// in some cases function doesn't require profiles info and
 		// callback is not set
 		if (callback) {
-			fs.exists(tauDir, (exists) => {
+			fs.exists(tauDir, (err, exists) => {
 				if (exists) {
 					fs.readdir(tauDir, (err, profileNames) => {
 						callback({

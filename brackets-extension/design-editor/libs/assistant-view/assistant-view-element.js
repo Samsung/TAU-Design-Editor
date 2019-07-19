@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 'use babel';
 
-import fs from 'fs';
 import $ from 'jquery';
 import {} from 'jquery-ui';
 import editor from '../../../../design-editor/src/editor';
@@ -12,7 +12,7 @@ import utils from '../../../../design-editor/src/utils/utils';
 const TextEditor = editor.TextEditor;
 
 const brackets = utils.checkGlobalContext('brackets');
-const saveDocument = window.saveDocument;
+const saveDocument = utils.checkGlobalContext('saveDocument');
 
 
 class AssistantView extends DressElement {
@@ -82,26 +82,25 @@ class AssistantView extends DressElement {
         });
     }
 
-    _onChange() {
-        if (this._changeTimer) {
-            clearTimeout(this._changeTimer);
-        }
+	_onChange() {
+		if (this._changeTimer) {
+			clearTimeout(this._changeTimer);
+		}
 
-        this._changeTimer = setTimeout(() => {
-            // save file
-            if (editor.isAtom()) {
-                this._textEditor.saveAs(this._currentFilePath);
-            } else if (saveDocument) {
-                saveDocument(this._textEditor.document, true, function (err) {
-                    if (err) {
-                        console.error(err);
-                    }
-                });
-            } else {
-                console.warn('save document hook not found!');
-            }
-        }, this._changeTimerTTL);
-    }
+		this._changeTimer = setTimeout(() => {
+			// save file
+			if (saveDocument) {
+				saveDocument(this._textEditor.document, true, (err) => {
+					if (err) {
+						console.error(err);
+					}
+					console.log('Document saved');
+				});
+			} else {
+				console.warn('save document hook not found!');
+			}
+		}, this._changeTimerTTL);
+	}
 
     /**
      * Get selectable item
@@ -110,28 +109,28 @@ class AssistantView extends DressElement {
      * @returns {*}
      * @private
      */
-    static _getSelectableItem(element, selectorList) {
-        var $element = $(element),
-            matched = false;
+	static _getSelectableItem(element, selectorList) {
+		let $element = $(element),
+			matched = false;
 
-        if (selectorList) {
-            if ($.isArray(selectorList)) {
-                selectorList = selectorList.join(', ');
-            }
+		if (selectorList) {
+			if ($.isArray(selectorList)) {
+				selectorList = selectorList.join(', ');
+			}
 
-            do {
-                if ($element.is(selectorList)) {
-                    matched = true;
-                }
-                if (matched === false) {
-                    $element = $element.parent();
-                }
-            } while ((matched === false) && ($element.length > 0));
-        } else {
-            matched = true;
-        }
-        return matched ? $element : null;
-    }
+			do {
+				if ($element.is(selectorList)) {
+					matched = true;
+				}
+				if (!matched) {
+					$element = $element.parent();
+				}
+			} while ((!matched) && ($element.length > 0));
+		} else {
+			matched = true;
+		}
+		return matched ? $element : null;
+	}
 
     /**
      * Element drag callback
@@ -237,19 +236,19 @@ class AssistantView extends DressElement {
     /**
      * Close
      */
-    close() {
-        if (this.isOpened()) {
-            eventEmitter.emit(EVENTS.ClosePanel, {
-                item: this,
-                clean: false
-            });
+	close() {
+		if (this.isOpened()) {
+			eventEmitter.emit(EVENTS.ClosePanel, {
+				item: this,
+				clean: false
+			});
 
-            // @TODO change removeClass to .hide()
-            this.$el.parent().removeClass('closet-editor-panel-visible');
+			// @TODO change removeClass to .hide()
+			this.$el.parent().removeClass('closet-editor-panel-visible');
 
-            this._opened = false;
-        }
-    }
+			this._opened = false;
+		}
+	}
 
     /**
      * is Open?
@@ -275,42 +274,33 @@ class AssistantView extends DressElement {
         };
     }
 
-    /**
+	/**
      * Set cursor position
      * @param {Array} pos
      */
-    setCursorPosition(pos) {
-        if (editor.isAtom()) {
-            this._textEditor.setCursorScreenPosition(pos);
-        } else {
-            this._textEditor.setCursorPos(pos[0], pos[1]);
-        }
-    }
+	setCursorPosition(pos) {
+		this._textEditor.setCursorPos(pos[0], pos[1]);
+	}
 
-    /**
+	/**
      * Insert text
      * @param {string} contents
      */
-    insertText(contents) {
-        var position = null,
-            line = null,
-            match = null;
-        if (editor.isAtom()) {
-            this._textEditor.insertText(contents, {
-                autoIndent: true,
-                autoIndentNewline: true
-            });
-        } else {
-            position = this.getCursorPosition();
-            line = this._bracketsDocument.getLine(position.row);
-            match = line.match(/^[ \t]*/);
-            contents = contents.split('\n').filter(lineElement => lineElement).map(lineElement => match[0] + lineElement).join('\n');
-            this._bracketsDocument.replaceRange(contents, {
-                line: position.row,
-                ch: position.column
-            });
-        }
-    }
+	insertText(contents) {
+		const position = this.getCursorPosition(),
+			line = this._bracketsDocument.getLine(position.row),
+			match = line.match(/^[ \t]*/);
+
+		contents = contents.split('\n')
+			.filter(lineElement => lineElement)
+			.map(lineElement => match[0] + lineElement)
+			.join('\n');
+		this._bracketsDocument.replaceRange(contents, {
+			line: position.row,
+			ch: position.column
+		});
+
+	}
 }
 
 const AssistantViewElement = document.registerElement('closet-assistant-view', AssistantView);

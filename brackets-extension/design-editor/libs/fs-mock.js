@@ -40,10 +40,10 @@ function writeFile(name, data, callback, additionalFileOptions) {
 }
 
 function exists(name, callback) {
-    var file = FileSystem.getFileForPath(name);
-    file.exists((err, _exists) => {
-        callback(_exists);
-    });
+	const file = FileSystem.getFileForPath(name);
+	file.exists((err, _exists) => {
+		callback(err, _exists);
+	});
 }
 
 function copy(src, dest, callback) {

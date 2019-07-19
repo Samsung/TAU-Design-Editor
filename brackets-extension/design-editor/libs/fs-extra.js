@@ -42,7 +42,7 @@ function writeFile(name, data, callback) {
 function exists(name, callback) {
 	const file = FileSystem.getFileForPath(name);
 	file.exists((err, _exists) => {
-		callback(_exists);
+		callback(err, _exists);
 	});
 }
 

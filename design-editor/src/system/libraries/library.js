@@ -80,7 +80,7 @@ class Library {
 	}
 
 	copyLibFile(callback) {
-		fs.exists(this.getAbsolutePath(), (exists) => {
+		fs.exists(this.getAbsolutePath(), (err, exists) => {
 			if (!exists) {
 				this.getTemplateContent()
 					.then((text) => {

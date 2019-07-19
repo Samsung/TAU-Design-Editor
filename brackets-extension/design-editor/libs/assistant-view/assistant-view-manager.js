@@ -1,14 +1,8 @@
 'use babel';
 
-import fs from 'fs';
-import $ from 'jquery';
 import {AssistantViewElement} from './assistant-view-element';
 import {AssistantWizardElement} from '../../../../design-editor/src/panel/assistant/assistant-wizard';
 import {AssistantCodeGenerator} from '../../../../design-editor/src/system/assistant/assistant-code-generator';
-import {eventEmitter, EVENTS} from '../../../../design-editor/src/events-emitter';
-import pathUtils from '../../../../design-editor/src/utils/path-utils';
-import utils from '../../../../design-editor/src/utils/utils';
-import editor from '../../../../design-editor/src/editor';
 
 const DEFAULT_GRAMMAR = 'source.js';
 
