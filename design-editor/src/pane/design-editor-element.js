@@ -715,44 +715,45 @@ class DesignEditor extends DressElement {
 				this._selectLayer.attachAlternativeSelector(generatedElement);
 			}
 			const externalResources = packageInfo.options.externalResources;
-			if (externalResources) {
-				const dom = this._model._DOM;
-				externalResources.forEach((scriptData) => {
-					let fileSrc = scriptData;
-					let attributes = {};
+			// External resources support is currently disabled
+			// if (externalResources) {
+			// 	const dom = this._model._DOM;
+			// 	externalResources.forEach((scriptData) => {
+			// 		let fileSrc = scriptData;
+			// 		let attributes = {};
 
-					if (typeof scriptData === 'object') {
-						fileSrc = scriptData.src;
-						attributes = scriptData.attributes;
-					}
+			// 		if (typeof scriptData === 'object') {
+			// 			fileSrc = scriptData.src;
+			// 			attributes = scriptData.attributes;
+			// 		}
 
-					const fileExtension = fileSrc.match(/[^.]+$/)[0];
-					let resource;
+			// 		const fileExtension = fileSrc.match(/[^.]+$/)[0];
+			// 		let resource;
 
-					// check if resources already exists
-					switch (fileExtension) {
-					case 'js' :
-						if (!dom.head.querySelector(`script[src="${  fileSrc }"]`)) {
-							resource = document.createElement('script');
-							resource.setAttribute('src', fileSrc);
-						}
-						break;
-					case 'css' :
-						if (!dom.head.querySelector(`link[href="${  fileSrc }"]`)) {
-							resource = document.createElement('link');
-							resource.setAttribute('href', fileSrc);
-							resource.setAttribute('rel', 'stylesheet');
-						}
-						break;
-					}
-					if (resource) {
-						Object.keys(attributes).forEach((key) => {
-							resource.setAttribute(key, attributes[key]);
-						});
-						dom.head.appendChild(resource);
-					}
-				});
-			}
+			// 		// check if resources already exists
+			// 		switch (fileExtension) {
+			// 		case 'js' :
+			// 			if (!dom.head.querySelector(`script[src="${  fileSrc }"]`)) {
+			// 				resource = document.createElement('script');
+			// 				resource.setAttribute('src', fileSrc);
+			// 			}
+			// 			break;
+			// 		case 'css' :
+			// 			if (!dom.head.querySelector(`link[href="${  fileSrc }"]`)) {
+			// 				resource = document.createElement('link');
+			// 				resource.setAttribute('href', fileSrc);
+			// 				resource.setAttribute('rel', 'stylesheet');
+			// 			}
+			// 			break;
+			// 		}
+			// 		if (resource) {
+			// 			Object.keys(attributes).forEach((key) => {
+			// 				resource.setAttribute(key, attributes[key]);
+			// 			});
+			// 			dom.head.appendChild(resource);
+			// 		}
+			// 	});
+			// }
 		}
 
 		elementSelector.select(id);
@@ -789,41 +790,42 @@ class DesignEditor extends DressElement {
 
 		const packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
 		const externalResources = packageInfo.options.externalResources;
-		if (externalResources) {
-			const dom = this._model._DOM;
-			// check if exists other elements indicated type
-			if (!dom.querySelector(packageInfo.options.selector)) {
-				// remove unnecesary resources
-				externalResources.forEach((scriptData) => {
-					let fileSrc = scriptData;
+		// External Resources support is currently disabled
+		// if (externalResources) {
+		// 	const dom = this._model._DOM;
+		// 	// check if exists other elements indicated type
+		// 	if (!dom.querySelector(packageInfo.options.selector)) {
+		// 		// remove unnecesary resources
+		// 		externalResources.forEach((scriptData) => {
+		// 			let fileSrc = scriptData;
 
-					if (typeof scriptData === 'object') {
-						fileSrc = scriptData.src;
-					}
+		// 			if (typeof scriptData === 'object') {
+		// 				fileSrc = scriptData.src;
+		// 			}
 
-					const fileExtension = fileSrc.match(/[^.]+$/)[0];
-					let scripts, css;
-					switch (fileExtension) {
-					case 'js' :
-						scripts = [].slice.call(dom.querySelectorAll('script[src]'));
-						scripts.forEach((resource) => {
-							if (resource.getAttribute('src').indexOf(fileSrc) > -1) {
-								dom.head.removeChild(resource);
-							}
-						});
-						break;
-					case 'css' :
-						css = [].slice.call(dom.querySelectorAll('link[href]'));
-						css.forEach((resource) => {
-							if (resource.getAttribute('href').indexOf(fileSrc) > -1) {
-								dom.head.removeChild(resource);
-							}
-						});
-						break;
-					}
-				});
-			}
-		}
+		// 			const fileExtension = fileSrc.match(/[^.]+$/)[0];
+		// 			let scripts, css;
+		// 			switch (fileExtension) {
+		// 			case 'js' :
+		// 				scripts = [].slice.call(dom.querySelectorAll('script[src]'));
+		// 				scripts.forEach((resource) => {
+		// 					if (resource.getAttribute('src').indexOf(fileSrc) > -1) {
+		// 						dom.head.removeChild(resource);
+		// 					}
+		// 				});
+		// 				break;
+		// 			case 'css' :
+		// 				css = [].slice.call(dom.querySelectorAll('link[href]'));
+		// 				css.forEach((resource) => {
+		// 					if (resource.getAttribute('href').indexOf(fileSrc) > -1) {
+		// 						dom.head.removeChild(resource);
+		// 					}
+		// 				});
+		// 				break;
+		// 			}
+		// 		});
+		// 	}
+		// }
 	}
 
 	/**
