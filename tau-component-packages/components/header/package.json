@@ -20,7 +20,8 @@
       "toggleswitch",
       "iot-contextmenu",
       "box",
-      "button"
+      "button",
+      "toggleslider"
   ],
   "section": "header",
   "class": [
