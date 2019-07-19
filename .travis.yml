@@ -4,6 +4,10 @@ os:
   - linux
   - windows
 
+branches:
+  only:
+  - master
+
 node_js: 
   - "10"
 
