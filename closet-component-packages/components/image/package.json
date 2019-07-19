@@ -4,7 +4,7 @@
   "attachable": true,
   "type": "standalone-component",
   "displayOrderWeight": 200,
-  "template": "<img class=\"ui-picture\" src=\"\" alt=\"\"  style=\"height: 100px;\">",
+  "template": "<img class=\"ui-picture\" src=\"#\" alt=\"\" style=\"height: 100px; width: 100px; display:block; background:#cacaca\">",
   "resizable": true,
   "draggable": true,
   "resources": {
