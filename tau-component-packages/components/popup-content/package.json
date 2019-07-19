@@ -23,6 +23,7 @@
     "input-text",
     "input-password",
     "input-date",
-    "input-number"
+    "input-number",
+    "toggleslider"
   ]
 }

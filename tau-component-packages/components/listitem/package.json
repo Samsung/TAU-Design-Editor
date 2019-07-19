@@ -52,7 +52,8 @@
     "box",
     "video",
     "anchor",
-    "box"
+    "box",
+    "toggleslider"
   ],
   "styles": [
     {
