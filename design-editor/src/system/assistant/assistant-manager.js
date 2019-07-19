@@ -23,14 +23,14 @@ const JS_TEMPLATE = 'document.getElementById(\'main\').addEventListener(\'pagebe
  *  insertCode() - insert code to the editor
  */
 class AssistantManager {
-    constructor() {
-        this._assistantView = new AssistantView();
-        this._assistantWizard = new AssistantWizardElement();
-        this._codeGenerator = new AssistantCodeGenerator();
-        this._bindEvents();
-        this._model = null;
-        this._designEditor = null;
-    }
+	constructor() {
+		this._assistantView = new AssistantView();
+		this._assistantWizard = new AssistantWizardElement();
+		this._codeGenerator = new AssistantCodeGenerator();
+		this._bindEvents();
+		this._model = null;
+		this._designEditor = null;
+	}
 
     /**
      * Create JS file if not exists
@@ -39,17 +39,17 @@ class AssistantManager {
      * @param {Function} callback
      * @private
      */
-    _createJSIfNotExists(pathName, callback) {
-        fs.exists(pathName, (error, exists) => {
-            if (exists) {
-                callback();
-            } else {
-                fs.writeFile(pathName, JS_TEMPLATE, () => {
-                    callback();
-                });
-            }
-        });
-    }
+	_createJSIfNotExists(pathName, callback) {
+		fs.exists(pathName, (err, exists) => {
+			if (exists) {
+				callback();
+			} else {
+				fs.writeFile(pathName, JS_TEMPLATE, () => {
+					callback();
+				});
+			}
+		});
+	}
 
     /**
      * Gets script path when script name is tha same as
