@@ -986,6 +986,24 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
+	 * Wheel event callback
+	 * @param {Event} event
+	 */
+	_onMouseWheel(event) {
+		const deltaY = event.originalEvent.wheelDelta,
+			direction = (deltaY > 0) ? 'CCW' : 'CW',
+			iframeDocument = this._$iframe[0].contentDocument;
+
+		iframeDocument.dispatchEvent(new CustomEvent('rotarydetent', {
+			'bubbles': true,
+			'cancelable': true,
+			'detail': {
+				'direction': direction
+			}
+		}));
+	}
+
+	/**
 	 * On scroll
 	 * @private
 	 */
@@ -1114,6 +1132,7 @@ class DesignEditor extends DressElement {
 	 */
 	_bindEvents() {
 		this._selectLayer.$el.on('keydown', this._onKeyDown.bind(this));
+		this.$el.on('wheel', this._onMouseWheel.bind(this));
 	}
 
 	/**
