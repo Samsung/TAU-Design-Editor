@@ -13,12 +13,12 @@ class PanelManager {
 	 * @param {Object} itemViews
 	 */
 	initialize(itemViews) {
-		var panelContainer = null,
+		let panelContainer = null,
 			containers = {},
 			closetContainer = null,
 			panelCenter = null,
-			panelMiddle = null,
-			document = itemViews && itemViews.ownerDocument;
+			panelMiddle = null;
+		const document = itemViews && itemViews.ownerDocument;
 		// list of modal panels
 		this._panels = new WeakMap();
 		this._dimmed = false;
@@ -64,9 +64,6 @@ class PanelManager {
 	_bindClosetEvent() {
 		eventEmitter.on(EVENTS.OpenPanel, this._onOpenPanel.bind(this));
 		eventEmitter.on(EVENTS.ClosePanel, this._onClosePanel.bind(this));
-
-		eventEmitter.on(EVENTS.OpenPanel, this._onOpenPanel.bind(this));
-		eventEmitter.on(EVENTS.ClosePanel, this._onClosePanel.bind(this));
 	}
 
 	/**
@@ -77,6 +74,7 @@ class PanelManager {
 	_onOpenPanel(options /* type, item */) {
 		this.openPanel(options);
 	}
+
 	/**
 	 * event handler for close displayed modal panel.
 	 * if clean flag is true, modal panel will be deleted in panel list.
@@ -98,7 +96,7 @@ class PanelManager {
 	 * @returns {*}
 	 */
 	createPanel(side, opt) {
-		var options = opt,
+		let options = opt,
 			panel = null,
 			container = this.containers[side];
 
@@ -141,7 +139,7 @@ class PanelManager {
 	 * @returns {Object}
 	 */
 	openPanel(options /* type, item. visible, priority */) {
-		var panelInstance = this.getPanel(options.item);
+		let panelInstance = this.getPanel(options.item);
 
 		if (panelInstance) {
 			panelInstance.show();
@@ -168,24 +166,27 @@ class PanelManager {
 
 		return panelInstance;
 	}
+
 	/**
 	 * close panel
 	 * @param {HTMLElement} panelItem
 	 */
 	closePanel(panelItem) {
-		var panelInstance = this.getPanel(panelItem);
+		const panelInstance = this.getPanel(panelItem);
 
 		if (panelInstance && !panelInstance.item) {
 			panelInstance.hide();
 			this._dimmed = false;
 		}
 	}
+
 	/**
 	 * delete panel from panel list(weakmap)
 	 * @param {HTMLElement} panelItem
 	 */
 	deletePanel(panelItem) {
-		var panelInstance = this.getPanel(panelItem);
+		const panelInstance = this.getPanel(panelItem);
+
 		if (panelInstance) {
 			panelInstance.destroy();
 			this._panels.delete(panelItem);
