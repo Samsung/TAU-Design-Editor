@@ -991,7 +991,7 @@ class Model {
 
 	addLibrary(libraryName) {
 		const helper = this._libraryCreator.createLibrary(libraryName);
-		if (!this._DOM.querySelector(helper.getSelector())) {
+		if (!this._DOM.head.querySelector(helper.getSelector())) {
 			this._DOM.head.appendChild(
 				helper.createHTMLElement(
 					utils.checkGlobalContext('globalData').fileUrl
