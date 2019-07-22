@@ -33,15 +33,31 @@ npm run build-watt
 ```
 npm run build-vsc
 ```
+
+### How to use for WATT
+```
+1. Launch the WATT with Chrome -> New Project -> Web Application -> Sample -> Mobile -> General -> TAU BASE
+2. Input the Project Name
+3. Finish
+```
+
 ### Features
-- Drag&Drop the widget
+- Drag&Drop the widget (Wearable)
 ![](docs/Dragwidget.gif)
-- Preview
+- Preview (Wearable)
 ![](docs/Preview.gif)
-- Structure Element
+- Structure Element (Wearable)
 ![](docs/Structure.gif)
-- Newpage
+- Newpage (Wearable)
 ![](docs/Newpage.gif)
+- Javascript Assistant (mobile)
+![](docs/JavascriptAssistant.gif)
+- How to set the image (mobile)
+![](docs/Image.gif)
+- How to set the Dropdown items (mobile)
+![](docs/Dropdown.gif)
+- How to make application (mobile)
+![](docs/IoTApp.gif)
 
 ### Coding style tests
 
