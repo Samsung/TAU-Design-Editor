@@ -62,7 +62,7 @@ class Preview extends DressElement {
 	 * @private
 	 */
 	_render(contents, basePath, uri, position, callback) {
-		const preview = this.createPreviewDocument(contents, path.dirname(path.relative(basePath, uri)));
+		const preview = this.createPreviewDocument(contents, path.relative(basePath, uri));
 		this.createFromTemplate(TEMPLATE_PATH, {
 			callback: () => {
 				const $frame = this.$el.find('.closet-preview-frame');
@@ -171,11 +171,12 @@ class Preview extends DressElement {
 	 * @returns {string} absolute path to temporary file
 	 */
 	createPreviewDocument(contents, location) {
-		const relativePathToFile = pathUtils.joinPaths(location, 'temporary-preview.html'),
+		const relativePathToFile = pathUtils.joinPaths(path.dirname(location), 'temporary-preview.html'),
 			writeFile = promisify(fs.writeFile),
 			processPipe = pipe([addDoctypeDeclaration, removeMediaQueryConstraints,
-				this.addHelperCSSLibrary.bind(this), this.signMainPage.bind(this)]),
-			parsedContents = processPipe(contents);
+				this.addHelperCSSLibrary.bind(this),
+				this.removeFileReferance.bind(this)]),
+			parsedContents = processPipe(contents, location);
 
 		this.fsPath = pathUtils.createProjectPath(relativePathToFile);
 
@@ -183,6 +184,18 @@ class Preview extends DressElement {
 			.then(() => {
 				return pathUtils.createProjectPath(relativePathToFile, true);
 			}).catch((err) => {throw err;});
+	}
+
+	/**
+	 * Removing references to original file
+	 * @param  {string} contents Previewed document content
+	 * @param  {string} location Path to original file
+	 * @returns {string} edited content
+	 */
+	removeFileReferance(contents, location) {
+		// eslint-disable-next-line no-useless-escape
+		const contentsRegex = new RegExp(path.basename(location).replace('.', '\.'), 'gi');
+		return contents.replace(contentsRegex, '');
 	}
 
 	/**
@@ -210,12 +223,6 @@ class Preview extends DressElement {
 		return xmlSerializer.serializeToString(doc);
 	}
 
-	signMainPage(contents) {
-		if (!checkGlobalContext('globalData').mainFile) {
-			checkGlobalContext('globalData').mainFile = checkGlobalContext('globalData').fileUrl;
-		}
-		return contents;
-	}
 }
 
 const PreviewElement = document.registerElement('closet-preview-element', Preview);
