@@ -124,12 +124,17 @@ class Guide {
                 return;
             }
 
-            // destroy wrapper
-            if (this._guideElementPostGenerated) {
-                this._guideElementPostGenerated.destroy();
-                this._guideElementPostGenerated.element.remove();
-                this._guideElementPostGenerated = null;
-            }
+			// destroy wrapper
+			if (this._guideElementPostGenerated) {
+				this._guideElementPostGenerated.destroy();
+				if (this._guideElementPostGenerated.element) {
+					this._guideElementPostGenerated.element.remove();
+				} else {
+					// eslint-disable-next-line no-console
+					console.warn('Guide: PostGenerated element not exists.');
+				}
+				this._guideElementPostGenerated = null;
+			}
 
             if (rule) {
                 beforeTop = rule.element.offset().top;
@@ -366,33 +371,39 @@ class Guide {
      * @private
      */
     _onDestroyGuide() {
-        var beforeTop = 0,
-            afterTop = 0,
-            contentScroller = this._designEditor ? this._designEditor.getContentScroller() : null;
+		let beforeTop = 0,
+			afterTop = 0;
 
-        if (this._guideElementPostGenerated) {
-            this._guideElementPostGenerated.destroy();
-            this._guideElementPostGenerated.element.remove();
-            this._guideElementPostGenerated = false;
-        }
+		const contentScroller = this._designEditor ? this._designEditor.getContentScroller() : null;
 
-        beforeTop = this._lastRule && this._lastRule.element.offset().top;
+		if (this._guideElementPostGenerated) {
+			this._guideElementPostGenerated.destroy();
+			if (this._guideElementPostGenerated.element) {
+				this._guideElementPostGenerated.element.remove();
+			} else {
+				// eslint-disable-next-line no-console
+				console.warn('Guide: PostGenerated element not exists.');
+			}
+			this._guideElementPostGenerated = false;
+		}
 
-        if (this._$lastGuideElement) {
-            this._$lastGuideElement.remove();
-        }
+		beforeTop = this._lastRule && this._lastRule.element.offset().top;
 
-        if (this._$lastGuideElementContainer) {
-            this._$lastGuideElementContainer.remove();
-        }
+		if (this._$lastGuideElement) {
+			this._$lastGuideElement.remove();
+		}
 
-        afterTop = this._lastRule && this._lastRule.element.offset().top;
-        if (contentScroller) {
-            contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
-        }
-        this._lastRule = null;
-        guideInfo.destroyGuideInfo();
-    }
+		if (this._$lastGuideElementContainer) {
+			this._$lastGuideElementContainer.remove();
+		}
+
+		afterTop = this._lastRule && this._lastRule.element.offset().top;
+		if (contentScroller) {
+			contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
+		}
+		this._lastRule = null;
+		guideInfo.destroyGuideInfo();
+	}
 }
 
 export {Guide};
