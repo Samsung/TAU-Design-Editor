@@ -286,6 +286,13 @@ class Interaction {
             height: $contentElement.outerHeight()
         };
 
+		// store element width and height, because of dragging changes
+		// positioning type and element may lost it's dimensions
+		$contentElement.css({
+			'width': $contentElement.css('width'),
+			'height': $contentElement.css('height')
+		});
+
         $selectLayerParent[0].showHighlighter($contentElement.parent()[0]);
 
         // Make parent offset root if it's not already
