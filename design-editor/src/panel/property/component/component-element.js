@@ -262,24 +262,24 @@ class Component extends DressElement {
         self._render();
     }
 
-    /**
+	/**
      * Return list of components, which could be available in current design editor profile
      * @param {Object} componentInfo
      * @private
      */
-    _selectComponentsToDeviceProfile(componentInfo) {
-		let components = {},
-			comp = null,
+	_selectComponentsToDeviceProfile(componentInfo) {
+		let comp = null;
+		const components = {},
 			screen = StateManager.get('screen');
 
 		for (comp in componentInfo) {
-			let componentProfileList = componentInfo[comp].options[DEVICE_PROFILE_OPTION];
+			const componentProfileList = componentInfo[comp].options[DEVICE_PROFILE_OPTION];
 			if (!componentProfileList || componentProfileList.indexOf(screen.profile) !== -1) {
 				components[comp] = componentInfo[comp];
 			}
 		}
 		return components;
-    }
+	}
 
     /**
      * Fill component info at panel
