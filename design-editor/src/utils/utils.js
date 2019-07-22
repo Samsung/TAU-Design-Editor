@@ -79,7 +79,7 @@ export function isDemoVersion() {
  * @param {function} functions Array of functions to call
  */
 export function pipe (functions) {
-	return functions.reduce((f1, f2) => (a) => f2(f1(a)));
+	return functions.reduce((f1, f2) => (a, b) => f2(f1(a), b));
 }
 
 export default {

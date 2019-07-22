@@ -18,6 +18,7 @@
   },
   "template": "<select data-native-menu=\"false\" data-inline=\"true\" data-items=\"Add values\"></select>",
   "version": "mobile",
+  "device-profile": "mobile",
   "generator": {
     "constructor": "tau.widget.DropdownMenu",
     "parameter": {
