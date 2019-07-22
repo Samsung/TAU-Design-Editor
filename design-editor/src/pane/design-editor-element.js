@@ -241,30 +241,9 @@ class DesignEditor extends DressElement {
 							// get matching component for each built widget
 							const component = packages[name.toLowerCase()];
 							if (component) {
-								let widget = tau.engine.getBinding(widgetEl, name);
-								if (!widget) {
-									widget = tau.engine.instanceWidget(widgetEl, name);
-								}
-								if (widget) {
-									const container = widget.getContainer();
-									// if component root element is not widget element
-									// then the root element is a container
-									// and data-ids should be moved
-									if (widgetEl !== container) {
-										if (widgetEl.hasAttribute(INTERNAL_ID_ATTRIBUTE)) {
-											container.setAttribute(
-												INTERNAL_ID_ATTRIBUTE,
-												widgetEl.getAttribute(INTERNAL_ID_ATTRIBUTE)
-											);
-											widgetEl.removeAttribute(INTERNAL_ID_ATTRIBUTE);
-
-											Array.prototype.slice.call(widgetEl.attributes).forEach((attribute) => {
-												if (RE_COPY_ATTRIBUTE_TO_CONTAINER.test(attribute.name)) {
-													container.setAttribute(attribute.name, attribute.value);
-												}
-											});
-										}
-									}
+								const container = this.getContainerByElement(widgetEl);
+								if (container) {
+									this.addAttributesToContainer(widgetEl, container);
 								}
 							}
 						});
@@ -736,44 +715,45 @@ class DesignEditor extends DressElement {
 				this._selectLayer.attachAlternativeSelector(generatedElement);
 			}
 			const externalResources = packageInfo.options.externalResources;
-			if (externalResources) {
-				const dom = this._model._DOM;
-				externalResources.forEach((scriptData) => {
-					let fileSrc = scriptData;
-					let attributes = {};
+			// External resources support is currently disabled
+			// if (externalResources) {
+			// 	const dom = this._model._DOM;
+			// 	externalResources.forEach((scriptData) => {
+			// 		let fileSrc = scriptData;
+			// 		let attributes = {};
 
-					if (typeof scriptData === 'object') {
-						fileSrc = scriptData.src;
-						attributes = scriptData.attributes;
-					}
+			// 		if (typeof scriptData === 'object') {
+			// 			fileSrc = scriptData.src;
+			// 			attributes = scriptData.attributes;
+			// 		}
 
-					const fileExtension = fileSrc.match(/[^.]+$/)[0];
-					let resource;
+			// 		const fileExtension = fileSrc.match(/[^.]+$/)[0];
+			// 		let resource;
 
-					// check if resources already exists
-					switch (fileExtension) {
-					case 'js' :
-						if (!dom.head.querySelector(`script[src="${  fileSrc }"]`)) {
-							resource = document.createElement('script');
-							resource.setAttribute('src', fileSrc);
-						}
-						break;
-					case 'css' :
-						if (!dom.head.querySelector(`link[href="${  fileSrc }"]`)) {
-							resource = document.createElement('link');
-							resource.setAttribute('href', fileSrc);
-							resource.setAttribute('rel', 'stylesheet');
-						}
-						break;
-					}
-					if (resource) {
-						Object.keys(attributes).forEach((key) => {
-							resource.setAttribute(key, attributes[key]);
-						});
-						dom.head.appendChild(resource);
-					}
-				});
-			}
+			// 		// check if resources already exists
+			// 		switch (fileExtension) {
+			// 		case 'js' :
+			// 			if (!dom.head.querySelector(`script[src="${  fileSrc }"]`)) {
+			// 				resource = document.createElement('script');
+			// 				resource.setAttribute('src', fileSrc);
+			// 			}
+			// 			break;
+			// 		case 'css' :
+			// 			if (!dom.head.querySelector(`link[href="${  fileSrc }"]`)) {
+			// 				resource = document.createElement('link');
+			// 				resource.setAttribute('href', fileSrc);
+			// 				resource.setAttribute('rel', 'stylesheet');
+			// 			}
+			// 			break;
+			// 		}
+			// 		if (resource) {
+			// 			Object.keys(attributes).forEach((key) => {
+			// 				resource.setAttribute(key, attributes[key]);
+			// 			});
+			// 			dom.head.appendChild(resource);
+			// 		}
+			// 	});
+			// }
 		}
 
 		elementSelector.select(id);
@@ -810,41 +790,42 @@ class DesignEditor extends DressElement {
 
 		const packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
 		const externalResources = packageInfo.options.externalResources;
-		if (externalResources) {
-			const dom = this._model._DOM;
-			// check if exists other elements indicated type
-			if (!dom.querySelector(packageInfo.options.selector)) {
-				// remove unnecesary resources
-				externalResources.forEach((scriptData) => {
-					let fileSrc = scriptData;
+		// External Resources support is currently disabled
+		// if (externalResources) {
+		// 	const dom = this._model._DOM;
+		// 	// check if exists other elements indicated type
+		// 	if (!dom.querySelector(packageInfo.options.selector)) {
+		// 		// remove unnecesary resources
+		// 		externalResources.forEach((scriptData) => {
+		// 			let fileSrc = scriptData;
 
-					if (typeof scriptData === 'object') {
-						fileSrc = scriptData.src;
-					}
+		// 			if (typeof scriptData === 'object') {
+		// 				fileSrc = scriptData.src;
+		// 			}
 
-					const fileExtension = fileSrc.match(/[^.]+$/)[0];
-					let scripts, css;
-					switch (fileExtension) {
-					case 'js' :
-						scripts = [].slice.call(dom.querySelectorAll('script[src]'));
-						scripts.forEach((resource) => {
-							if (resource.getAttribute('src').indexOf(fileSrc) > -1) {
-								dom.head.removeChild(resource);
-							}
-						});
-						break;
-					case 'css' :
-						css = [].slice.call(dom.querySelectorAll('link[href]'));
-						css.forEach((resource) => {
-							if (resource.getAttribute('href').indexOf(fileSrc) > -1) {
-								dom.head.removeChild(resource);
-							}
-						});
-						break;
-					}
-				});
-			}
-		}
+		// 			const fileExtension = fileSrc.match(/[^.]+$/)[0];
+		// 			let scripts, css;
+		// 			switch (fileExtension) {
+		// 			case 'js' :
+		// 				scripts = [].slice.call(dom.querySelectorAll('script[src]'));
+		// 				scripts.forEach((resource) => {
+		// 					if (resource.getAttribute('src').indexOf(fileSrc) > -1) {
+		// 						dom.head.removeChild(resource);
+		// 					}
+		// 				});
+		// 				break;
+		// 			case 'css' :
+		// 				css = [].slice.call(dom.querySelectorAll('link[href]'));
+		// 				css.forEach((resource) => {
+		// 					if (resource.getAttribute('href').indexOf(fileSrc) > -1) {
+		// 						dom.head.removeChild(resource);
+		// 					}
+		// 				});
+		// 				break;
+		// 			}
+		// 		});
+		// 	}
+		// }
 	}
 
 	/**
@@ -919,6 +900,55 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
+	 * Check if dropped widget has a container
+	 * @param {HTMLElement} element
+	 * @returns {HTMLElement|null}
+	 */
+
+	getContainerByElement(element) {
+		const iframeDocument = this._$iframe[0].contentDocument;
+		const tau = iframeDocument.defaultView.tau;
+		const widgetName = element.getAttribute('data-tau-name');
+		if (tau && widgetName) {
+			// use tau to find a container of element
+			let widget = tau.engine.getBinding(element, widgetName);
+			if (!widget) {
+				widget = tau.engine.instanceWidget(element, widgetName);
+			}
+			if (widget) {
+				const container = widget.getContainer();
+				if (element !== container && element.hasAttribute(INTERNAL_ID_ATTRIBUTE)) {
+					return container;
+				} else {
+					return null;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Set data-id to container and remove from child element
+	 * Add attributes from child element to container
+	 * @param {HTMLElement} element
+	 * @param {HTMLElement} container
+	 * @returns {HTMLElement}
+	 */
+
+	addAttributesToContainer(element, container) {
+		container.setAttribute(
+			INTERNAL_ID_ATTRIBUTE,
+			element.getAttribute(INTERNAL_ID_ATTRIBUTE)
+		);
+		element.removeAttribute(INTERNAL_ID_ATTRIBUTE);
+		Array.prototype.slice.call(element['attributes']).forEach((attribute) => {
+			if (RE_COPY_ATTRIBUTE_TO_CONTAINER.test(attribute.name)) {
+				container.setAttribute(attribute.name, attribute.value);
+			}
+		});
+		return container;
+	}
+
+	/**
 	 * Callback for event select element
 	 * @param {number} elementId
 	 */
@@ -928,6 +958,14 @@ class DesignEditor extends DressElement {
 
 		if (this.isVisible()) {
 			$element = this._getElementById(elementId);
+			const container = this.getContainerByElement($element[0]);
+			if (container) {
+				const updatedContainer = this.addAttributesToContainer(
+					$element[0],
+					container
+				);
+				return requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, updatedContainer));
+			}
 
 			if ($element.length) {
 				requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, $element[0]));
@@ -947,6 +985,24 @@ class DesignEditor extends DressElement {
 		} else {
 			this._selectLayer.hideSelector();
 		}
+	}
+
+	/**
+	 * Wheel event callback
+	 * @param {Event} event
+	 */
+	_onMouseWheel(event) {
+		const deltaY = event.originalEvent.wheelDelta,
+			direction = (deltaY > 0) ? 'CCW' : 'CW',
+			iframeDocument = this._$iframe[0].contentDocument;
+
+		iframeDocument.dispatchEvent(new CustomEvent('rotarydetent', {
+			'bubbles': true,
+			'cancelable': true,
+			'detail': {
+				'direction': direction
+			}
+		}));
 	}
 
 	/**
@@ -1078,6 +1134,7 @@ class DesignEditor extends DressElement {
 	 */
 	_bindEvents() {
 		this._selectLayer.$el.on('keydown', this._onKeyDown.bind(this));
+		this.$el.on('wheel', this._onMouseWheel.bind(this));
 	}
 
 	/**

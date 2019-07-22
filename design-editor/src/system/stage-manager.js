@@ -267,6 +267,9 @@ class StageManager {
 				if (activatePreviewModeButton) {
 					activatePreviewModeButton.style.display = 'none';
 				}
+			} else {
+				// Hide DE icon.
+				window.top.$('#tau-preview-icon').css('visibility', 'hidden');
 			}
 
 		} else {
@@ -277,6 +280,9 @@ class StageManager {
 			}, 500);
 
 			$workSpace.find('closet-preview-element-toolbar').remove();
+
+			// Restore DE icon since it may have been hidden while going to live preview.
+			window.top.$('#tau-preview-icon').css('visibility', 'visible');
 		}
 	}
 

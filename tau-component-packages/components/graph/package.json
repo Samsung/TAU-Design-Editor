@@ -18,13 +18,13 @@
   },
   "externalResources": [
     {
-      "src": "./libs/tau/libs/d3.min.js",
+      "src": "./lib/tau/libs/d3.min.js",
       "attributes": {
         "charset": "utf-8"
       }
     },
-    "./libs/tau/libs/tauCharts.min.js",
-    "./libs/tau/libs/tauCharts.min.css"
+    "./lib/tau/libs/tauCharts.min.js",
+    "./lib/tau/libs/tauCharts.min.css"
   ],
   "template": "<div class=\"ui-graph\" data-mode=\"continuous\" data-graph=\"line\" data-color=\"#FF0000\" data-xlabel=\"Number\" data-ylabel=\"Value\" data-xinit=\"0\" data-yinit=\"0\" data-axis-x-type=\"index\" data-axis-x-max-count=\"10\" data-axis-x-unit=\"s\" data-value=\"[1,2,5]\"></div>",
   "generator": {

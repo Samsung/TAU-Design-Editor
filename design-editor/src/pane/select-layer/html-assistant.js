@@ -48,14 +48,7 @@ class HTMLAssistant {
 	toggle(callback) {
 		const opened = this._htmlAssistantEditor.isOpened();
 		if (opened) {
-			new Promise((resolve) => {
-				this._htmlAssistantEditor.close();
-				window.addEventListener('message', ({ data }) => {
-					if (data.type === 'VSCODE_MESSAGE' && data.info === 'EDITOR_CLOSED') {
-						resolve();
-					}
-				});
-			})
+			this._htmlAssistantEditor.close()
 				.then(() => this._htmlAssistantEditor.getEditorContent())
 				.then(content => this.setSelectedContent(content))
 				.then(() => {

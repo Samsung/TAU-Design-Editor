@@ -29,6 +29,14 @@ class HTMLAssistantEditorElement {
 			type: 'CLOSE_EDITOR'
 		}, '*');
 		this._isOpened = false;
+
+		return new Promise((resolve) => {
+			window.addEventListener('message', ({ data }) => {
+				if (data.type === 'VSCODE_MESSAGE' && data.info === 'EDITOR_CLOSED') {
+					return resolve();
+				}
+			});
+		});
 	}
 
 	clean() {
