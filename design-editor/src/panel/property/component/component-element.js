@@ -268,17 +268,17 @@ class Component extends DressElement {
      * @private
      */
     _selectComponentsToDeviceProfile(componentInfo) {
-        var self = this,
-            components = {},
-            comp = null;
+		let components = {},
+			comp = null,
+			screen = StateManager.get('screen');
 
-        for (comp in componentInfo) {
-            let componentProfileList = componentInfo[comp].options[DEVICE_PROFILE_OPTION];
-            if (!componentProfileList || componentProfileList.indexOf(self._profile) !== -1) {
-                components[comp] = componentInfo[comp];
-            }
-        }
-        return components;
+		for (comp in componentInfo) {
+			let componentProfileList = componentInfo[comp].options[DEVICE_PROFILE_OPTION];
+			if (!componentProfileList || componentProfileList.indexOf(screen.profile) !== -1) {
+				components[comp] = componentInfo[comp];
+			}
+		}
+		return components;
     }
 
     /**
