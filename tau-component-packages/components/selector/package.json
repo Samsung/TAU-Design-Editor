@@ -23,6 +23,7 @@
     "selectoritem"
   ],
   "version": "wearable-circle",
+  "device-profile": "wearable",
   "data": [
     {
       "option": "item-selector",
