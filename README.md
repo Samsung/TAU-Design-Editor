@@ -37,8 +37,9 @@ npm run build-vsc
 ### How to use for WATT
 ```
 1. Launch the WATT with Chrome -> New Project -> Web Application -> Sample -> Mobile -> General -> TAU BASE
-2. Input the Project Name
-3. Finish
+2. Input the Project Name and select the Finish
+3. Open the Project and select the .html file
+4. Select Monitor icon at the top right
 ```
 
 ### Features
