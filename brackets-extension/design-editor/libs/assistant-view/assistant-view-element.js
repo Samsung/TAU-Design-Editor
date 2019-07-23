@@ -132,47 +132,45 @@ class AssistantView extends DressElement {
 		return matched ? $element : null;
 	}
 
-    /**
-     * Element drag callback
-     * @param {Event} event
-     * @private
-     */
-    _onElementDrag(event) {
-        var pointedElement,
-            $lineElement,
-            lineNumber,
-            textEditorElement = this._$textEditorEl && this._$textEditorEl[0] || null;
+	/**
+	 * Element drag callback
+	 * @param {Event} event
+	 * @private
+	 */
+	_onElementDrag(event) {
+		const pointedElement = document.elementFromPoint(event.clientX, event.clientY),
+			$lineElement = AssistantView._getSelectableItem(pointedElement, ['.CodeMirror-code > div']);
+		let lineNumber;
 
-        // brackets version
-        pointedElement = document.elementFromPoint(event.clientX, event.clientY);
-        $lineElement = AssistantView._getSelectableItem(pointedElement, ['.CodeMirror-code > div']);
-        if ($lineElement) {
-            lineNumber = $lineElement.parent().children().index($lineElement[0]);
-        }
+		if ($lineElement) {
+			lineNumber = $lineElement.parent().children().index($lineElement[0]);
+		}
 
-        if ($lineElement) {
-            this.setCursorPosition([lineNumber, 0]);
-        }
-    }
+		if ($lineElement) {
+			this.setCursorPosition([lineNumber, 0]);
+		}
+	}
 
-    /**
-     * Element drag stop
-     * @private
-     */
-    _onElementDragStop() {
-        eventEmitter.emit(EVENTS.OpenAssistantWizard);
-    }
+	/**
+	 * Element drag stop
+	 * @private
+	 */
+	_onElementDragStop() {
+		if (this.isOpened()) {
+			eventEmitter.emit(EVENTS.OpenAssistantWizard);
+		}
+	}
 
-    /**
-     * Set grammar
-     * @param {Object} grammar
-     */
-    setGrammar(grammar) {
-        if (this._currentGrammar !== grammar) {
-            this._currentGrammar = grammar;
-            this._textEditor.setGrammar(grammar);
-        }
-    }
+	/**
+	 * Set grammar
+	 * @param {Object} grammar
+	 */
+	setGrammar(grammar) {
+		if (this._currentGrammar !== grammar) {
+			this._currentGrammar = grammar;
+			this._textEditor.setGrammar(grammar);
+		}
+	}
 
     /**
      * Set content
