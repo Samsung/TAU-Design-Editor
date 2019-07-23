@@ -12,7 +12,7 @@ import utils from '../../utils/utils';
 const TextEditor = editor.TextEditor;
 
 const brackets = utils.checkGlobalContext('brackets');
-const saveDocument = utils.checkGlobalContext('saveDocument');
+const saveDocument = window.saveDocument;
 
 
 class AssistantView extends DressElement {
@@ -335,3 +335,4 @@ class AssistantView extends DressElement {
 const AssistantViewElement = document.registerElement('closet-assistant-view', AssistantView);
 
 export {AssistantViewElement, AssistantView};
+
