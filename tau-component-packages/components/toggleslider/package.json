@@ -17,6 +17,7 @@
     }
   },
   "template": "<input type=\"checkbox\" class=\"ui-toggleswitch\" data-appearance=\"slider\">",
+  "version": "mobile",
   "generator": {
     "constructor": "tau.widget.ToggleSwitch",
     "parameter": {
