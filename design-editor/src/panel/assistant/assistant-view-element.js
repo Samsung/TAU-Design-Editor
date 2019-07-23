@@ -168,13 +168,15 @@ class AssistantView extends DressElement {
         }
     }
 
-    /**
-     * Element drag stop
-     * @private
-     */
-    _onElementDragStop() {
-        eventEmitter.emit(EVENTS.OpenAssistantWizard);
-    }
+	/**
+	 * Element drag stop
+	 * @private
+	 */
+	_onElementDragStop() {
+		if (this.isOpened()) {
+			eventEmitter.emit(EVENTS.OpenAssistantWizard);
+		}
+	}
 
     /**
      * Set grammar

@@ -96,7 +96,6 @@ class AssistantManager {
 		});
 	}
 
-
 	/**
 	 * Getting reference to ScriptElement from model or undefined if not exists
 	 * @param  {String} fileName name of JS file
@@ -119,11 +118,7 @@ class AssistantManager {
 	}
 
 	_bindEvents() {
-		eventEmitter.on(EVENTS.OpenAssistantWizard, () => {
-			// this._onOpenAssistantCodeWizard.bind(this);
-			// eslint-disable-next-line no-console
-			console.warn('feature of drag&drop elements to JS assistant isn\'t implemented yet');
-		});
+		eventEmitter.on(EVENTS.OpenAssistantWizard, this._onOpenAssistantCodeWizard.bind(this));
 		eventEmitter.on(EVENTS.AssistantWizardAccepted, this._onWizardAccepted.bind(this));
 	}
 
