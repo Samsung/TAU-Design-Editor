@@ -187,6 +187,7 @@ class Toolbar extends DressElement {
         if (control) {
             console.log('turning off', control);
             control.removeClass('selected');
+            control.blur();
         }
     }
 
