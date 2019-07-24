@@ -113,16 +113,16 @@ class ComponentGenerator {
         return null;
     }
 
-    /**
+	/**
      * Get Package parent component selector to build widget
      * @param {Object} componentElement
      * @returns {*}
      * @private
      */
-    _getPackageParentToBuildInfo(componentElement) {
-        const info = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(componentElement);
-        return (info.options) ? { selector: info.options.buildParentSelector } : null;
-    }
+	_getPackageParentToBuildInfo(componentElement) {
+		const info = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(componentElement);
+		return (info && info.options) ? { selector: info.options.buildParentSelector } : null;
+	}
 }
 
 const componentGenerator = new ComponentGenerator();
