@@ -4,114 +4,115 @@ import {packageManager, Package} from 'content-manager';
 
 class ComponentGenerator {
 
-    /*
+	/*
      * Generate TAU Components
      *
      */
-    generateComponent(componentElement, designView) {
-        var info = this._getPackageInfo(componentElement),
-            constructorArray,
-            i, len,
-            method,
-            component,
-            $iframe,
-            dependencyComponentPackage,
-            dependencyComponent,
-            dependencyComponentElement,
-            dcpConstructorArray,
-            activePage,
-            toggleSwitch,
-            tau,
-            parentComponentToBuildInfo,
-            parentComponentToBuild,
-            contextElement;
+	generateComponent(componentElement, designView) {
+		const info = this._getPackageInfo(componentElement);
+		let constructorArray,
+			i, len,
+			method,
+			component,
+			$iframe,
+			dependencyComponentPackage,
+			dependencyComponent,
+			dependencyComponentElement,
+			dcpConstructorArray,
+			activePage,
+			toggleSwitch,
+			tau,
+			parentComponentToBuildInfo,
+			parentComponentToBuild,
+			contextElement;
 
-        console.log('generateComponent');
-        if (info && designView) {
-            $iframe = designView.getDesignViewIframe();
+		if (info && designView) {
+			$iframe = designView.getDesignViewIframe();
 
-            constructorArray = info.constructor.split('.');
+			constructorArray = info.constructor.split('.');
 
-            len = constructorArray.length;
+			len = constructorArray.length;
 
-            method = $iframe[0].contentWindow;
+			method = $iframe[0].contentWindow;
 
-            if (info.dependencyComponent) {
-                dependencyComponentPackage = packageManager.getPackages(Package.TYPE.COMPONENT).get(info.dependencyComponent);
+			if (info.dependencyComponent) {
+				dependencyComponentPackage = packageManager.getPackages(Package.TYPE.COMPONENT)
+					.get(info.dependencyComponent);
 
-                dcpConstructorArray = dependencyComponentPackage.options.generator.constructor.split('.');
-                len = dcpConstructorArray.length;
-                for (i = 0; i < len; i += 1) {
-                    method = method[dcpConstructorArray[i]];
-                }
-                dependencyComponentElement = componentElement.closest(dependencyComponentPackage.options.selector);
+				dcpConstructorArray = dependencyComponentPackage.options.generator.constructor.split('.');
+				len = dcpConstructorArray.length;
+				for (i = 0; i < len; i += 1) {
+					method = method[dcpConstructorArray[i]];
+				}
+				dependencyComponentElement = componentElement.closest(dependencyComponentPackage.options.selector);
 
-                dependencyComponent = method(dependencyComponentElement, dependencyComponentPackage.options.generator.parameter.options);
+				dependencyComponent = method(dependencyComponentElement,
+					dependencyComponentPackage.options.generator.parameter.options);
 
-                if (info.parentMethodToCall) {
-                    component = dependencyComponent[info.parentMethodToCall](componentElement);
-                } else {
-                    component = dependencyComponent['refresh']();
-                }
-            } else {
-                for (i = 0; i < len; i += 1) {
-                    method = method[constructorArray[i]];
-                }
+				if (info.parentMethodToCall) {
+					component = dependencyComponent[info.parentMethodToCall](componentElement);
+				} else {
+					component = dependencyComponent['refresh']();
+				}
+			} else {
+				for (i = 0; i < len; i += 1) {
+					method = method[constructorArray[i]];
+				}
 
-                if (method) {
-                    component = method(componentElement, info.parameter.options);
-                } else {
-                    console.warn('Method ' + info.constructor + ' not exists.');
-                }
+				if (method) {
+					component = method(componentElement, info.parameter.options);
+				} else {
+					// eslint-disable-next-line no-console
+					console.warn(`Method ${  info.constructor  } not exists.`);
+				}
 
-            }
-            this._$iframe = $iframe;
-            return component;
-        } else if (designView) {
-            console.log('component-generator:else');
-	        $iframe = designView.getDesignViewIframe();
-	        method = $iframe[0].contentWindow;
-	        tau = method.tau;
-	        // @todo patch for iot template
-	        activePage = method.document.querySelector('.ui-page-active');
-	        tau.widget.Page(activePage).refresh();
-	        toggleSwitch = activePage.querySelector('.ui-toggleswitch');
-	        if (toggleSwitch) {
-		        tau.widget.ToggleSwitch(toggleSwitch);
-            } else {
-                contextElement = componentElement;
-                parentComponentToBuildInfo = this._getPackageParentToBuildInfo(componentElement);
-                if (parentComponentToBuildInfo) {
-                    parentComponentToBuild = componentElement.closest(parentComponentToBuildInfo.selector);
-                    if (parentComponentToBuild) {
-                        contextElement = parentComponentToBuild;
-                    }
-                }
-                tau.engine.createWidgets(contextElement);
-            }
-	        // end patch
-        }
-        return false;
-    }
+			}
+			this._$iframe = $iframe;
+			return component;
+		} else if (designView) {
+			$iframe = designView.getDesignViewIframe();
+			method = $iframe[0].contentWindow;
+			tau = method.tau;
+			// @todo patch for iot template
+			activePage = method.document.querySelector('.ui-page-active');
+			tau.widget.Page(activePage).refresh();
+			toggleSwitch = activePage.querySelector('.ui-toggleswitch');
+			if (toggleSwitch) {
+				tau.widget.ToggleSwitch(toggleSwitch);
+			} else {
+				contextElement = componentElement;
+				parentComponentToBuildInfo = this._getPackageParentToBuildInfo(componentElement);
+				if (parentComponentToBuildInfo) {
+					parentComponentToBuild = componentElement.closest(parentComponentToBuildInfo.selector);
+					if (parentComponentToBuild) {
+						contextElement = parentComponentToBuild;
+					}
+				}
+				tau.engine.createWidgets(contextElement);
+			}
+			// end patch
+		}
+		return false;
+	}
 
-    /**
+	/**
      * Get Package info
      * @param {Object} componentElement
      * @returns {*}
      * @private
      */
-    _getPackageInfo(componentElement) {
-        var info = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(componentElement);
-        if (info && info.options.generator) {
-            return {
-                constructor: info.options.generator.constructor,
-                parameter: info.options.generator.parameter,
-                dependencyComponent: info.options.generator['dependency-component'],
-                parentMethodToCall: info.options.generator['parent-call-method']
-            };
-        }
-        return null;
-    }
+	_getPackageInfo(componentElement) {
+		const info = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(componentElement);
+		if (info && info.options.generator) {
+			return {
+				constructor: info.options.generator.constructor,
+				parameter: info.options.generator.parameter,
+				dependencyComponent: info.options.generator['dependency-component'],
+				parentMethodToCall: info.options.generator['parent-call-method']
+			};
+		}
+		return null;
+	}
 
 	/**
      * Get Package parent component selector to build widget
