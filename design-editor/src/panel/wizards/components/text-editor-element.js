@@ -1,82 +1,74 @@
 'use babel';
 
 import $ from 'jquery';
-import editor from '../../../editor';
-import utils from '../../../utils/utils';
 
-var BracketsProjectManager;
-var brackets = utils.checkGlobalContext('brackets');
-
-var classes = {
-    BLOCK : 'block',
-    DEFAULT_TEXT : 'pw-page-name',
-    BRACKETS_TEXT : 'brackets-text-edit'
+const classes = {
+	BLOCK : 'block',
+	DEFAULT_TEXT : 'pw-page-name',
+	BRACKETS_TEXT : 'brackets-text-edit'
 };
-
-
-if (!window.atom && brackets) {
-    BracketsProjectManager = brackets.getModule('project/ProjectManager');
-}
 
 /**
  *
  */
 class TextEditor extends HTMLDivElement {
-    /**
+	/**
      * Create callback
      */
-    createdCallback() {
-        this._initialize();
-        this.options = {
-            path: ''
-        };
-    }
+	createdCallback() {
+		this._initialize();
+		this.options = {
+			path: ''
+		};
+	}
 
-    /**
+	/**
      * Init
      * @private
      */
-    _initialize() {
-        this._textElement = null;
-        $(this).addClass(classes.BLOCK);
-        this._setElement();
-    }
+	_initialize() {
+		this._textElement = null;
+		$(this).addClass(classes.BLOCK);
+		this._setElement();
+	}
 
-    /**
+	/**
      * Set element
      * @private
      */
-    _setElement() {
-        var $textElement,
-            self = this;
+	_setElement() {
+		const $textElement = $(document.createElement('input')),
+			self = this;
+		self._textElement = $textElement[0];
+		$(self).append($textElement);
+		$textElement
+			.attr('mini', true)
+			.attr('required', '')
+			.addClass(classes.BRACKETS_TEXT);
+		$(self).addClass(classes.DEFAULT_TEXT);
+		self._textElement.addEventListener('blur', this.showWarningIfEmpty);
+	}
 
-        if (window.atom) {
-            $textElement = $(document.createElement(editor.selectors.textEditor));
-            self._textElement = $textElement[0];
-            $(self).append($textElement);
-            $textElement
-                .attr('mini', true);
-        } else {
-            $textElement = $(document.createElement('input'));
-            self._textElement = $textElement[0];
-            $(self).append($textElement);
-            $textElement
-                .attr('mini', true)
-                .addClass(classes.BRACKETS_TEXT);
-        }
-        $(self).addClass(classes.DEFAULT_TEXT);
-    }
-
-    /**
+	/**
      * Get value
      * @returns {*}
      */
-    getValue() {
-        if (window.atom) {
-            return this._textElement.getModel().getText();
-        }
-        return this._textElement.value;
-    }
+	getValue() {
+		return this._textElement.value;
+	}
+
+	/**
+	 * Shows warning message if element is empty
+	 * @param  {Event} e event given to callback
+	 */
+	showWarningIfEmpty(e) {
+		const element = e.target;
+		if (!element.value()) {
+			element.parentElement.classList.add('empty-warning');
+		} else {
+			element.parentElement.classList.remove('empty-warning');
+		}
+	}
 }
 
 const TextEditorElement = document.registerElement('text-editor', TextEditor);
