@@ -90,6 +90,18 @@ closet-page-wizard {
         background-color: @input-background-color;
         width: 100%;
     }
+
+    input.empty-warning:not(:focus) {
+        border: 2px solid @input-border-warning;
+    }
+
+    .empty-warning:not(:focus)::before {
+        content: "This value cannot be empty";
+        color: @input-border-warning;
+        display: block;
+        padding-bottom: 10px; 
+    }
+
     closet-file-picker {
         select {
             overflow: auto;

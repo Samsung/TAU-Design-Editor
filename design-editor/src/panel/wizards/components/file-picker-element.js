@@ -23,26 +23,23 @@ BracketsProjectManager = brackets.getModule('project/ProjectManager');
  * Get all directories from project
  * @param {function} onSuccess - success callback
  */
-function getDirectories(onSuccess = () => {} ) {
-    BracketsProjectManager
-    .getAllFiles()
-    .then((files) => {
-        const directories = files
-            .map(file => file.parentPath)
-            .filter((dir, index, array) => { // remove duplicates
-                return array.indexOf(dir) == index;
-            })
-            .sort((a, b) => {
-                const slashPattern = new RegExp(/\//, 'g');
-                return (a.match(slashPattern) || [] ).length - (b.match(slashPattern) || [] ).length;
-            });
+function getDirectories(onSuccess = () => { }) {
+	BracketsProjectManager
+		.getAllFiles()
+		.then((files) => {
+			const directories = files
+				.map(file => file.parentPath)
+				.filter((dir, index, array) => { // remove duplicates
+					return array.indexOf(dir) == index;
+				})
+				.sort((a, b) => {
+					const slashPattern = new RegExp(/\//, 'g');
+					return (a.match(slashPattern) || []).length - (b.match(slashPattern) || []).length;
+				});
 
-        onSuccess(directories);
+			onSuccess(directories);
 
-    })
-    .catch((err) => {
-        throw err;
-    });
+		});
 }
 
 /**

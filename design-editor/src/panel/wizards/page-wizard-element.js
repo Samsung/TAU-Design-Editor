@@ -18,7 +18,7 @@ const CompositeDisposable = editor.CompositeDisposable;
 const notificationManager = editor.notifications;
 
 const TEMPLATE_PATH = '/panel/wizards/page-wizard-element.html',
-    DEFAULT_TEMPLATE_NAME = 'template.html';
+	DEFAULT_TEMPLATE_NAME = 'template.html';
 
 /**
  *
@@ -221,53 +221,46 @@ class PageWizard extends DressElement {
         }
     }
 
-    /**
-     * Validate data
-     */
-    _validationCheck() {
-        var pageInfo = this._newPageInfo;
+	/**
+	 * Validate data
+	 */
+	_validationCheck() {
+		let validate = true;
 
-        if (!pageInfo.templatePath) {
-            return {
-                result: false,
-                message: 'Please choose a template.'
-            };
-        } else if (this._pagePathInputElement.path === pageInfo.pagePath) {
-            return {
-                result: false,
-                message: 'Please enter page name.'
-            };
-        }
-        return {
-            result: true,
-            message: ''
-        };
+		if (!this._pageNameInputElement.getValue().trim()) {
+			this._pageNameInputElement.classList.add('empty-warning');
+			validate = false;
+		}
 
-    }
+		if (!this._pagePathInputElement.path.trim()) {
+			this._pagePathInputElement.classList.add('empty-warning');
+			validate = false;
+		}
 
-    /**
-     * Cancel click callback
-     */
-    onCancel() {
-        this._destroy();
-    }
+		if (!this._thumbnailElement.templatePath) {
+			this._thumbnailElement.classList.add('empty-warning');
+			validate = false;
+		}
 
-    /**
-     * Accept click callback
-     */
-    onAccept() {
-        var validate;
+		return validate;
+	}
 
-        this._setNewPageInfo();
-        validate = this._validationCheck();
+	/**
+	 * Cancel click callback
+	 */
+	onCancel() {
+		this._destroy();
+	}
 
-        if (validate.result === true) {
-            this._saveNewPage();
-        } else {
-            notificationManager.addError(validate.message, {dismissed: true});
-            notificationManager.clear();
-        }
-    }
+	/**
+	 * Accept click callback
+	 */
+	onAccept() {
+		if (this._validationCheck()) {
+			this._setNewPageInfo();
+			this._saveNewPage();
+		}
+	}
 
     /**
      * Destroy
