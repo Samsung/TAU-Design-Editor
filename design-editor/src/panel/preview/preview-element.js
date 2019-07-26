@@ -161,6 +161,11 @@ class Preview extends DressElement {
 			event.keyName = 'back';
 			contentDoc.body.dispatchEvent(event);
 		}
+		const backwardButton = document
+			.querySelector('closet-preview-element-toolbar .preview-backward');
+		if (backwardButton) {
+			backwardButton.blur();
+		}
 	}
 
 	/**
