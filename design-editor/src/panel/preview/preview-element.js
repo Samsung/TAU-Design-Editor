@@ -211,7 +211,6 @@ class Preview extends DressElement {
 		const libraryName = 'preview-helper.css',
 			library = this.libraryCreator.createLibrary(libraryName),
 			domParser = new DOMParser(),
-			xmlSerializer = new XMLSerializer(),
 			doc = domParser.parseFromString(contents, 'text/html');
 
 		doc.head.appendChild(
@@ -225,7 +224,7 @@ class Preview extends DressElement {
 			console.log(`[OK] Library ${libraryName} copied`);
 		});
 
-		return xmlSerializer.serializeToString(doc);
+		return doc.documentElement.innerHTML;
 	}
 
 }
