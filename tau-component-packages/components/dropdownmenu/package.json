@@ -11,9 +11,9 @@
     ],
     "js": "../../tau/tau.min.js",
     "icon": {
-      "mobile": "./iot-dropdown.png",
+      "mobile": "./dropdown.png",
       "wearable": "./wearable-dropdown.png",
-      "tv": "./iot-dropdown.png"
+      "tv": "./dropdown.png"
     }
   },
   "template": "<select data-native-menu=\"false\" data-inline=\"true\" data-items=\"Add values\"></select>",
@@ -40,5 +40,5 @@
     }
   },
   "draggable": true,
-  "new": true
+  "new": false
 }
