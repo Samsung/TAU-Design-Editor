@@ -203,15 +203,15 @@ class Behavior extends DressElement {
 							$content = $content.next();
 							$content.find('.behavior-type').val(behavior.type);
 							$content = $content.next();
+							if (behavior.type === 'page') {
+								$content.find('.behavior-page-name').css('display', 'inline-block');
+								$content.find('.behavior-animation-name').css('display', 'none');
+							} else {
+								$content.find('.behavior-animation-name').css('display', 'inline-block');
+								$content.find('.behavior-page-name').css('display', 'none');
+							}
 							Object.keys(behavior.options).forEach((key) => {
-								$content.find(`.behavior-${  key}`).val(behavior.options[key]);
-								if (behavior.type === 'page') {
-									$content.find('.behavior-page-name').css('display', 'inline-block');
-									$content.find('.behavior-animation-name').css('display', 'none');
-								} else {
-									$content.find('.behavior-animation-name').css('display', 'inline-block');
-									$content.find('.behavior-page-name').css('display', 'none');
-								}
+								$content.find(`.behavior-${key}`).val(behavior.options[key]);
 							});
 						});
 					});
