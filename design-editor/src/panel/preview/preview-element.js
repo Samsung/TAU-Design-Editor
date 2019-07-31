@@ -178,8 +178,9 @@ class Preview extends DressElement {
 	createPreviewDocument(contents, location) {
 		const relativePathToFile = pathUtils.joinPaths(path.dirname(location), 'temporary-preview.html'),
 			writeFile = promisify(fs.writeFile),
-			processPipe = pipe([addDoctypeDeclaration, removeMediaQueryConstraints,
+			processPipe = pipe([removeMediaQueryConstraints,
 				this.addHelperCSSLibrary.bind(this),
+				addDoctypeDeclaration,
 				this.removeFileReferance.bind(this)]),
 			parsedContents = processPipe(contents, location);
 
