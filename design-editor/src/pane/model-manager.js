@@ -4,8 +4,9 @@ import fs from 'fs';
 import {html as beautify} from 'js-beautify';
 import {Model} from './design-editor';
 import editor from '../editor';
+import utils from '../utils/utils';
 
-const brackets = window.brackets || window.top.brackets;
+const brackets = utils.checkGlobalContext('brackets');
 const PreferencesManager = brackets ? brackets.getModule('preferences/PreferencesManager') : {};
 
 const beautyOptions = {
@@ -201,62 +202,65 @@ class ModelManager {
         return html;
     }
 
-    /**
+	/**
      * Save model
      * @param {string} modelId
      * @param {boolean} quiet No confirm dialog
      * @param {function ()} callback Called after model saving is done
      */
-    saveModel(modelId, quiet, callback) {
-        const model = this.getModel(modelId);
-        if (!model || !model.isInit()) {
-            return callback();
-        }
-        if (!quiet && model.isDirty()) {
-            if (!window.confirm('Document was changed, do you want to save?')) {
-                return callback();
-            }
-        }
-        const capabilities = model.getSmartThingsCapabilitiesIfChanged();
-        let promise;
-        if (!capabilities) {
-            // No changes should be applied
-            promise = Promise.resolve(null);
-        } else if (capabilities.length === 0) {
-            // Device id should be removed from document and profile should removed
-            promise = Promise.resolve({ id: null, profile: null });
-        } else {
-            // Device should be created
-            const title = model.getTitle();
-            const deviceName = title
-                ? title
-                : 'Custom device';
-            promise = createSmartThingsVirtualDevice(modelId, deviceName, capabilities);
-        }
-        promise
-            .then(deviceData => {
-                let deviceHandleModification;
-                if (deviceData) {
-                    updateDeviceProfile(modelId, deviceData.profile);
-                    deviceHandleModification = { remove: !deviceData.id, deviceHandle: deviceData.id };
-                } else {
-                    deviceHandleModification = null;
-                }
-                let html = model.export(false, deviceHandleModification);
-                html = html.replace(
-                    /<head><base [^>]+ data-project-path="true"><style>.using-alternative-selector\{opacity:0\.4;\}<\/style>/,
-                    '<head>');
-                html = beautify(html, beautyOptions);
-                fs.writeFile(modelId, html, () => {
-                    model.clean();
-                    callback();
-                });
-            })
-            .catch(err => {
-                console.log("Error while saving model " + (err && err.message ? err.message : ""));
-                callback();
-            });
-    }
+	saveModel(modelId, quiet, callback) {
+		const model = this.getModel(modelId);
+		if (!model || !model.isInit()) {
+			return callback();
+		}
+
+		if (!quiet && model.isDirty()) {
+			if (!window.confirm('Document was changed, do you want to save?')) {
+				return callback();
+			}
+		}
+		const capabilities = model.getSmartThingsCapabilitiesIfChanged();
+		let promise;
+		if (!capabilities) {
+			// No changes should be applied
+			promise = Promise.resolve(null);
+		} else if (!capabilities.length) {
+			// Device id should be removed from document and profile should removed
+			promise = Promise.resolve({ id: null, profile: null });
+		} else {
+			// Device should be created
+			const title = model.getTitle();
+			const deviceName = title
+				? title
+				: 'Custom device';
+			promise = createSmartThingsVirtualDevice(modelId, deviceName, capabilities);
+		}
+		promise
+			.then(deviceData => {
+				let deviceHandleModification;
+				if (deviceData) {
+					updateDeviceProfile(modelId, deviceData.profile);
+					deviceHandleModification = { remove: !deviceData.id, deviceHandle: deviceData.id };
+				} else {
+					deviceHandleModification = null;
+				}
+				let html = model.export(false, deviceHandleModification);
+				html = html.replace(
+					// eslint-disable-next-line max-len
+					/<head><base [^>]+ data-project-path="true"><style>.using-alternative-selector\{opacity:0\.4;\}<\/style>/,
+					'<head>');
+				html = beautify(html, beautyOptions);
+				fs.writeFile(modelId, html, () => {
+					model.clean();
+					callback();
+				});
+			})
+			.catch(err => {
+				// eslint-disable-next-line no-console
+				console.log(`Error while saving model ${  err && err.message ? err.message : ''}`);
+				callback();
+			});
+	}
 }
 
 export {ModelManager};

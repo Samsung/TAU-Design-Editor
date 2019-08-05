@@ -47,7 +47,6 @@ class BracketsEditor {
 		configurationDesignAreaElement = new ConfigurationDesignAreaElement();
 
 		modelManager = ModelManager.getInstance();
-				//appManager = AppManager.getInstance();
 
 		eventEmitter.on(EVENTS.InsertComponent, (event, componentPackageInfo, element) => {
 			const activeClosetEditor = appManager.getActiveDesignEditor();
@@ -104,12 +103,10 @@ class BracketsEditor {
 				tauComponents.consumeCloset(packageManager, () => {
 					panelManager.initialize(document.body);
 					stageManager.initialize()._onActiveEditorUpdated(1, element);
+					element.appendChild(statusBarElement);
 					document.querySelector('.closet-container' +
 						' .closet-panel-container-middle  .closet-panel-container-center').appendChild(element);
-					element.appendChild(statusBarElement);
 					statusBarElement.addItem(configurationDesignAreaElement);
-
-					document.querySelector('.closet-container').classList.add('full');
 
 					fs.readFile(window.top.globalData.fileUrl, 'utf8', (err, data) => {
 						if (err) throw err;
@@ -117,8 +114,8 @@ class BracketsEditor {
 							document.body.classList.add('closet-preview-mode');
 							document.body.classList.add('closet-preview-mode-active');
 						}
-						$('.closet-container').addClass('full design-view-active');
 						self.update(data, window.top.globalData);
+						document.querySelector('.closet-container').classList.add('full', 'design-view-active');
 						element.show();
 						// inform about activate design editor
 						eventEmitter.emit(EVENTS.ActiveEditorUpdated, 1, element);
@@ -170,7 +167,7 @@ class BracketsEditor {
 
 		// eslint-disable-next-line no-console
 		console.log('update with state', state);
-		element.update(model, data, state.basePath, state, state.networks);
+		element.update(model, data, state.basePath, state);
 	}
 }
 
