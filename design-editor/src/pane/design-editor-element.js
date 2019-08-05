@@ -25,7 +25,7 @@ import editor from '../editor';
 import {TooltipElement} from '../panel/tooltip-element';
 import {Devices} from '../system/devices';
 import utils from '../utils/utils';
-import {removeMediaQueryConstraints, addDoctypeDeclaration} from '../utils/iframe';
+import iframeUtils from '../utils/iframe';
 import pathUtils from '../utils/path-utils';
 import fs from 'fs-extra';
 import path, {relative} from 'path';
@@ -161,7 +161,7 @@ class DesignEditor extends DressElement {
 			const matches = /<tizen:profile[^"]+"([^"]+)[^>]+>/gi.exec(res.text);
 			let configProfile = profile;
 			if (matches && matches[1]) {
-				console.log(`profile found in config.xml: ${  matches[1]}`);
+				console.log(`profile found in config.xml: ${matches[1]}`);
 				configProfile = matches[1];
 			}
 			// init model, add data-id attributes
@@ -177,7 +177,7 @@ class DesignEditor extends DressElement {
 					}
 				}
 
-				console.log(`setting screen profile to: ${  profile}`);
+				console.log(`setting screen profile to: ${profile}`);
 				StateManager.set('screen', this.screenConfig);
 
 				eventEmitter.emit(EVENTS.RequestChangeProfile, profile);
@@ -185,29 +185,14 @@ class DesignEditor extends DressElement {
 					eventEmitter.emit(EVENTS.RequestChangeDevice, this.screenConfig.device);
 				}
 			} else {
-				console.log(`updating model, new profile: ${  profile}`);
+				console.log(`updating model, new profile: ${profile}`);
 				this._model.update(documentForModel);
-
-				changeAppProfile(pathUtils.createProjectPath(''), profile)
-					.then(() => {
-						console.log('config.xml successfuly changed');
-					})
-					.catch((err) => {
-						console.error('could not modify config.xml', err);
-					});
 			}
-
-			//@TODO: this needs to be fixed
-			let finalBase = pathUtils.joinPaths(this.getBasePath(), serverPath);
-			const globalData = utils.checkGlobalContext('globalData');
-			if (window.vscode && globalData.host) {
-				console.log('finalBase:', globalData.host + serverPath);
-				finalBase = globalData.host + serverPath;
-			}
+			const finalBase = pathUtils.joinPaths(this.getBasePath(), serverPath);
 			if (iframeDocument) {
 				// fill HTML to iframe and run TAU
 				console.log('writing model', this._model.getDOM(), 'to iframe document', iframeDocument);
-				iframeDocument.open();
+
 				let htmlContent = this._model.getHTML()
 					.replace('<html', '<html data-project="closet"')
 					.replace(/(<head[^>]*>)/,
@@ -217,42 +202,11 @@ class DesignEditor extends DressElement {
 							<style>.using-alternative-selector{opacity:0.4;}</style>
 						`
 					);
-				htmlContent = removeMediaQueryConstraints(htmlContent);
-				htmlContent = addDoctypeDeclaration(htmlContent);
+				htmlContent = iframeUtils.removeMediaQueryConstraints(htmlContent);
+				htmlContent = iframeUtils.addDoctypeDeclaration(htmlContent);
 
-				iframeDocument.write(htmlContent);
-				iframeDocument.close();
-
-				//@TODO: this needs to be fixed
-				iframeDocument.addEventListener('pageshow', () => {
-					console.log('$iframe.pageshow');
-					this._updateIFrameHeight();
-					iframeDocument.querySelector('base').setAttribute('href', finalBase);
-					// "pageshow" event is triggered by TAU then TAU should be exists in iframe scope
-					const tau = iframeDocument.defaultView.tau;
-					StateManager.set('tau-version', tau.version);
-
-					// fix data-ids for contained widgets
-					const components = packageManager.getPackages(Package.TYPE.COMPONENT);
-					const packages = components._packages;
-					// find all build widgets
-					iframeDocument.querySelectorAll('[data-tau-built]').forEach((widgetEl) => {
-						widgetEl.getAttribute('data-tau-name').split(',').forEach((name) => {
-							// get matching component for each built widget
-							const component = packages[name.toLowerCase()];
-							if (component) {
-								const container = this.getContainerByElement(widgetEl);
-								if (container) {
-									this.addAttributesToContainer(widgetEl, container);
-								}
-							}
-						});
-					});
-
-					eventEmitter.emit(EVENTS.TAULoaded, tau.version);
-				});
+				iframeUtils.writeIframeContent(iframeDocument, htmlContent);
 			}
-
 			this._$iframe.one('load', () => {
 				this._selectLayer.refreshAltSelectors();
 				this._attachAlternativeSelectors(this._$iframe.contents()[0]);
@@ -263,6 +217,7 @@ class DesignEditor extends DressElement {
 				this._$iframe.css('visibility', 'visible');
 				eventEmitter.emit(EVENTS.ActiveEditorUpdated, 1, this);
 			});
+
 			elementSelector.unSelect();
 		}).catch((err) => {
 			console.error('could not find app config.xml!', err);
@@ -402,6 +357,35 @@ class DesignEditor extends DressElement {
 		this._$scroller.on('scroll', this._onScroll.bind(this));
 
 		this._guide = new Guide();
+
+		this._$iframe[0].addEventListener('pageshow', (e) => {
+			const iframeDocument = e.target;
+			console.log('$iframe.pageshow');
+			this._updateIFrameHeight();
+			//iframeDocument.querySelector('base').setAttribute('href', finalBase);
+			// "pageshow" event is triggered by TAU then TAU should be exists in iframe scope
+			const tau = iframeDocument.defaultView.tau;
+			StateManager.set('tau-version', tau.version);
+
+			// fix data-ids for contained widgets
+			const components = packageManager.getPackages(Package.TYPE.COMPONENT);
+			const packages = components._packages;
+			// find all build widgets
+			iframeDocument.querySelectorAll('[data-tau-built]').forEach((widgetEl) => {
+				widgetEl.getAttribute('data-tau-name').split(',').forEach((name) => {
+					// get matching component for each built widget
+					const component = packages[name.toLowerCase()];
+					if (component) {
+						const container = this.getContainerByElement(widgetEl);
+						if (container) {
+							this.addAttributesToContainer(widgetEl, container);
+						}
+					}
+				});
+			});
+
+			eventEmitter.emit(EVENTS.TAULoaded, tau.version);
+		});
 	}
 
 	/**
@@ -423,6 +407,7 @@ class DesignEditor extends DressElement {
 
 	/**
 	 * on save file callback
+	 * @param {boolean} loud true if additional pop-up should be show
 	 * @private
 	 */
 	_onSaveFile(loud) {
@@ -432,7 +417,7 @@ class DesignEditor extends DressElement {
 			saveToFile(() => {
 				console.log('file saved!');
 			}, !loud);
-			this.update();
+			//this.update();
 		} else {
 			console.warn('no save file function!');
 		}
@@ -539,7 +524,7 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
-	 * Show
+	 * Show frame around selected element
 	 */
 	show() {
 		const self = this;

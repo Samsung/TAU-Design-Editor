@@ -85,19 +85,18 @@ define((require, exports, module) => {
         _loadDoc(e.target, true);
     }
 
-    function _resizeAndShowIframe() {
-        var iframeWidth = 0;
-        if (realVisibility && $iframe) {
-            iframeWidth = panel.$panel.innerWidth();
+	function _resizeAndShowIframe() {
+		if (realVisibility && $iframe) {
+			const iframeWidth = panel.$panel.innerWidth();
 
-            $iframe.attr('width', iframeWidth + 'px');
-            $iframe.show();
+			$iframe.attr('width', `${ iframeWidth }px`);
+			$iframe.show();
 
-            $('#editor-holder').css('max-height', '0');
+			$('#editor-holder').css('max-height', '0');
 
-            $iframe.attr('height', '100%');
-        }
-    }
+			$iframe.attr('height', '100%');
+		}
+	}
 
 	function _setSaveMenuEnabled(isDesignEditorVisible) {
 		const saveCommand = CommandManager.get(Commands.FILE_SAVE),
