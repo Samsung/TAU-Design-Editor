@@ -61,60 +61,63 @@ class AssistantWizard extends DressElement {
         this._registerCommands();
     }
 
-    /**
-     * Open
-     * @param {HTMLElement} element
-     * @param {Array} existInstanceList
-     */
-    open(element, existInstanceList) {
-        var PackageList,
-            CustomEventList,
-            componentAttrs,
-            $el = this.$el;
+	/**
+	 * Open
+	 * @param {HTMLElement} element
+	 * @param {Array} existInstanceList
+	 */
+	open(element, existInstanceList) {
+		const
+			PackageList = packageManager.getPackages(Package.TYPE.COMPONENT),
+			$el = this.$el;
 
-        PackageList = packageManager.getPackages(Package.TYPE.COMPONENT);
-        this._$target = $(element);
-        this._targetCompInfo = PackageList.getPackageByElement(element);
+		window.parent.postMessage({
+			type: 'ASSISTANT_WIZARD_OPEN'
+		}, '*');
 
-        componentAttrs = this._targetCompInfo.options.attributes;
-        CustomEventList = this._targetCompInfo.options.events;
+		this._$target = $(element);
+		this._targetCompInfo = PackageList.getPackageByElement(element);
 
-        $.get(this._appPath.src + '/panel/assistant/assistant-wizard.html', (content) => {
-            $el.html(mustache.render(content, {
-                options: componentAttrs ? this._createOptionList(componentAttrs) : [],
-                events: CustomEventList,
-                notTAUWidget : !this._targetCompInfo.options.generator
-            }));
+		const
+			componentAttrs = this._targetCompInfo.options.attributes,
+			CustomEventList = this._targetCompInfo.options.events;
 
-            this._$usingExistInstanceCheckbox = $el.find('.closet-using-exist-instance');
-            this._$instanceList = $el.find('.closet-exist-instance-list');
-            this._$pageList = $el.find('.closet-exist-page-names');
-            this._$widgetOptionButtons = $el.find('.closet-assistant-wizard-option-item');
-            this._$useCustomEventCheckbox = $el.find('.closet-input-manually');
-            this._$actionPresetGroup = $el.find('.closet-action-preset-group');
-            this._$actionPresetArea = $el.find('.closet-assistant-wizard-preset-wrapper');
+		$.get(`${this._appPath.src}/panel/assistant/assistant-wizard.html`, (content) => {
+			$el.html(mustache.render(content, {
+				options: componentAttrs ? this._createOptionList(componentAttrs) : [],
+				events: CustomEventList,
+				notTAUWidget : !this._targetCompInfo.options.generator
+			}));
 
-            this._$eventTypeSelect = $el.find('.event-type');
-            this._$eventTypeInput = $el.find('.event-type-custom');
+			this._$usingExistInstanceCheckbox = $el.find('.closet-using-exist-instance');
+			this._$instanceList = $el.find('.closet-exist-instance-list');
+			this._$pageList = $el.find('.closet-exist-page-names');
+			this._$widgetOptionButtons = $el.find('.closet-assistant-wizard-option-item');
+			this._$useCustomEventCheckbox = $el.find('.closet-input-manually');
+			this._$actionPresetGroup = $el.find('.closet-action-preset-group');
+			this._$actionPresetArea = $el.find('.closet-assistant-wizard-preset-wrapper');
 
-            eventEmitter.emit(EVENTS.OpenPanel, {
-                type: 'modal',
-                item: this
-            });
+			this._$eventTypeSelect = $el.find('.event-type');
+			this._$eventTypeInput = $el.find('.event-type-custom');
 
-            this._setActiveBlockByTabElement($el.find('.closet-task-group button.selected'));
+			eventEmitter.emit(EVENTS.OpenPanel, {
+				type: 'modal',
+				item: this
+			});
 
-            this._setInputModels();
-            this._setInitialStringToInput();
-            this._setUsingExistInstance(!!(existInstanceList.length));
-            this._setInstanceList(existInstanceList);
-            this._updateFileList(pathUtils.createProjectPath());
+			this._setActiveBlockByTabElement($el.find('.closet-task-group button.selected'));
 
-            $el.parent().addClass('closet-assistant-wizard-panel');
+			this._setInputModels();
+			this._setInitialStringToInput();
+			this._setUsingExistInstance(!!(existInstanceList.length));
+			this._setInstanceList(existInstanceList);
+			this._updateFileList(pathUtils.createProjectPath());
 
-            this._bindEvent();
-        });
-    }
+			$el.parent().addClass('closet-assistant-wizard-panel');
+
+			this._bindEvent();
+		});
+	}
 
     /**
      * Bind events
@@ -165,7 +168,7 @@ class AssistantWizard extends DressElement {
 
     /**
      * Show preset
-      * @param {string} presetName
+     * @param {string} presetName
      * @private
      */
     _showPresetOptions(presetName) {
@@ -226,7 +229,6 @@ class AssistantWizard extends DressElement {
         }
 
         return result;
-
     }
 
     /**
@@ -455,6 +457,10 @@ class AssistantWizard extends DressElement {
       * @private
      */
     _close() {
+		window.parent.postMessage({
+			type: 'ASSISTANT_WIZARD_CLOSE'
+		}, '*');
+
         eventEmitter.emit(EVENTS.ClosePanel, {
             item: this,
             clean: true
