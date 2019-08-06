@@ -125,7 +125,8 @@ class AssistantWizard extends DressElement {
      */
     _bindEvent() {
         this._$useCustomEventCheckbox.on('click', this._onClickCustom.bind(this));
-        this._$actionPresetGroup.on('click', this._onClickPreset.bind(this));
+		this._$actionPresetGroup.on('click', this._onClickPreset.bind(this));
+		this._$usingExistInstanceCheckbox.on('click', this._onClickUseExistVar.bind(this));
     }
 
     /**
@@ -165,6 +166,20 @@ class AssistantWizard extends DressElement {
 
         this._showPresetOptions(presetName);
     }
+
+	/**
+     * On click useExistVar checkbox callback
+     * @param {Event} event
+     * @private
+     */
+	_onClickUseExistVar(event){
+		const isCheckboxChecked = event.target.checked;
+		if (!isCheckboxChecked) {
+			this._$instanceList[0].style = 'display:none;';
+		} else {
+			this._$instanceList[0].style = 'display:flex;';
+		}
+	}
 
     /**
      * Show preset

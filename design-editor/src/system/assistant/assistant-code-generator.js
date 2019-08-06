@@ -252,11 +252,11 @@ class AssistantCodeGenerator {
      * @private
      */
     _setValueToMap(map, key, value) {
-        const stored = this._getValueFromMap(map, key);
+		const stored = this._getValueFromMap(map, key[0]);
 
-        stored.push(value);
-        map.set(key, stored);
-    }
+		stored.push(value);
+		map.set(key[0], stored);
+	}
 
     /**
      * Get value form map
@@ -265,8 +265,8 @@ class AssistantCodeGenerator {
      * @returns {*}
      * @private
      */
-    _getValueFromMap(map, key) {
-        return map.get(key) || [];
+	_getValueFromMap(map, key) {
+		return map.get(key[0]) || [];
     }
 }
 
