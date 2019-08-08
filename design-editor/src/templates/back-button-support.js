@@ -14,7 +14,7 @@
 				} catch (ignore) {
 				}
 			} else {
-				history.back();
+				tau.history.back();
 			}
 		}
 	});
