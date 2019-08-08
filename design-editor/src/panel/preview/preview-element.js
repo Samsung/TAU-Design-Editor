@@ -13,7 +13,6 @@ import {pipe} from '../../utils/utils';
 import { promisify } from 'util';
 
 const TEMPLATE_PATH = '/panel/preview/preview-element.html';
-let initalUrl = '';
 
 /**
  * Responsible for live-preview feature
@@ -70,8 +69,6 @@ class Preview extends DressElement {
 				this.setProfileStyle(position, $frame);
 
 				$frame.one('load', () => {
-					// Store first document URL for support for back button;
-					initalUrl = $frame[0].contentDocument.location.href;
 					// restore scroll position in iframe
 					this.scrollIframe.call(this, position, callback, $frame);
 				});
@@ -153,7 +150,7 @@ class Preview extends DressElement {
 		const contentDoc = this.$el.find('.closet-preview-frame')[0].contentDocument;
 		let event;
 
-		if (contentDoc && contentDoc.location.href !== initalUrl) {
+		if (contentDoc) {
 			event = new CustomEvent('tizenhwkey', {
 				'bubbles': true,
 				'cancelable': true
