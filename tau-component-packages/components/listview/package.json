@@ -26,7 +26,7 @@
       "wearable": "./wearable-listview-c.png"
     }
   },
-  "template": "<ul class=\"ui-listview\" data-colored-background=\"false\"><li><span>List Item</span></li></ul>",
+  "template": "<ul class=\"ui-listview\" data-colored-background=\"false\" style=\"padding: 15px\"><li><span>List Item</span></li></ul>",
   "constraint": [
     "listitem"
   ],
