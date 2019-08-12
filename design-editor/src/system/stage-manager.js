@@ -1,6 +1,7 @@
 'use babel';
 
 import $ from 'jquery';
+
 import AssistantManager from './assistant/assistant-manager';
 import {EVENTS, eventEmitter} from '../events-emitter';
 import {panelManager} from './panel-manager';
@@ -13,8 +14,6 @@ import HTMLAssistant from '../pane/select-layer/html-assistant';
 import {ToolbarElement} from '../panel/toolbar-element';
 import {PreviewElement} from '../panel/preview/preview-element';
 import {PreviewToolbarElement} from '../panel/preview/preview-toolbar-element';
-// import {InteractionViewElement} from '../panel/preview/interaction-view-element';
-// import {InteractionViewToolbarElement} from '../panel/preview/interaction-view-toolbar-element';
 import {InfoElement} from '../pane/select-layer/info-element';
 import utils from '../utils/utils';
 

@@ -386,6 +386,43 @@ class DesignEditor extends DressElement {
 
 			eventEmitter.emit(EVENTS.TAULoaded, tau.version);
 		});
+
+		/**
+		 * It expands container to the height of
+		 * sum of height of its children to make them possible
+		 * to view and edit in edit mode.
+		 */
+		this.containerExpander = {
+			initialStyle: {},
+			element: null,
+			rollOut: function(element) {
+				this.element = element;
+				this.initialStyle.height = element.style.height;
+				this.initialStyle.overflowY = element.style.overflowY;
+
+				const extendedHeight = [...element.children]
+					.reduce((acc, value) => acc + parseInt(getComputedStyle(value).height), 0);
+
+				if (extendedHeight > parseInt(this.initialStyle.height)) {
+					element.style.height = `${extendedHeight}px`;
+					element.style.overflow = 'hidden';
+				}
+			},
+			rollBack: function(elementId) {
+				if (elementId == this.element.getAttribute('data-id')) {
+					this.element.style.height = this.initialStyle.height;
+					this.element.style.overflowY = this.initialStyle.overflowY;
+				}
+
+				this._reset();
+			},
+			_reset: function(elementId) {
+				if (elementId == this.elementId) {
+					this.initialStyle = {};
+					this.elementId = '';
+				}
+			}
+		};
 	}
 
 	/**
@@ -938,22 +975,25 @@ class DesignEditor extends DressElement {
 	 * @param {number} elementId
 	 */
 	_onSelectedElement(elementId) {
-		let $element;
+		let element;
 		console.log('_onSelectedElement', elementId);
 
 		if (this.isVisible()) {
-			$element = this._getElementById(elementId);
-			const container = this.getContainerByElement($element[0]);
+			element = this._getElementById(elementId)[0];
+
+			this.containerExpander.rollOut(element);
+
+			const container = this.getContainerByElement(element);
 			if (container) {
 				const updatedContainer = this.addAttributesToContainer(
-					$element[0],
+					element,
 					container
 				);
 				return requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, updatedContainer));
 			}
 
-			if ($element.length) {
-				requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, $element[0]));
+			if (element) {
+				requestAnimationFrame(this._selectLayer.showSelector.bind(this._selectLayer, element));
 			}
 		}
 	}
@@ -964,6 +1004,7 @@ class DesignEditor extends DressElement {
 	 */
 	_onDeselectedElement(elementId) {
 		const $element = this._getElementById(elementId);
+		this.containerExpander.rollBack(elementId);
 
 		if ($element.length > 0) {
 			this._selectLayer.hideSelector($element);
