@@ -3,7 +3,6 @@
 import path from 'path';
 import mustache from 'mustache';
 import $ from 'jquery';
-import jqueryUI from 'jquery-ui';
 import {packageManager, Package} from 'content-manager';
 import {appManager as AppManager} from '../../../app-manager';
 import {DressElement} from '../../../utils/dress-element';
