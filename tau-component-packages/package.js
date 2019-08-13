@@ -19,6 +19,8 @@ module.exports = {
         'popup': 'components/popup',
         'sectionchanger': 'components/sectionchanger',
         'section': 'components/section',
+        'selector': 'components/selector',
+        'selectoritem': 'components/selectoritem',
         'text': 'components/text',
         'popup-content': 'components/popup-content',
         'popup-footer': 'components/popup-footer',
