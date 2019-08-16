@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use babel';
 
 import path from 'path';
@@ -170,52 +171,52 @@ class Structure extends DressElement {
      * Callback for event select element
      * @param {number} elementId
      */
-    _onSelectedElement(elementId) {
-        console.log('_onSelectedElement', elementId);
-        var $listItem = this._$treeRoot.find('[data-linked-element=' + elementId + ']'),
-            elementInfo,
-            $element,
-            elementPackage;
+	_onSelectedElement(elementId) {
+		console.log('_onSelectedElement', elementId);
+		const $listItem = this._$treeRoot.find(`[data-linked-element=${  elementId  }]`);
+		let	elementInfo,
+			$element,
+			elementPackage;
 
-        if ($listItem.length) {
-            $listItem.addClass('item-selected');
-        }
-        if (this._lastSelectedItemId === elementId) {
-            return;
-        }
-        this._lastSelectedItemId = elementId;
+		if ($listItem.length) {
+			$listItem.addClass('item-selected');
+		}
+		if (this._lastSelectedItemId === elementId) {
+			return;
+		}
+		this._lastSelectedItemId = elementId;
 
-        if (this._editor && this._editor.isVisible()) {
-            elementInfo = this._editor.getUIInfo(this._editor._getElementById(elementId));
-            elementPackage = elementInfo && elementInfo.package;
-            if (this._hidingComponent) {
-                this._hidingComponent[this._hidingInfo.package.options.display.hide.method]();
-            }
-            if (elementInfo.package.options.type === 'hiding-container-component') {
-                if (this._hidingComponent) {
-                    this._hidingComponent[elementInfo.package.options.display.hide.method]();
-                }
-                this._openHidingComponent(elementInfo);
-                // elementInfo.$element.css('display', 'block');
-            } else {
-                $element = elementInfo.$element;
-                while (elementInfo && $element.parent().length) {
-                    elementInfo = this._editor.getUIInfo($element.parent());
-                    elementPackage = elementInfo && elementInfo.package;
-                    if (elementPackage && elementPackage.options.type === 'hiding-container-component') {
-                        elementSelector.unSelect();
-                        if (this._hidingComponent) {
-                            this._hidingComponent[this._hidingInfo.package.options.display.hide.method]();
-                        }
-                        this._openHidingComponent(elementInfo, elementId);
-                        // elementInfo.$element.css('display', 'block');
-                        break;
-                    }
-                    $element = $element.parent();
-                }
-            }
-        }
-    }
+		if (this._editor && this._editor.isVisible()) {
+			elementInfo = this._editor.getUIInfo(this._editor._getElementById(elementId));
+			elementPackage = elementInfo && elementInfo.package;
+			if (this._hidingComponent) {
+				this._hidingComponent[this._hidingInfo.package.options.display.hide.method]();
+			}
+			if (elementInfo.package.options.type === 'hiding-container-component') {
+				if (this._hidingComponent) {
+					this._hidingComponent[elementInfo.package.options.display.hide.method]();
+				}
+				this._openHidingComponent(elementInfo);
+				// elementInfo.$element.css('display', 'block');
+			} else {
+				$element = elementInfo.$element;
+				while (elementInfo && $element.parent().length) {
+					elementInfo = this._editor.getUIInfo($element.parent());
+					elementPackage = elementInfo && elementInfo.package;
+					if (elementPackage && elementPackage.options.type === 'hiding-container-component') {
+						elementSelector.unSelect();
+						if (this._hidingComponent) {
+							this._hidingComponent[this._hidingInfo.package.options.display.hide.method]();
+						}
+						this._openHidingComponent(elementInfo, elementId);
+						// elementInfo.$element.css('display', 'block');
+						break;
+					}
+					$element = $element.parent();
+				}
+			}
+		}
+	}
 
     /**
      * Callback for event deselect element
@@ -268,21 +269,21 @@ class Structure extends DressElement {
      * Bind events
      * @private
      */
-    _bindEvent() {
-        var handler = this._bindHandler;
-        handler.CLICK = this.onClick.bind(this);
-        handler.ElementSelected = this._onSelectedElement.bind(this);
-        handler.ElementDeselected = this._onDeselectedElement.bind(this);
-        handler.ElementInserted = this._onInsertedElement.bind(this);
-        handler.ElementDeleted = this._onDeletedElement.bind(this);
+	_bindEvent() {
+		const handler = this._bindHandler;
+		handler.CLICK = this.onClick.bind(this);
+		handler.ElementSelected = this._onSelectedElement.bind(this);
+		handler.ElementDeselected = this._onDeselectedElement.bind(this);
+		handler.ElementInserted = this._onInsertedElement.bind(this);
+		handler.ElementDeleted = this._onDeletedElement.bind(this);
 
-        this._$treeRoot.on('click', handler.CLICK);
-        eventEmitter.on(EVENTS.ElementSelected, handler.ElementSelected);
-        eventEmitter.on(EVENTS.ElementDeselected, handler.ElementDeselected);
-        eventEmitter.on(EVENTS.ElementInserted, handler.ElementInserted);
-        eventEmitter.on(EVENTS.ElementMoved, handler.ElementInserted);
-        eventEmitter.on(EVENTS.ElementDeleted, handler.ElementDeleted);
-    }
+		this._$treeRoot.on('click', handler.CLICK);
+		eventEmitter.on(EVENTS.ElementSelected, handler.ElementSelected);
+		eventEmitter.on(EVENTS.ElementDeselected, handler.ElementDeselected);
+		eventEmitter.on(EVENTS.ElementInserted, handler.ElementInserted);
+		eventEmitter.on(EVENTS.ElementMoved, handler.ElementInserted);
+		eventEmitter.on(EVENTS.ElementDeleted, handler.ElementDeleted);
+	}
 
     /**
      * Remove bind events
@@ -313,7 +314,7 @@ class Structure extends DressElement {
         $listItem.addClass('item-selected');
 
         if ($target.hasClass('item-name')) {
-            elementSelector.select(linkedElementId);
+			elementSelector.select(linkedElementId);
         } else if ($listItem.hasClass('collapsed')) {
             $listItem.removeClass('collapsed');
         } else {
