@@ -21,7 +21,9 @@
       "iot-contextmenu",
       "box",
       "button",
-      "toggleslider"
+      "toggleslider",
+      "text",
+      "image"
   ],
   "section": "header",
   "class": [
