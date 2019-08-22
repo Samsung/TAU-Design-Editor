@@ -618,12 +618,18 @@ class DesignEditor extends DressElement {
 	 * @private element
 	 */
 	_refreshTAUWidget(id) {
-		const element = this._getElementById(id),
-			tau = this._$iframe[0].contentWindow && this._$iframe[0].contentWindow.tau;
+		const element = this._getElementById(id).get(0),
+			tau = this._$iframe.get(0).contentWindow && this._$iframe.get(0).contentWindow.tau,
+			packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
 		let widgetInstance;
 
 		if (tau) {
-			widgetInstance = tau.engine.getBinding(element[0]);
+			widgetInstance = tau.engine.getBinding(element);
+
+			if (!widgetInstance && packageInfo && packageInfo.options && packageInfo.options.baseElementSelector) {
+				widgetInstance = tau.engine.getBinding(element.querySelector(packageInfo.options.baseElementSelector));
+			}
+
 			if (widgetInstance) {
 				widgetInstance.refresh();
 			}
@@ -680,6 +686,7 @@ class DesignEditor extends DressElement {
 		const bigRegexp = /[A-Z]/g;
 		this._getElementById(id).css(name.replace(bigRegexp, c => `-${  c.toLowerCase()}`), value);
 		this._requiredSyncSelector = true;
+		this._refreshTAUWidget(id);
 		requestAnimationFrame(this._syncSelector.bind(this));
 	}
 
