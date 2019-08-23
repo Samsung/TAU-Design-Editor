@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use babel';
 import {HTMLAssistantEditorElement} from 'html-assistant-editor';
 import {EVENTS, eventEmitter} from '../../events-emitter';
@@ -54,26 +55,32 @@ class HTMLAssistant {
 				.then(() => {
 					this.element = this._model.getElementWithoutId(this.selectedElementId);
 					this._htmlAssistantEditor.clean();
+					eventEmitter.emit(EVENTS.CloseInstantTextEditor);
 				})
 				.catch(error => console.error(error));
 
 		} else {
 			this._htmlAssistantEditor.open(this.getSelectedContent(this.element));
+			eventEmitter.emit(EVENTS.OpenInstantTextEditor);
 		}
 		callback(opened);
 	}
 
 	_bindEvents () {
 		eventEmitter.on(EVENTS.ElementSelected, (elementId) => {
-			console.log("element selected", elementId);
+			console.log('element selected', elementId);
 			this._model = appManager.getActiveDesignEditor().getModel();
 			this.selectedElementId = elementId;
 			this.element = this._model.getElementWithoutId(this.selectedElementId);
 		});
 
 		eventEmitter.on(EVENTS.ElementDeselected, () => {
-			console.log("element deselected");
-			this.selectedElementId = null;
+			if (this._htmlAssistantEditor.isOpened()) {
+				console.log('element deselected');
+				this.toggle(() => {
+					this.selectedElementId = null;
+				});
+			}
 		});
 	}
 }

@@ -23,6 +23,7 @@ class Toolbar extends DressElement {
      */
 	onCreated() {
 		this._allButtonsDisabled = false;
+		this.htmlAssistantOpen = false;
 		this._initialize();
 		this._create();
 		this.events = {
@@ -40,6 +41,14 @@ class Toolbar extends DressElement {
 			'click .save-file': EVENTS.DocumentSave
 		};
 
+		eventEmitter.on(EVENTS.OpenInstantTextEditor, () => {
+			this.htmlAssistantOpen = true;
+		});
+
+		eventEmitter.on(EVENTS.OpenInstantTextEditor, () => {
+			this.htmlAssistantOpen = false;
+		});
+
 		eventEmitter.on(EVENTS.ElementSelected, (elementId) => {
 			this.setEnable(this.Controls.INSTANT_EDIT);
 			if (this._assistantViewState) {
@@ -48,6 +57,7 @@ class Toolbar extends DressElement {
 			this._selectedElement = elementId;
 		});
 		eventEmitter.on(EVENTS.ElementDeselected, () => {
+			this.turnOffControl(this.Controls.INSTANT_EDIT);
 			this.setDisable(this.Controls.INSTANT_EDIT);
 			this.setDisable(this.Controls.INSERT_CODE);
 			this._selectedElement = null;

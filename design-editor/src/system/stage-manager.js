@@ -26,39 +26,39 @@ class StageManager {
      * Init
      * @returns {StageManager}
      */
-    initialize() {
-        // initialize property container
-        this._propertyContainerElement = new PropertyContainerElement();
-        // initialize animation container
-        this._animationContainerElement = new AnimationContainerElement();
+	initialize() {
+		// initialize property container
+		this._propertyContainerElement = new PropertyContainerElement();
+		// initialize animation container
+		this._animationContainerElement = new AnimationContainerElement();
 
-        this._structureElement = new StructureElement();
+		this._structureElement = new StructureElement();
 
-        this._infoElement = new InfoElement();
+		this._infoElement = new InfoElement();
 
-        this._toolbarContainerElement = new ToolbarElement();
-        this._toolbarContainerElementPanel = null;
+		this._htmlAssistant = new HTMLAssistant();
+		this._toolbarContainerElement = new ToolbarElement();
+		this._toolbarContainerElementPanel = null;
 
-        this._previewElementToolbar = new PreviewToolbarElement();
-        this._previewElementToolbarPanel = null;
+		this._previewElementToolbar = new PreviewToolbarElement();
+		this._previewElementToolbarPanel = null;
 		// this._interactionViewElementToolbar = new InteractionViewToolbarElement();
 		// this._interactionViewElementToolbarPanel = null;
-       // this._interactionView = new InteractionViewElement();
+		// this._interactionView = new InteractionViewElement();
 
-        this._htmlAssistant = new HTMLAssistant();
-        this._assistantManager = new AssistantManager();
-        panelManager.openPanel({type: 'left', item: this._toolbarContainerElement, priority: 110});
+		this._assistantManager = new AssistantManager();
+		panelManager.openPanel({ type: 'left', item: this._toolbarContainerElement, priority: 110 });
 
-        this._toolbarControls = this._toolbarContainerElement.Controls;
+		this._toolbarControls = this._toolbarContainerElement.Controls;
 
-        this._subscriptions = null;
-        this._lastClosetEditor = null;
-        this._lastClosetPath = null;
+		this._subscriptions = null;
+		this._lastClosetEditor = null;
+		this._lastClosetPath = null;
 
-        this._bindClosetEvent();
-        this._registerCommands();
-        return this;
-    }
+		this._bindClosetEvent();
+		this._registerCommands();
+		return this;
+	}
 
     /**
      * Bind closet events
