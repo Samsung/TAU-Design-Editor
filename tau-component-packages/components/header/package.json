@@ -23,7 +23,9 @@
       "button",
       "toggleslider",
       "text",
-      "image"
+      "closet-image",
+      "checkbox",
+      "radio"
   ],
   "section": "header",
   "class": [
