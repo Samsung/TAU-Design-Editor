@@ -802,13 +802,56 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
+	 * Tries to remove element from TAU widget.
+	 * This method calls configured widget methods
+	 * designed to remove items from complex widgets.
+	 * @param {HTMLElement} element
+	 * @returns {Boolean} True if element has been succesfuly removed.
+	 */
+	_removeElementUsingTAU(element) {
+		const getComponentPackages = packageManager.getPackages(Package.TYPE.COMPONENT);
+		const packageInfo = getComponentPackages.getPackageByElement(element);
+
+		if (packageInfo.options.destroyer && packageInfo.options['dependency-component']
+			&& packageInfo.options.destroyer['parent-call-method']) {
+
+			const dependencyComponentName = packageInfo.options['dependency-component'];
+			const dependencyComponentPackage = getComponentPackages.get(dependencyComponentName);
+			const dependencyComponentElement = element.closest(dependencyComponentPackage.options.selector);
+
+			if (dependencyComponentElement) {
+				const dependencyComponentInfo = getComponentPackages.getPackageByElement(dependencyComponentElement),
+					parentWidgetConstructorName = dependencyComponentInfo
+					&& dependencyComponentInfo.options
+					&& dependencyComponentInfo.options.generator
+					&& dependencyComponentInfo.options.generator.constructor;
+
+				const method = parentWidgetConstructorName.split('.')
+					.reduce((prev, curr) => prev[curr], this._$iframe[0].contentWindow);
+
+				const dependencyWidget = method(dependencyComponentElement);
+
+				dependencyWidget[packageInfo.options.destroyer['parent-call-method']](element);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Callback for event delete element
 	 * @param {number} id
 	 */
 	_onElementDeleted(id) {
 		const element = this._getElementById(id);
 
-		element.remove();
+		// Attempt to remove element by TAU widget method
+		// if it fails (i.e widget has no such method)
+		// element is strictly removed from document
+		if (!this._removeElementUsingTAU(element[0])) {
+			element.remove();
+		}
 
 		const packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
 		const externalResources = packageInfo.options.externalResources;

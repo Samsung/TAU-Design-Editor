@@ -18,13 +18,16 @@
     "text",
     "closet-image"
   ],
+  "dependency-component": "selector",
   "generator": {
-    "dependency-component": "selector",
     "constructor": "",
     "parameter": {
       "options": {}
     },
     "parent-call-method": "addItem"
+  },
+  "destroyer": {
+    "parent-call-method": "removeItemByElement"
   },
   "class": [],
   "attributes": {

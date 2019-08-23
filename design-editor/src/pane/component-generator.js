@@ -107,7 +107,7 @@ class ComponentGenerator {
 			return {
 				constructor: info.options.generator.constructor,
 				parameter: info.options.generator.parameter,
-				dependencyComponent: info.options.generator['dependency-component'],
+				dependencyComponent: info.options['dependency-component'],
 				parentMethodToCall: info.options.generator['parent-call-method']
 			};
 		}
