@@ -1187,36 +1187,38 @@ class Model {
         return this._DOM.querySelector(query);
     }
 
-    /**
-     * Return element
-     * @param {string} id
-     * @returns {{id: *, component: (*|{}|Object), attributes: boolean}}
-     */
-    getElement(id) {
-        var element = findById(this._DOM, id),
-            component = componentPackages.getPackageByElement($(element)),
-            style = this._designEditor.getComputedStyle(id),
-            keyframe = null;
-        if (this._keyframeId !== null) {
-            keyframe = this.getKeyFrameElement(this._keyframeId, id);
-            if (keyframe) {
-                Object.keys(keyframe.style).forEach((name) => {
-                    style[name] = keyframe.style[name];
-                });
-            }
-        }
-        return {
-            id: id,
-            component: component,
-            attributes: element ? [].map.call(element.attributes, attributeName => ({
-                name: attributeName,
-                value: element.attributes[attributeName]
-            })) : [],
-            // @TODO require analyze what should be style in the place, style attribute of element or computed styles
-            style: style,
-            content: (element && element.innerHTML) || ''
-        };
-    }
+	/**
+	 * Return element
+	 * @param {string} id
+	 * @returns {{id: *, component: (*|{}|Object), attributes: boolean}}
+	 */
+	getElement(id) {
+		const element = findById(this._DOM, id),
+			component = componentPackages.getPackageByElement($(element)),
+			style = this._designEditor.getComputedStyle(id);
+		let keyframe = null;
+
+		if (this._keyframeId !== null) {
+			keyframe = this.getKeyFrameElement(this._keyframeId, id);
+			if (keyframe) {
+				Object.keys(keyframe.style).forEach((name) => {
+					style[name] = keyframe.style[name];
+				});
+			}
+		}
+		return {
+			id: id,
+			component: component,
+			attributes: element ? [].map.call(element.attributes, attribute => ({
+				name: attribute.name,
+				value: attribute.value
+			})) : [],
+			// @TODO require analyze what should be style in the place, style attribute of element or computed styles
+			style: style,
+			content: (element && element.innerHTML) || '',
+			classList: element ? [...element.classList] : []
+		};
+	}
 
     /**
      * Get clear element
