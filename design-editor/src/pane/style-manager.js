@@ -58,28 +58,101 @@ class StyleManager {
         eventEmitter.on(EVENTS.ChangeElementStyle, this._onChangeElementStyle.bind(this));
     }
 
-    /**
-     * Change element style callback
-     * @param {string} template
-     * @private
-     */
-    _onChangeElementStyle(template) {
-        console.log('style-manager:_onChangeElementStyle');
+	/**
+	 * Change element style callback
+	 * @param {string | object} newStyleDefinition
+	 * @private
+	 */
+	_onChangeElementStyle(newStyleDefinition) {
+		// eslint-disable-next-line no-console
+		console.log('style-manager:_onChangeElementStyle');
+		const id = elementSelector.getSelectedElementId(),
+			designEditor = appManager.getActiveDesignEditor(),
+			$element = designEditor && $(designEditor._getElementById(id));
+		let template;
 
-        var id = elementSelector.getSelectedElementId(),
-            designEditor = appManager.getActiveDesignEditor(),
-            $element = designEditor && $(designEditor._getElementById(id));
+		this._designEditor = designEditor;
+		if (designEditor.getUIInfo($element).package.name === 'listview') {
+			this._getModel($element.children(), 'listview');
+		} else {
+			this._getModel($element, designEditor.getUIInfo($element).package.name);
+		}
+		if (typeof newStyleDefinition === 'string') {
+			template = newStyleDefinition;
+			this._replaceStyle($element, template);
+		} else {
+			this._applyStyle($element, newStyleDefinition);
+		}
+	}
 
-        this._designEditor = designEditor;
+	/**
+	 * Applies defined style for element
+	 * @param {jQuery} $element
+	 * @param {Object} newStyleDefinition
+	 */
+	_applyStyle($element, newStyleDefinition) {
+		const id = $element.attr('data-id'),
+			model = this._designEditor.getModel(),
+			element = model.getElement(id),
+			component = element && element.component,
+			currentClassList = element.classList,
+			newClassList = newStyleDefinition.classList || [],
+			newAttributes = newStyleDefinition.attributes || {},
+			newStyles = newStyleDefinition.style || {},
+			classesMap = new Map();
 
-        if (designEditor.getUIInfo($element).package.name === 'listview') {
-            this._getModel($element.children(), 'listview');
-        } else {
-            this._getModel($element, designEditor.getUIInfo($element).package.name);
-        }
+		currentClassList.forEach((className) => {
+			classesMap.set(className, true);
+		});
 
-        this._replaceStyle($element, template);
-    }
+		// Looking for classes that should be removed.
+		// To avoid removing unnecessary classes search for
+		// all classes used across widget available templates.
+		// Leave classes that aren't mentioned in any template
+		// or classes are defined in current preset style.
+		if (component && component.options && component.options.styles) {
+			component.options.styles.forEach(newStyleDefinition => {
+				// For compatibility with previous string style templates
+				if (typeof newStyleDefinition !== 'string' &&
+					newStyleDefinition.template &&
+					newStyleDefinition.template.classList) {
+					newStyleDefinition.template.classList.forEach((className) => {
+						classesMap.set(className, false);
+					});
+				}
+			});
+		}
+
+		newClassList.forEach((className) => {
+			classesMap.set(className, true);
+		});
+
+		const mergedClassList = [...classesMap]
+			.filter((element) => element[1])
+			.map((element) => element[0]);
+
+		// @TODO: This way all attribute updates would be pushed to history stack
+		// as separate events. The style setting won't be a single event to undo.
+		// Need to add some API to model that could process multiple attributes change
+		model.updateAttribute(id, 'class', mergedClassList.join(' '));
+
+		// set the rest of attributes defined in template
+		for (const key in newAttributes) {
+			if (newAttributes.hasOwnProperty(key)) {
+				model.updateAttribute(id, key, newAttributes[key]);
+			}
+		}
+
+		// set the styles defined in template
+		for (const key in newStyles) {
+			if (newStyles.hasOwnProperty(key)) {
+				model.updateStyle(id, key, newStyles[key]);
+			}
+		}
+
+		// @TODO: Some templates could have child elements defined
+		// @TODO: Templates should be capable of parsing content of existing elements
+	}
 
     /**
      * Replace style
