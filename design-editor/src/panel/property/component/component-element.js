@@ -15,6 +15,9 @@ const TYPE_DESIGN_EDITOR = ViewType.Design;
 
 let componentsInfo = null;
 let waitForInterval = false;
+const RENDER_TIMEOUT = 300; //ms
+let renderTimeoutHandler = null;
+
 const dragInfo = {
     currentDragEvent: null,
     componentInfo: null,
@@ -97,7 +100,6 @@ class Component extends DressElement {
         this._profile = screen.profile || 'mobile';
         this._shape = screen.shape || 'rectangle';
         this._bindEditorEvents();
-        this._lastRender = 0;
 
         /**
          * Id of animation frame request created during item (widget) dragging.
@@ -280,37 +282,47 @@ class Component extends DressElement {
 		return components;
 	}
 
-    /**
-     * Fill component info at panel
-     * @param {Boolean?} force - force rendering even if last render was done
-     * less than minimum timeout. Default value is false.
-     * @private
-     */
+	/**
+	 * Fill component info at panel
+	 * If render method is called in short time of period only the last one will runs
+	 * @param {boolean} force render without timeout
+	 * @private
+	 */
 	_render(force) {
-        var self = this,
-            time = Date.now(),
-			componentsInfoProfile = null;
+		if (renderTimeoutHandler) {
+			window.clearTimeout(renderTimeoutHandler);
+		}
+		renderTimeoutHandler = window.setTimeout(
+			this._renderCallback.bind(this),
+			(force) ? 0 : RENDER_TIMEOUT
+		);
+	}
 
-		force = (force === undefined) ? false : force;
+	/**
+	 * This method is called by _render method with timeout
+	 * @private
+	 */
+	_renderCallback() {
+		const self = this;
+		let componentsInfoProfile = null;
 
-		if (componentsInfo && (time - self._lastRender >= 100 || force))  {
-            componentsInfoProfile = self._selectComponentsToDeviceProfile(componentsInfo);
-            self._getItemTemplate(componentsInfoProfile)
-                .then((template) => {
-                    var $content = self.$el.find('.closet-component-element-content');
-                    $content.html('');
-                    $content.append($(template));
-                    self._$componentButtonList = this.$el.find('.' + ITEM_BUTTON_CLASS);
+		if (componentsInfo)  {
+			componentsInfoProfile = self._selectComponentsToDeviceProfile(componentsInfo);
+			self._getItemTemplate(componentsInfoProfile)
+				.then((template) => {
+					const $content = self.$el.find('.closet-component-element-content');
+
+					$content.html('');
+					$content.append($(template));
+					self._$componentButtonList = this.$el.find(`.${ITEM_BUTTON_CLASS}`);
 					self._setIcon(self._$componentButtonList);
 					self._setDraggable(self._$componentButtonList.filter(
 						':not(.component-disabled), :not(.not-available)'));
-                }, (err) => {
-                    throw err;
-                }
-            );
-            self._lastRender = time;
-        }
-    }
+				}, (err) => {
+					throw err;
+				});
+		}
+	}
 
     /**
      * Clear dragable function
@@ -556,13 +568,14 @@ class Component extends DressElement {
      * @private
      */
     _componentsToOptions(info) {
-        var options = {},
-            profile = this._profile,
-			shape = this._shape,
-			isAvailable;
+		const options = {},
+			screen = StateManager.get('screen'),
+			currentTauVersion = StateManager.get('tau-version', undefined),
+			profile = screen.profile,
+			shape = screen.shape,
+			defaultWeight = 10000;
 
-		const defaultWeight = 10000;
-		const currentTauVersion = StateManager.get('tau-version', undefined);
+		let isAvailable;
 
 		Object.keys(info).forEach((id) => {
             if (info[id].options.attachable !== false && correctVersion(info[id].options.version, profile, shape)) {
