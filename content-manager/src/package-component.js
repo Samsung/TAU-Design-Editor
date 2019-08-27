@@ -19,11 +19,6 @@ var COMMON_ATTRIBUTE = {
         'type': 'text',
         'value': ''
     },
-    'data-options': {
-        'label': 'Widget options',
-        'type': 'text',
-        'value': ''
-    },
     'model': {
         'label': 'Model',
         'widget-option': true,
