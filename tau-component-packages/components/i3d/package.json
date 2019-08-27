@@ -18,7 +18,7 @@
             "type": "src"
         }
     },
-    "template": "<div class=\"ui-i3d\"></div>",
+    "template": "<div class=\"ui-i3d\" style=\"height: 200px; width: 200px; display:block; background:#cacaca\"></div>",
     "resizable": true,
     "draggable": true,
     "new": true,

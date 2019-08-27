@@ -90,9 +90,7 @@ class AttributeInterative extends DressElement {
                         if (object.id === selectedId) {
                             if (designEditor) {
                                 var model = designEditor.getModel();
-                                var file = object.files.find(function(f) { return f.type === selectedType; });
                                 model.updateAttribute(element.id, 'type', selectedType);
-                                model.updateAttribute(element.id, 'src', path.join('i3d', 'models', selectedModel, selectedId, file.file));
                                 if (selectedType === 'obj') {
                                     var mtl = object.files.find(function(f) { return f.type === 'mtl' });
                                     if (mtl) {
@@ -114,7 +112,7 @@ class AttributeInterative extends DressElement {
                     if (selectedIndex !== 0) {
                         var selectedOption = this.options.item(selectedIndex);
                         var modelID = selectedOption.getAttribute('i3d-model');
-    
+
                         for (var model of models) {
                             if (model.id === modelID) {
                                 objects = model.objects;
@@ -143,6 +141,7 @@ class AttributeInterative extends DressElement {
                                 var file = objects[0].files.find(function(f) { return f.type === objects[0].type; });
                                 model.updateAttribute(element.id, 'src', path.join('i3d', 'models', modelID, objects[0].id, file.file));
                                 model.updateAttribute(element.id, 'i3d-model', modelID);
+								model.updateStyle(element.id, 'background', 'none');
                             }
 
                             modelContainer.show();
