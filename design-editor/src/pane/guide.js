@@ -41,7 +41,9 @@ class Guide {
 	 * @param {Object} designEditor : designEditor related to the given infos.
 	 */
 	_onSetNewGuide(targetInfo, containerInfo, packageInfo, designEditor, isRestrict) {
-		let $guideComponent = null,
+		let context = null,
+			element = null,
+			$guideComponent = null,
 			$target = null,
 			$scriptChild = null,
 			allowedPackagenameListInContainer = null,
@@ -50,172 +52,169 @@ class Guide {
 			contentScroller = null,
 			beforeTop = 0,
 			afterTop = 0,
-			rule = null;
-
-		const profile = StateManager.get('screen').profile || 'mobile';
-		const childrenLocation = (containerInfo.package && containerInfo.package.options
-			&& containerInfo.package.options.childrenLocation &&
-			containerInfo.package.options.childrenLocation.hasOwnProperty(profile)) ?
-			containerInfo.package.options.childrenLocation[profile] : '';
-
-		if (!containerInfo) {
-			return;
-		}
+			rule = null,
+			wrapperElement = null,
+			$wrapperElement = null;
+		const profile = StateManager.get('screen').profile || 'mobile',
+			childrenLocation = (containerInfo.package && containerInfo.package.options
+				&& containerInfo.package.options.childrenLocation &&
+				containerInfo.package.options.childrenLocation.hasOwnProperty(profile)) ?
+				containerInfo.package.options.childrenLocation[profile] : '';
 
 		this._designEditor = designEditor;
 		// create a fragment and make a component that will be shown as a guide.
-		const context = designEditor.getDesignViewIframe()[0].contentWindow.document;
-		const element = context.createElement('div');
+		context = designEditor.getDesignViewIframe()[0].contentWindow.document;
+		element = context.createElement('div');
 		element.innerHTML = packageInfo.options.template;
-
-		// it's the component we want to add to the project
 		$guideComponent = $(element.firstElementChild);
 		$guideComponent.addClass(CLASS_NAME.GUIDE_ELEMENT);
 
 		$target = $(targetInfo.element);
-		allowedPackagenameListInContainer = containerInfo.package.options.constraint;
-		contentScroller = designEditor.getContentScroller();
 
+		if (!containerInfo) {
+			return;
+		}
+		allowedPackagenameListInContainer = containerInfo.package.options.constraint;
+
+		contentScroller = designEditor.getContentScroller();
 		/*
 		* Make guide element and guide line when user point element on design-view
 		*/
-		if ($target.hasClass(CLASS_NAME.GUIDE_ELEMENT) || $target.closest(`.${CLASS_NAME.GUIDE_ELEMENT}`).length) {
-			return;
-		}
 
-		isComponentAllowedInThisContainer = $.inArray(packageInfo.name, allowedPackagenameListInContainer) !== -1;
+		if (!$target.hasClass(CLASS_NAME.GUIDE_ELEMENT) && !$target.closest(`.${CLASS_NAME.GUIDE_ELEMENT}`).length) {
+			isComponentAllowedInThisContainer = $.inArray(packageInfo.name, allowedPackagenameListInContainer) !== -1;
 
-		if (packageInfo.options['parent-constraint']) {
-			if (!$target.closest(containerInfo.$element).length) {
+			if (packageInfo.options['parent-constraint']) {
+				if (!$target.closest(containerInfo.$element).length) {
+					return;
+				}
+				rule = {
+					direction: 'append',
+					element: containerInfo.$element
+				};
+			} else if ($target.is(containerInfo.$element) && isComponentAllowedInThisContainer === false) {
+				const parentComponent = designEditor.getUIInfo($target.parent());
+				if (parentComponent) {
+					if ($.inArray(packageInfo.name, parentComponent.package.options.constraint) !== -1) {
+						rule = this._getInsertedRule(targetInfo, $target.parent(), isRestrict, containerInfo);
+						isComponentAllowedInThisContainer = true;
+					}
+				}
+			} else {
+				// element does not exists in container or element is outside container
+				rule = this._getInsertedRule(targetInfo, containerInfo.$element, isRestrict, containerInfo);
+			}
+
+			if (
+				rule &&
+				this._lastRule &&
+				this._lastRule.direction === rule.direction &&
+				this._lastRule.element.is(rule.element)
+			) {
 				return;
 			}
 
-			rule = {
-				direction: 'append',
-				element: containerInfo.$element
-			};
-		} else if ($target.is(containerInfo.$element) && !isComponentAllowedInThisContainer) {
-			// element exisis in container
-			const parentComponent = designEditor.getUIInfo($target.parent());
-			if (parentComponent) {
-				if ($.inArray(packageInfo.name, parentComponent.package.options.constraint) !== -1) {
-					rule = this._getInsertedRule(targetInfo, $target.parent(), isRestrict, containerInfo);
-					isComponentAllowedInThisContainer = true;
+			// destroy wrapper
+			if (this._guideElementPostGenerated) {
+				this._guideElementPostGenerated.destroy();
+				if (this._guideElementPostGenerated.element) {
+					this._guideElementPostGenerated.element.remove();
+				} else {
+					// eslint-disable-next-line no-console
+					console.warn('Guide: PostGenerated element not exists.');
 				}
+				this._guideElementPostGenerated = null;
 			}
-		} else {
-			// element does not exists in container or element is outside container
-			rule = this._getInsertedRule(targetInfo, containerInfo.$element, isRestrict, containerInfo);
-		}
 
-		if (
-			rule &&
-			this._lastRule &&
-			this._lastRule.direction === rule.direction &&
-			this._lastRule.element.is(rule.element)
-		) {
-			return;
-		}
-
-		// destroy wrapper
-		if (this._guideElementPostGenerated) {
-			this._guideElementPostGenerated.destroy();
-			if (this._guideElementPostGenerated.element) {
-				this._guideElementPostGenerated.element.remove();
-			} else {
-				// eslint-disable-next-line no-console
-				console.warn('Guide: PostGenerated element not exists.');
-			}
-			this._guideElementPostGenerated = null;
-		}
-
-		if (rule) {
-			beforeTop = rule.element.offset().top;
-			if (this._$lastGuideElement) {
-				this._$lastGuideElement.remove();
-			}
-		}
-		if (!isComponentAllowedInThisContainer) {
-			this._onDestroyGuide();
 			if (rule) {
-				afterTop = rule.element.offset().top;
+				beforeTop = rule.element.offset().top;
+				if (this._$lastGuideElement) {
+					this._$lastGuideElement.remove();
+				}
+			}
+			if (!isComponentAllowedInThisContainer) {
+				this._onDestroyGuide();
+				if (rule) {
+					afterTop = rule.element.offset().top;
+					guideInfo.setGuideInfo({
+						relativeElement: rule.element
+					}, 'reject', designEditor);
+				}
+				contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
+
+				return;
+			}
+
+			if (rule && isComponentAllowedInThisContainer) {
+				if (rule.direction === 'before') {
+					rule.element.before($guideComponent);
+					afterTop = rule.element.offset().top;
+					contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
+				} else if (rule.direction === 'after') {
+					rule.element.after($guideComponent);
+					afterTop = rule.element.offset().top;
+					contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
+				} else {
+					$scriptChild = this._getScriptTagInElement(rule.element);
+					if ($scriptChild) {
+						$scriptChild.before($guideComponent);
+					} else if (childrenLocation) {
+						const element = rule.element.find(childrenLocation);
+						if (element) {
+							element.append($guideComponent);
+						}
+					} else {
+						rule.element.append($guideComponent);
+					}
+				}
+
+				// if compenent require post generating
+				guideElementPostGenerated = componentGenerator.generateComponent($guideComponent.get(0), designEditor);
+				if (guideElementPostGenerated) {
+					wrapperElement = guideElementPostGenerated.getContainer();
+					if (wrapperElement && wrapperElement != $guideComponent.get(0)) {
+						$wrapperElement = $(wrapperElement);
+						$wrapperElement.addClass(CLASS_NAME.GUIDE_ELEMENT);
+					}
+				}
+
 				guideInfo.setGuideInfo({
-					relativeElement: rule.element
-				}, 'reject', designEditor);
-			}
-			contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
+					guideElement: $wrapperElement || $guideComponent,
+					relativeElement: rule.element,
+					containerElement: rule.direction === 'append' ? rule.element : rule.element.parent()
+				}, rule.direction, designEditor);
 
-			return;
-		}
+				// component hidden인 경우, active-class 를 붙여서 visiable하게 변경
+				if (packageInfo.options['active-class']) {
+					if ($wrapperElement) {
+						$wrapperElement.addClass(packageInfo.options['active-class']);
+					} else {
+						$guideComponent.addClass(packageInfo.options['active-class']);
+					}
+				}
 
-		if (rule && isComponentAllowedInThisContainer) {
-			if (rule.direction === 'before') {
-				rule.element.before($guideComponent);
-				afterTop = rule.element.offset().top;
-				contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
-			} else if (rule.direction === 'after') {
-				rule.element.after($guideComponent);
-				afterTop = rule.element.offset().top;
-				contentScroller.scrollTop((contentScroller.scrollTop() + afterTop) - beforeTop);
+				this._lastRule = rule;
+				this._$lastGuideElement = $guideComponent;
+				this._$lastGuideElementContainer = $wrapperElement;
+				this._guideElementPostGenerated = guideElementPostGenerated;
+
 			} else {
-				$scriptChild = this._getScriptTagInElement(rule.element);
-				if ($scriptChild) {
-					$scriptChild.before($guideComponent);
-				} else if (childrenLocation) {
-					const element = rule.element.find(childrenLocation);
-					if (element) {
-						element.append($guideComponent);
-					}
-				} else {
-					rule.element.append($guideComponent);
-				}
+				this._onDestroyGuide();
 			}
 
-			// if compenent require post generating
-			guideElementPostGenerated = componentGenerator.generateComponent($guideComponent.get(0), designEditor);
-			const wrapperElement = guideElementPostGenerated.getContainer();
-			if (guideElementPostGenerated) {
-				if (wrapperElement && wrapperElement != $guideComponent.get(0)) {
-					wrapperElement.classList.add(CLASS_NAME.GUIDE_ELEMENT);
-				}
-			}
-
-			guideInfo.setGuideInfo({
-				guideElement: $(wrapperElement) || $guideComponent,
-				relativeElement: rule.element,
-				containerElement: rule.direction === 'append' ? rule.element : rule.element.parent()
-			}, rule.direction, designEditor);
-
-			if (packageInfo.options['active-class']) {
-				if (wrapperElement) {
-					wrapperElement.classList.add(packageInfo.options['active-class']);
-				} else {
-					$guideComponent.addClass(packageInfo.options['active-class']);
-				}
-			}
-
-			this._lastRule = rule;
-			this._$lastGuideElement = $guideComponent;
-			this._$lastGuideElementContainer = $(wrapperElement);
-			this._guideElementPostGenerated = guideElementPostGenerated;
-
-		} else {
-			this._onDestroyGuide();
-		}
-
-		if (packageInfo.options['parent-modifiers']) {
-			packageInfo.options['parent-modifiers'].forEach((modifier) => {
-				$guideComponent.parents(modifier.selector).each((_notused, filteredParent) => {
-
-					if (
-						modifier.className &&
-						!filteredParent.classList.conains(modifier.className)
-					) { // when more are added, this could be a switch
-						filteredParent.classList.add(modifier.className);
-					}
-
+			if (packageInfo.options['parent-modifiers']) {
+				packageInfo.options['parent-modifiers'].forEach((modifier) => {
+					$guideComponent.parents(modifier.selector).each((_notused, filteredParent) => {
+						const $filteredParent = $(filteredParent);
+						if (
+							modifier.className &&
+							!$filteredParent.hasClass(modifier.className)
+						) { // when more are added, this could be a switch
+							$filteredParent.addClass(modifier.className);
+						}
+					});
 				});
-			});
+			}
 		}
 	}
 
