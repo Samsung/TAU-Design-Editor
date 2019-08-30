@@ -5,6 +5,7 @@
   "attachable": true,
   "type": "standalone-component",
   "displayOrderWeight": 700,
+  "textEditable": false,
   "resources": {
     "css": [
       "../../tau/theme/tau.min.css",

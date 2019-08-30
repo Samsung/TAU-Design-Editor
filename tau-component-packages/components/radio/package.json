@@ -3,6 +3,7 @@
   "selector": "input[type=radio]",
   "attachable": true,
   "type": "standalone-component",
+  "textEditable": false,
   "displayOrderWeight": 500,
   "resources": {
     "css": [

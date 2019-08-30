@@ -4,6 +4,7 @@
   "baseElementSelector": "input[type=password]",
   "attachable": true,
   "displayOrderWeight": 1000,
+  "textEditable": true,
   "type": "standalone-component",
   "resources": {
     "css": [

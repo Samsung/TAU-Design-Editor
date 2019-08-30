@@ -196,43 +196,54 @@ class Attribute extends DressElement {
 				.getElement(_selectedElementId);
 			iframeElement = designEditor._getElementById(_selectedElementId);
 			this._computedStyle = window.getComputedStyle(iframeElement[0]);
-			if (modelElement.component && modelElement.component.name === 'i3d') {
+
+			const { component } = modelElement;
+			if (component && component.name === 'i3d') {
 				$el.find('.closet-interactive-element').show();
 				interactiveElement.setData(modelElement);
 			} else {
 				$el.find('.closet-interactive-element').hide();
 			}
 
-			if (modelElement.component && modelElement.component.name === 'coverflow') {
+			if (component && component.name === 'coverflow') {
 				$el.find('.closet-coverflow-element').show();
 			} else {
 				$el.find('.closet-coverflow-element').hide();
 			}
 
-			if (modelElement.component && modelElement.component.name === 'closet-image') {
+			if (component && component.name === 'closet-image') {
 				$el.find('.closet-image-element').show();
 				self._imageElement.setData(iframeElement);
 			} else {
 				$el.find('.closet-image-element').hide();
 			}
-			if (modelElement.component && modelElement.component.name === 'checkbox') {
+
+			if (component && component.options.textEditable) {
+				$el.find('.closet-text-element').show();
+			} else {
+				$el.find('.closet-text-element').hide();
+			}
+
+			if (component && component.name === 'checkbox') {
 				$el.find('.closet-checkbox-element').show();
 				self._checkboxElement.setData(iframeElement, modelElement);
 			} else {
 				$el.find('.closet-checkbox-element').hide();
 			}
-			if (modelElement.component && !(['text', 'title'].includes(modelElement.component.name))) {
+
+			if (component && !(['text', 'title'].includes(component.name))) {
 				self.expand('closet-additional-attribute', self._expandable);
 			} else {
 				self.unexpand('closet-additional-attribute', self._expandable);
 			}
-			if (modelElement.component && modelElement.component.options.options) {
+
+			if (component && component.options.options) {
 				$el.find('.closet-property-widget-option').show();
 			} else {
 				$el.find('.closet-property-widget-option').hide();
 			}
 
-			attributes = modelElement.component && modelElement.component.getAttributes();
+			attributes = component && component.getAttributes();
 
 			if (attributes) {
 				attributes.forEach((attributeObject) => {

@@ -3,6 +3,7 @@
   "selector": ":not(.ui-toggleswitch) > input[type=checkbox]:not(.ui-slider-switch-input):not([data-role=toggleswitch]):not(.ui-toggleswitch), input[type=checkbox]:not(.ui-toggleswitch)",
   "attachable": true,
   "type": "standalone-component",
+  "textEditable": false,
   "displayOrderWeight": 400,
   "resources": {
     "css": [
