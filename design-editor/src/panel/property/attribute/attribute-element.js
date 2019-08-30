@@ -191,212 +191,213 @@ class Attribute extends DressElement {
 
         this._$list.html('');
 
-        if (designEditor && _selectedElementId) {
-            modelElement = designEditor.getModel()
-                .getElement(_selectedElementId);
-            iframeElement = designEditor._getElementById(_selectedElementId);
+		if (designEditor && _selectedElementId) {
+			modelElement = designEditor.getModel()
+				.getElement(_selectedElementId);
+			iframeElement = designEditor._getElementById(_selectedElementId);
+			this._computedStyle = window.getComputedStyle(iframeElement[0]);
+			if (modelElement.component && modelElement.component.name === 'i3d') {
+				$el.find('.closet-interactive-element').show();
+				interactiveElement.setData(modelElement);
+			} else {
+				$el.find('.closet-interactive-element').hide();
+			}
 
-            if (modelElement.component && modelElement.component.name === 'i3d') {
-                $el.find('.closet-interactive-element').show();
-                interactiveElement.setData(modelElement);
-            } else {
-                $el.find('.closet-interactive-element').hide();
-            }
+			if (modelElement.component && modelElement.component.name === 'coverflow') {
+				$el.find('.closet-coverflow-element').show();
+			} else {
+				$el.find('.closet-coverflow-element').hide();
+			}
 
-            if (modelElement.component && modelElement.component.name === 'coverflow') {
-                $el.find('.closet-coverflow-element').show();
-            } else {
-                $el.find('.closet-coverflow-element').hide();
-            }
+			if (modelElement.component && modelElement.component.name === 'closet-image') {
+				$el.find('.closet-image-element').show();
+				self._imageElement.setData(iframeElement);
+			} else {
+				$el.find('.closet-image-element').hide();
+			}
+			if (modelElement.component && modelElement.component.name === 'checkbox') {
+				$el.find('.closet-checkbox-element').show();
+				self._checkboxElement.setData(iframeElement, modelElement);
+			} else {
+				$el.find('.closet-checkbox-element').hide();
+			}
+			if (modelElement.component && !(['text', 'title'].includes(modelElement.component.name))) {
+				self.expand('closet-additional-attribute', self._expandable);
+			} else {
+				self.unexpand('closet-additional-attribute', self._expandable);
+			}
+			if (modelElement.component && modelElement.component.options.options) {
+				$el.find('.closet-property-widget-option').show();
+			} else {
+				$el.find('.closet-property-widget-option').hide();
+			}
 
-            if (modelElement.component && modelElement.component.name === 'closet-image') {
-                $el.find('.closet-image-element').show();
-                self._imageElement.setData(iframeElement);
-            } else {
-                $el.find('.closet-image-element').hide();
-            }
-            if (modelElement.component && modelElement.component.name === 'checkbox') {
-                $el.find('.closet-checkbox-element').show();
-                self._checkboxElement.setData(iframeElement , modelElement);
-            } else {
-                $el.find('.closet-checkbox-element').hide();
-            }
-            if (modelElement.component && !(['text', 'title'].includes(modelElement.component.name))) {
-                self.expand('closet-additional-attribute', self._expandable);
-            } else {
-              self.unexpand('closet-additional-attribute', self._expandable);
-            }
-            if (modelElement.component && modelElement.component.options.options) {
-                $el.find('.closet-property-widget-option').show();
-            } else {
-                $el.find('.closet-property-widget-option').hide();
-            }
+			attributes = modelElement.component && modelElement.component.getAttributes();
 
-            attributes = modelElement.component && modelElement.component.getAttributes();
+			if (attributes) {
+				attributes.forEach((attributeObject) => {
+					let type = self.typeElementPackages.get(attributeObject.type.name),
+						TypeElement = null,
+						optionName = convertToOptionName(attributeObject.name),
+						typeElement,
+						li, label,
+						options = null,
+						value = '';
 
-            if (attributes) {
-                attributes.forEach((attributeObject) => {
-                    var type = self.typeElementPackages.get(attributeObject.type.name),
-                        TypeElement = null,
-                        optionName = convertToOptionName(attributeObject.name),
-                        typeElement,
-                        typeName,
-                        li, label,
-                        options = null,
-                        $iframeElement = iframeElement && iframeElement.jquery ?
-                            iframeElement :
-                            $(iframeElement),
-                        value = '';
+					const typeName = attributeObject.type.name,
+						$iframeElement = iframeElement && iframeElement.jquery ?
+							iframeElement :
+							$(iframeElement);
 
-                    typeName = attributeObject.type.name;
+					if (typeName !== 'empty') {
+						TypeElement = type.getModule();
+						type = self.typeElementPackages.get(typeName);
+						optionName = attributeObject.name.match(/^data-|^st-/)
+							? attributeObject.name
+							: convertToOptionName(attributeObject.name);
 
-                    if (typeName !== 'empty') {
-                        TypeElement = type.getModule();
-                        type = self.typeElementPackages.get(typeName);
-                        optionName = attributeObject.name.match(/^data-|^st-/) ? attributeObject.name : convertToOptionName(attributeObject.name);
+						options = $.extend({}, attributeObject.type.option);
+						// list of items for select
+						if (attributeObject.list) {
+							options.list = attributeObject.list;
+						}
 
-                        options = $.extend({}, attributeObject.type.option);
-                        // list of items for select
-                        if (attributeObject.list) {
-	                        options.list = attributeObject.list;
-                        }
+						value = $iframeElement.attr(optionName) || attributeObject.value;
+						options.value = value;
+						typeElement = new TypeElement(options);
 
-                        value = $iframeElement.attr(optionName) || attributeObject.value;
-                        options.value = value;
-                        typeElement = new TypeElement(options);
+						typeElement.setAttribute('attr-name', optionName);
+						typeElement.$el.on('change', (e) => {
+							const value = (typeName === 'checkbox') ? e.target.checked : typeElement.value;
+							if (designEditor) {
+								designEditor
+									.getModel()
+									.updateAttribute(self._selectedElementId, optionName, value);
+							}
+						});
 
-                        typeElement.setAttribute('attr-name', optionName);
-                        typeElement.$el.on('change', (e) => {
-                            let value = (typeName === 'checkbox') ? e.target.checked : typeElement.value;
-                            if (designEditor) {
-                                designEditor
-                                    .getModel()
-                                    .updateAttribute(self._selectedElementId, optionName, value);
-                            }
-                        });
+						li = $(`<li class="${  attributeObject.type.name  }"></li>`);
+						label = $(`<span class="closet-attribute-label">${  attributeObject.label  }</span>`);
+						typeElement.$el.addClass('closet-attribute-type');
 
-                        li = $('<li class="' + attributeObject.type.name + '"></li>');
-                        label = $('<span class="closet-attribute-label">' + attributeObject.label + '</span>');
-                        typeElement.$el.addClass('closet-attribute-type');
+						li.append(label)
+							.append(typeElement)
+							.appendTo(fragment);
+					}
+				});
 
-                        li.append(label)
-                            .append(typeElement)
-                            .appendTo(fragment);
-                    }
-                });
+				self._$list.append(fragment);
 
-                self._$list.append(fragment);
+				if (!self._isVisibleCommonStyleElement) {
+					self._$commonList.css('display', 'block');
+					this._$list.append(fragment);
+					Object.keys(attributeTemplates).forEach((item) => {
+						attribute = item.split('_')[1].toLowerCase();
+						this._updateAttributes(modelElement, attribute);
+					});
+				}
 
-                if (!self._isVisibleCommonStyleElement) {
-                    self._$commonList.css('display', 'block');
-                    this._$list.append(fragment);
-                    Object.keys(attributeTemplates).forEach((item) => {
-                        attribute = item.split('_')[1].toLowerCase();
-                        this._updateAttributes(modelElement, attribute);
-                    });
-                }
+				this._selectedElementId = _selectedElementId;
 
-                this._selectedElementId = _selectedElementId;
+				self._stylesElement.setData(modelElement.component, iframeElement);
+			}
 
-                self._stylesElement.setData(modelElement.component, iframeElement);
-            }
+			self._layoutElement.setData(modelElement.component);
+			self._sthingsElement.setData(modelElement);
 
-            self._layoutElement.setData(modelElement.component);
-            self._sthingsElement.setData(modelElement);
+			if (modelElement.component && modelElement.component.options) {
+				options = modelElement.component.options.options;
+			}
+			self._$optionsList.html('');
 
-            if (modelElement.component && modelElement.component.options) {
-                options = modelElement.component.options.options;
-            }
-            self._$optionsList.html('');
+			if (options) {
+				const optionsFragment = document.createDocumentFragment();
 
-            if (options) {
-                const optionsFragment = document.createDocumentFragment();
+				options.forEach(option => {
+					const type = (typeof option.values === 'object') ? 'select' : 'text';
+					const TypeElement = self.typeElementPackages.get(type).getModule();
 
-                options.forEach(option => {
-                    const type = (typeof option.values === 'object') ? 'select' : 'text';
-                    let TypeElement = self.typeElementPackages.get(type).getModule();
+					const options = {};
 
-                    let options = {};
+					if (type === 'select') {
+						const list = [{ 'value': '', 'label': 'Default' }];
+						options.list = list;
 
-                    if (type === 'select') {
-                        const list = [{'value' : '', 'label' : 'Default'}];
-                        options.list = list;
+						option.values.forEach(value => {
+							if (typeof value === 'object') {
+								list.push(value);
+							} else {
+								list.push({
+									'value': value,
+									'label': value
+								});
+							}
+						});
 
-                        option.values.forEach(value => {
-                            if (typeof value === 'object') {
-                                list.push(value);
-                            } else {
-                                list.push({
-                                    'value': value,
-                                    'label': value
-                                });
-                            }
-                        });
+					}
 
-                    }
+					let currentValue;
 
-                    let currentValue;
+					const element = iframeElement.get(0);
+					let boundWidget = element.getAttribute('data-tau-bound');
 
-                    const element = iframeElement.get(0);
-                    let boundWidget = element.getAttribute('data-tau-bound');
+					if (boundWidget) {
+						const iframe = element.ownerDocument.defaultView;
+						const optionName = convertToOptionName(option.name);
+						const engine = iframe.tau.engine;
+						boundWidget = element.getAttribute('data-tau-bound').split(',')[0];
 
-                    if (boundWidget) {
-                        const iframe = element.ownerDocument.defaultView;
-                        const optionName = convertToOptionName(option.name);
-                        const engine = iframe.tau.engine;
-                        boundWidget = element.getAttribute('data-tau-bound').split(',')[0]
+						if (engine && engine
+							.instanceWidget(element, boundWidget)
+							.option(optionName)) {
+							currentValue = engine
+								.instanceWidget(element, boundWidget)
+								.option(optionName);
+						}
 
-                        if (engine && engine
-                                .instanceWidget(element, boundWidget)
-                                .option(optionName)) {
-                            currentValue = engine
-                                .instanceWidget(element, boundWidget)
-                                .option(optionName);
-                        }
+						if (currentValue) {
+							options.value = currentValue;
+						}
 
-                        if (currentValue) {
-                            options.value = currentValue;
-                        }
+						const typeElement = new TypeElement(options);
+						const eventName = (type === 'select') ? 'change' : 'keyup';
 
-                        let typeElement = new TypeElement(options);
-                        const eventName = (type === 'select') ? 'change' : 'keyup';
+						typeElement.$el.on(eventName, () => {
+							if (designEditor) {
+								const boundWidgets = element.getAttribute('data-tau-bound');
+								if (boundWidgets) {
+									boundWidgets.split(',').forEach(name => {
+										engine
+											.instanceWidget(element, name)
+											.option(optionName, typeElement.value);
+									});
+								}
+								if (typeElement.value !== '') {
+									designEditor
+										.getModel()
+										.updateAttribute(self._selectedElementId, `data-${  option.name}`,
+											typeElement.value);
+								} else {
+									designEditor
+										.getModel()
+										.removeAttribute(self._selectedElementId, `data-${  option.name}`);
+								}
+							}
+						});
 
-                        typeElement.$el.on(eventName, (event) => {
-                            if (designEditor) {
-                                let boundWidgets = element.getAttribute('data-tau-bound');
-                                if (boundWidgets) {
-                                    boundWidgets.split(',').forEach( name => {
-                                        engine
-                                            .instanceWidget(element, name)
-                                            .option(optionName, typeElement.value);
-                                    });
-                                }
-                                if (typeElement.value !== '') {
-                                    designEditor
-                                    .getModel()
-                                    .updateAttribute(self._selectedElementId, 'data-' + option.name,
-                                    typeElement.value);
-                                } else {
-                                    designEditor
-                                    .getModel()
-                                    .removeAttribute(self._selectedElementId, 'data-' + option.name);
-                                }
-                            }
-                        });
+						const li = $(`<li class="${  type  }"></li>`);
+						const label = $(`<span class="closet-attribute-label">${  option.label  }</span>`);
+						typeElement.$el.addClass('closet-attribute-type');
 
-                        const li = $('<li class="' + type + '"></li>');
-                        const label = $('<span class="closet-attribute-label">' + option.label + '</span>');
-                        typeElement.$el.addClass('closet-attribute-type');
+						li.append(label)
+							.append(typeElement)
+							.appendTo(optionsFragment);
+					}
 
-                        li.append(label)
-                          .append(typeElement)
-                          .appendTo(optionsFragment);
-                    }
-
-                });
-                self._$optionsList.append(optionsFragment);
-            }
-        } else {
+				});
+				self._$optionsList.append(optionsFragment);
+			}
+		} else {
             self._$optionsList.html('');
             self._stylesElement.setData();
             self._layoutElement.setData();
@@ -825,7 +826,7 @@ class Attribute extends DressElement {
             listElements = self._AttributeElementLists[attribute + 'Elements'];
 
         Object.keys(listElements).forEach((item) => {
-            var value = styles[item] || '';
+			const value = styles[item] || this._computedStyle[item];
             switch (item) {
             case 'borderColor':
                 listElements[item].val(rgba2hex(value));
