@@ -4,6 +4,7 @@
   "attachable": false,
   "type": "standalone-component",
   "altSelector": true,
+  "textEditable": false,
   "resources": {
     "js": "tau-circle-progress.js",
     "css": "./tau-circle-progress.css",

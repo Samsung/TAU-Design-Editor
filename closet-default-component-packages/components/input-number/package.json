@@ -4,6 +4,7 @@
     "baseElementSelector": "input[type=number]",
     "attachable": true,
     "displayOrderWeight": 800,
+    "textEditable": false,
     "type": "standalone-component",
     "resources": {
       "css": [

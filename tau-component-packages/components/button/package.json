@@ -7,6 +7,7 @@
       "options": {}
     }
   },
+  "textEditable": true,
   "resources": {
     "css": [
       "../../tau/theme/tau.min.css",

@@ -7,6 +7,7 @@
     "js": "button.js",
     "css": "button.css"
   },
+  "textEditable": true,
   "attributes": {
     "button-text": {
       "label": "Text",

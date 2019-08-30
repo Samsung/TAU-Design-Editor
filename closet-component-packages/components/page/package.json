@@ -8,6 +8,7 @@
     "js": "./page.js",
     "css": "./page.css"
   },
+  "textEditable": false,
   "attributes": {},
   "behaviors": {
     "events": {

@@ -4,6 +4,7 @@
   "baseElementSelector": "input.ui-toggle-switch",
   "attachable": true,
   "type": "standalone-component",
+  "textEditable": false,
   "displayOrderWeight": 600,
   "resources": {
     "css": [
