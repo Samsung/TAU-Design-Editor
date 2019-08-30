@@ -132,6 +132,7 @@ class Guide {
 					this._$lastGuideElement.remove();
 				}
 			}
+
 			if (!isComponentAllowedInThisContainer) {
 				this._onDestroyGuide();
 				if (rule) {

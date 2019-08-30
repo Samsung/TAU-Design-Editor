@@ -3,6 +3,7 @@
 import fs from 'fs';
 import $ from 'jquery';
 import {packageManager, Package} from 'content-manager';
+
 import {appManager as AppManager} from '../../../app-manager';
 import {DressElement} from '../../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../../events-emitter';
@@ -11,8 +12,7 @@ import {AttributeLayoutElement} from './attribute-element-layout';
 import {AttributeSmartThingsElement} from './attribute-element-sthings';
 import {AttributeInteractiveElement} from './attribute-element-interactive';
 import {AttributeImageElement} from './attribute-element-image';
-import {AttributeCheckboxElement} from './attribute-element-checkbox'
-import editor from '../../../editor';
+import {AttributeCheckboxElement} from './attribute-element-checkbox';
 import utils from '../../../utils/utils';
 import attributeUtils from '../../../utils/attribute-utils';
 
@@ -59,6 +59,7 @@ function rgba2hex(rgba) {
  *
  */
 class Attribute extends DressElement {
+
     /**
      * Create callback
      */
@@ -208,6 +209,12 @@ class Attribute extends DressElement {
             } else {
                 $el.find('.closet-coverflow-element').hide();
             }
+
+			if (modelElement.component && modelElement.component.options.textEditable) {
+				$el.find('.closet-text-element').show();
+			} else {
+				$el.find('.closet-text-element').hide();
+			}
 
             if (modelElement.component && modelElement.component.name === 'closet-image') {
                 $el.find('.closet-image-element').show();

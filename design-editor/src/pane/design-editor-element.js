@@ -947,7 +947,6 @@ class DesignEditor extends DressElement {
 	 * @param {HTMLElement} element
 	 * @returns {HTMLElement|null}
 	 */
-
 	getContainerByElement(element) {
 		const iframeDocument = this._$iframe[0].contentDocument;
 		const tau = iframeDocument.defaultView.tau;
@@ -1144,8 +1143,8 @@ class DesignEditor extends DressElement {
 		this._selectLayer.screenShape = screenConfig.shape;
 
 		$(this._selectLayer).css({
-			width: `${adjustedWidth  }px`,
-			height: `${adjustedHeight  }px`,
+			width: `${adjustedWidth}px`,
+			height: `${adjustedHeight}px`,
 			top: `-webkit-calc((50% - ${  (screenConfig.height * screenConfig.ratio) / 2  }px))`
 		});
 		this._selectLayer.makeHoverScroller();
