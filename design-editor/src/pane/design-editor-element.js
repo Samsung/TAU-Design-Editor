@@ -33,7 +33,8 @@ import path, {relative} from 'path';
 const KEY_CODE = { DELETE: 46 },
 	INTERNAL_ID_ATTRIBUTE = 'data-id',
 	LOCK_CLASS = 'lock',
-	RE_COPY_ATTRIBUTE_TO_CONTAINER = new RegExp('^(data-(?!tau)|st-).*');
+	RE_COPY_ATTRIBUTE_TO_CONTAINER = new RegExp('^(data-(?!tau)|st-).*'),
+	RE_DATA_ATTRIBUTE = /^data-/;
 
 let _instance = null;
 
@@ -628,12 +629,12 @@ class DesignEditor extends DressElement {
 	/**
 	 * Function that calls refresh on TAU widget
 	 * @param {string} id id of
-	 * @private element
+	 * @private
 	 */
 	_refreshTAUWidget(id) {
 		const element = this._getElementById(id).get(0),
-			tau = this._$iframe.get(0).contentWindow && this._$iframe.get(0).contentWindow.tau,
-			packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
+			packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element),
+			tau = this._$iframe.get(0).contentWindow && this._$iframe.get(0).contentWindow.tau;
 		let widgetInstance;
 
 		if (tau) {
@@ -650,13 +651,54 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
+	 * Method tries to move knowing data-* options from widget wrapper to widget base element
+	 * @param {HTMLElement} containerElement
+	 * @private
+	 */
+	_copyDataAttributesFromWidgetContainer(containerElement) {
+		const contentWindow = this._$iframe.get(0).contentWindow,
+			tau = contentWindow && contentWindow.tau;
+		let widgetInstance,
+			component;
+
+		if (tau) {
+			widgetInstance = tau.engine.getBinding(containerElement);
+
+			if (widgetInstance) {
+				// find component by element
+				component = packageManager.getPackages(Package.TYPE.COMPONENT)
+					.getPackageByElement(widgetInstance.element);
+
+				const attributes = component.options.attributes;
+				if (attributes && Object.keys(containerElement.dataset).length) {
+					for (const attributeName in attributes) {
+						if (attributes.hasOwnProperty(attributeName) &&
+							RE_DATA_ATTRIBUTE.test(attributeName) &&
+							containerElement.hasAttribute(attributeName)) {
+							// copy attributes to base element
+							widgetInstance.element.setAttribute(
+								attributeName,
+								containerElement.getAttribute(attributeName)
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Callback for change attribute of element
 	 * @param {string} id id of element
 	 * @param {string} name name of attribute
 	 * @param {string} value value of attribute
 	 */
 	_onAttributeChanged(id, name, value) {
-		this._getElementById(id).attr(name, value);
+		const element = this._getElementById(id).get(0);
+
+		element.setAttribute(name, value);
+
+		this._copyDataAttributesFromWidgetContainer(element);
 		this._refreshTAUWidget(id);
 	}
 
