@@ -10,6 +10,7 @@ import {EVENTS, eventEmitter} from '../../../events-emitter';
 import {elementSelector} from '../../../pane/element-selector';
 import {ViewType} from '../../../static';
 import {StateManager} from '../../../system/state-manager';
+import utils from '../../../utils/utils';
 
 const TYPE_DESIGN_EDITOR = ViewType.Design;
 
@@ -29,17 +30,6 @@ const TEMPLATE_FILE_PATH = '/panel/property/component/',
     ITEM_TEMPLATE_FILE_NAME = 'component-element-item.html',
     ITEM_BUTTON_CLASS = 'closet-component-element-list-item',
     DEVICE_PROFILE_OPTION = 'device-profile';
-
-/**
- * Check version
- * @param {string} version
- * @param {string} profile
- * @param {string} shape
- * @returns {boolean}
- */
-function correctVersion(version, profile, shape) {
-    return (!version || version === 'all' || version === profile || version === profile + '-' + shape);
-}
 
 /**
  * Drag interval
@@ -578,7 +568,7 @@ class Component extends DressElement {
 		let isAvailable;
 
 		Object.keys(info).forEach((id) => {
-            if (info[id].options.attachable !== false && correctVersion(info[id].options.version, profile, shape)) {
+            if (info[id].options.attachable !== false && utils.correctVersion(info[id].options.version, profile, shape)) {
                 if (!options[info[id].options.type]) {
                     options[info[id].options.type] = [];
                 }

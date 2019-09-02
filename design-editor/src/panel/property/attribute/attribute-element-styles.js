@@ -5,6 +5,8 @@ import $ from 'jquery';
 import path from 'path';
 import {packageManager, Package} from 'content-manager';
 import {appManager as AppManager} from '../../../app-manager';
+import {StateManager} from '../../../system/state-manager';
+import utils from '../../../utils/utils';
 import {DressElement} from '../../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../../events-emitter';
 
@@ -64,10 +66,14 @@ class AttributeStyles extends DressElement {
      * @param {HTMLElement} element
      */
     setData(component, element) {
-        var options = component && component.options,
-            styles = options && options.styles,
-            temp = {},
-            i, len;
+		const options = component && component.options,
+			styles = options && options.styles,
+			screen = StateManager.get('screen'),
+			profile = screen.profile || 'mobile',
+			shape = screen.shape || 'rectangle';
+		let temp = {},
+			i,
+			len;
 
         if (styles) {
             len = styles.length;
@@ -76,7 +82,10 @@ class AttributeStyles extends DressElement {
                 if (styles[i].parentSelector && element
                     && element.closest(styles[i]['parent-selector']).length == 0) {
                     continue;
-                }
+				}
+				if (!utils.correctVersion(styles[i].version, profile, shape)) {
+					break;
+				}
                 // icon is path
                 temp = {};
                 temp.name = styles[i].name;

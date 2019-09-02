@@ -173,21 +173,24 @@
   "draggable": true,
   "styles": [
     {
+	  "name": "Circle button",
+	  "version": "mobile",
       "icon": "./styles/circle-button.png",
-      "name": "Circle buttom",
-      "template": "<button data-inline=\"true\" data-icon=\"add\" data-style=\"circle\" class=\"ui-btn\"></button>"
+	  "template": "<button data-inline=\"true\" data-icon=\"add\" data-style=\"circle\" class=\"ui-btn\"></button>"
     },
     {
+	  "name": "Left header button",
+	  "version": "mobile",
       "icon": "./styles/left-header-button.png",
-      "name": "Left header button",
       "template": "<button data-icon=\"add\" class=\"ui-btn ui-btn-left\"></button>",
-      "parent-selector": ".ui-header"
+	  "parent-selector": ".ui-header"
     },
     {
+	  "name": "Right header button",
+	  "version": "mobile",
       "icon": "./styles/right-header-button.png",
-      "name": "Right header button",
       "template": "<button data-icon=\"add\" class=\"ui-btn ui-btn-right\"></button>",
-      "parent-selector": ".ui-header"
+	  "parent-selector": ".ui-header"
     }
   ],
   "attributes": {

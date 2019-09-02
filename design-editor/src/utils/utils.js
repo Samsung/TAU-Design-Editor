@@ -75,6 +75,17 @@ export function isDemoVersion() {
 }
 
 /**
+ * Check version
+ * @param {string} version
+ * @param {string} profile
+ * @param {string} shape
+ * @returns {boolean}
+ */
+function correctVersion(version, profile, shape) {
+	return (!version || version === 'all' || version === profile || version === `${profile}-${shape}`);
+}
+
+/**
  * Returns a function that performs pipe operation of given functions in order
  * @param {function} functions Array of functions to call
  */
@@ -88,5 +99,6 @@ export default {
 	generateAbsolutePath,
 	timeoutPromise,
 	isDemoVersion,
+	correctVersion,
 	pipe
 };
