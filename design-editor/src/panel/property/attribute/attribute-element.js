@@ -30,6 +30,7 @@ const CSS_UNITS = ['em', 'ex', '%', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ch', 'r
 var script;
 var coverflowImage = [];
 var wallArray = [];
+let selectFileLen = 0;
 
 /**
  * Convert name
@@ -85,7 +86,6 @@ class Attribute extends DressElement {
         self._$selectedElement = null;
 
         self.events = {
-			'click #backgroundColorClear': 'resetToInitialBackgroundColorValue',
             'change #fileForBackground': 'onSetRelativePathForBackground',
             'click  #fileForBackgroundClear': 'onClearBackgroundImage',
             'change #cfFiles': 'onSelectImageForCoverFlow',
@@ -208,6 +208,8 @@ class Attribute extends DressElement {
 
 			if (component && component.name === 'coverflow') {
 				$el.find('.closet-coverflow-element').show();
+				this._$coverflowEffect.hide();
+				this._$coverflowFileSize.hide();
 			} else {
 				$el.find('.closet-coverflow-element').hide();
 			}
@@ -456,8 +458,11 @@ class Attribute extends DressElement {
             this._$backgroundChooseLayer = $element.find('#backgroundImageChoose');
             this._$backgroundShowLayer = $element.find('#backgroundImageShow');
             this._$backgroundShowLayerInput = this._$backgroundShowLayer.find('input[type=text]');
-        }
-            this._expandable = [...document.querySelectorAll('.closet-additional-attribute')];
+		} else if (name === 'coverflow') {
+			this._$coverflowEffect = $element.find('#coverflowEffect');
+			this._$coverflowFileSize = $element.find('#coverflowFileSize');
+		}
+		this._expandable = [...document.querySelectorAll('.closet-additional-attribute')];
     }
 
     /**
@@ -468,12 +473,12 @@ class Attribute extends DressElement {
      */
     _createStylesTabs(fileName, attribute) {
         var self = this,
-            list,
-            listElements;
+			list,
+			listElements;
 
-        self._AttributeElementLists[attribute + 'Elements'] = {};
-        list = self._AttributeLists['$' + attribute];
-        listElements = self._AttributeElementLists[attribute + 'Elements'];
+		self._AttributeElementLists[`${attribute}Elements`] = {};
+		list = self._AttributeLists[`$${attribute}`];
+		listElements = self._AttributeElementLists[`${attribute}Elements`];
 
         this.createFromTemplate(TEMPLATE_FILE_PATH + fileName, {
             parent: list,
@@ -486,44 +491,6 @@ class Attribute extends DressElement {
                 self._initTabs(attribute, list);
             }
         });
-	}
-
-	/**
-     * Handler to click for reset background color button
-	 * Set background color value to default for element and input
-     * @param {Event} event
-     */
-	resetToInitialBackgroundColorValue() {
-		const activeDesignEditor = AppManager.getActiveDesignEditor();
-		// update style to set value of background color implemented by TAU
-		activeDesignEditor
-			.getModel()
-			.updateStyle(
-				this._selectedElementId,
-				'backgroundColor',
-				''
-			);
-		// set value implemented by TAU to input
-		this._updateAttributes(activeDesignEditor.getModel().getElement(this._selectedElementId), 'background');
-		// hide reset button
-		document.getElementById('backgroundColorClear').style.display = 'none';
-	}
-
-	/**
-     * Show/Hide reset background color button
-     * @param {string} id data-id of changed element
-     */
-	displayBackgroundColorResetButton(id) {
-		// get currently active widget
-		const changedElement = AppManager.getActiveDesignEditor()._getElementById(id).get(0),
-			resetBackgroundColorButton = document.getElementById('backgroundColorClear');
-		if (changedElement.style.backgroundColor) {
-			// display background reset button when background color exists in inline style of element
-			resetBackgroundColorButton.style.display = 'block';
-		} else {
-			// not display background reset button because background color doesn't exist in inline style of element
-			resetBackgroundColorButton.style.display = 'none';
-		}
 	}
 
     _applyBackgroundImageInfo(fileName) {
@@ -578,39 +545,21 @@ class Attribute extends DressElement {
      * coverflow image selection callback
      * @param {Event} e
      */
-    onSelectImageForCoverFlow(e) {
-        var iframeElement,
-            element,
-            cfFiles = e.target.files,
-            editor = AppManager.getActiveDesignEditor(),
-            model = editor.getModel();
-        let str = '';
-
-        script = '<ul class=\"flip-items\">';
-        model.updateStyle(this._selectedElementId, 'backgroundImage', 'none');
-        this._applyBackgroundImageInfo();
-
-        if (cfFiles) {
-            for(var i = 0; i < cfFiles.length; i++) {
-                var img = cfFiles[i].name;
-                if (img.match('.jpg') || img.match('.png')) {
-                    coverflowImage.push(cfFiles[i].name);
-                }
-            }
-            for (var i = 0; coverflowImage.length; i++) {
-                if (coverflowImage[i] === undefined) {
-                    break;
-                }
-                str = '<li><img src=\"images/' + coverflowImage[i] + '\" width=\"100px\" height=\"100px\"></li>';
-                script += str;
-            }
-            script += '</ul>';
-            iframeElement = editor._getElementById(this._selectedElementId);
-            element = iframeElement.get(0);
-            element.innerHTML = script;
-
-            model.updateText(this._selectedElementId, script);
-        }
+	onSelectImageForCoverFlow(e) {
+		const cfFiles = e.target.files;
+		attributeUtils.copyToImagesForCoverFlow(event, cfFiles.length);
+		coverflowImage = [];
+		selectFileLen = cfFiles.length;
+		if (cfFiles) {
+			for (let i = 0; i < selectFileLen; i++) {
+				const img = cfFiles[i].name;
+				if (img.match('.jpg') || img.match('.png')) {
+					coverflowImage.push(cfFiles[i].name);
+				}
+			}
+		}
+		this._$coverflowEffect.show();
+		this._$coverflowFileSize.show();
     }
 
     /**
@@ -633,14 +582,26 @@ class Attribute extends DressElement {
                     this._onChange3dWall();
                     model.updateText(this._selectedElementId, script);
                 } else {
-                    model.updateAttribute(this._selectedElementId, 'data-' + name, value);
-                }
-            } else if (name === 'youtube_keyword') {
-                var id = this._selectedElementId;
-                this._onParserUrl(this._onYoutubeChange3dWall);
-                window.setTimeout(function () {
-                    AppManager.getActiveDesignEditor().getModel().updateText(id, script);
-                }, 500);
+					let str = '';
+					let iframeElement, element;
+					script = '<ul class=\'flip-items\'>';
+					if (selectFileLen != 0) {
+						for (let i = 0; coverflowImage.length; i++) {
+							if (coverflowImage[i] === undefined) {
+								break;
+							}
+							str = `<li><img src='images/${coverflowImage[i]}' width='100px' height='100px'></li>`;
+							script += str;
+						}
+						script += '</ul>';
+						iframeElement = editor._getElementById(this._selectedElementId);
+						element = iframeElement.get(0);
+						element.innerHTML = script;
+					}
+					model.updateStyle(this._selectedElementId, 'background', 'rgba(255, 255, 255, 0)');
+					model.updateAttribute(this._selectedElementId, `data-${name}`, value);
+					model.updateText(this._selectedElementId, script);
+				}
             } else if (name === 'cfSize' && script.length > 0) {
                 var regUnit = /[0-9]+(\.[0-9]+)?(px|%)/,
                     regNumber = /^\d+(?:[.]?[\d]?[\d])?$/,
@@ -656,6 +617,7 @@ class Attribute extends DressElement {
                 }
                 script = script.replace(/width=\"100px\"/gi, 'width=' + '\"' + rval + '\"');
                 script = script.replace(/height=\"100px\"/gi, 'height=' + '\"' + rval + '\"');
+				model.updateStyle(this._selectedElementId, 'background', 'rgba(255, 255, 255, 0)');
                 model.updateText(this._selectedElementId, script);
             } else if (name.startsWith('i3d-')) {
                 var type = name.substring(4);
@@ -681,9 +643,6 @@ class Attribute extends DressElement {
                 } else {
                     console.error('The value of the '+type+' is invalid!');
 				}
-			} else if (name === 'backgroundColor') {
-				model.updateStyle(this._selectedElementId, name, value);
-				this.displayBackgroundColorResetButton(this._selectedElementId);
 			} else {
                 model.updateStyle(this._selectedElementId, name, value);
             }
@@ -712,94 +671,6 @@ class Attribute extends DressElement {
         }
         wallScript += innerScript + '</div></div>';
         script = wallScript.replace(/,/g, '');
-    }
-
-    _onYoutubeChange3dWall() {
-        var wallScript = '<div class=\"wrapper\"><div class=\"outer\">',
-            innerScript = ['<div class=\"inner1\">', '<div class=\"inner2\">', '<div class=\"inner3\">'],
-            cnt = 0;
-        const row = 2;
-
-        for (var i = 0; i < wallArray.length; i = i + 2) {
-            if (wallArray[i] === undefined) {
-                console.log('wallArray is undefined.');
-                break;
-            }
-
-            innerScript[cnt++] += '<figure><a href=\"https://youtube.com/watch?v=' + wallArray[i]
-                                + '\" target=\"_blank\"><img src=\"' + wallArray[i + 1] + '\" width=\"100px\" height=\"100px\"></a></figure>';
-
-            if (cnt > row) {
-                cnt = 0;
-            }
-        }
-        for (var j = 0; j <= row; j++) {
-            innerScript[j] += '</div>';
-        }
-        wallScript += innerScript + '</div></div>';
-        script = wallScript.replace(/,/g, '');
-    }
-
-    _onParserUrl(callback) {
-        var wallScript = '<div class=\"wrapper\"><div class=\"outer\">',
-            innerScript = ['<div class=\"inner1\">', '<div class=\"inner2\">', '<div class=\"inner3\">'],
-            url;
-        var locate, end = 0;
-        const filePath = '/projects/images/youtube_result_dog';
-
-        fs.readFile(filePath, 'utf8', (err, data) => {
-            var urlArray = new Array(),
-                thumbArray = new Array();
-
-            if (err) throw err;
-            if (wallArray.length > 0) {
-                wallArray = [];
-            }
-            if (data.length > 0) {
-                // Get a unique value for a video.
-                do {
-                    locate = data.indexOf('data-context-item-id', locate + 1);
-                    if (locate === -1) {
-                        break;
-                    }
-                    url = data.substring(locate + 22, locate + 33);
-                    urlArray.push(url);
-                } while (locate + 1 < data.length && locate != -1);
-
-                // Case 1 : Extract link from src with 'https'
-                do {
-                    locate = data.indexOf('src=\"http', locate + 1);
-                    end = data.indexOf('\"', locate + 6);
-                    if (locate === -1) {
-                        break;
-                    }
-                    url = data.substring(locate + 5, end);
-                    thumbArray.push(url);
-                } while (locate + 1 < data.length && locate != -1);
-
-                // Case 2 : Extract data from data-thumb because it does not contain 'https'
-                do {
-                    locate = data.indexOf('data-thumb', locate + 1);
-                    end = data.indexOf('\"', locate + 12);
-                    if (locate === -1) {
-                        break;
-                    }
-                    url = data.substring(locate + 12, end);
-                    thumbArray.push(url);
-                } while (locate + 1 < data.length && locate != -1);
-
-                for (var uIndex = 0; uIndex < urlArray.length; uIndex++) {
-                    for (var tIndex = 0; tIndex < thumbArray.length; tIndex++) {
-                        if (thumbArray[tIndex].indexOf(urlArray[uIndex]) !== -1) {
-                            wallArray.push(urlArray[uIndex]);
-                            wallArray.push(thumbArray[tIndex]);
-                        }
-                    }
-                }
-
-                callback();
-            }
-        });
     }
 
     /**
@@ -885,7 +756,6 @@ class Attribute extends DressElement {
                 listElements[item].val(rgba2hex(value));
                 break;
 			case 'backgroundColor':
-				this.displayBackgroundColorResetButton(el.id);
                 listElements[item].val(rgba2hex(value));
                 break;
             case 'backgroundImage':
