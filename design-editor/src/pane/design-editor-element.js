@@ -8,6 +8,9 @@
 
 import $ from 'jquery';
 import {packageManager, Package} from 'content-manager';
+import fs from 'fs-extra';
+import path, {relative} from 'path';
+
 import {StateManager} from '../system/state-manager';
 import {stageManager} from '../system/stage-manager';
 import {SnapGuideManager} from './snap-guide-manager';
@@ -27,8 +30,7 @@ import {Devices} from '../system/devices';
 import utils from '../utils/utils';
 import iframeUtils from '../utils/iframe';
 import pathUtils from '../utils/path-utils';
-import fs from 'fs-extra';
-import path, {relative} from 'path';
+import { containerExpander } from './utils/design-editor-element-utils';
 
 const KEY_CODE = { DELETE: 46 },
 	INTERNAL_ID_ATTRIBUTE = 'data-id',
@@ -48,24 +50,6 @@ const getAppConfig = (app_path) => {
 			} else {
 				resolve({file: configPath, text});
 			}
-		});
-	});
-};
-
-const changeAppProfile = (app_path, profile) => {
-	return new Promise((resolve, reject) => {
-		getAppConfig(app_path).then((res) => {
-			console.log(`changing profile to: ${  profile  } in ${  res.file}`);
-			const text = res.text.replace(/<tizen:profile[^>]+>/gi, `<tizen:profile name="${  profile  }"/>`);
-			fs.writeFile(res.file, text, (err) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(text);
-				}
-			});
-		}).catch((err) => {
-			reject(err);
 		});
 	});
 };
@@ -352,13 +336,16 @@ class DesignEditor extends DressElement {
 		this._tooltipPanel = new TooltipElement();
 
 		snapGuides = SnapGuideManager.getInstance().getGuides();
-		this._$scroller.append(this._$iframe).append(this._$iframeDummy)
+		this._$scroller
+			.append(this._$iframe)
+			.append(this._$iframeDummy)
 			.append(this._selectLayer)
 			.append(this._sectionController);
 
 		this.$el.append(this._$designArea);
 
-		this._$designArea.append(this._$scroller)
+		this._$designArea
+			.append(this._$scroller)
 			.append(this._gridLayer)
 			.append(this._rulerXLayer)
 			.append(this._rulerYLayer)
@@ -399,43 +386,6 @@ class DesignEditor extends DressElement {
 
 			eventEmitter.emit(EVENTS.TAULoaded, tau.version);
 		});
-
-		/**
-		 * It expands container to the height of
-		 * sum of height of its children to make them possible
-		 * to view and edit in edit mode.
-		 */
-		this.containerExpander = {
-			initialStyle: {},
-			element: null,
-			rollOut: function(element) {
-				this.element = element;
-				this.initialStyle.height = element.style.height;
-				this.initialStyle.overflowY = element.style.overflowY;
-
-				const extendedHeight = [...element.children]
-					.reduce((acc, value) => acc + parseInt(getComputedStyle(value).height), 0);
-
-				if (extendedHeight > parseInt(this.initialStyle.height)) {
-					element.style.height = `${extendedHeight}px`;
-					element.style.overflow = 'hidden';
-				}
-			},
-			rollBack: function(elementId) {
-				if (elementId == this.element.getAttribute('data-id')) {
-					this.element.style.height = this.initialStyle.height;
-					this.element.style.overflowY = this.initialStyle.overflowY;
-				}
-
-				this._reset();
-			},
-			_reset: function(elementId) {
-				if (elementId == this.elementId) {
-					this.initialStyle = {};
-					this.elementId = '';
-				}
-			}
-		};
 	}
 
 	/**
@@ -1002,7 +952,7 @@ class DesignEditor extends DressElement {
 		if (this.isVisible()) {
 			element = this._getElementById(elementId)[0];
 
-			this.containerExpander.rollOut(element);
+			containerExpander.rollOut(element);
 
 			const container = this.getContainerByElement(element);
 			if (container) {
@@ -1025,7 +975,7 @@ class DesignEditor extends DressElement {
 	 */
 	_onDeselectedElement(elementId) {
 		const $element = this._getElementById(elementId);
-		this.containerExpander.rollBack(elementId);
+		containerExpander.rollBack(elementId);
 
 		if ($element.length > 0) {
 			this._selectLayer.hideSelector($element);
