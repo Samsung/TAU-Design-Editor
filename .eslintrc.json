@@ -36,7 +36,8 @@
         "no-trailing-spaces": "error",
         "eol-last":"error",
         "lines-between-class-members":"error",
-        "keyword-spacing":"error"
+        "keyword-spacing":"error",
+        "complexity":"error"
         },
         "parserOptions": {
             "sourceType": "module"

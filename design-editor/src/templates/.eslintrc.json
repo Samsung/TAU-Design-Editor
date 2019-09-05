@@ -7,6 +7,7 @@
 			"double"
 		],
 		"no-undef": "off",
-		"no-empty": "off"
+		"no-empty": "off",
+		"complexity": "off"
 	}
 }

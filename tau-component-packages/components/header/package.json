@@ -27,6 +27,9 @@
       "checkbox",
       "radio"
   ],
+  "parent-constraint": [
+    "page"
+  ],
   "section": "header",
   "class": [
     {
