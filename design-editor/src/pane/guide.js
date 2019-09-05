@@ -83,7 +83,9 @@ class Guide {
 
 		if (!$target.hasClass(CLASS_NAME.GUIDE_ELEMENT) && !$target.closest(`.${CLASS_NAME.GUIDE_ELEMENT}`).length) {
 			isComponentAllowedInThisContainer = $.inArray(packageInfo.name, allowedPackagenameListInContainer) !== -1;
-
+			/**
+			 * Check if proper container element exists
+			 */
 			if (packageInfo.options['parent-constraint']) {
 				if (!$target.closest(containerInfo.$element).length) {
 					return;
@@ -103,6 +105,18 @@ class Guide {
 			} else {
 				// element does not exists in container or element is outside container
 				rule = this._getInsertedRule(targetInfo, containerInfo.$element, isRestrict, containerInfo);
+			}
+
+			/**
+			 * @todo This should be fixed during refactor
+			 * Header as a element had parent-constraint but cannot be append to the end of siblings elements
+			 * like it is coded in 93. line
+			 */
+			if (packageInfo.name == 'header') {
+				rule = {
+					direction: 'before',
+					element: containerInfo.$element.children().first()
+				};
 			}
 
 			if (
@@ -264,14 +278,17 @@ class Guide {
         return $container.children('[' + INTERNAL_ID_ATTRIBUTE + ']' + selector);
     }
 
-    /**
-     * Insert Rule
-     * @param {Object} targetInfo
-     * @param {jQuery} $container
-     * @param {boolean} isRestrict
-     * @returns {*}
-     * @private
-     */
+	/**
+	 * Responsible for way in which element is inserted to document
+	 * before or after elements in the same scope
+	 * @param {Object} targetInfo - current target (first element under mouse pointer)
+	 * @param {jQuery} $container - container defined by component to be its parent
+	 * @param {boolean} isRestrict
+	 * @returns {*} - object for proper rule that insert new component to the DOM has two properties:
+	 *  - direction has value 'before', 'after' or 'append'
+	 *  - element it's HTML element (for before and after direction it is sibling, for append it is parent element)
+	 * @private
+	 */
     _getInsertedRule(targetInfo, $container, isRestrict, containerInfo) {
         var $target = $(targetInfo.element),
             pos = targetInfo.pointFromIFrame,

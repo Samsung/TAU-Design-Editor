@@ -4,6 +4,7 @@
   "description": "TAU Design editor",
   "main": ".",
   "scripts": {
+    "eslint" : "eslint design-editor/",
     "lint": "lint-diff $TRAVIS_COMMIT_RANGE",
     "test:watt": "echo \"Testing WATT...\" && cross-env EDITOR=WATT mocha --reporter progress --require babel-polyfill --require @babel/register --require jsdom-global/register --recursive",
     "test:vsc": "echo \"Testing VSC...\" && cross-env EDITOR=VSC mocha --reporter progress --require babel-polyfill --require @babel/register --require jsdom-global/register --recursive",
