@@ -994,7 +994,7 @@ class DesignEditor extends DressElement {
 		if (this.isVisible()) {
 			element = this._getElementById(elementId)[0];
 
-			containerExpander.rollOut(element);
+			containerExpander.rollOut(element, { packageManager, Package });
 
 			const container = this.getContainerByElement(element);
 			if (container) {

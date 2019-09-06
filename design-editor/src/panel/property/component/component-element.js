@@ -170,12 +170,9 @@ class Component extends DressElement {
             self._onSelectElement(elementId, false);
         });
 
-        eventEmitter.on(EVENTS.ChangeProfile, self._changeProfile.bind(self));
-
-        eventEmitter.on(EVENTS.ChangeShape, self._changeShape.bind(self));
-
-        eventEmitter.on(EVENTS.ActiveEditorUpdated, self._onUpdateActiveEditor.bind(self));
-
+		eventEmitter.on(EVENTS.ChangeProfile, self._changeProfile.bind(self));
+		eventEmitter.on(EVENTS.ChangeShape, self._changeShape.bind(self));
+		eventEmitter.on(EVENTS.ActiveEditorUpdated, self._onUpdateActiveEditor.bind(self));
 		eventEmitter.on(EVENTS.TAULoaded, self._render.bind(self, true));
     }
 
