@@ -2,6 +2,7 @@
   "label": "Listview",
   "selector": ".ui-listview",
   "attachable": true,
+  "draggable": true,
   "type": "container-component",
   "displayOrderWeight": 500,
   "resources": {
