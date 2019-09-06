@@ -5,6 +5,8 @@ import { containerExpander } from '@/pane/utils/design-editor-element-utils';
 describe('design-editor-element-utils', () => {
 	describe('containerExpander', () => {
 		let container, initialHeight, initialOverflowY;
+		let getPackageManagerMock, PackageMock;
+
 		const getBox = (size) => {
 			const div = document.createElement('div');
 			div.style.height = `${size}px`;
@@ -27,14 +29,31 @@ describe('design-editor-element-utils', () => {
 
 			initialHeight = container.style.height;
 			initialOverflowY = container.style.overflowY;
+
+			getPackageManagerMock = (type) => ({
+				getPackages: () => ({
+					getPackageByElement: () => ({
+						options: { type }
+					})
+				})
+			});
+
+			PackageMock = {
+				TYPE: {
+					COMPONENT: ''
+				}
+			};
 		});
 
-		it('expand container to roll out and roll back when it\' height is smaller than its children height', () => {
+		it('expand container to roll out and roll back when it\'s height is smaller than its children height', () => {
 			container.appendChild(getBox(100));
 			container.appendChild(getBox(100));
 			container.appendChild(getBox(100));
 
-			containerExpander.rollOut(container);
+			containerExpander.rollOut(container, {
+				packageManager: getPackageManagerMock('container-component'),
+				Package: PackageMock
+			});
 			expect(parseInt(container.style.height)).to.be.above(parseInt('100px'));
 
 			containerExpander.rollBack(container.getAttribute('data-id'));
@@ -44,7 +63,10 @@ describe('design-editor-element-utils', () => {
 		it('don\'t change style of element whose height is larger or equal than its children\'s height', () => {
 			container.appendChild(getBox(80));
 
-			containerExpander.rollOut(container);
+			containerExpander.rollOut(container, {
+				packageManager: getPackageManagerMock('container-component'),
+				Package: PackageMock
+			});
 			hasInitialStyles();
 
 			containerExpander.rollBack(container.getAttribute('data-id'));
@@ -58,7 +80,11 @@ describe('design-editor-element-utils', () => {
 		});
 
 		it('doesn\'t roll out element that is not a container', () => {
-			// TODO
+			containerExpander.rollOut(container, {
+				packageManager: getPackageManagerMock('standalone-component'),
+				Package: PackageMock
+			});
+			expect(containerExpander.wasExtended).to.equal(false);
 		});
 	});
 });

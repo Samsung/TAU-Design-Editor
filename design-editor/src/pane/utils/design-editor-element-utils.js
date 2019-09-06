@@ -7,8 +7,12 @@ export const containerExpander = {
 	initialStyle: {},
 	element: null,
 	wasExtended: false,
-	rollOut: function(element) {
+	rollOut: function(element, { packageManager, Package }) {
 		this._reset();
+
+		if (!this._isContainer(element, { packageManager, Package })) {
+			return;
+		}
 
 		this.element = element;
 		this.initialStyle.height = element.style.height;
@@ -35,5 +39,12 @@ export const containerExpander = {
 		this.initialStyle = {};
 		this.elementId = '';
 		this.wasExtended = false;
+	},
+	_isContainer: function(element, { packageManager, Package }) {
+		const packageElement = packageManager
+			.getPackages(Package.TYPE.COMPONENT)
+			.getPackageByElement(element);
+
+		return packageElement.options.type === 'container-component';
 	}
 };
