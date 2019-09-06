@@ -85,6 +85,7 @@ class Attribute extends DressElement {
         self._$selectedElement = null;
 
         self.events = {
+			'click #backgroundColorClear': 'resetToInitialBackgroundColorValue',
             'change #fileForBackground': 'onSetRelativePathForBackground',
             'click  #fileForBackgroundClear': 'onClearBackgroundImage',
             'change #cfFiles': 'onSelectImageForCoverFlow',
@@ -485,7 +486,45 @@ class Attribute extends DressElement {
                 self._initTabs(attribute, list);
             }
         });
-    }
+	}
+
+	/**
+     * Handler to click for reset background color button
+	 * Set background color value to default for element and input
+     * @param {Event} event
+     */
+	resetToInitialBackgroundColorValue() {
+		const activeDesignEditor = AppManager.getActiveDesignEditor();
+		// update style to set value of background color implemented by TAU
+		activeDesignEditor
+			.getModel()
+			.updateStyle(
+				this._selectedElementId,
+				'backgroundColor',
+				''
+			);
+		// set value implemented by TAU to input
+		this._updateAttributes(activeDesignEditor.getModel().getElement(this._selectedElementId), 'background');
+		// hide reset button
+		document.getElementById('backgroundColorClear').style.display = 'none';
+	}
+
+	/**
+     * Show/Hide reset background color button
+     * @param {string} id data-id of changed element
+     */
+	displayBackgroundColorResetButton(id) {
+		// get currently active widget
+		const changedElement = AppManager.getActiveDesignEditor()._getElementById(id).get(0),
+			resetBackgroundColorButton = document.getElementById('backgroundColorClear');
+		if (changedElement.style.backgroundColor) {
+			// display background reset button when background color exists in inline style of element
+			resetBackgroundColorButton.style.display = 'block';
+		} else {
+			// not display background reset button because background color doesn't exist in inline style of element
+			resetBackgroundColorButton.style.display = 'none';
+		}
+	}
 
     _applyBackgroundImageInfo(fileName) {
         console.log('_applyBackgroundImageInfo', fileName);
@@ -641,8 +680,11 @@ class Attribute extends DressElement {
                     model.updateAttribute(this._selectedElementId, type, value);
                 } else {
                     console.error('The value of the '+type+' is invalid!');
-                }
-            } else {
+				}
+			} else if (name === 'backgroundColor') {
+				model.updateStyle(this._selectedElementId, name, value);
+				this.displayBackgroundColorResetButton(this._selectedElementId);
+			} else {
                 model.updateStyle(this._selectedElementId, name, value);
             }
         }
@@ -842,7 +884,8 @@ class Attribute extends DressElement {
             case 'borderColor':
                 listElements[item].val(rgba2hex(value));
                 break;
-            case 'backgroundColor':
+			case 'backgroundColor':
+				this.displayBackgroundColorResetButton(el.id);
                 listElements[item].val(rgba2hex(value));
                 break;
             case 'backgroundImage':
