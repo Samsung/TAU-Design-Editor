@@ -12,6 +12,8 @@ import {ViewType} from '../../../static';
 import {StateManager} from '../../../system/state-manager';
 import utils from '../../../utils/utils';
 
+import { _compareVersions } from './utils/component-element-utils';
+
 const TYPE_DESIGN_EDITOR = ViewType.Design;
 
 let componentsInfo = null;
@@ -45,35 +47,6 @@ function dragInterval() {
     eventEmitter.emit(EVENTS.ComponentDragged, event, dragInfo.componentInfo);
 }
 
-/**
- * Returns true if version requirement is met, otherwise false.
- * In case of missing parameters it returns true.
- * @param {string} currentVersion
- * @param {string} requiredVersion
- */
-function _compareVersions(currentVersion, requiredVersion) {
-	if (!currentVersion || !requiredVersion) {
-		return true;
-	}
-
-	const current = currentVersion.split('.').map((s) => parseInt(s));
-	const required = requiredVersion.split('.').map((s) => parseInt(s));
-	const minLength = Math.min(current.length, required.length);
-
-	for (let i = 0; i < minLength; i++) {
-		if (current[i] > required[i]) {
-			return true;
-		} else if (current[i] < required[i]) {
-			return false;
-		}
-	}
-
-	if (current.length > minLength) {
-		return true;
-	}
-
-	return false;
-}
 
 /**
  *
