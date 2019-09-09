@@ -1,6 +1,6 @@
 {
     "label": "Input Number",
-    "selector": "input[type=number], .ui-text-input-container.ui-text-input-type-number",
+    "selector": "input[type=number], .ui-text-input-container, .ui-text-input-container.ui-text-input-type-number",
     "baseElementSelector": "input[type=number]",
     "attachable": true,
     "displayOrderWeight": 800,

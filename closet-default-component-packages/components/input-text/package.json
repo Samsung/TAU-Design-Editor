@@ -1,7 +1,7 @@
 {
     "name": "input-text",
     "label": "Input Text",
-    "selector": "input[type=text], .ui-text-input-container.ui-text-input-type-text",
+    "selector": "input[type=text], .ui-text-input-container, .ui-text-input-container.ui-text-input-type-text",
     "baseElementSelector": "input[type=text]",
     "attachable": true,
     "displayOrderWeight": 900,

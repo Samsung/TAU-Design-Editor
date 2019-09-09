@@ -80,5 +80,7 @@
       "size": "full",
       "thickness": "null"
     }
-  }
+  },
+  "resizable": true,
+  "draggable": true
 }
