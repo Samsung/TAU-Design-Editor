@@ -1,6 +1,6 @@
 {
   "label": "Progress",
-  "selector": ".ui-circle-progress, .ui-progress",
+  "selector": ".ui-circle-progress, .ui-progress, .ui-progressbar",
   "attachable": true,
   "type": "standalone-component",
   "displayOrderWeight": 1500,
