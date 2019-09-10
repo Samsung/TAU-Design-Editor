@@ -91,6 +91,7 @@ class Preview extends DressElement {
 	 */
 	show({editor, callback}) {
 		const $targetFrame = editor && editor.getDesignViewIframe(),
+			// FIXME: $targetFrame is hidden for TAU remote samples and its position is 0.
 			position = ($targetFrame && $targetFrame[0].getBoundingClientRect()) || {top: 0, left: 0};
 
 		if ($targetFrame && editor) {
@@ -125,13 +126,12 @@ class Preview extends DressElement {
 			styles = {
 				width: `${screenConfig.width}px`,
 				height: `${screenConfig.height}px`,
-				transform: `scale(${ratio}) translate(-50% -50%)`
+				transform: `scale(${ratio})`
 			};
 
 		if (position.top) {
 			styles.top = position.top;
 			styles.left = position.left;
-			styles.transform = `scale(${ratio})`;
 		}
 
 		$elem.addClass(`closet-preview-shape-${screenConfig.shape}`)
