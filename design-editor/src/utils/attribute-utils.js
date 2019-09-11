@@ -22,8 +22,7 @@ export default {
 				if (event.target.readyState === FileReader.DONE) {
 					const
 						filePath = path.join('images', file.name),
-						writePath = pathUtils.createProjectPath(filePath),
-						readPath = pathUtils.createProjectPath(filePath, true);
+						writePath = pathUtils.createProjectPath(filePath);
 
 					utils.checkGlobalContext('writeFile') (
 						writePath,
@@ -36,16 +35,16 @@ export default {
 								getDEModel.updateAttribute(
 									elementId,
 									changedAttribute,
-									readPath
+									filePath
 								);
 							} else {
 								getDEModel.updateStyle(
 									elementId,
 									changedAttribute,
-									`url("${readPath}")`
+									`url("${filePath}")`
 								);
 							}
-							changeImageInfo(readPath);
+							changeImageInfo(filePath);
 						}
 					);
 				}
