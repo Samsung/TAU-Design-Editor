@@ -77,6 +77,54 @@ export default {
 				reader.readAsBinaryString(file);
 			});
 		}
-	}
+	},
 
+	/**
+	 * Set a source to interactvie model
+	 * @param {Event} event
+	 * @param {string} targetPath path of target directory
+	 * @param {string} elementId id of changed element
+	 * @param {function} changeModelInfo function that changed info about element in sidebar
+	 */
+	setModelSource(event, targetPath, elementId, changeModelInfo) {
+		[].slice.call(event.target.files).forEach(file => {
+			const reader = new FileReader();
+			reader.addEventListener('loadend', event => {
+				if (event.target.readyState === FileReader.DONE) {
+					const
+						filePath = path.join(targetPath, file.name),
+						writePath = pathUtils.createProjectPath(filePath);
+
+					utils.checkGlobalContext('writeFile') (
+						writePath,
+						event.target.result, {
+							encoding: 'binary'
+						},
+						() => {
+							const ext = file.name.match(/.(\w*)$/)[1];
+							if (ext === undefined) {
+								return;
+							}
+
+							const getDEModel = AppManager.getActiveDesignEditor().getModel();
+							if (['obj', 'fbx', 'gltf'].indexOf(ext) !== -1) {
+								getDEModel.updateAttribute(elementId, 'src', filePath);
+								// Remove default background color when selecting model file
+								getDEModel.updateStyle(elementId, 'background', 'none');
+
+								if (ext !== 'obj') {
+									getDEModel.removeAttribute(elementId,'mtl');
+								}
+							} else if (ext === 'mtl') {
+								getDEModel.updateAttribute(elementId, 'mtl', filePath);
+							}
+
+							changeModelInfo(filePath, ext);
+						}
+					);
+				}
+			});
+			reader.readAsBinaryString(file);
+		});
+	}
 };

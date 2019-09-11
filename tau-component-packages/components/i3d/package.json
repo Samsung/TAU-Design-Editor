@@ -1,24 +1,35 @@
 {
-    "name": "i3d",
-    "label": "Interactive 3D Model",
+    "label": "Interactive3D",
     "selector": ".ui-i3d",
     "attachable": true,
     "type": "interactive-container-component",
     "displayOrderWeight": 200,
     "resources": {
+      "css": [
+        "../../tau/theme/tau.min.css"
+      ],
+      "js": "../../tau/tau.min.js",
       "icon": {
         "mobile": "./i3d.png",
         "wearable": "./i3d.png",
         "tv": "./i3d.png"
       }
     },
-    "attributes": {
-        "src": {
-            "label": "src",
-            "type": "src"
+    "externalResources": [
+      {
+        "src": "./lib/tau/libs/r-type.min.js",
+        "attributes": {
+          "charset": "utf-8"
         }
+      }
+    ],
+    "template": "<div class=\"ui-i3d\" style=\"height: 200px; width: 200px; display:block; background:#cacaca;\"></div>",
+    "generator": {
+      "constructor": "tau.widget.Interactive3D",
+      "parameter": {
+        "options": {}
+      }
     },
-    "template": "<div class=\"ui-i3d\" style=\"height: 200px; width: 200px; display:block; background:#cacaca\"></div>",
     "resizable": true,
     "draggable": true,
     "new": true,
