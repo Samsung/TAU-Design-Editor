@@ -16,7 +16,6 @@ import { _compareVersions } from './utils/component-element-utils';
 
 const TYPE_DESIGN_EDITOR = ViewType.Design;
 
-let componentsInfo = null;
 let waitForInterval = false;
 const RENDER_TIMEOUT = 300; //ms
 let renderTimeoutHandler = null;
@@ -85,76 +84,71 @@ class Component extends DressElement {
         this._unsetDraggable(this._$componentButtonList);
     }
 
-    /**
-     * Build main DOM structure and initialize all properties
-     * @private
-     */
-    _initialize() {
-        var self = this,
-            componentsContainers = {},
-            componentsChildren = {};
+	/**
+	 * Build main DOM structure and initialize all properties
+	 * @private
+	 */
+	_initialize() {
+		const componentsContainers = {},
+			componentsChildren = {};
 
-        self._$componentButtonList = null;
-        self._componentPackage = packageManager.getPackages(Package.TYPE.COMPONENT);
-        componentsInfo = self._componentPackage._packages;
+		this._$componentButtonList = null;
+		this._componentPackage = packageManager.getPackages(Package.TYPE.COMPONENT);
+		this.componentsInfo = this._componentPackage._packages;
 
-        Object.keys(componentsInfo).forEach((componentName) => {
-            var componentOptions = componentsInfo[componentName].options;
+		Object.keys(this.componentsInfo).forEach((componentName) => {
+			const componentOptions = this.componentsInfo[componentName].options;
 
-            if (componentOptions.constraint) {
-                componentOptions.constraint.forEach((constraint) => {
-                    if (componentsContainers[constraint]) {
-                        componentsContainers[constraint].push(componentName);
-                    } else {
-                        componentsContainers[constraint] = [componentName];
-                    }
-                    if (componentsChildren[componentName]) {
-                        componentsChildren[componentName].push(constraint);
-                    } else {
-                        componentsChildren[componentName] = [constraint];
-                    }
-                });
-            }
-        });
+			if (componentOptions.constraint) {
+				componentOptions.constraint.forEach((constraint) => {
+					if (componentsContainers[constraint]) {
+						componentsContainers[constraint].push(componentName);
+					} else {
+						componentsContainers[constraint] = [componentName];
+					}
+					if (componentsChildren[componentName]) {
+						componentsChildren[componentName].push(constraint);
+					} else {
+						componentsChildren[componentName] = [constraint];
+					}
+				});
+			}
+		});
 
-        self._componentsContainers = componentsContainers;
-        self._componentsChildren = componentsChildren;
+		this._componentsContainers = componentsContainers;
+		this._componentsChildren = componentsChildren;
 
-        $.get(path.join(AppManager.getAppPath().src, TEMPLATE_FILE_PATH, TEMPLATE_FILE_NAME), (templateString, err) => {
-            if (templateString) {
-                self.$el.append(mustache.render(templateString));
-                self._render();
-            } else {
-                throw new Error(err);
-            }
-        });
-    }
+		$.get(path.join(AppManager.getAppPath().src, TEMPLATE_FILE_PATH, TEMPLATE_FILE_NAME), (templateString, err) => {
+			if (templateString) {
+				this.$el.append(mustache.render(templateString));
+				this._render();
+			} else {
+				throw new Error(err);
+			}
+		});
+	}
 
-    /**
-     * Change component profil
-     * @private
-     */
-    _changeProfile(profile) {
-        let self = this;
+	/**
+	 * Change component profil
+	 * @private
+	 */
+	_changeProfile(profile) {
+		this._profile = profile;
+		this._setIcon(this._$componentButtonList.toArray());
 
-        self._profile = profile;
-        self._setIcon(self._$componentButtonList);
+		this._render();
+	}
 
-        self._render();
-    }
+	/**
+	 * Change component shape
+	 * @private
+	 */
+	_changeShape(shape) {
+		this._shape = shape;
+		this._setIcon(this._$componentButtonList.toArray());
 
-    /**
-     * Change component shape
-     * @private
-     */
-    _changeShape(shape) {
-        let self = this;
-
-        self._shape = shape;
-        self._setIcon(self._$componentButtonList);
-
-        self._render();
-    }
+		this._render();
+	}
 
     /**
      * Bind editor events
@@ -263,25 +257,23 @@ class Component extends DressElement {
 	 * @private
 	 */
 	_renderCallback() {
-		const self = this;
-		let componentsInfoProfile = null;
-
-		if (componentsInfo)  {
-			componentsInfoProfile = self._selectComponentsToDeviceProfile(componentsInfo);
-			self._getItemTemplate(componentsInfoProfile)
-				.then((template) => {
-					const $content = self.$el.find('.closet-component-element-content');
-
-					$content.html('');
-					$content.append($(template));
-					self._$componentButtonList = this.$el.find(`.${ITEM_BUTTON_CLASS}`);
-					self._setIcon(self._$componentButtonList);
-					self._setDraggable(self._$componentButtonList.filter(
-						':not(.component-disabled), :not(.not-available)'));
-				}, (err) => {
-					throw err;
-				});
+		if (!this.componentsInfo) {
+			return;
 		}
+		const componentsInfoProfile = this._selectComponentsToDeviceProfile(this.componentsInfo);
+		this._getItemTemplate(componentsInfoProfile)
+			.then((template) => {
+				const $content = this.$el.find('.closet-component-element-content');
+
+				$content.html('');
+				$content.append($(template));
+				this._$componentButtonList = this.$el.find(`.${ITEM_BUTTON_CLASS}`);
+				this._setIcon(this._$componentButtonList.toArray());
+				this._setDraggable(this._$componentButtonList.filter(
+					':not(.component-disabled), :not(.not-available)'));
+			}, (err) => {
+				throw err;
+			});
 	}
 
     /**
@@ -312,42 +304,46 @@ class Component extends DressElement {
         });
     }
 
-    /**
-     * All Component should be had own Icon that display on component tab.
-     * @param {string} $itemList
-     * @private
-     */
-	_setIcon($itemList = $([]) /* Compnent list*/) {
-        var name,
-            options,
-            imgPath;
+	/**
+	 * All Component should be had own Icon that display on component tab.
+	 * @param {Element[]} $itemList -Compnent list
+	 * @private
+	 */
+	_setIcon(itemList) {
 
-        $itemList.each((index, element) => {
-            let icon = null;
+		itemList = itemList || [];
 
-            name = $(element).data('component-name');
-            options = componentsInfo[name].options;
-            icon = options.resources.icon;
+		const getComponentIconPath = component => {
+			const icon = component.options.resources.icon;
 
-            if (typeof icon !== 'string' && icon) {
-                icon = icon[this._profile];
-                if (typeof icon !== 'string' && icon) {
-                    icon = icon[this._shape];
-                }
-            }
+			const iconPath =
+				icon && icon[this._profile] && icon[this._profile][this._shape] ||
+				icon && icon[this._profile] ||
+				icon;
 
-            if (typeof icon === 'string' && icon) {
-                imgPath = path.join(options.path, icon);
-                // on Windows path separator is \, having this not encoded in css url is invalid and images are not loaded
-                imgPath = imgPath.replace(/\\/g, '/');
-                $(element).css('background-image', 'url("' + imgPath + '")')
-                    .removeClass('closet-component-element-list-item-noicon');
-            } else {
-                $(element).css('background-image', 'none')
-                    .addClass('closet-component-element-list-item-noicon');
-            }
-        });
-    }
+			return iconPath;
+		};
+
+		itemList.forEach(element => {
+			const name = $(element).data('component-name');
+			const component = this.componentsInfo[name];
+			const iconRelPath = getComponentIconPath(component);
+
+			if (typeof iconRelPath === 'string' && iconRelPath) {
+				const imgPath = path.join(component.options.path, iconRelPath)
+					// fix for Windows paths
+					.replace(/\\/g, '/');
+
+				$(element)
+					.css('background-image', `url(${imgPath})`)
+					.removeClass('closet-component-element-list-item-noicon');
+			} else {
+				$(element)
+					.css('background-image', 'none')
+					.addClass('closet-component-element-list-item-noicon');
+			}
+		});
+	}
 
     /**
      * Method load external resources like js and css
@@ -433,18 +429,16 @@ class Component extends DressElement {
      * @private
      */
     _onDragStart(e, ui) {
-        var self = this,
-            name = $(e.target).data('component-name'),
-            componentInfo = componentsInfo[name],
-            possibleContainers = self._componentsContainers[name],
-            tooltipText;
+		const name = $(e.target).data('component-name'),
+			componentInfo = this.componentsInfo[name],
+			possibleContainers = this._componentsContainers[name];
 
-        // to cache
+		// to cache
         dragInfo.name = name;
         dragInfo.componentInfo = componentInfo;
 
         elementSelector.unSelect();
-        self._createDragHelper(ui.helper);
+		this._createDragHelper(ui.helper);
 
         // append external libraries required by component
         if (componentInfo.options && componentInfo.options.externalResources) {
@@ -454,12 +448,15 @@ class Component extends DressElement {
         }
 
         if (possibleContainers.length) {
-            tooltipText = 'Possible containers ' + (componentInfo.options.label ? ('for ' + componentInfo.options.label + ' : ') : ': ');
+			let tooltipText = `Possible containers ${
+				componentInfo.options.label ? `for ${componentInfo.options.label} : ` : ': '
+			}`;
             tooltipText += possibleContainers.reduce((containersText, currentContainer, index) => {
                 if (index === 1) {
-                    return componentsInfo[containersText].options.label + ', ' + componentsInfo[currentContainer].options.label;
+					return `${this.componentsInfo[containersText].options.label},
+						${this.componentsInfo[currentContainer].options.label}`;
                 }
-                return containersText + ', ' + componentsInfo[currentContainer].options.label;
+				return `${containersText}, ${this.componentsInfo[currentContainer].options.label}`;
             }) + '.';
 
             // show tooltip-panel
