@@ -284,7 +284,7 @@ class Attribute extends DressElement {
 						typeElement.setAttribute('attr-name', optionName);
 						typeElement.$el.on('change', (e) => {
 							const value = (typeName === 'checkbox') ? e.target.checked : typeElement.value;
-							if (designEditor) {
+							if (designEditor && value !== undefined) {
 								designEditor
 									.getModel()
 									.updateAttribute(self._selectedElementId, optionName, value);
@@ -574,11 +574,13 @@ class Attribute extends DressElement {
      * @param {Event} event
      */
 	onSetRelativePathForBackground(event) {
-		attributeUtils.setImageSource(event,
+		attributeUtils.writeMediaFileWhenIsLoaded(event, filePath => attributeUtils.setImageSource(
+			filePath,
 			'backgroundImage',
 			this._selectedElementId,
-			this._applyBackgroundImageInfo.bind(this));
-    }
+			this._applyBackgroundImageInfo.bind(this)));
+	}
+
 
     /**
      * coverflow image selection callback
