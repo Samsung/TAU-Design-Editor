@@ -1,52 +1,44 @@
 <div class="closet-interactive-element-container">
-    <div id="model-selector-container">
+    <div id="model-editor-container">
         <li>
-            <span class='closet-attribute-common-label-long'>model</span>
-            <select id="model-selector" name='model' class='closet-attribute-common-textbox closet-attribute-common-border-style-long'>
-                <option value="" selected>Choose model</option>
-            </select>
-        </li>
-   </div>
-    <div id="model-editor-container" style="display: none;">
-        <li>
-            <span class='closet-attribute-common-label-long'>image</span>
-            <img id="model-image" class="closet-attribute-common-border-style">
+            <span class="closet-attribute-common-label-long">model</span>
+            <button class="btn" id="srcModelBtn">Choose File</button>
+            <input type="file" style="display:none;" id="srcModelFile" accept=".obj, .mtl, .gltf, .fbx, .bin, .png, .jpg, .jpeg" multiple>
         </li>
         <li>
-            <span class='closet-attribute-common-label-long'>type</span>
-            <select id="type-selector" name='type' class='closet-attribute-common-textbox closet-attribute-common-border-style-long'>
-            </select>
+            <span class="closet-attribute-common-label-long">src</span>
+            <input type="text" name="i3d-src" class="closet-attribute-common-textbox long-controls" readonly>
         </li>
         <li>
-            <span class='closet-attribute-common-label'>width</span>
-            <input type='text' name='i3d-width' class='native-key-bindings closet-attribute-common-textbox'>
-            <span class='closet-attribute-common-label'>height</span>
-            <input type='text' name='i3d-height' class='native-key-bindings closet-attribute-common-textbox'>
+            <span class="closet-attribute-common-label">width</span>
+            <input type="text" name="i3d-width" class="native-key-bindings closet-attribute-common-textbox" placeholder="400">
+            <span class="closet-attribute-common-label">height</span>
+            <input type="text" name="i3d-height" class="native-key-bindings closet-attribute-common-textbox" placeholder="300">
         </li>
         <li>
-            <span class='closet-attribute-common-label-long'>position</span>
-            <input type='text' name='i3d-position' class='closet-attribute-common-textbox'>
+            <span class="closet-attribute-common-label-long">position</span>
+            <input type="text" name="i3d-position" class="closet-attribute-common-textbox long-controls" placeholder="0 0 0">
         </li>
         <li>
-            <span class='closet-attribute-common-label-long'>scale</span>
-            <input type='text' name='i3d-scale' class='closet-attribute-common-textbox'>
+            <span class="closet-attribute-common-label-long">scale</span>
+            <input type="text" name="i3d-scale" class="closet-attribute-common-textbox long-controls" placeholder="1 1 1">
         </li>
         <li>
-            <span class='closet-attribute-common-label-long'>rotation</span>
-            <input type='text' name='i3d-rotation' class='closet-attribute-common-textbox'>
+            <span class="closet-attribute-common-label-long">rotation</span>
+            <input type="text" name="i3d-rotation" class="closet-attribute-common-textbox long-controls" placeholder="0 0 0">
         </li>
         <li>
-            <span class='closet-attribute-common-label-long'>light</span>
-            <input type='text' name='i3d-light' class='closet-attribute-common-textbox'>
+            <span class="closet-attribute-common-label-long">light</span>
+            <input type="text" name="i3d-light" class="closet-attribute-common-textbox long-controls" placeholder="0xffffff 0xffffff 1">
         </li>
         <li class="closet-text-element-list-buttons">
             <div class="closet-text-element-style-toggle">
                 <input type="checkbox" class="closet-text-element-toggle-input" name="i3d-controls">
-                <span class='toggle-inner'>Controls</span>
+                <span class="toggle-inner">Controls</span>
             </div>
             <div class="closet-text-element-style-toggle">
                 <input type="checkbox" class="closet-text-element-toggle-input" name="i3d-autoplay">
-                <span class='toggle-inner'>Autoplay</span>
+                <span class="toggle-inner">Autoplay</span>
             </div>
         </li>
     </div>

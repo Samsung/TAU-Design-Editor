@@ -201,7 +201,7 @@ class Attribute extends DressElement {
 			const { component } = modelElement;
 			if (component && component.name === 'i3d') {
 				$el.find('.closet-interactive-element').show();
-				interactiveElement.setData(modelElement);
+				interactiveElement.setData(iframeElement, modelElement);
 			} else {
 				$el.find('.closet-interactive-element').hide();
 			}
