@@ -1,5 +1,6 @@
 // @ts-nocheck
 import Library from './library';
+import {basename} from 'path';
 
 /**
  * @classdesc Module responsible for CSS Libraries
@@ -37,7 +38,8 @@ class CSSLibrary extends Library {
 	 * @returns {string} css selector of particular library
 	 */
 	getSelector() {
-		return `link[href$="${this.fileName}"]`;
+		const minifiedName = `${basename(this.fileName, 'css')}min.css`;
+		return `link[href$="${this.fileName}"], link[href$="${minifiedName}"]`;
 	}
 }
 
