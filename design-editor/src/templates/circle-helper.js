@@ -1,5 +1,8 @@
 /*global tau */
 /*jslint unparam: true */
+
+// this file should work with node 5.1
+
 document.addEventListener("tauinit", function () {
 	// This logic works only on circular device.
 	if (tau.support.shape.circle) {
@@ -9,69 +12,34 @@ document.addEventListener("tauinit", function () {
 });
 
 function onShow(event) {
-	var target = event.target,
-		pageIndicators = target.querySelectorAll(".ui-page-indicator"),
-		listViews = target.querySelectorAll(".ui-listview"),
-		selectors = target.querySelectorAll(".ui-selector"),
-		sliders = target.querySelectorAll("input[type=range], .ui-slider"),
-		toggleSwitches = target.querySelectorAll("input[data-appearance]"),
-		dimmers = target.querySelectorAll(".ui-dimmer"),
-		graphs = target.querySelectorAll(".ui-graph"),
-		progressBars = target.querySelectorAll(".ui-circle-progress");
+	var target = event.target;
 
-	pageIndicators.forEach(function (pageIndicatorEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(pageIndicatorEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.PageIndicator(pageIndicatorEl);
-		}
-	});
+	function Component(selector, tauConstructor) {
+		this.selector = selector;
+		this.tauConstructor = tauConstructor;
+	}
 
-	listViews.forEach(function (listViewEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(listViewEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.Listview(listViewEl);
-		}
-	});
+	var components = {
+		pageIndicators: new Component(".ui-page-indicator", tau.widget.PageIndicator),
+		listViews: new Component(".ui-listview", tau.widget.Listview),
+		selectors: new Component(".ui-selector", tau.widget.Selector),
+		sliders: new Component("input[type=range], .ui-slider", tau.widget.Slider),
+		toggleSwitches: new Component("input[data-appearance]", tau.widget.ToggleSwitch),
+		dimmers: new Component(".ui-dimmer", tau.widget.Dimmer),
+		graphs: new Component(".ui-graph", tau.widget.Graph),
+		progressBars: new Component(".ui-circle-progress", tau.widget.CircleProgressBar)
+	};
 
-	selectors.forEach(function (selectorEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(selectorEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.Selector(selectorEl);
-		}
-	});
+	Object.keys(components).forEach(function(componentName) {
+		var componentData = components[componentName];
+		var selectedComponents = target.querySelectorAll(componentData.selector);
 
-	sliders.forEach(function (sliderEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(sliderEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.Slider(sliderEl);
-		}
-	});
+		selectedComponents.forEach(function (componentEl) {
+			var closestPopup = tau.util.selectors.getClosestBySelector(componentEl, ".ui-popup");
+			if (closestPopup && event.type === "popupshow" || !closestPopup) {
+				componentData.tauConstructor(componentEl);
+			}
+		});
 
-	toggleSwitches.forEach(function (toggleSwitchEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(toggleSwitchEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.ToggleSwitch(toggleSwitchEl);
-		}
-	});
-
-	dimmers.forEach(function (dimmerEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(dimmerEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.Dimmer(dimmerEl);
-		}
-	});
-
-	graphs.forEach(function (graphEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(graphEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.Graph(graphEl);
-		}
-	});
-
-	progressBars.forEach(function(progressBarEl) {
-		var closestPopup = tau.util.selectors.getClosestBySelector(progressBarEl, ".ui-popup");
-		if (closestPopup && event.type === "popupshow" || !closestPopup) {
-			tau.widget.CircleProgressBar(progressBarEl);
-		}
 	});
 }
