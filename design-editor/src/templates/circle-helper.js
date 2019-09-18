@@ -16,7 +16,8 @@ function onShow(event) {
 		sliders = target.querySelectorAll("input[type=range], .ui-slider"),
 		toggleSwitches = target.querySelectorAll("input[data-appearance]"),
 		dimmers = target.querySelectorAll(".ui-dimmer"),
-		graphs = target.querySelectorAll(".ui-graph");
+		graphs = target.querySelectorAll(".ui-graph"),
+		progressBars = target.querySelectorAll(".ui-circle-progress");
 
 	pageIndicators.forEach(function (pageIndicatorEl) {
 		var closestPopup = tau.util.selectors.getClosestBySelector(pageIndicatorEl, ".ui-popup");
@@ -64,6 +65,13 @@ function onShow(event) {
 		var closestPopup = tau.util.selectors.getClosestBySelector(graphEl, ".ui-popup");
 		if (closestPopup && event.type === "popupshow" || !closestPopup) {
 			tau.widget.Graph(graphEl);
+		}
+	});
+
+	progressBars.forEach(function(progressBarEl) {
+		var closestPopup = tau.util.selectors.getClosestBySelector(progressBarEl, ".ui-popup");
+		if (closestPopup && event.type === "popupshow" || !closestPopup) {
+			tau.widget.CircleProgressBar(progressBarEl);
 		}
 	});
 }
