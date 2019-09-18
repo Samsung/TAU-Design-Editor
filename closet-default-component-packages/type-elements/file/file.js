@@ -5,10 +5,16 @@ const Mustache = require('mustache'),
 	$ = require('jquery'),
 	TypeElement = require('../type-element'),
 	AttributeUtils = require('../../../design-editor/src/utils/attribute-utils').default,
+	Editor = require('../../../design-editor/src/editor').default,
 	remote = require('remote'),
 	dialog = window.atom && remote.require('dialog'),
 	BrowserWindow = window.atom && remote.require('browser-window'),
-	TEMPLATE_BRACKETS = '<input type="file" class="inline-block btn' +
+	chooseFileInput = Editor.isVSC() ?
+		'<input type="file" class="inline-block btn' +
+		' closet-attr-file-file closet-attr-long-button" ' +
+		'accept=".mp4, .mov, .flac, .aac"/>'
+		:
+		'<input type="file" class="inline-block btn' +
 		' closet-attr-file-file closet-attr-long-button" />';
 
 module.exports = dress.factory('closet-type-file', {
@@ -23,7 +29,7 @@ module.exports = dress.factory('closet-type-file', {
 
 	onReady: function () {
 		const self = this;
-		self.$el.html(Mustache.render(TEMPLATE_BRACKETS, self.options));
+		self.$el.html(Mustache.render(chooseFileInput, self.options));
 		self.$el.find('.closet-attr-file-file').on('change', event => {
 			if (event.target.files[0]['type'].match('audio.*|video.*')) {
 				AttributeUtils.writeMediaFileWhenIsLoaded(event, (filePath) => self.setValue(filePath));
