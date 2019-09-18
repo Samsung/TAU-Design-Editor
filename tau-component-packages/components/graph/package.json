@@ -86,37 +86,6 @@
       "values": ""
     }
   ],
-  "styles": [
-    {
-      "icon": "./styles/time-series-chart.png",
-      "name": "Time series",
-      "template": {
-        "classList": ["ui-graph"],
-        "attributes": {
-          "data-mode": "continuos",
-          "data-graph": "line",
-          "data-axis-x-type": "index",
-          "data-color": "#FF0000",
-          "data-value": "[1, 2, 5]"
-        },
-        "style": {}
-      }
-    }, {
-      "icon": "./styles/bar-chart.png",
-      "name": "Multiple series bar chart",
-      "template": {
-        "classList": ["ui-graph"],
-        "attributes": {
-          "data-graph": "bar",
-          "data-mode": "continuous",
-          "data-axis-x-type": "order",
-          "data-color": "#FF0000,#00FF00",
-          "data-value": "[{\"x\":1,\"y\":15,\"label\":\"series 1\"},{\"x\":1,\"y\":8,\"label\":\"series 2\"},{\"x\":2,\"y\":18,\"label\":\"series 1\"},{\"x\":2,\"y\":20,\"label\":\"series 2\"},{\"x\":3,\"y\":0,\"label\":\"series 1\"},{\"x\":3,\"y\":9,\"label\":\"series 2\"},{\"x\":4,\"y\":12,\"label\":\"series 1\"},{\"x\":4,\"y\":19,\"label\":\"series 2\"}]"
-        },
-        "style": {}
-      }
-    }
-  ],
   "draggable": true,
   "new": true,
   "since": "1.1"
