@@ -1,6 +1,6 @@
 {
   "label": "Progress",
-  "selector": ".ui-circle-progress, .ui-progress, .ui-progressbar",
+  "selector": ".ui-progress, .ui-progress-circle",
   "attachable": true,
   "type": "standalone-component",
   "displayOrderWeight": 1500,
@@ -17,10 +17,10 @@
       "wearable": "./progress.png"
     }
   },
-  "template": "<progress class=\"ui-circle-progress\" max=\"100\" value=\"20\"></progress>",
+  "template": "<div class=\"ui-circle-progress ui-progress\" data-size=\"large\" data-type=\"circle\" data-value=\"20\"></div>",
   "snippet": [
     {
-      "snippet": "<progress class=\"ui-circle-progress\" id=\"${3:circle-progress}\" max=\"${1:100}\" value=\"${2:20}\"></progress>",
+      "snippet": "<div class=\"ui-circle-progress ui-progress\" data-size=\"large\" data-type=\"circle\" data-value=\"${0:100}\" ></div>",
       "widget": "Progress",
       "displayText": "tauProgressBar",
       "description": "Shows a control that indicates the progress percentage of an on-going operation by circular shape."
@@ -81,6 +81,6 @@
       "thickness": "null"
     }
   },
-  "resizable": true,
+  "resizable": false,
   "draggable": true
 }
