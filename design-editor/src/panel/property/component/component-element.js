@@ -3,6 +3,7 @@
 import path from 'path';
 import mustache from 'mustache';
 import $ from 'jquery';
+
 import {packageManager, Package} from 'content-manager';
 import {appManager as AppManager} from '../../../app-manager';
 import {DressElement} from '../../../utils/dress-element';
@@ -11,13 +12,12 @@ import {elementSelector} from '../../../pane/element-selector';
 import {ViewType} from '../../../static';
 import {StateManager} from '../../../system/state-manager';
 import utils from '../../../utils/utils';
-
 import { _compareVersions } from './utils/component-element-utils';
 
 const TYPE_DESIGN_EDITOR = ViewType.Design;
+const RENDER_TIMEOUT = 300; //ms
 
 let waitForInterval = false;
-const RENDER_TIMEOUT = 300; //ms
 let renderTimeoutHandler = null;
 
 const dragInfo = {
@@ -26,11 +26,12 @@ const dragInfo = {
     $dragHelper: null
 };
 
-const TEMPLATE_FILE_PATH = '/panel/property/component/',
-    TEMPLATE_FILE_NAME = 'component-element.html',
-    ITEM_TEMPLATE_FILE_NAME = 'component-element-item.html',
-    ITEM_BUTTON_CLASS = 'closet-component-element-list-item',
-    DEVICE_PROFILE_OPTION = 'device-profile';
+const
+	TEMPLATE_FILE_PATH = '/panel/property/component/',
+	TEMPLATE_FILE_NAME = 'component-element.html',
+	ITEM_TEMPLATE_FILE_NAME = 'component-element-item.html',
+	ITEM_BUTTON_CLASS = 'closet-component-element-list-item',
+	DEVICE_PROFILE_OPTION = 'device-profile';
 
 /**
  * Drag interval
@@ -52,23 +53,23 @@ function dragInterval() {
  */
 class Component extends DressElement {
 
-    /**
-     * Method called when CE is created.
-     */
-    onCreated() {
-        let screen = StateManager.get('screen');
-        this.classList.add('closet-property');
-        // @todo: change this to more configurable
-        this._profile = screen.profile || 'mobile';
-        this._shape = screen.shape || 'rectangle';
-        this._bindEditorEvents();
+	/**
+	 * Method called when CE is created.
+	 */
+	onCreated() {
+		const screen = StateManager.get('screen');
+		this.classList.add('closet-property');
+		// @todo: change this to more configurable
+		this._profile = screen.profile || 'mobile';
+		this._shape = screen.shape || 'rectangle';
+		this._bindEditorEvents();
 
-        /**
-         * Id of animation frame request created during item (widget) dragging.
-         * The id is used to clear request when the dragging is stopped.
-         */
-        this._dragAnimationFrameRequestId = 0;
-    }
+		/**
+		 * Id of animation frame request created during item (widget) dragging.
+		 * The id is used to clear request when the dragging is stopped.
+		 */
+		this._dragAnimationFrameRequestId = 0;
+	}
 
     /**
      * Method called on attached element to DOM
@@ -77,12 +78,12 @@ class Component extends DressElement {
         this._initialize();
     }
 
-    /**
-     * Method called when element is destroyed
-     */
-    onDestroy() {
-        this._unsetDraggable(this._$componentButtonList);
-    }
+	/**
+	 * Method called when element is destroyed
+	 */
+	onDestroy() {
+		this._unsetDraggable(this._componentButtonList);
+	}
 
 	/**
 	 * Build main DOM structure and initialize all properties
@@ -92,7 +93,7 @@ class Component extends DressElement {
 		const componentsContainers = {},
 			componentsChildren = {};
 
-		this._$componentButtonList = null;
+		this._componentButtonList = [];
 		this._componentPackage = packageManager.getPackages(Package.TYPE.COMPONENT);
 		this.componentsInfo = this._componentPackage._packages;
 
@@ -134,7 +135,7 @@ class Component extends DressElement {
 	 */
 	_changeProfile(profile) {
 		this._profile = profile;
-		this._setIcon(this._$componentButtonList.toArray());
+		this._setIcon(this._componentButtonList);
 
 		this._render();
 	}
@@ -145,7 +146,7 @@ class Component extends DressElement {
 	 */
 	_changeShape(shape) {
 		this._shape = shape;
-		this._setIcon(this._$componentButtonList.toArray());
+		this._setIcon(this._componentButtonList);
 
 		this._render();
 	}
@@ -182,7 +183,7 @@ class Component extends DressElement {
 
         elementInfo = self._editor.getUIInfo(self._editor._getElementById(elementId));
 
-        self._$componentButtonList.each((index, component) => {
+		self._componentButtonList.forEach((component) => {
             var $component = $(component),
                 childName = $component.data('component-name'),
                 componenChildren = elementInfo && self._componentsChildren[elementInfo.package.name],
@@ -267,25 +268,26 @@ class Component extends DressElement {
 
 				$content.html('');
 				$content.append($(template));
-				this._$componentButtonList = this.$el.find(`.${ITEM_BUTTON_CLASS}`);
-				this._setIcon(this._$componentButtonList.toArray());
-				this._setDraggable(this._$componentButtonList.filter(
+				const _$componentButtonList = this.$el.find(`.${ITEM_BUTTON_CLASS}`);
+				this._componentButtonList = _$componentButtonList.toArray();
+				this._setIcon(this._componentButtonList);
+				this._setDraggable(_$componentButtonList.filter(
 					':not(.component-disabled), :not(.not-available)'));
 			}, (err) => {
 				throw err;
 			});
 	}
 
-    /**
-     * Clear dragable function
-     * @param {jQuery} $itemList
-     * @private
-     */
-    _unsetDraggable($itemList) {
-        if ($itemList) {
-            $itemList.draggable('destroy');
-        }
-    }
+	/**
+	 * Clear dragable function
+	 * @param {HTMLCollection} itemList
+	 * @private
+	 */
+	_unsetDraggable(itemList) {
+		if (itemList && itemList.length) {
+			$(itemList).draggable('destroy');
+		}
+	}
 
     /**
      * Set dragable function
@@ -306,11 +308,10 @@ class Component extends DressElement {
 
 	/**
 	 * All Component should be had own Icon that display on component tab.
-	 * @param {Element[]} $itemList -Compnent list
+	 * @param {Element[]} itemList -Compnent list
 	 * @private
 	 */
 	_setIcon(itemList) {
-
 		itemList = itemList || [];
 
 		const getComponentIconPath = component => {
@@ -422,13 +423,13 @@ class Component extends DressElement {
         }
     }
 
-    /**
-     * Callback for drag start
-     * @param {Event} e
-     * @param {Object} ui
-     * @private
-     */
-    _onDragStart(e, ui) {
+	/**
+	 * Callback for drag start
+	 * @param {Event} e
+	 * @param {Object} ui
+	 * @private
+	 */
+	_onDragStart(e, ui) {
 		const name = $(e.target).data('component-name'),
 			componentInfo = this.componentsInfo[name],
 			possibleContainers = this._componentsContainers[name];
@@ -561,25 +562,24 @@ class Component extends DressElement {
         return options;
     }
 
-    /**
-     * Read template and fill data about items
-     * @param {Object} info
-     * @returns {Promise}
-     * @private
-     */
-    _getItemTemplate(info) {
-        var options = this._componentsToOptions(info);
+	/**
+	 * Read template and fill data about items
+	 * @param {Object} info
+	 * @returns {Promise}
+	 * @private
+	 */
+	_getItemTemplate(info) {
+		const options = this._componentsToOptions(info);
+		const templatePath = path.join(
+			AppManager.getAppPath().src,
+			TEMPLATE_FILE_PATH,
+			ITEM_TEMPLATE_FILE_NAME
+		);
 
-        return new Promise((resolve, reject) => {
-            $.get(path.join(AppManager.getAppPath().src, TEMPLATE_FILE_PATH, ITEM_TEMPLATE_FILE_NAME), (templateString, err) => {
-                if (templateString) {
-                    resolve(mustache.render(templateString, options));
-                } else {
-                    reject(new Error(err));
-                }
-            });
-        });
-    }
+		return fetch(templatePath)
+			.then(response => response.text())
+			.then(templateString => mustache.render(templateString, options));
+	}
 
     /**
      * Return title of panel
