@@ -17,7 +17,8 @@
   },
   "template": "<header class=\"ui-header\"><h2 class=\"ui-title\">Header</h2></header>",
   "constraint": [
-      "toggleswitch",
+      "toggleswitch-wearable",
+      "toggleswitch-mobile",
       "iot-contextmenu",
       "box",
       "button",

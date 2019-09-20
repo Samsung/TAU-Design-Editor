@@ -45,6 +45,8 @@ export const containerExpander = {
 			.getPackages(Package.TYPE.COMPONENT)
 			.getPackageByElement(element);
 
-		return packageElement.options.type === 'container-component';
+		return packageElement &&
+			packageElement.options &&
+			packageElement.options.type === 'container-component';
 	}
 };

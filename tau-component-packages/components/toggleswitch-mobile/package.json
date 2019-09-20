@@ -1,7 +1,8 @@
 {
   "label": "Toggleswitch",
-  "selector": ".ui-toggle-container, input.ui-toggleswitch",
-  "baseElementSelector": "input.ui-toggle-switch",
+  "selector": ".ui-toggleswitch, .ui-toggle-switch",
+  "baseElementSelector": "input.ui-toggleswitch",
+  "version": "mobile",
   "attachable": true,
   "type": "standalone-component",
   "textEditable": false,
@@ -25,16 +26,9 @@
       "options": {}
     }
   },
-  "wrapContent": "<label></label>",
   "resizable": true,
   "draggable": true,
   "class": [
     "ui-toggleswitch-large"
-  ],
-  "parent-modifiers": [
-    {
-      "selector": "li",
-      "className": "li-has-toggle"
-    }
   ]
 }

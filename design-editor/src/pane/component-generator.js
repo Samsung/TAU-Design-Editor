@@ -76,21 +76,17 @@ class ComponentGenerator {
 			// @todo patch for iot template
 			activePage = method.document.querySelector('.ui-page-active');
 			tau.widget.Page(activePage).refresh();
-			toggleSwitch = activePage.querySelector('.ui-toggleswitch');
-			if (toggleSwitch) {
-				tau.widget.ToggleSwitch(toggleSwitch);
-			} else {
-				contextElement = componentElement;
-				parentComponentToBuildInfo = this._getPackageParentToBuildInfo(componentElement);
-				if (parentComponentToBuildInfo) {
-					parentComponentToBuild = componentElement.closest(parentComponentToBuildInfo.selector);
-					if (parentComponentToBuild) {
-						contextElement = parentComponentToBuild;
-					}
+
+			contextElement = componentElement;
+			parentComponentToBuildInfo = this._getPackageParentToBuildInfo(componentElement);
+			if (parentComponentToBuildInfo) {
+				parentComponentToBuild = componentElement.closest(parentComponentToBuildInfo.selector);
+				if (parentComponentToBuild) {
+					contextElement = parentComponentToBuild;
 				}
-				tau.engine.createWidgets(contextElement);
 			}
-			// end patch
+			tau.engine.createWidgets(contextElement);
+
 		}
 		return false;
 	}
