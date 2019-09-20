@@ -1,6 +1,5 @@
 'use babel';
 
-import fs from 'fs';
 import $ from 'jquery';
 import {packageManager, Package} from 'content-manager';
 import {appManager as AppManager} from '../../../app-manager';
@@ -11,8 +10,7 @@ import {AttributeLayoutElement} from './attribute-element-layout';
 import {AttributeSmartThingsElement} from './attribute-element-sthings';
 import {AttributeInteractiveElement} from './attribute-element-interactive';
 import {AttributeImageElement} from './attribute-element-image';
-import {AttributeCheckboxElement} from './attribute-element-checkbox'
-import editor from '../../../editor';
+import {AttributeCheckboxElement} from './attribute-element-checkbox';
 import utils from '../../../utils/utils';
 import attributeUtils from '../../../utils/attribute-utils';
 

@@ -1,0 +1,35 @@
+{
+  "label": "Toggleswitch",
+  "selector": "div.ui-toggleswitch",
+  "version": "wearable",
+  "baseElementSelector": ".ui-toggleswitch",
+  "attachable": true,
+  "type": "standalone-component",
+  "textEditable": false,
+  "displayOrderWeight": 600,
+  "resources": {
+    "css": [
+      "../../tau/theme/tau.min.css",
+      "../../tau/theme/tau.circle.min.css"
+    ],
+    "js": "../../tau/tau.min.js",
+    "icon": {
+      "mobile": "./mobile-toggle.png",
+      "tv": "./mobile-toggle.png",
+      "wearable": "./toggleswitch.png"
+    }
+  },
+  "template": "<div class=\"ui-toggleswitch\"><input class=\"ui-switch-input\" type=\"checkbox\" checked /><div class=\"ui-switch-button\"></div></div>",
+  "wrapContent": "<label></label>",
+  "resizable": true,
+  "draggable": true,
+  "class": [
+    "ui-toggleswitch-large"
+  ],
+  "parent-modifiers": [
+    {
+      "selector": "li",
+      "className": "li-has-toggle"
+    }
+  ]
+}

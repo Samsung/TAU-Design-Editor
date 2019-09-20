@@ -102,16 +102,11 @@ class Component extends DressElement {
 
 			if (componentOptions.constraint) {
 				componentOptions.constraint.forEach((constraint) => {
-					if (componentsContainers[constraint]) {
-						componentsContainers[constraint].push(componentName);
-					} else {
-						componentsContainers[constraint] = [componentName];
-					}
-					if (componentsChildren[componentName]) {
-						componentsChildren[componentName].push(constraint);
-					} else {
-						componentsChildren[componentName] = [constraint];
-					}
+					componentsContainers[constraint] = componentsContainers[constraint] || [];
+					componentsChildren[componentName] = componentsChildren[componentName] || [];
+
+					componentsContainers[constraint].push(componentName);
+					componentsChildren[componentName].push(constraint);
 				});
 			}
 		});
