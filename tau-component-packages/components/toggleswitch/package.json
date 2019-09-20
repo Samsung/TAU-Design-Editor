@@ -1,6 +1,6 @@
 {
   "label": "Toggleswitch",
-  "selector": ".ui-toggle-container, input.ui-toggleswitch",
+  "selector": ".ui-toggleswitch",
   "baseElementSelector": "input.ui-toggle-switch",
   "attachable": true,
   "type": "standalone-component",
@@ -18,7 +18,7 @@
       "wearable": "./toggleswitch.png"
     }
   },
-  "template": "<input type=\"checkbox\" class=\"ui-toggleswitch\" />",
+  "template": "<div class=\"ui-toggleswitch\"><input class=\"ui-switch-input\" type=\"checkbox\" checked /><div class=\"ui-switch-button\"></div></div>",
   "generator": {
     "constructor": "tau.widget.ToggleSwitch",
     "parameter": {
