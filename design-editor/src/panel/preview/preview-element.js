@@ -11,6 +11,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import {pipe} from '../../utils/utils';
 import { promisify } from 'util';
+import {startVD} from './preview-element-vd';
 
 const TEMPLATE_PATH = '/panel/preview/preview-element.html';
 
@@ -68,14 +69,14 @@ class Preview extends DressElement {
 
 				this.setProfileStyle(position, $frame);
 
-				$frame.one('load', () => {
-					// restore scroll position in iframe
-					this.scrollIframe.call(this, position, callback, $frame);
-				});
-
 				preview
 					.then((previewPath) => {
 						$frame.attr('src', previewPath);
+						$frame.one('load', () => {
+							// restore scroll position in iframe
+							this.scrollIframe.call(this, position, callback, $frame);
+							startVD(StateManager.get('screen', {}).profile);
+						});
 					}).catch((err) => {
 						// eslint-disable-next-line no-console
 						console.error(err);
