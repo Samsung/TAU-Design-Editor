@@ -17,10 +17,10 @@
       "wearable": "./progress.png"
     }
   },
-  "template": "<div class=\"ui-circle-progress ui-progress\" data-size=\"large\" data-type=\"circle\" data-value=\"20\"></div>",
+  "template": "<div class=\"ui-progress\" data-size=\"large\" data-value=\"20\"></div>",
   "snippet": [
     {
-      "snippet": "<div class=\"ui-circle-progress ui-progress\" data-size=\"large\" data-type=\"circle\" data-value=\"${0:100}\" ></div>",
+      "snippet": "<div class=\"ui-progress\" data-size=\"large\" data-value=\"${0:100}\"></div>",
       "widget": "Progress",
       "displayText": "tauProgressBar",
       "description": "Shows a control that indicates the progress percentage of an on-going operation by circular shape."
@@ -71,14 +71,21 @@
     }
   ],
   "generator": {
-    "constructor": "tau.widget.CircleProgressBar",
+    "constructor": "tau.widget.Progress",
     "parameter": {
       "options": {}
-    },
-    "options": {
-      "containerClassName": "null",
-      "size": "full",
-      "thickness": "null"
+    }
+  },
+  "attributes": {
+    "data-type": {
+      "label": "Type",
+      "type": {
+        "name": "select"
+      },
+      "list": [
+        {"value": "circle", "label": "Circle"},
+        {"value": "bar", "label": "Bar"}
+      ]
     }
   },
   "resizable": false,
