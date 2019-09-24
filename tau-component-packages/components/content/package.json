@@ -1,6 +1,7 @@
 {
   "label": "Content",
   "selector": ".ui-content",
+  "template": "<div class=\"ui-content\" style=\"min-height: 250px\"> </div>",
   "resources": {
     "css": [
       "../../tau/theme/tau.min.css",
