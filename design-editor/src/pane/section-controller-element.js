@@ -158,7 +158,8 @@ class SectionController extends DressElement {
                         }, DURATION + 100);
                     }
                 }
-                if (elementInfo.package && elementInfo.package.name === 'section') {
+				// Make 'sectionchanger' and 'section' elements visible.
+				if (elementInfo.package.name === 'sectionchanger' || elementInfo.package.name === 'section') {
                     this.$el.css({
                         'display': 'block',
                         'width': (this._designView.getDesignViewIframe().outerWidth() * ratio) + 80,
