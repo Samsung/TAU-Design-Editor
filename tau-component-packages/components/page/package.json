@@ -38,7 +38,7 @@
     {
       "icon": "./styles/page-iot.png",
       "name": "IoT",
-      "template": "<div class=\"ui-page ui-page-iot\"><div class=\"ui-content\"></div></div>"
+      "template": "<div class=\"ui-page ui-page-iot\"><div class=\"ui-content\" style=\"min-height: 250px\"></div></div>"
     }
   ],
   "data": [
