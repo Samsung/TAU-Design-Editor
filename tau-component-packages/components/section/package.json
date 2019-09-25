@@ -19,7 +19,21 @@
     "closet-tau-circle-progress",
     "box",
     "button",
-    "toggleslider"
+    "toggleslider",
+    "graph",
+    "closet-image",
+    "audio",
+    "input-text",
+    "input-number",
+    "input-password",
+    "input-date",
+    "dimmer",
+    "slider",
+    "i3d",
+    "coverflow",
+    "dropdownmenu",
+    "video",
+    "progress"
   ],
   "selector": ".ui-section-changer section",
   "template": "<section><span>Section</span></section>"

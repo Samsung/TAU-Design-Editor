@@ -139,6 +139,7 @@
       "description": "declare to section tag width to fill content or not"
     }
   ],
+  "resizable": true,
   "class": [],
   "events": [
     "sectionchange"
