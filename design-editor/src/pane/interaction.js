@@ -8,7 +8,6 @@ import {appManager as AppManager} from '../app-manager';
 import {SnapGuideManager} from './snap-guide-manager';
 import {eventEmitter, EVENTS} from '../events-emitter';
 import {ElementDetector} from './element-detector';
-import {StyleManager} from './style-manager';
 import editor from '../editor';
 
 let snapGuideManager = null,
@@ -29,17 +28,13 @@ class Interaction {
         this._registerCommands();
     }
 
-    /**
-     * Return instance
-     * @returns {*}
-     */
-    static getInstance() {
-        if (_instance === null) {
-            _instance = new Interaction();
-        }
-
-        return _instance;
-    }
+	/**
+	 * Return instance
+	 * @returns {*}
+	 */
+	static getInstance() {
+		return _instance ? _instance : new Interaction();
+	}
 
     /**
      * Set interaction
@@ -47,7 +42,8 @@ class Interaction {
      * @param {HTMLElement} contentElement
      */
     setInteraction($selectedLayerElement, contentElement) {
-        var toolbarElement = $('closet-toolbar-container-element')[0];
+		var toolbarElement = $('closet-toolbar-container-element')[0];
+
         this._$selectedLayerElement = $selectedLayerElement;
         this._$contentElement = $(contentElement);
         this._editModeToggle = toolbarElement && toolbarElement.Controls.EDIT_MODE;
@@ -157,7 +153,7 @@ class Interaction {
 
             this._model = AppManager.getActiveDesignEditor().getModel();
 
-            if (options.draggable === true) {
+            if (options.draggable) {
                 if (this._onEditMode) {
                     this._$selectedLayerElement.draggable({
                         start: this._onDragStart.bind(this),
@@ -230,7 +226,6 @@ class Interaction {
 
         this._$contentElement.hide();
         this._$selectedLayerElement.hide();
-
     }
 
     /**
@@ -435,27 +430,33 @@ class Interaction {
         }
     }
 
-    /**
-     * Drag stop callback
-     * @private
-     */
-    _onDragStop() {
-        var $selectLayer = this._$selectedLayerElement.parent();
+	/**
+	 * Drag stop callback
+	 * @private
+	 */
+	_onDragStop() {
+		const $selectLayer = this._$selectedLayerElement.parent();
 
-        $selectLayer[0].hideHighlighter(this._$contentElement.parent());
+		$selectLayer[0].hideHighlighter(this._$contentElement.parent());
 
-        this._$selectedLayerElement.parent()[0].syncSelector(this._$contentElement);
-        this._$selectedLayerElement.css('opacity', 1);
+		this._$selectedLayerElement.parent()[0].syncSelector(this._$contentElement);
+		this._$selectedLayerElement.css('opacity', 1);
 
-        $('.closet-dv-scroll').css('display', 'block');
+		$('.closet-dv-scroll').css('display', 'block');
 
-        snapGuideManager.hideHorizontal();
-        snapGuideManager.hideVertical();
+		snapGuideManager.hideHorizontal();
+		snapGuideManager.hideVertical();
 
-        // @TODO add drag event to history
+		// @TODO add drag event to history
 
-        this._writeInfoToModel();
-    }
+		// remove absolute from parent
+		const $contentElementParent = this._$contentElement.parent();
+		$contentElementParent.css('position', this._previousStyles['position']);
+		this._model.updateStyle($contentElementParent.attr('data-id'), {'position': this._previousStyles['position']});
+		// - remove absolute ...
+
+		this._writeInfoToModel();
+	}
 
     /**
      * Set resizable
@@ -467,7 +468,7 @@ class Interaction {
 		let resizingDirectives = '';
 		if (resizeOptions) {
 			if (this._onEditMode) {
-				if (resizeOptions === true) {
+				if (resizeOptions) {
 					// set resizing to all directives when resizeOptions is true
 					resizingDirectives = 'e, s, se';
 				} else {
@@ -480,7 +481,7 @@ class Interaction {
 						resizingDirectives = 'e, s, se';
 					} else {
 						for (const property in resizeOptions) {
-							if (resizeOptions[property] === true) {
+							if (resizeOptions[property]) {
 								switch (property) {
 								// only horizontal value in resizeOptions object is true
 								case 'horizontal':
