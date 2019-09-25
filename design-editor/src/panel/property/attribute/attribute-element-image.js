@@ -151,7 +151,7 @@ class AttributeImage extends DressElement {
 	}
 
 	_updateImageSourcePath(sourcePath) {
-		if (!sourcePath) {
+		if (!sourcePath || sourcePath === '#') {
 			this.$el.find('#srcImageChoose').show();
 			this.$el.find('#srcImageShow').hide();
 			this.$el.find('#srcImageFile').val('');
