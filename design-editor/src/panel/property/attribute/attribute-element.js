@@ -298,6 +298,13 @@ class Attribute extends DressElement {
 						li.append(label)
 							.append(typeElement)
 							.appendTo(fragment);
+
+						if (typeName === 'file' && options.value) {
+							// display input type="text" with value of element
+							typeElement.firstChild.style.display = 'none';
+							typeElement.lastChild.style.display = 'block';
+							typeElement.lastChild.firstElementChild.value = options.value;
+						}
 					}
 				});
 
