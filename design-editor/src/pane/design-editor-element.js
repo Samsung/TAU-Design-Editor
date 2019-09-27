@@ -499,8 +499,22 @@ class DesignEditor extends DressElement {
 			};
 
 		$(scrollElement).css('overflowY', 'hidden');
-		// update positions to adjust the scroller
 
+		const getUiContent = () => {
+			if (!scrollElement) {
+				return;
+			}
+			const uiContentCollection = scrollElement.getElementsByClassName('ui-content');
+			return uiContentCollection.length
+				? uiContentCollection[0]
+				: undefined;
+		};
+		const uiContent = getUiContent();
+		if (uiContent) {
+			uiContent.style.minHeight = '250px';
+		}
+
+		// update positions to adjust the scroller
 		this._$iframe.css(
 			$.extend(style, {
 				top: `-webkit-calc((50% - ${  (screenHeight * screenRatio) / 2  }px) + ${
