@@ -8,7 +8,6 @@ import {appManager as AppManager} from '../app-manager';
 import {SnapGuideManager} from './snap-guide-manager';
 import {eventEmitter, EVENTS} from '../events-emitter';
 import {ElementDetector} from './element-detector';
-import {StyleManager} from './style-manager';
 import editor from '../editor';
 
 let snapGuideManager = null,
@@ -29,17 +28,13 @@ class Interaction {
         this._registerCommands();
     }
 
-    /**
-     * Return instance
-     * @returns {*}
-     */
-    static getInstance() {
-        if (_instance === null) {
-            _instance = new Interaction();
-        }
-
-        return _instance;
-    }
+	/**
+	 * Return instance
+	 * @returns {*}
+	 */
+	static getInstance() {
+		return _instance ? _instance : new Interaction();
+	}
 
     /**
      * Set interaction
