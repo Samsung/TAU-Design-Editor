@@ -595,20 +595,57 @@ class Attribute extends DressElement {
      */
 	onSelectImageForCoverFlow(e) {
 		const cfFiles = e.target.files;
-		attributeUtils.copyToImagesForCoverFlow(event, cfFiles.length);
-		coverflowImage = [];
-		selectFileLen = cfFiles.length;
-		if (cfFiles) {
-			for (let i = 0; i < selectFileLen; i++) {
-				const img = cfFiles[i].name;
-				if (img.match('.jpg') || img.match('.png')) {
-					coverflowImage.push(cfFiles[i].name);
+		attributeUtils.writeMediaFileWhenIsLoaded(event, () => {
+			coverflowImage = [];
+			selectFileLen = cfFiles.length;
+			if (cfFiles) {
+				for (let i = 0; i < selectFileLen; i++) {
+					const img = cfFiles[i].name;
+					if (img.match('.jpg') || img.match('.png')) {
+						coverflowImage.push(cfFiles[i].name);
+					}
 				}
 			}
+			this.addImagesToCoverFlowWidget();
+			this._$coverflowEffect.show();
+			this._$coverflowFileSize.show();
+		});
+	}
+
+	/**
+     * Add images inside <li> tags to build coverflow widget
+     * @param {Event} e
+     */
+	addImagesToCoverFlowWidget(event) {
+		const editor = AppManager.getActiveDesignEditor(),
+			model = editor.getModel(),
+			selectOfEffect = document.getElementById('selectEffect'),
+			name = event ? event.target.name : 'effect',
+			value = event ? event.target.value : 'coverflow';
+		script = '<ul class=\'flip-items\'>';
+		if (selectFileLen != 0) {
+			for (let i = 0; coverflowImage.length; i++) {
+				let str = '';
+				if (coverflowImage[i] === undefined) {
+					break;
+				}
+				str = `<li><img src='images/${coverflowImage[i]}' width='100px' height='100px'></li>`;
+				script += str;
+			}
+			script += '</ul>';
+			const iframeElement = editor._getElementById(this._selectedElementId);
+			model.removeAttribute(this._selectedElementId, 'class');
+			model.updateAttribute(this._selectedElementId, 'class', 'ui-coverflow');
+			const element = iframeElement.get(0);
+			element.innerHTML = script;
+			if (!selectOfEffect.value) {
+				selectOfEffect.value = value;
+			}
 		}
-		this._$coverflowEffect.show();
-		this._$coverflowFileSize.show();
-    }
+		model.updateStyle(this._selectedElementId, 'background', 'rgba(255, 255, 255, 0)');
+		model.updateAttribute(this._selectedElementId, `data-${name}`, value);
+		model.updateText(this._selectedElementId, script);
+	}
 
     /**
      * On change style callback
@@ -630,25 +667,7 @@ class Attribute extends DressElement {
                     this._onChange3dWall();
                     model.updateText(this._selectedElementId, script);
                 } else {
-					let str = '';
-					let iframeElement, element;
-					script = '<ul class=\'flip-items\'>';
-					if (selectFileLen != 0) {
-						for (let i = 0; coverflowImage.length; i++) {
-							if (coverflowImage[i] === undefined) {
-								break;
-							}
-							str = `<li><img src='images/${coverflowImage[i]}' width='100px' height='100px'></li>`;
-							script += str;
-						}
-						script += '</ul>';
-						iframeElement = editor._getElementById(this._selectedElementId);
-						element = iframeElement.get(0);
-						element.innerHTML = script;
-					}
-					model.updateStyle(this._selectedElementId, 'background', 'rgba(255, 255, 255, 0)');
-					model.updateAttribute(this._selectedElementId, `data-${name}`, value);
-					model.updateText(this._selectedElementId, script);
+					this.addImagesToCoverFlowWidget(event);
 				}
             } else if (name === 'cfSize' && script.length > 0) {
                 var regUnit = /[0-9]+(\.[0-9]+)?(px|%)/,
