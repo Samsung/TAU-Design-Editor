@@ -18,8 +18,6 @@ module.exports = {
         'box': 'components/box',
         'input-text': 'components/input-text',
         'input-password': 'components/input-password',
-        'input-date': 'components/input-date',
-        'input-number': 'components/input-number',
         'anchor': 'components/anchor'
     }
 };
