@@ -12,7 +12,7 @@ class HTMLAssistant {
 	constructor() {
 		this._model = null;
 		this._htmlAssistantEditor = new HTMLAssistantEditorElement();
-		this.selectedElementId = null;
+		this.lastSelectedElementId = null;
 		this._isOpened = false;
 		this.element = null;
 		this._bindEvents();
@@ -32,10 +32,10 @@ class HTMLAssistant {
 	 * @param {string | Promise} content HTML content of edited element
 	 * @returns {Promise} resolves after model is updated with new text
 	 */
-	setSelectedContent(content) {
+	setSelectedContent(content, elemID) {
 		return Promise.resolve(content)
 			.then((item) => {
-				this._model.updateText(this.selectedElementId, item);
+				this._model.updateText(elemID, item);
 			})
 			.catch((err) => {
 				throw err;
@@ -48,12 +48,15 @@ class HTMLAssistant {
 	 */
 	toggle(callback) {
 		const opened = this._htmlAssistantEditor.isOpened();
+		// keep elemID separately because selectedElementId may be changed
+		// before finishing resolving all promises due to other elem selection
+		const elemID = this.lastSelectedElementId;
+		this.element = this._model.getElementWithoutId(this.lastSelectedElementId);
 		if (opened) {
 			this._htmlAssistantEditor.close()
 				.then(() => this._htmlAssistantEditor.getEditorContent())
-				.then(content => this.setSelectedContent(content))
+				.then(content => this.setSelectedContent(content, elemID))
 				.then(() => {
-					this.element = this._model.getElementWithoutId(this.selectedElementId);
 					this._htmlAssistantEditor.clean();
 					eventEmitter.emit(EVENTS.CloseInstantTextEditor);
 				})
@@ -73,16 +76,14 @@ class HTMLAssistant {
 		eventEmitter.on(EVENTS.ElementSelected, (elementId) => {
 			console.log('element selected', elementId);
 			this._model = appManager.getActiveDesignEditor().getModel();
-			this.selectedElementId = elementId;
-			this.element = this._model.getElementWithoutId(this.selectedElementId);
+			this.lastSelectedElementId = elementId;
+			this.element = this._model.getElementWithoutId(this.lastSelectedElementId);
 		});
 
 		eventEmitter.on(EVENTS.ElementDeselected, () => {
 			if (this._htmlAssistantEditor.isOpened()) {
 				console.log('element deselected');
-				this.toggle(() => {
-					this.selectedElementId = null;
-				});
+				this.toggle(()=>{});
 			}
 		});
 	}
