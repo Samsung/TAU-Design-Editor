@@ -105,11 +105,13 @@ class HTMLAssistantEditor extends DressElement {
 	}
 
 	/**
-	 * Returns current content from editor
-	 * @returns {string} editor content
+	 * Gets current content from editor
+	 * @returns {Promise} resolves with editor content
 	 */
 	getEditorContent() {
-		return this._textEditor.document.getText();
+		return new Promise((resolve) => {
+			resolve(this._textEditor.document.getText());
+		});
 	}
 
 	layout(x, y) {
