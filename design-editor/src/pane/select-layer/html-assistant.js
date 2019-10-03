@@ -57,13 +57,16 @@ class HTMLAssistant {
 					this._htmlAssistantEditor.clean();
 					eventEmitter.emit(EVENTS.CloseInstantTextEditor);
 				})
-				.catch(error => console.error(error));
+				.catch(error => console.error(error))
+				.then(() => {
+					callback(opened);
+				});
 
 		} else {
 			this._htmlAssistantEditor.open(this.getSelectedContent(this.element));
 			eventEmitter.emit(EVENTS.OpenInstantTextEditor);
+			callback(opened);
 		}
-		callback(opened);
 	}
 
 	_bindEvents () {
