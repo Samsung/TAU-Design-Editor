@@ -71,6 +71,14 @@ class HTMLAssistantEditor extends DressElement {
 	}
 
 	/**
+	 * Cleaning function
+	 */
+	clean() {
+		// Stub for VSC extension API compatibility
+	}
+
+
+	/**
 	 * Check if editor is opened
 	 * @returns {boolean} true if document is open
 	 */
