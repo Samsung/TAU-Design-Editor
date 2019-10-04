@@ -24,11 +24,9 @@ class ElementSelector {
 			this.unSelect();
 		}
 
-		if (!this._curSelectedId) {
-			this._curSelectedId = elementId;
-			eventEmitter.emit(EVENTS.ElementSelected, elementId);
-		}
-	}
+		this._curSelectedId = elementId;
+		eventEmitter.emit(EVENTS.ElementSelected, elementId);
+	} 
 
 	/**
      * Unselect element

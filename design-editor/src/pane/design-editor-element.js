@@ -1202,6 +1202,7 @@ class DesignEditor extends DressElement {
 
 		if (!selectedElement.attr('data-closed-edit-mode')) {
 			if (event.keyCode === KEY_CODE.DELETE && selectedElement) {
+				console.log('[OnKeyDown]: Element deletion start, key is pressed properly :)');
 				event.stopImmediatePropagation();
 				elementSelector.unSelect();
 				this._deleteElement(info);
