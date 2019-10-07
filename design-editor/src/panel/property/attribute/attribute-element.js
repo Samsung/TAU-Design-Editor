@@ -85,7 +85,8 @@ class Attribute extends DressElement {
 
         self.events = {
 			'click #backgroundColorClear': 'resetToInitialBackgroundColorValue',
-            'change #fileForBackground': 'onSetRelativePathForBackground',
+			'click #srcCoverflowClear': 'removeSourceForCoverFlow',
+			'change #fileForBackground': 'onSetRelativePathForBackground',
             'click  #fileForBackgroundClear': 'onClearBackgroundImage',
             'change #cfFiles': 'onSelectImageForCoverFlow',
             'change [name]': 'onCommonStyleChange',
@@ -206,9 +207,15 @@ class Attribute extends DressElement {
 			}
 
 			if (component && component.name === 'coverflow') {
+				const selectEffect = document.getElementById('selectEffect');
 				$el.find('.closet-coverflow-element').show();
-				this._$coverflowEffect.hide();
-				this._$coverflowFileSize.hide();
+				// check are images added to coverflow
+				if (iframeElement[0].dataset.items && iframeElement[0].dataset.effect) {
+					this.updateSourceForCoverFlowImages(iframeElement[0].dataset.items);
+					selectEffect.value = iframeElement[0].dataset.effect;
+				} else {
+					this.updateSourceForCoverFlowImages();
+				}
 			} else {
 				$el.find('.closet-coverflow-element').hide();
 			}
@@ -600,38 +607,43 @@ class Attribute extends DressElement {
 				for (let i = 0; i < selectFileLen; i++) {
 					const img = cfFiles[i].name;
 					if (img.match('.jpg') || img.match('.png')) {
-						coverflowImage.push(cfFiles[i].name);
+						coverflowImage.push(img);
 					}
 				}
 			}
-			this.addImagesToCoverFlowWidget();
-			this._$coverflowEffect.show();
-			this._$coverflowFileSize.show();
+			this.addImagesToCoverFlowWidget(null, coverflowImage);
 		});
 	}
 
 	/**
-     * Add images inside <li> tags to build coverflow widget
-     * @param {Event} e
+	* Add images inside <li> tags to build coverflow widget
+	* @param {Event} event
+	* @param {Array} files images for coverflow widget
      */
-	addImagesToCoverFlowWidget(event) {
+	addImagesToCoverFlowWidget(event, files) {
 		const editor = AppManager.getActiveDesignEditor(),
 			model = editor.getModel(),
 			selectOfEffect = document.getElementById('selectEffect'),
 			name = event ? event.target.name : 'effect',
-			value = event ? event.target.value : 'coverflow';
+			value = event ? event.target.value : 'coverflow',
+			iframeElement = editor._getElementById(this._selectedElementId);
+		let dataItems = '';
+		if (!files) {
+			files = iframeElement[0].dataset.items.split(',');
+		}
 		script = '<ul class=\'flip-items\'>';
-		if (selectFileLen != 0) {
-			for (let i = 0; coverflowImage.length; i++) {
-				let str = '';
-				if (coverflowImage[i] === undefined) {
+		if (files.length != 0) {
+			// add images to coverflow
+			for (let i = 0; i < files.length; i++) {
+				const str = `<li><img src='images/${files[i]}' width='100px' height='100px'></li>`;
+				if (files[i] === undefined) {
 					break;
 				}
-				str = `<li><img src='images/${coverflowImage[i]}' width='100px' height='100px'></li>`;
+				dataItems += (i === files.length-1) ? `${files[i]}` : `${files[i]},`;
 				script += str;
 			}
 			script += '</ul>';
-			const iframeElement = editor._getElementById(this._selectedElementId);
+			// remove and update class to build coverflow with new selected effect
 			model.removeAttribute(this._selectedElementId, 'class');
 			model.updateAttribute(this._selectedElementId, 'class', 'ui-coverflow');
 			const element = iframeElement.get(0);
@@ -639,10 +651,61 @@ class Attribute extends DressElement {
 			if (!selectOfEffect.value) {
 				selectOfEffect.value = value;
 			}
+			this.updateSourceForCoverFlowImages(dataItems);
 		}
 		model.updateStyle(this._selectedElementId, 'background', 'rgba(255, 255, 255, 0)');
+		model.updateAttribute(this._selectedElementId, 'data-items', dataItems);
 		model.updateAttribute(this._selectedElementId, `data-${name}`, value);
 		model.updateText(this._selectedElementId, script);
+	}
+
+	/**
+     * Handler for button clearing source for coverflow
+     */
+	removeSourceForCoverFlow() {
+		const activeDesignEditor = AppManager.getActiveDesignEditor(),
+			model = activeDesignEditor.getModel(),
+			parentOfCoverflowImages = activeDesignEditor._getElementById(this._selectedElementId).get(0),
+			allOfCoverflowImages = parentOfCoverflowImages.getElementsByTagName('img');
+		for (let i=0; i < allOfCoverflowImages.length; i++) {
+			const dataIdOfImage = allOfCoverflowImages[i].getAttribute('data-id');
+			model.updateAttribute(dataIdOfImage, 'src', '');
+			activeDesignEditor
+				.getModel()
+				.updateStyle(
+					dataIdOfImage,
+					'backgroundColor',
+					'#cacaca'
+				);
+			this._updateAttributes(model.getElement(dataIdOfImage), 'background');
+		}
+		model.updateAttribute(parentOfCoverflowImages.getAttribute('data-id'), 'data-items', '');
+		model.updateAttribute(parentOfCoverflowImages.getAttribute('data-id'), 'data-effect', '');
+		document.getElementById('selectEffect').value = '';
+		this.updateSourceForCoverFlowImages();
+	}
+
+	/**
+	 * update source of coverflow images and show input text or input file
+	 * when source exists/not exist
+	 * @param {string} sourcePath path of images added to coverflow
+	 */
+	updateSourceForCoverFlowImages(sourcePath) {
+		const inputTextCoverflow = document.getElementById('srcCoverFlowShow'),
+			inputFileCoverflow = document.getElementById('srcCoverFlowInput');
+		if (!sourcePath) {
+			inputTextCoverflow.style.display = 'none';
+			inputFileCoverflow.style.display = 'block';
+			this._$coverflowEffect.hide();
+			this._$coverflowFileSize.hide();
+			document.getElementById('cfFiles').value = '';
+		} else {
+			inputTextCoverflow.style.display = 'block';
+			this._$coverflowEffect.show();
+			this._$coverflowFileSize.show();
+			inputFileCoverflow.style.display = 'none';
+			document.getElementById('srcCoverflowValue').value = sourcePath;
+		}
 	}
 
     /**
@@ -838,10 +901,12 @@ class Attribute extends DressElement {
                 break;
             case 'content':
                 listElements[item].val(content);
-                break;
-            default:
-                listElements[item].val(value);
-            }
+				break;
+			case 'effect':
+				break;
+			default:
+				listElements[item].val(value);
+			}
         });
     }
 }
