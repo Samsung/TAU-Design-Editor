@@ -76,31 +76,6 @@ export default {
 		}
 	},
 
-	copyToImagesForCoverFlow(event, count) {
-		for (let i = 0; i < count; i++) {
-			[].slice.call(event.target.files).forEach(file => {
-				const reader = new FileReader();
-				reader.addEventListener('loadend', event => {
-					if (event.target.readyState === FileReader.DONE) {
-						const
-							filePath = path.join('images', file.name),
-							writePath = pathUtils.createProjectPath(filePath);
-
-						utils.checkGlobalContext('writeFile') (
-							writePath,
-							event.target.result, {
-								encoding: 'binary'
-							},
-							() => {
-							}
-						);
-					}
-				});
-				reader.readAsBinaryString(file);
-			});
-		}
-	},
-
 	/**
 	 * Set a source to interactive model
 	 * @param {Event} event
