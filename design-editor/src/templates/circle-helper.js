@@ -27,7 +27,8 @@ function onShow(event) {
 		toggleSwitches: new Component("input[data-appearance]", tau.widget.ToggleSwitch),
 		dimmers: new Component(".ui-dimmer", tau.widget.Dimmer),
 		graphs: new Component(".ui-graph", tau.widget.Graph),
-		progressBars: new Component(".ui-circle-progress", tau.widget.CircleProgressBar)
+		progressBars: new Component(".ui-circle-progress", tau.widget.CircleProgressBar),
+		sectionChanger: new Component(".ui-section-changer", tau.widget.SectionChanger)
 	};
 
 	Object.keys(components).forEach(function(componentName) {
