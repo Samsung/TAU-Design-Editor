@@ -9,6 +9,7 @@ import {SnapGuideManager} from './snap-guide-manager';
 import {eventEmitter, EVENTS} from '../events-emitter';
 import {ElementDetector} from './element-detector';
 import editor from '../editor';
+import './style-manager';
 
 let snapGuideManager = null,
     snapToContainerEnabled = false,
