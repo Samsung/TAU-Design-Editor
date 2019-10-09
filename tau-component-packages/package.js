@@ -16,6 +16,7 @@ module.exports = {
 		'radio': 'components/radio',
 		'toggleswitch': 'components/toggleswitch',
 		'popup': 'components/popup',
+		'sectionchanger': 'components/sectionchanger',
 		'section': 'components/section',
 		'selector': 'components/selector',
 		'selectoritem': 'components/selectoritem',
