@@ -8,6 +8,7 @@
   "type": "container-component",
   "constraint": [
     "box",
+    "card",
     "bottom-button",
     "checkbox",
     "processing",
