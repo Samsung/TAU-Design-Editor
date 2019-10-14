@@ -37,7 +37,6 @@
     },
     "components": {
         "box": "components/box",
-        "card": "components/card",
         "input-text": "components/input-text",
         "input-password": "components/input-password",
         "input-date": "components/input-date",

@@ -19,7 +19,6 @@
   },
   "constraint": [
     "box",
-    "card",
     "bottom-button",
     "checkbox",
     "listview",

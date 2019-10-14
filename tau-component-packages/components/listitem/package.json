@@ -51,9 +51,9 @@
     "graph",
     "iot-contextmenu",
     "box",
-    "card",
     "video",
     "anchor",
+    "box",
     "toggleslider"
   ],
   "styles": [
