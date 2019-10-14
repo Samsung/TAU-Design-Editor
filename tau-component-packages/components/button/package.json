@@ -171,28 +171,6 @@
   ],
   "resizable": true,
   "draggable": true,
-  "styles": [
-    {
-	  "name": "Circle button",
-	  "version": "mobile",
-      "icon": "./styles/circle-button.png",
-	  "template": "<button data-inline=\"true\" data-icon=\"add\" data-style=\"circle\" class=\"ui-btn\"></button>"
-    },
-    {
-	  "name": "Left header button",
-	  "version": "mobile",
-      "icon": "./styles/left-header-button.png",
-      "template": "<button data-icon=\"add\" class=\"ui-btn ui-btn-left\"></button>",
-	  "parent-selector": ".ui-header"
-    },
-    {
-	  "name": "Right header button",
-	  "version": "mobile",
-      "icon": "./styles/right-header-button.png",
-      "template": "<button data-icon=\"add\" class=\"ui-btn ui-btn-right\"></button>",
-	  "parent-selector": ".ui-header"
-    }
-  ],
   "attributes": {
     "data-icon": {
       "label": "Icon",
