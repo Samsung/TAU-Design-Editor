@@ -21,7 +21,6 @@
   "constraint": [
     "audio",
     "box",
-    "card",
     "bottom-button",
     "button",
     "checkbox",
