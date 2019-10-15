@@ -304,7 +304,9 @@ class DesignEditor extends DressElement {
 			Hide: this._onHideElement,
 			ChangeProfile: this._onChangeProfile,
 			ChangeShape: this._onChangeShape,
-			DocumentSave: this._onSaveFile
+			DocumentSave: this._onSaveFile,
+			Undo: this._onUndo,
+			Redo: this._onRedo
 		};
 
 		Object.keys(this._callback).forEach(callbackName => {
@@ -422,6 +424,14 @@ class DesignEditor extends DressElement {
 		} else {
 			console.warn('no save file function!');
 		}
+	}
+
+	_onUndo() {
+		this._model.undo();
+	}
+
+	_onRedo() {
+		this._model.redo();
 	}
 
 	/**
