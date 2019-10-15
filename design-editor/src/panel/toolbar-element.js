@@ -38,7 +38,9 @@ class Toolbar extends DressElement {
 			'click .animation-panel-toggle': EVENTS.ToggleAnimationPanel,
 			'click .instant-edit': EVENTS.ToggleInstantTextEditor,
 			'click .insert-code': EVENTS.OpenAssistantWizard,
-			'click .save-file': EVENTS.DocumentSave
+			'click .save-file': EVENTS.DocumentSave,
+			'click .undo': EVENTS.Undo,
+			'click .redo': EVENTS.Redo
 		};
 
 		eventEmitter.on(EVENTS.OpenInstantTextEditor, () => {
@@ -106,7 +108,9 @@ class Toolbar extends DressElement {
 			ANIMATION_PANEL: null,
 			INSTANT_EDIT: null,
 			INSERT_CODE: null,
-			SAVE: null
+			SAVE: null,
+			UNDO: null,
+			REDO: null
 		};
 	}
 
@@ -146,6 +150,8 @@ class Toolbar extends DressElement {
 		controls.INSTANT_EDIT = this.$el.find('button.instant-edit');
 		controls.INSERT_CODE = this.$el.find('button.insert-code');
 		controls.SAVE = this.$el.find('button.save-file');
+		controls.UNDO = this.$el.find('button.undo');
+		controls.REDO = this.$el.find('button.redo');
 
 		// In some cases (eg. when file other than .html is opened)
 		// all buttons should be disabled.
