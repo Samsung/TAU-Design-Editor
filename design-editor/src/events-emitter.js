@@ -95,7 +95,9 @@ const EVENTS = {
 	PopupOpened : 'global:Popup.opened',
 	ChangeCapability: 'attributes:change-capability',
 	ChangeCapabilityParam: 'attributes:change-capability-params',
-	TAULoaded: 'editor:TAU-loaded'
+	TAULoaded: 'editor:TAU-loaded',
+	Undo: 'editor:undo',
+	Redo: 'editor:redo'
 };
 
 export {EVENTS, eventEmitter};
