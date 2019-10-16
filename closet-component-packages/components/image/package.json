@@ -8,6 +8,29 @@
   "template": "<img class=\"ui-picture\" src=\"#\" alt=\"\" style=\"height: 100px; width: 100px; display:block; background:#cacaca\">",
   "resizable": true,
   "draggable": true,
+  "data": [
+    {
+	"option": "style",
+	"values": [
+		{
+		"text": "circle",
+		"description": "Image gets a circle shape"
+		}
+	]
+	}
+	],
+	"attributes": {
+		"border-radius": {
+			"label": "Style",
+			"type": {
+			  "name": "select"
+			},
+			"list": [
+			  { "value": "", "label": "", "checkSelected": true },
+			  { "value": "50%", "label": "circle" }
+			]
+		  }
+	},
   "resources": {
     "js": "image.js",
     "css": "image.css",
