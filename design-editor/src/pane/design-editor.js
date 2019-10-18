@@ -8,6 +8,7 @@ import {StateManager} from '../system/state-manager';
 import LibraryCreator from '../system/libraries/library-creator';
 import utils from '../utils/utils';
 import pathUtils from '../utils/path-utils';
+import History from './history';
 
 let globalId = 0;
 let newElementId = 0;
@@ -228,8 +229,7 @@ class Model {
      */
 	constructor() {
 		this._DOM = null;
-		this._history = [];
-		this._undoHistory = [];
+		this._history = new History();
 		this._keyframes = {};
 		this._keyframeId = null;
 		this._animations = [];
@@ -391,8 +391,7 @@ class Model {
         this.importBehavior();
         this.importCheckboxStyle();
         this._disableIotivityRestImpl();
-        this._history = [];
-        this._undoHistory = [];
+        this._history.invalidate();
         this._designEditor = _designEditor;
         this._capabilities = this._getSmartThingsCapabilities()
         componentPackages = componentPackagesFromCloset;
@@ -470,8 +469,7 @@ class Model {
                 }
             });
         }
-        this._undoHistory = [];
-        this._history.push({
+        this._history.add({
             id: id,
             operation: 'style',
             styles: styles,
@@ -491,8 +489,7 @@ class Model {
             previousValue = element.getAttribute(name);
         if (previousValue !== value) {
             setAttribute(id, element, name, value);
-            this._undoHistory = [];
-            this._history.push({
+            this._history.add({
                 id: id,
                 operation: 'attribute',
                 name: name,
@@ -514,8 +511,7 @@ class Model {
 
         if (element.hasAttribute(name)) {
             removeAttribute(id, element, name);
-            this._undoHistory = [];
-            this._history.push({
+            this._history.add({
                 id: id,
                 operation: 'attribute',
                 name: name,
@@ -541,8 +537,7 @@ class Model {
 
             if (previousValue !== value) {
                 setContent(id, element, value);
-                this._undoHistory = [];
-                this._history.push({
+                this._history.add({
                     id: id,
                     operation: 'content',
                     value: value,
@@ -624,8 +619,7 @@ class Model {
             // componentPackageInfo.copyToProject(ProjectManager.getActiveProjectInfo().projectPath, this._DOM);
         }
 
-        this._undoHistory = [];
-        this._history.push({
+        this._history.add({
             id: id,
             operation: 'insert',
             parent_id: parent_id,
@@ -647,8 +641,7 @@ class Model {
 
         removeElement(parent, element);
 
-        this._undoHistory = [];
-        this._history.push({
+        this._history.add({
             operation: 'delete',
             element: element,
             parent_id: parent.getAttribute('data-id'),
@@ -672,8 +665,7 @@ class Model {
 
         moveElement(element, findById(this._DOM, parentId), findById(this._DOM, siblingId));
 
-        this._undoHistory = [];
-        this._history.push({
+        this._history.add({
             operation: 'move',
             element: element,
             parent_id: parentId,
@@ -1044,15 +1036,13 @@ class Model {
             element = null,
             parent = null;
         if (!this._disableHisotry) {
-            state = this._history.pop();
+            state = this._history.undo();
             element = null;
             if (state) {
                 element = state.element || findById(this._DOM, state.id);
                 if (state.parent_id) {
                     parent = findById(this._DOM, state.parent_id);
                 }
-
-                this._undoHistory.push(state);
 
                 switch (state.operation) {
                 case 'style':
@@ -1091,7 +1081,7 @@ class Model {
             element = null,
             parent = null;
         if (!this._disableHisotry) {
-            state = this._undoHistory.pop();
+            state = this._history.redo();
             if (state) {
                 element = state.element || findById(this._DOM, state.id);
                 if (state.parent_id) {
@@ -1103,7 +1093,6 @@ class Model {
                     return;
                 }
 
-                this._history.push(state);
                 switch (state.operation) {
                 case 'style':
                     Object.keys(state.styles).forEach((name) => {
