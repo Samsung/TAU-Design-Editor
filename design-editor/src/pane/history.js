@@ -1,3 +1,5 @@
+import {EVENTS, eventEmitter} from '../events-emitter';
+
 /**
  * Container for Undo/Redo operation.
  */
@@ -15,6 +17,10 @@ class History {
 	add(operation) {
 		this._undoHistory = [];
 		this._history.push(operation);
+		eventEmitter.emit(EVENTS.HistoryChanged, {
+			'historyLength':	 this._history.length,
+			'undoHistoryLength': this._undoHistory.length
+		});
 	}
 
 	undo() {
@@ -22,6 +28,10 @@ class History {
 		if (!state)
 			return null;
 		this._undoHistory.push(state);
+		eventEmitter.emit(EVENTS.HistoryChanged, {
+			'historyLength':	 this._history.length,
+			'undoHistoryLength': this._undoHistory.length
+		});
 		return state;
 	}
 
@@ -30,6 +40,10 @@ class History {
 		if (!state)
 			return null;
 		this._history.push(state);
+		eventEmitter.emit(EVENTS.HistoryChanged, {
+			'historyLength': 	 this._history.length,
+			'undoHistoryLength': this._undoHistory.length
+		});
 		return state;
 	}
 }

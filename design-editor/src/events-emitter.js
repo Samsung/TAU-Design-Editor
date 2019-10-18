@@ -97,7 +97,8 @@ const EVENTS = {
 	ChangeCapabilityParam: 'attributes:change-capability-params',
 	TAULoaded: 'editor:TAU-loaded',
 	Undo: 'editor:undo',
-	Redo: 'editor:redo'
+	Redo: 'editor:redo',
+	HistoryChanged: 'editor:history-changed'
 };
 
 export {EVENTS, eventEmitter};
