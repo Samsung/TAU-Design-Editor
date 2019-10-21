@@ -9,6 +9,7 @@ import LibraryCreator from '../system/libraries/library-creator';
 import utils from '../utils/utils';
 import pathUtils from '../utils/path-utils';
 import History from './history';
+import {elementSelector} from './element-selector';
 
 let globalId = 0;
 let newElementId = 0;
@@ -171,6 +172,7 @@ function insertElement(parent, element, prev) {
  */
 function removeElement(parent, element) {
 	console.log('removeElement');
+	elementSelector.unSelect();
     parent.removeChild(element);
     eventEmitter.emit(EVENTS.ElementDeleted,
         element.getAttribute(INTERNAL_ID_ATTRIBUTE));
