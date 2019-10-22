@@ -112,7 +112,7 @@ class Guide {
 			 * Header as a element had parent-constraint but cannot be append to the end of siblings elements
 			 * like it is coded in 93. line
 			 */
-			if (packageInfo.name == 'header') {
+			if (packageInfo.name == 'header' || packageInfo.name == 'appbar') {
 				rule = {
 					direction: 'before',
 					element: containerInfo.$element.children().first()
