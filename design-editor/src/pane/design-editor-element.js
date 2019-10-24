@@ -773,7 +773,7 @@ class DesignEditor extends DressElement {
 			if (packageInfo.options.altSelector) {
 				this._selectLayer.attachAlternativeSelector(generatedElement);
 			}
-			const externalResources = packageInfo.options.externalResources;
+			// const externalResources = packageInfo.options.externalResources;
 			// External resources support is currently disabled
 			// if (externalResources) {
 			// 	const dom = this._model._DOM;
@@ -847,8 +847,10 @@ class DesignEditor extends DressElement {
 
 		element.remove();
 
-		const packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
-		const externalResources = packageInfo.options.externalResources;
+		// NOTE: below lines should not be called after element.remove()!
+		// const packageInfo = packageManager.getPackages(Package.TYPE.COMPONENT).getPackageByElement(element);
+		// const externalResources = packageInfo.options.externalResources;
+
 		// External Resources support is currently disabled
 		// if (externalResources) {
 		// 	const dom = this._model._DOM;
