@@ -8,6 +8,7 @@ import path from 'path';
 import {appManager as AppManager} from '../../../app-manager';
 import {DressElement} from '../../../utils/dress-element';
 import attributeUtils from '../../../utils/attribute-utils';
+import {EVENTS, eventEmitter} from '../../../events-emitter';
 
 const TEMPLATE_FILE = 'panel/property/attribute/templates/attribute-image.html';
 
@@ -18,7 +19,7 @@ const filterDefaults = {
 	'sepia': 0,
 	'grayscale': 0,
 	'hue-rotate': 0,
-	'opacity': 1
+	'opacity': 1.0
 };
 
 const filterPresets = {
@@ -73,10 +74,24 @@ class AttributeImage extends DressElement {
 
 		$.get(path.join(AppManager.getAppPath().src, TEMPLATE_FILE), (template) => {
 			self.$el.append(mustache.render(template, self._data));
-			self.$el.find('[type=range]').on('change', this._onSliderValueChange.bind(this));
 			self.$el.find('.closet-image-filter-btn').on('click', this._onPresetButtonClick.bind(this));
 			self.$el.find('#srcImageFile').on('change', this._onSrcImageChange.bind(this));
 			self.$el.find('#srcImageClear').on('click', this._onSrcImageClear.bind(this));
+		});
+
+		eventEmitter.on(EVENTS.ChangeStyle, (id, name, value) => {
+			if (self._selectedElementId !== id)
+				return;
+
+			if (name === 'filter') {
+				self._saveImageFilter(value);
+			} else  if (Object.keys(filterDefaults).indexOf(name) != -1) {
+				imageFilter[name] = value || filterDefaults[name];
+			} else {
+				return;
+			}
+			self._setImageFilter({ needsUpdate: false });
+			self._updatePanel();
 		});
 	}
 
@@ -86,9 +101,7 @@ class AttributeImage extends DressElement {
 		this._updatePanel();
 	}
 
-	_readImageFilter() {
-		const filter = this._targetImage[0].style.filter;
-
+	_saveImageFilter(filter) {
 		imageFilter = Object.assign({}, filterDefaults, { opacity: this._targetImage[0].style.opacity || 1 });
 
 		if (filter) {
@@ -98,8 +111,14 @@ class AttributeImage extends DressElement {
 		}
 	}
 
-	_setImageFilter() {
-		let filterString = '';
+	_readImageFilter() {
+		const self = this;
+		self._saveImageFilter(self._targetImage[0].style.filter);
+	}
+
+	_setImageFilter(modelOptions) {
+		let filterString = '',
+			previousStyle = '';
 
 		Object.keys(imageFilter).forEach(filter => {
 			if (filter === 'opacity') {
@@ -107,16 +126,19 @@ class AttributeImage extends DressElement {
 			}
 
 			if (parseInt(imageFilter[filter], 10) !== filterDefaults[filter]) {
-				filterString += `${filter
-				}(${  imageFilter[filter]  }${this.$el.find(`[name=${  filter  }]`).attr('dataunit')  }) `;
+				filterString += `${filter}(${imageFilter[filter]}${this.$el.find(`[name=${filter}]`).attr('dataunit')}) `;
 			}
 		});
+		filterString = filterString.trim();
 
-		this._targetImage[0].style.webkitFilter = filterString;
+		previousStyle = this._targetImage[0].style.filter;
+		this._targetImage[0].style.filter = filterString;
 		this._targetImage[0].style.opacity = imageFilter.opacity === filterDefaults.opacity ? '' : imageFilter.opacity;
 
-		AppManager.getActiveDesignEditor()
-			.getModel().updateStyle(this._targetImage[0].getAttribute('data-id'), 'webkitFilter', filterString);
+		if (modelOptions.needsUpdate) {
+			AppManager.getActiveDesignEditor()
+				.getModel().updateStyle(this._targetImage[0].getAttribute('data-id'), 'filter', filterString, previousStyle);
+		}
 	}
 
 	_onPresetButtonClick(event) {
@@ -125,7 +147,7 @@ class AttributeImage extends DressElement {
 
 		imageFilter = Object.assign({}, filterDefaults, filterPresets[preset]);
 
-		this._setImageFilter();
+		this._setImageFilter({ needsUpdate: true});
 		this._updatePanel();
 	}
 
@@ -143,11 +165,6 @@ class AttributeImage extends DressElement {
 				$slider.val(newValue);
 			}, 0);
 		});
-	}
-
-	_onSliderValueChange(e) {
-		imageFilter[e.target.name] = parseInt(e.target.value, 10);
-		this._setImageFilter();
 	}
 
 	_updateImageSourcePath(sourcePath) {

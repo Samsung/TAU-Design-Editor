@@ -456,9 +456,9 @@ class Model {
             styles = {};
 
         if (typeof name === 'string') {
+            previousValues[name] = previousValue || element.style[name];
             this._updateOneStyle(...arguments);
             styles[name] = value;
-            previousValues[name] = previousValue || element.style[name];
         } else {
             styles = name;
             if (value) {
