@@ -202,7 +202,6 @@ class DesignEditor extends DressElement {
 					);
 				htmlContent = iframeUtils.removeMediaQueryConstraints(htmlContent);
 				htmlContent = iframeUtils.addDoctypeDeclaration(htmlContent);
-
 				iframeUtils.writeIframeContent(iframeDocument, htmlContent);
 			}
 			this._$iframe.one('load', () => {
@@ -215,12 +214,43 @@ class DesignEditor extends DressElement {
 				this._$iframe.css('visibility', 'visible');
 				eventEmitter.emit(EVENTS.ActiveEditorUpdated, 1, this);
 			});
-
+			this._$iframe[0].contentWindow.addEventListener('pageshow', () => {
+				this.onPageShow(finalBase, iframeDocument);
+			});
 			elementSelector.unSelect();
 		}).catch((err) => {
 			console.error('could not find app config.xml!', err);
 		});
 
+	}
+
+	onPageShow(finalBase, iframeDocument) {
+		if (iframeDocument) {
+			console.log('$iframe.pageshow');
+			this._updateIFrameHeight();
+			iframeDocument.querySelector('base').setAttribute('href', finalBase);
+			// "pageshow" event is triggered by TAU then TAU should be exists in iframe scope
+			const tau = iframeDocument.defaultView.tau;
+			StateManager.set('tau-version', tau.version);
+
+			// fix data-ids for contained widgets
+			const components = packageManager.getPackages(Package.TYPE.COMPONENT);
+			const packages = components._packages;
+			// find all build widgets
+			iframeDocument.querySelectorAll('[data-tau-built]').forEach((widgetEl) => {
+				widgetEl.getAttribute('data-tau-name').split(',').forEach((name) => {
+					// get matching component for each built widget
+					const component = packages[name.toLowerCase()];
+					if (component) {
+						const container = this.getContainerByElement(widgetEl);
+						if (container) {
+							this.addAttributesToContainer(widgetEl, container);
+						}
+					}
+				});
+			});
+			eventEmitter.emit(EVENTS.TAULoaded, tau.version);
+		}
 	}
 
 	/**
@@ -360,35 +390,6 @@ class DesignEditor extends DressElement {
 		this._$scroller.on('scroll', this._onScroll.bind(this));
 
 		this._guide = new Guide();
-
-		this._$iframe[0].addEventListener('pageshow', (e) => {
-			const iframeDocument = e.target;
-			console.log('$iframe.pageshow');
-			this._updateIFrameHeight();
-			//iframeDocument.querySelector('base').setAttribute('href', finalBase);
-			// "pageshow" event is triggered by TAU then TAU should be exists in iframe scope
-			const tau = iframeDocument.defaultView.tau;
-			StateManager.set('tau-version', tau.version);
-
-			// fix data-ids for contained widgets
-			const components = packageManager.getPackages(Package.TYPE.COMPONENT);
-			const packages = components._packages;
-			// find all build widgets
-			iframeDocument.querySelectorAll('[data-tau-built]').forEach((widgetEl) => {
-				widgetEl.getAttribute('data-tau-name').split(',').forEach((name) => {
-					// get matching component for each built widget
-					const component = packages[name.toLowerCase()];
-					if (component) {
-						const container = this.getContainerByElement(widgetEl);
-						if (container) {
-							this.addAttributesToContainer(widgetEl, container);
-						}
-					}
-				});
-			});
-
-			eventEmitter.emit(EVENTS.TAULoaded, tau.version);
-		});
 	}
 
 	/**
