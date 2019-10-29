@@ -24,6 +24,9 @@
       "description": "Enter your text."
     }
   ],
-  "resizable": true,
+  "resizable": {
+    "vertical": false,
+    "horizontal": true
+  },
   "draggable": true
 }
