@@ -508,8 +508,8 @@ class Interaction {
     _onResizeStart() {
         var elem = this._$contentElement[0];
 
-        this._previousStyles = {};
-        ['position', 'top', 'left', '-webkit-transform', 'width', 'height'].forEach((prop) => {
+		this._previousStyles = {};
+        ['position', 'top', 'left', '-webkit-transform', 'width', 'height', 'border'].forEach((prop) => {
             this._previousStyles[prop] = elem.style[prop] || '';
         });
     }
@@ -524,8 +524,14 @@ class Interaction {
         const ratio = StateManager.get('screen').ratio;
 
         this._$contentElement.css({
-            'width': ((ui.size.width) / ratio) + 'px',
-            'height': ((ui.size.height) / ratio) + 'px'
+			'width': this._previousStyles['border'] ?
+				`${((ui.size.width - parseInt(this._previousStyles['border']) * 2) / ratio)}px`
+				:
+				`${((ui.size.width) / ratio)}px`,
+			'height': this._previousStyles['border'] ?
+				`${((ui.size.height - parseInt(this._previousStyles['border']) * 2) / ratio)}px`
+				:
+				`${((ui.size.height) / ratio)}px`
         });
     }
 
