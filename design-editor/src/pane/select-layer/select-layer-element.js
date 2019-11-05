@@ -517,24 +517,34 @@ class SelectLayer extends DressElement {
           .hover(this._onHoverStart.bind(this), this._onHoverStop.bind(this));
     }
 
-    /**
-     * On hover start callback
-     * @param {Event} event
-     * @private
-     */
-    _onHoverStart(event) {
-        var $target = $(event.target),
-            activeEditor = $target.closest('closet-design-editor')[0],
-            position = activeEditor.getScrollerScroll();
+	/**
+	 * On hover start callback
+	 * @param {Event} event
+	 * @private
+	 */
+	_onHoverStart(event) {
+		const $target = $(event.target),
+			activeEditor = $target.closest('closet-design-editor')[0],
+			position = activeEditor.getScrollerScroll();
 
-        if ($target.hasClass('closet-dv-scroll-up') && position.y > 0) {
-            activeEditor.setScrollerScroll(position.x, position.y - SCROLL_SPEED);
-        } else if ($target.hasClass('closet-dv-scroll-down') && position.y < activeEditor.getScroller().height()) {
-            activeEditor.setScrollerScroll(position.x, position.y + SCROLL_SPEED);
-        }
+		const project = $target.siblings('iframe')[0].contentDocument;
 
-        this._scrollKey = window.requestAnimationFrame(this._onHoverStart.bind(this, event));
-    }
+		const scrollViewClip = project.querySelector('.ui-content.ui-scrollview-clip');
+		const scrollView = $target.siblings('iframe')[0].contentDocument.querySelector('.ui-scrollview-view');
+
+		const scrollViewClipHeight = parseInt(window.getComputedStyle(scrollViewClip).height);
+		const scrollViewScrollHeight = scrollView.scrollHeight;
+
+		const maxScrollValue = scrollViewScrollHeight - scrollViewClipHeight;
+
+		if ($target.hasClass('closet-dv-scroll-up') && position.y > 0) {
+			activeEditor.setScrollerScroll(position.x, position.y - SCROLL_SPEED);
+		} else if ($target.hasClass('closet-dv-scroll-down') && position.y < maxScrollValue) {
+			activeEditor.setScrollerScroll(position.x, position.y + SCROLL_SPEED);
+		}
+
+		this._scrollKey = window.requestAnimationFrame(this._onHoverStart.bind(this, event));
+	}
 
     /**
      * Stop hover callback
