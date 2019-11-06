@@ -726,7 +726,7 @@ class DesignEditor extends DressElement {
 	 * @param {string} parentId id of parent element
 	 * @param {string} id id of inserted element
 	 * @param {string} content content of inserted HTML Element
-	 * @param {string} previousId id of previous element
+	 * @param {string} previousId id of inserted element
 	 */
 	_onElementInserted(parentId, id, content, previousId) {
 		let $parent = null,
@@ -754,7 +754,7 @@ class DesignEditor extends DressElement {
 		if ($guideElement.length) {
 			$guideElement.replaceWith(generatedElement);
 		} else if ($previous.length) {
-			$previous.after(generatedElement);
+			$previous.replaceWith(generatedElement);
 		} else {
 			$parent.prepend(generatedElement);
 		}
