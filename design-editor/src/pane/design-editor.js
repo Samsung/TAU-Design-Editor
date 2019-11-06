@@ -1081,23 +1081,18 @@ class Model {
     redo() {
         var state = null,
             element = null,
-            parent = null,
-            prev = null;
+            parent = null;
         if (!this._disableHisotry) {
             state = this._history.redo();
             if (state) {
                 element = state.element || findById(this._DOM, state.id);
-                if (!element) {
-                    console.debug('check: element is null');
-                    return;
-                }
-
                 if (state.parent_id) {
                     parent = findById(this._DOM, state.parent_id);
                 }
 
-                if (state.prev_id) {
-                    prev = findById(this._DOM, state.prev_id);
+                if (!element) {
+                    console.debug('check: element is null');
+                    return;
                 }
 
                 switch (state.operation) {
@@ -1110,7 +1105,7 @@ class Model {
                     setAttribute(state.id, element, state.name, state.value);
                     break;
                 case 'insert':
-                    insertElement(state.parent, element, prev);
+                    insertElement(state.parent, element);
                     break;
                 case 'delete':
                     removeElement(parent, element);
