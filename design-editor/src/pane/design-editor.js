@@ -149,7 +149,7 @@ function setContent(id, element, value) {
  * @param {HTMLElement} element
  * @param {HTMLElement} prev
  */
-function insertElement(parent, element, prev) {
+function insertElement(parent, element, prev, options) {
     console.log('insertElement');
 
     if (prev) {
@@ -162,8 +162,8 @@ function insertElement(parent, element, prev) {
         parent.getAttribute(INTERNAL_ID_ATTRIBUTE),
         element.getAttribute(INTERNAL_ID_ATTRIBUTE),
         element.outerHTML,
-        prev && prev.getAttribute(INTERNAL_ID_ATTRIBUTE));
-
+        prev && prev.getAttribute(INTERNAL_ID_ATTRIBUTE),
+        options);
 }
 
 /**
@@ -438,7 +438,7 @@ class Model {
      */
     replaceElement(id, componentInfo) {
         var parentId = $(findById(this._DOM, id)).parent().attr('data-id');
-        this.insert(parentId, componentInfo, id);
+        this.insert(parentId, componentInfo, id, { replace: true });
         $(findById(this._DOM, id)).remove();
     }
 
@@ -609,14 +609,14 @@ class Model {
      * @param {HTMLElement} prevSibling_id
      * @returns {string}
      */
-    insert(parent_id, componentPackageInfo, prevSibling_id) {
+    insert(parent_id, componentPackageInfo, prevSibling_id, options) {
         var parent = parent_id instanceof HTMLElement ? parent_id : findById(this._DOM, parent_id),
             element = this._createNewElement(this._DOM, componentPackageInfo),
             id = element.getAttribute(INTERNAL_ID_ATTRIBUTE),
             prev = findById(this._DOM, prevSibling_id);
 
         if (parent) {
-            insertElement(parent, element, prev);
+            insertElement(parent, element, prev, options);
             // TODO Each component should be made independently, but now template has full components.
             // componentPackageInfo.copyToProject(ProjectManager.getActiveProjectInfo().projectPath, this._DOM);
         }
@@ -1061,7 +1061,9 @@ class Model {
                     removeElement(element.parentNode, element);
                     break;
                 case 'delete':
-                    insertElement(parent, element, findById(this._DOM, state.prevSibling_id));
+                    insertElement(parent, element, findById(this._DOM, state.prevSibling_id), {
+                        replace : false
+                    });
                     break;
                 case 'move':
                     moveElement(element, findById(this._DOM, state.prevParent_id), findById(this._DOM, state.prevSibling_id));
@@ -1081,18 +1083,23 @@ class Model {
     redo() {
         var state = null,
             element = null,
-            parent = null;
+            parent = null,
+            prev = null;
         if (!this._disableHisotry) {
             state = this._history.redo();
             if (state) {
                 element = state.element || findById(this._DOM, state.id);
+                if (!element) {
+                    console.debug('check: element is null');
+                    return;
+                }
+
                 if (state.parent_id) {
                     parent = findById(this._DOM, state.parent_id);
                 }
 
-                if (!element) {
-                    console.debug('check: element is null');
-                    return;
+                if (state.prev_id) {
+                    prev = findById(this._DOM, state.prev_id);
                 }
 
                 switch (state.operation) {
@@ -1105,7 +1112,9 @@ class Model {
                     setAttribute(state.id, element, state.name, state.value);
                     break;
                 case 'insert':
-                    insertElement(state.parent, element);
+                    insertElement(state.parent, element, prev, {
+                        replace: false
+                    });
                     break;
                 case 'delete':
                     removeElement(parent, element);
