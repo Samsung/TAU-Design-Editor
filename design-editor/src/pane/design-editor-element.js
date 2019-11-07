@@ -727,8 +727,11 @@ class DesignEditor extends DressElement {
 	 * @param {string} id id of inserted element
 	 * @param {string} content content of inserted HTML Element
 	 * @param {string} previousId id of inserted element
+	 * @param {Object} options.replace == true means that previousId element
+	 *                 is replaced with id element,
+	 *                 otherwise id element is inserted next to previousId
 	 */
-	_onElementInserted(parentId, id, content, previousId) {
+	_onElementInserted(parentId, id, content, previousId, options) {
 		let $parent = null,
 			$previous = null,
 			$guideElement = null,
@@ -754,7 +757,11 @@ class DesignEditor extends DressElement {
 		if ($guideElement.length) {
 			$guideElement.replaceWith(generatedElement);
 		} else if ($previous.length) {
-			$previous.replaceWith(generatedElement);
+			if (options.replace) {
+				$previous.replaceWith(generatedElement);
+			} else {
+				$previous.after(generatedElement);
+			}
 		} else {
 			$parent.prepend(generatedElement);
 		}
@@ -1318,7 +1325,8 @@ class DesignEditor extends DressElement {
 				elementId = this._model.insert(
 					parentId,
 					componentPackageInfo,
-					$guideElement.prev().attr(INTERNAL_ID_ATTRIBUTE)
+					$guideElement.prev().attr(INTERNAL_ID_ATTRIBUTE),
+					{ replace: true } // Guide element is replaced independently of this flag.
 				);
 			} else {
 				elementId = this._model.move(
