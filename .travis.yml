@@ -5,7 +5,7 @@ os:
   - windows
 
 node_js: 
-  - "10"
+  - "10.15"
 
 script: 
   - npm run coverage
