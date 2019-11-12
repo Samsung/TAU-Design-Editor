@@ -215,7 +215,7 @@ class DesignEditor extends DressElement {
 				eventEmitter.emit(EVENTS.ActiveEditorUpdated, 1, this);
 			});
 			this._$iframe[0].contentWindow.addEventListener('pageshow', () => {
-				this.onPageShow(finalBase, iframeDocument);
+				this.onPageShow(iframeDocument);
 			});
 			elementSelector.unSelect();
 		}).catch((err) => {
@@ -224,33 +224,52 @@ class DesignEditor extends DressElement {
 
 	}
 
-	onPageShow(finalBase, iframeDocument) {
+	/**
+	 * `pageshow` event callback
+	 * Responsible for:
+	 * 	- Setting TAU version
+	 * 	- Adding internal ID to every widget
+	 * @param {HTMLIFrameElement} iframeDocument reference to iframe element with designed project
+	 */
+	onPageShow(iframeDocument) {
 		if (iframeDocument) {
 			console.log('$iframe.pageshow');
-			this._updateIFrameHeight();
-			iframeDocument.querySelector('base').setAttribute('href', finalBase);
-			// "pageshow" event is triggered by TAU then TAU should be exists in iframe scope
-			const tau = iframeDocument.defaultView.tau;
-			StateManager.set('tau-version', tau.version);
+			const tau = iframeDocument.defaultView.tau,
+				components = packageManager.getPackages(Package.TYPE.COMPONENT),
+				packages = components._packages;
 
-			// fix data-ids for contained widgets
-			const components = packageManager.getPackages(Package.TYPE.COMPONENT);
-			const packages = components._packages;
-			// find all build widgets
-			iframeDocument.querySelectorAll('[data-tau-built]').forEach((widgetEl) => {
-				widgetEl.getAttribute('data-tau-name').split(',').forEach((name) => {
-					// get matching component for each built widget
-					const component = packages[name.toLowerCase()];
-					if (component) {
-						const container = this.getContainerByElement(widgetEl);
-						if (container) {
-							this.addAttributesToContainer(widgetEl, container);
-						}
-					}
-				});
-			});
+			this._setTauVersion(tau);
+			this._addDataIdToAllElements(packages, iframeDocument);
 			eventEmitter.emit(EVENTS.TAULoaded, tau.version);
 		}
+	}
+
+	/**
+	 * Setting Tau version to State Manager
+	 * @param {Tau} tau tau instance
+	 */
+	_setTauVersion(tau) {
+		StateManager.set('tau-version', tau.version);
+	}
+
+	/**
+	 * Init internal ID attribute in every element on site
+	 * @param {Object} packages given editor packages
+	 * @param {HTMLIFrameElement} iframeDocument referance to iframe element with designed project
+	 */
+	_addDataIdToAllElements(packages, iframeDocument) {
+		iframeDocument.querySelectorAll('[data-tau-built]').forEach((widgetEl) => {
+			widgetEl.getAttribute('data-tau-name').split(',').forEach((name) => {
+				// get matching component for each built widget
+				const component = packages[name.toLowerCase()];
+				if (component) {
+					const container = this.getContainerByElement(widgetEl);
+					if (container) {
+						this.addAttributesToContainer(widgetEl, container);
+					}
+				}
+			});
+		});
 	}
 
 	/**
