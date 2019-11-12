@@ -126,7 +126,8 @@ class AttributeImage extends DressElement {
 			}
 
 			if (parseInt(imageFilter[filter], 10) !== filterDefaults[filter]) {
-				filterString += `${filter}(${imageFilter[filter]}${this.$el.find(`[name=${filter}]`).attr('dataunit')}) `;
+				filterString += `${filter}(${imageFilter[filter]}
+					${this.$el.find(`[name=${filter}]`).attr('dataunit')}) `;
 			}
 		});
 		filterString = filterString.trim();
@@ -137,7 +138,8 @@ class AttributeImage extends DressElement {
 
 		if (modelOptions.needsUpdate) {
 			AppManager.getActiveDesignEditor()
-				.getModel().updateStyle(this._targetImage[0].getAttribute('data-id'), 'filter', filterString, previousStyle);
+				.getModel().updateStyle(this._targetImage[0].getAttribute('data-id'), 'filter',
+					filterString, previousStyle);
 		}
 	}
 
