@@ -289,7 +289,7 @@ class Attribute extends DressElement {
 						typeElement.setAttribute('attr-name', optionName);
 						typeElement.$el.on('change', (e) => {
 							const value = (typeName === 'checkbox') ? e.target.checked : typeElement.value;
-							if (designEditor && value !== undefined && optionName.match(/^data-|^st-/)) {
+							if (designEditor && value !== undefined) {
 								designEditor
 									.getModel()
 									.updateAttribute(self._selectedElementId, optionName, value);
