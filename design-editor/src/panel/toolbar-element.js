@@ -97,15 +97,13 @@ class Toolbar extends DressElement {
 		});
 
 		eventEmitter.on(EVENTS.HistoryChanged, (changes) => {
-			if (changes.historyLength == 0)
-				this.setDisable(this.Controls.UNDO);
-			else
-				this.setEnable(this.Controls.UNDO);
+			changes.historyLength == 0 ?
+				this.setDisable(this.Controls.UNDO) :
+				this.setEnable(this.Controls.UNDO)
 
-			if (changes.undoHistoryLength == 0)
-				this.setDisable(this.Controls.REDO);
-			else
-				this.setEnable(this.Controls.REDO);
+			changes.undoHistoryLength == 0 ?
+				this.setDisable(this.Controls.REDO) :
+				this.setEnable(this.Controls.REDO)
 		});
 
 		this.Controls = {
@@ -291,8 +289,7 @@ class Toolbar extends DressElement {
 				this.turnOnControl(controls.EDITOR);
 
 				Object.keys(controls).forEach((key) => {
-					if (['INSTANT_EDIT', 'INSERT_CODE', 'SAVE', 'INTERACTION_VIEW', 'UNDO', 'REDO']
-						.indexOf(key) === -1) {
+					if (['INSTANT_EDIT', 'INSERT_CODE', 'SAVE', 'INTERACTION_VIEW', 'UNDO', 'REDO'].indexOf(key) === -1) {
 						this.setEnable(controls[key]);
 					}
 				});
