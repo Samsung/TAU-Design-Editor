@@ -757,7 +757,8 @@ class DesignEditor extends DressElement {
 			contentDoc = null,
 			fragment = null,
 			generatedElement = null,
-			packageInfo = null;
+			packageInfo = null,
+			$uiScrollView = null;
 
 		if (!this.isVisible()) {
 			return;
@@ -768,6 +769,7 @@ class DesignEditor extends DressElement {
 		$guideElement = $parent.find('.closet-guide-element').first();
 		contentDoc = this._$iframe[0].contentWindow.document;
 		fragment = contentDoc.createElement('div');
+		$uiScrollView = $parent.find('.ui-scrollview-view').first();
 
 		fragment.innerHTML = content;
 
@@ -782,7 +784,19 @@ class DesignEditor extends DressElement {
 				$previous.after(generatedElement);
 			}
 		} else {
-			$parent.prepend(generatedElement);
+			// Do not add to ui-content directly but to ui-scrollview-view instead since
+			// insertComponent determines parent as element that has data-id attribute
+			// omitting ui-scrollview-view due to it's editor specific element
+			// on Mobile profile which does not belong to model.
+			if ($parent.hasClass('ui-content')) {
+				if ($uiScrollView.length > 0) {
+					$uiScrollView.prepend(generatedElement);
+				} else {
+					$parent.prepend(generatedElement);
+				}
+			} else {
+				$parent.prepend(generatedElement);
+			}
 		}
 
 		componentGenerator.generateComponent(generatedElement, this);
