@@ -1112,7 +1112,7 @@ class Model {
                     setAttribute(state.id, element, state.name, state.value);
                     break;
                 case 'insert':
-                    insertElement(state.parent, element, prev, {
+                    insertElement(parent, element, prev, {
                         replace: false
                     });
                     break;
