@@ -11,8 +11,10 @@ import {AttributeSmartThingsElement} from './attribute-element-sthings';
 import {AttributeInteractiveElement} from './attribute-element-interactive';
 import {AttributeImageElement} from './attribute-element-image';
 import {AttributeCheckboxElement} from './attribute-element-checkbox';
+import AttributeGradient from './attribute-background-gradient';
 import utils from '../../../utils/utils';
 import attributeUtils from '../../../utils/attribute-utils';
+import BackgroundGradient from './attribute-background-gradient';
 
 const TEMPLATE_FILE_PATH = '/panel/property/attribute/';
 const ATTRIBUTE_ELEMENT_FILE_NAME = 'templates/attribute-element.html';
@@ -57,7 +59,8 @@ class Attribute extends DressElement {
         self._interactiveElement = new AttributeInteractiveElement();
         self._imageElement = new AttributeImageElement();
         self._checkboxElement = new AttributeCheckboxElement();
-        self.model = null;
+		self.model = null;
+		self._gradient = new BackgroundGradient(document);
         self.classList.add('closet-attribute-element-container');
         self.classList.add('closet-property');
 
@@ -70,15 +73,18 @@ class Attribute extends DressElement {
 
         self._$selectedElement = null;
 
-        self.events = {
+		self.events = {
 			'click #backgroundColorClear': 'resetToInitialBackgroundColorValue',
 			'click #srcCoverflowClear': 'removeSourceForCoverFlow',
 			'change #fileForBackground': 'onSetRelativePathForBackground',
-            'click  #fileForBackgroundClear': 'onClearBackgroundImage',
-            'change #cfFiles': 'onSelectImageForCoverFlow',
-            'change [name]': 'onCommonStyleChange',
-            'keydown [name]': 'onCommonStyleKeydown'
-        };
+			'click  #fileForBackgroundClear': 'onClearBackgroundImage',
+			'change #backgroundGradientType': 'onChangeGradientElement',
+			'change #gradientColor1': 'onChangeGradientElement',
+			'change #gradientColor2': 'onChangeGradientElement',
+			'change #cfFiles': 'onSelectImageForCoverFlow',
+			'change [name]': 'onCommonStyleChange',
+			'keydown [name]': 'onCommonStyleKeydown'
+		};
 
         this.createFromTemplate(TEMPLATE_FILE_PATH + ATTRIBUTE_ELEMENT_FILE_NAME, {
             callback: () => {
@@ -87,6 +93,16 @@ class Attribute extends DressElement {
             }
         });
     }
+
+	onChangeGradientElement() {
+		const editor = AppManager.getActiveDesignEditor(),
+			element = editor._getElementById(this._selectedElementId),
+			model = editor.getModel();
+		this._gradient.changeGradientElement();
+		model.updateStyle(this._selectedElementId,
+			'background-image', this._gradient.createGradientCSS());
+		console.log('[Element]: ', element);
+	}
 
     /**
      * Init attribute DOM
@@ -466,17 +482,17 @@ class Attribute extends DressElement {
         this.$el.removeClass('fast-show');
     }
 
-    _initTabs(name, $element) {
-        if (name === 'background') {
-            this._$backgroundChooseLayer = $element.find('#backgroundImageChoose');
-            this._$backgroundShowLayer = $element.find('#backgroundImageShow');
-            this._$backgroundShowLayerInput = this._$backgroundShowLayer.find('input[type=text]');
+	_initTabs(name, $element) {
+		if (name === 'background') {
+			this._$backgroundChooseLayer = $element.find('#backgroundImageChoose');
+			this._$backgroundShowLayer = $element.find('#backgroundImageShow');
+			this._$backgroundShowLayerInput = this._$backgroundShowLayer.find('input[type=text]');
 		} else if (name === 'coverflow') {
 			this._$coverflowEffect = $element.find('#coverflowEffect');
 			this._$coverflowFileSize = $element.find('#coverflowFileSize');
 		}
 		this._expandable = [...document.querySelectorAll('.closet-additional-attribute')];
-    }
+	}
 
     /**
      * Create style tabs
@@ -567,23 +583,23 @@ class Attribute extends DressElement {
         }
     }
 
-    onClearBackgroundImage(e) {
-        console.log('clearing background image');
-        if (e && e.originalEvent instanceof Event) {
-            AppManager.getActiveDesignEditor().getModel().updateStyle(
-                this._selectedElementId,
-                'backgroundImage',
-                'none'
-            );
-        }
-        this._applyBackgroundImageInfo();
-        this.$el.find('#fileForBackground').val('');
-    }
+	onClearBackgroundImage(e) {
+		console.log('clearing background image');
+		if (e && e.originalEvent instanceof Event) {
+			AppManager.getActiveDesignEditor().getModel().updateStyle(
+				this._selectedElementId,
+				'backgroundImage',
+				'none'
+			);
+		}
+		this._applyBackgroundImageInfo();
+		this.$el.find('#fileForBackground').val('');
+	}
 
-    /**
-     * set relative path callback
-     * @param {Event} event
-     */
+	/**
+	 * set relative path callback
+	 * @param {Event} event
+	 */
 	onSetRelativePathForBackground(event) {
 		attributeUtils.writeMediaFileWhenIsLoaded(event, filePath => attributeUtils.setImageSource(
 			filePath,
@@ -593,10 +609,10 @@ class Attribute extends DressElement {
 	}
 
 
-    /**
-     * coverflow image selection callback
-     * @param {Event} e
-     */
+	/**
+	 * coverflow image selection callback
+	 * @param {Event} e
+	 */
 	onSelectImageForCoverFlow(e) {
 		const cfFiles = e.target.files;
 		attributeUtils.writeMediaFileWhenIsLoaded(event, () => {
@@ -879,7 +895,7 @@ class Attribute extends DressElement {
             content = el.content,
             listElements = self._AttributeElementLists[attribute + 'Elements'];
 
-        Object.keys(listElements).forEach((item) => {
+		Object.keys(listElements).forEach((item) => {
 			const value = styles[item] || this._computedStyle[item];
             switch (item) {
             case 'borderColor':
@@ -890,7 +906,7 @@ class Attribute extends DressElement {
                 listElements[item].val(utils.rgba2hex(value));
                 break;
             case 'backgroundImage':
-                self._applyBackgroundImageInfo(value);
+                self._applyBackgroundImageInfo(this._gradient.createImageCSS(value));
                 break;
             case 'color':
                 listElements[item].val(utils.rgba2hex(value));
@@ -906,8 +922,8 @@ class Attribute extends DressElement {
 			default:
 				listElements[item].val(value);
 			}
-        });
-    }
+		});
+	}
 }
 
 const AttributeElement = document.registerElement('closet-attribute-element', Attribute);
