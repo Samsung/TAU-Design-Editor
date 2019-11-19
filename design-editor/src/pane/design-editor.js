@@ -431,6 +431,23 @@ class Model {
         }
     }
 
+    _convertColorStylesToHex(styles) {
+        Object.keys(styles).forEach(key => {
+            switch (key) {
+                case 'borderColor':
+                case 'backgroundColor':
+                case 'color':
+                    const value = styles[key];
+                    const hex = utils.rgba2hex(value);
+                    if (hex !== '') {
+                        styles[key] = hex;
+                    }
+                    break;
+            }
+        });
+        return styles;
+    }
+
     /**
      * Raplace element
      * @param {string} id
@@ -475,7 +492,9 @@ class Model {
             id: id,
             operation: 'style',
             styles: styles,
-            previousValues: previousValues
+            // Browser replaces hex number into rgb(r, g, b) string
+            // which is not accepted by input type="color".
+            previousValues: this._convertColorStylesToHex(previousValues)
         });
         this.dirty();
     }

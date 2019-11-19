@@ -93,6 +93,19 @@ export function pipe (functions) {
 	return functions.reduce((f1, f2) => (a, b) => f2(f1(a), b));
 }
 
+/**
+ * Convert RGBA or RGB string to HEX string
+ * @param rgba
+ * @returns {string}
+ */
+export function rgba2hex(rgba) {
+    rgba = rgba.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return (rgba && rgba.length === 4) ? '#' +
+    ('0' + parseInt(rgba[1], 10).toString(16)).slice(-2) +
+    ('0' + parseInt(rgba[2], 10).toString(16)).slice(-2) +
+    ('0' + parseInt(rgba[3], 10).toString(16)).slice(-2) : '';
+}
+
 export default {
 	checkGlobalContext,
 	urlJoin,
@@ -100,5 +113,6 @@ export default {
 	timeoutPromise,
 	isDemoVersion,
 	correctVersion,
-	pipe
+	pipe,
+	rgba2hex
 };
