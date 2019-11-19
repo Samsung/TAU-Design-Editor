@@ -42,19 +42,6 @@ function convertToOptionName(str) {
 }
 
 /**
- * Convert RGBA to HEX
- * @param rgba
- * @returns {string}
- */
-function rgba2hex(rgba) {
-    rgba = rgba.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return (rgba && rgba.length === 4) ? '#' +
-    ('0' + parseInt(rgba[1], 10).toString(16)).slice(-2) +
-    ('0' + parseInt(rgba[2], 10).toString(16)).slice(-2) +
-    ('0' + parseInt(rgba[3], 10).toString(16)).slice(-2) : '';
-}
-
-/**
  *
  */
 class Attribute extends DressElement {
@@ -889,17 +876,17 @@ class Attribute extends DressElement {
 			const value = styles[item] || this._computedStyle[item];
             switch (item) {
             case 'borderColor':
-                listElements[item].val(rgba2hex(value));
+                listElements[item].val(utils.rgba2hex(value));
                 break;
 			case 'backgroundColor':
 				this.displayBackgroundColorResetButton(el.id);
-                listElements[item].val(rgba2hex(value));
+                listElements[item].val(utils.rgba2hex(value));
                 break;
             case 'backgroundImage':
                 self._applyBackgroundImageInfo(value);
                 break;
             case 'color':
-                listElements[item].val(rgba2hex(value));
+                listElements[item].val(utils.rgba2hex(value));
                 break;
             case 'fontFamily':
                 listElements[item].val(value.replace(/^"(.*)"$/, '$1'));
