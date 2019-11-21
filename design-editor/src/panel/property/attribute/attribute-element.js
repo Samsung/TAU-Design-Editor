@@ -138,10 +138,18 @@ class Attribute extends DressElement {
             var element = null,
                 currentValue = '';
             if (self._selectedElementId === id) {
-                element = self.$el.find('[name=' + name + ']');
-                currentValue = element.val();
-                if (currentValue !== value) {
-                    element.val(value);
+                if (name === 'backgroundImage') {
+                    if (value === undefined || value === '' || value === 'none') {
+                        this.onClearBackgroundImage();
+                    } else {
+                        this._applyBackgroundImageInfo(value);
+                    }
+                } else {
+                    element = self.$el.find('[name=' + name + ']');
+                    currentValue = element.val();
+                    if (currentValue !== value) {
+                        element.val(value);
+                    }
                 }
             }
         });
@@ -561,14 +569,13 @@ class Attribute extends DressElement {
 
     onClearBackgroundImage(e) {
         console.log('clearing background image');
-        AppManager
-            .getActiveDesignEditor()
-            .getModel()
-            .updateStyle(
+        if (e && e.originalEvent instanceof Event) {
+            AppManager.getActiveDesignEditor().getModel().updateStyle(
                 this._selectedElementId,
                 'backgroundImage',
                 'none'
             );
+        }
         this._applyBackgroundImageInfo();
         this.$el.find('#fileForBackground').val('');
     }
