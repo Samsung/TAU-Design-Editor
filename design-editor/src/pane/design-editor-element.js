@@ -1515,20 +1515,14 @@ class DesignEditor extends DressElement {
 	 * @returns {*}
 	 */
 	getComputedStyle(elementId) {
-		const
-			$element = this._getElementById(elementId),
-			styles = {};
-
-		let computedStyles = null;
+		const $element = this._getElementById(elementId);
+		let computedStyles = {};
 
 		if ($element.length) {
 			computedStyles = this._$iframe[0].contentWindow.getComputedStyle($element[0]);
-			for (let i = 0; i < computedStyles.length; i += 1) {
-				const name = computedStyles[i].replace(/-([a-z])/g, partName => partName[1].toUpperCase());
-				styles[name] = computedStyles[computedStyles[i]];
-			}
 		}
-		return styles;
+
+		return computedStyles;
 	}
 
 	/**
