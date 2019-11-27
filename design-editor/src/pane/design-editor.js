@@ -473,7 +473,10 @@ class Model {
             styles = {};
 
         if (typeof name === 'string') {
-            previousValues[name] = previousValue || element.style[name];
+            // getComputedStyle of element if its 'raw' style is empty.
+            // This ensures 'auto', 'none' etc. values which are
+            // inserted into corresponding elements in attribute panel on undo/redo.
+            previousValues[name] = previousValue || element.style[name] || this._designEditor.getComputedStyle(id)[name];
             this._updateOneStyle(...arguments);
             styles[name] = value;
         } else {
