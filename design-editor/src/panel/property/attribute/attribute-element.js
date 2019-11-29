@@ -730,10 +730,18 @@ class Attribute extends DressElement {
      */
     onCommonStyleChange(event, originalTarget) {
         var target = originalTarget || event.target,
+            $target = $(target),
             editor = AppManager.getActiveDesignEditor(),
             model = editor.getModel(),
             name = target.name,
             value = target.value;
+
+        // Check if input value is changed.
+        if ($target.is('input:text') && $(target).data("lastval") == value) {
+            return;
+        } else {
+            $(target).data("lastval", value);
+        }
 
         if (this._selectedElementId && name) {
             if (name === 'content') {
