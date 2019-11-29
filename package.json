@@ -6,8 +6,8 @@
   "scripts": {
     "eslint": "eslint design-editor/",
     "lint": "lint-diff $TRAVIS_COMMIT_RANGE",
-    "test:watt": "echo \"Testing WATT...\" && cross-env EDITOR=WATT mocha --reporter progress --require babel-polyfill --require @babel/register --require jsdom-global/register --recursive",
-    "test:vsc": "echo \"Testing VSC...\" && cross-env EDITOR=VSC mocha --reporter progress --require babel-polyfill --require @babel/register --require jsdom-global/register --recursive",
+    "test:watt": "echo \"Testing WATT...\" && cross-env EDITOR=WATT nyc mocha --reporter progress --require babel-polyfill --require @babel/register --require jsdom-global/register --recursive",
+    "test:vsc": "echo \"Testing VSC...\" && cross-env EDITOR=VSC nyc mocha --reporter progress --require babel-polyfill --require @babel/register --require jsdom-global/register --recursive",
     "test": "npm run test:watt && npm run test:vsc",
     "coverage": "nyc npm run test",
     "build-watt": "cross-env EDITOR=WATT webpack --config tools/build.watt.config.js --config-name production",
