@@ -6,7 +6,7 @@
     "attachable": true,
     "displayOrderWeight": 900,
     "type": "standalone-component",
-    "textEditable": true,
+    "textEditable": false,
     "resources": {
       "css": [
         "./styles/input-text.css"
