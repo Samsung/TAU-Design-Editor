@@ -1230,6 +1230,20 @@ class DesignEditor extends DressElement {
 	}
 
 	/**
+	 * Check if element can be removed
+	 * @param {Object} componentPackage
+	 * @returns {boolean}
+	 * @private
+	 */
+	_isRemovable(componentPackage) {
+		// If package does not specify 'removable' property, we assume that it can be rmeoved.
+		if (componentPackage.package.options['removable'] === undefined || componentPackage.package.options['removable']) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Callback for keyboard key down
 	 * @param {Event} event
 	 * @private
@@ -1239,7 +1253,7 @@ class DesignEditor extends DressElement {
 			selectedElement = this._getElementById(selectedElementId),
 			info = this.getUIInfo(selectedElement);
 
-		if (!selectedElement.attr('data-closed-edit-mode')) {
+		if (!selectedElement.attr('data-closed-edit-mode') && this._isRemovable(info)) {
 			if (event.keyCode === KEY_CODE.DELETE && selectedElement) {
 				event.stopImmediatePropagation();
 				elementSelector.unSelect();

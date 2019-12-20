@@ -17,6 +17,7 @@
   "attachable": false,
   "resizable": false,
   "draggable": false,
+  "removable": false,
   "type": "container-component",
   "constraint": [
     "audio",
