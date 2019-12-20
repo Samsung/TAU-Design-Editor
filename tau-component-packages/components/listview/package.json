@@ -12,15 +12,6 @@
       "./styles/style.css"
     ],
     "js": "../../tau/tau.min.js",
-    "images": [
-      "./styles/images/b_drawer.png",
-      "./styles/images/tw_list_add_holo_dark.png",
-      "./styles/images/tw_list_check_ic.png",
-      "./styles/images/tw_list_check_line.png",
-      "./styles/images/tw_list_delete_holo_dark.png",
-      "./styles/images/tw_list_number_icon.png",
-      "./styles/images/tw_list_setting_holo_dark.png"
-    ],
     "icon": {
       "mobile": "./mobile-listview-w.jpg",
       "tv": "./mobile-listview-w.jpg",
@@ -70,68 +61,6 @@
         }
       ],
       "version": "mobile@2.2"
-    }
-  ],
-  "styles": [
-    {
-      "icon": "./styles/subtext1.png",
-      "name": "subtext-1line",
-      "template": "<li class=\"li-has-multiline\"><span>{{mainText}}</span>{{#subText}}{{#first}}<span class=\"ui-li-sub-text li-text-sub\">{{text}}</span>{{/first}}{{/subText}}</li>"
-    },
-    {
-      "icon": "./styles/subtext2.png",
-      "name": "subtext-2line",
-      "template": "<li class=\"li-has-multiline li-has-2line-sub\"><span>{{mainText}}</span>{{#subText}}<span class=\"ui-li-sub-text li-text-sub\">{{text}}</span>{{/subText}}</li>"
-    },
-    {
-      "icon": "./styles/thumbnail1.png",
-      "name": "thumbnail-1line-right",
-      "template": "<li class=\"li-has-thumb-right\"><span>{{mainText}}</span><closet-image class=\"ui-li-thumb-right\" style=\"width: \"></closet-image></li>"
-    },
-    {
-      "icon": "./styles/thumbnail1left.png",
-      "name": "thumbnail-1line-left",
-      "template": "<li class=\"li-has-thumb-left\"><span>{{mainText}}</span><closet-image class=\"ui-li-thumb-left\"></closet-image></li>"
-    },
-    {
-      "icon": "./styles/thumbnail2.png",
-      "name": "thumbnail-2line-right",
-      "template": "<li class=\"li-has-multiline li-has-thumb-right\"><span>{{mainText}}</span>{{#subText}}{{#first}}<span class=\"ui-li-sub-text li-text-sub\">{{text}}</span>{{/first}}{{/subText}}<closet-image class=\"ui-li-thumb-right\"></closet-image></li>"
-    },
-    {
-      "icon": "./styles/thumbnail2left.png",
-      "name": "thumbnail-2line-left",
-      "template": "<li class=\"li-has-multiline li-has-thumb-left\"><span>{{mainText}}</span>{{#subText}}{{#first}}<span class=\"ui-li-sub-text li-text-sub\">{{text}}</span>{{/first}}{{/subText}}<closet-image class=\"ui-li-thumb-left\"></closet-image></li>"
-    },
-    {
-      "icon": "./styles/toggle1.png",
-      "name": "toggle-1line",
-      "template": "<li class=\"li-has-toggle\"><label><span>{{mainText}}</span><div class=\"ui-toggleswitch\"><input type=\"checkbox\" class=\"ui-switch-input\"><div class=\"ui-switch-button\"></div></div></label></li>"
-    },
-    {
-      "icon": "./styles/toggle2.png",
-      "name": "toggle-2line",
-      "template": "<li class=\"li-has-toggle\"><label><span>{{mainText}}</span>{{#subText}}{{#first}}<span class=\"li-text-sub ui-li-sub-text\">{{text}}</span>{{/first}}{{/subText}}<div class=\"ui-toggleswitch\"><input type=\"checkbox\" class=\"ui-switch-input\"><div class=\"ui-switch-button\"></div></div></label></li>"
-    },
-    {
-      "icon": "./styles/checkbox1.png",
-      "name": "checkbox-1line",
-      "template": "<li class=\"li-has-checkbox\"><label><span>{{mainText}}</span><input type=\"checkbox\"></label></li>"
-    },
-    {
-      "icon": "./styles/checkbox2.png",
-      "name": "checkbox-2line",
-      "template": "<li class=\"li-has-checkbox li-has-multiline\"><label><span>{{mainText}}</span>{{#subText}}{{#first}}<span class=\"ui-li-sub-text li-text-sub\">{{text}}</span>{{/first}}{{/subText}}<input type=\"checkbox\"></label></li>"
-    },
-    {
-      "icon": "./styles/radio1.png",
-      "name": "radio-1line",
-      "template": "<li class=\"li-has-radio\"><label><span>{{mainText}}</span><input type=\"radio\" name=\"radio\"></label></li>"
-    },
-    {
-      "icon": "./styles/radio2.png",
-      "name": "radio-2line",
-      "template": "<li class=\"li-has-radio li-has-multiline\"><label><span>{{mainText}}</span>{{#subText}}{{#first}}<span class=\"ui-li-sub-text li-text-sub\">{{text}}</span>{{/first}}{{/subText}}<input type=\"radio\" name=\"radio\"></label></li>"
     }
   ]
 }
