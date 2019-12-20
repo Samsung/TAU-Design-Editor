@@ -58,10 +58,6 @@
   ],
   "styles": [
     {
-      "icon": "./styles/mobile-ct.png",
-      "name": "Color Temperature",
-      "template": "<li class=\"ui-snap-listview-item\"><div class=\"ui-colortemperature\"></div></li>"
-    }, {
       "icon": "./styles/mobile/2lines-image.png",
       "name": "2 lines with image",
       "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div style=\"background-color: #f0f0f0;\" alt=\"icon\" class=\"ui-li-area ui-li-area-b ui-li-image\"></div></li>"
