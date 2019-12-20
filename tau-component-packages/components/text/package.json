@@ -25,12 +25,5 @@
       "description": "Description about progress",
       "version": "wearable"
     }
-  ],
-  "styles": [
-    {
-      "icon": "./styles/processing.png",
-      "name": "processing description",
-      "template": "<span class=\"ui-processing-text\">{{mainText}}</span>"
-    }
   ]
 }
