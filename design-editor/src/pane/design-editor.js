@@ -456,7 +456,7 @@ class Model {
     replaceElement(id, componentInfo) {
         var parentId = $(findById(this._DOM, id)).parent().attr('data-id');
         this.insert(parentId, componentInfo, id, { replace: true });
-        $(findById(this._DOM, id)).remove();
+		this.delete(id);
     }
 
     /**
