@@ -11,7 +11,7 @@
     "js": "../../tau/tau.min.js",
     "icon": {
       "mobile": "./mobile-dimmer.png",
-      "wearable": "./mobile-dimmer.png",
+      "wearable": "./wearable_dimmer.png",
       "tv": "./mobile-dimmer.png"
     }
   },
