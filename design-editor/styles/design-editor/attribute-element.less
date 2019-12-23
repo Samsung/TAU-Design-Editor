@@ -72,6 +72,7 @@ closet-attribute-element,
     }
     .closet-style-element-list {
         .closet-element-styles-list {
+            position: relative;
             .styles-icon {
                 width: 80%;
                 position: relative;
@@ -83,6 +84,22 @@ closet-attribute-element,
             .styles-name {
                 font-size: 15px;
                 text-align: center;
+            }
+            &.item-new {
+                &::after{
+                    content: "new";
+                    color: white;
+                    display: block;
+                    line-height: 23px;
+                    width: 25px;
+                    height: 25px;
+                    position: absolute;
+                    left: 35px;
+                    top: 10px;
+                    border-radius: 50%;
+                    box-shadow: 0 3px 8px 1px rgba(0, 0, 0, 0.3);
+                    background: linear-gradient(to bottom, #77e59c 0%,green 100%);
+                }
             }
         }
     }

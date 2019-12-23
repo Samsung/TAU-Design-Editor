@@ -9,6 +9,7 @@ import {StateManager} from '../../../system/state-manager';
 import utils from '../../../utils/utils';
 import {DressElement} from '../../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../../events-emitter';
+import { _compareVersions } from '../component/utils/component-element-utils';
 
 const TEMPLATE_FILE = 'panel/property/attribute/attribute-element-styles.html';
 const EMPTY_STYLES_ELEMENT = '<span class="empty-styles">No styles to show.</span>';
@@ -70,7 +71,8 @@ class AttributeStyles extends DressElement {
 			styles = options && options.styles,
 			screen = StateManager.get('screen'),
 			profile = screen.profile || 'mobile',
-			shape = screen.shape || 'rectangle';
+			shape = screen.shape || 'rectangle',
+			currentTauVersion = StateManager.get('tau-version', undefined);
 		let temp = {},
 			i,
 			len;
@@ -86,12 +88,16 @@ class AttributeStyles extends DressElement {
 				if (!utils.correctVersion(styles[i].version, profile, shape)) {
 					break;
 				}
+				if (!_compareVersions(currentTauVersion, styles[i].since)) {
+					break;
+				}
                 // icon is path
                 temp = {};
                 temp.name = styles[i].name;
                 temp.icon = path.join(options.path, styles[i].icon).replace(/\\/g, '/');
                 temp.template = styles[i].template;
                 temp.index = i;
+				temp.new = !!styles[i].new;
                 this._data.style.push(temp);
             }
             this._render();
