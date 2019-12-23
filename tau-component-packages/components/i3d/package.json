@@ -11,7 +11,7 @@
       "js": "../../tau/tau.min.js",
       "icon": {
         "mobile": "./i3d.png",
-        "wearable": "./i3d.png",
+        "wearable": "./wearable_i3d.png",
         "tv": "./i3d.png"
       }
     },
