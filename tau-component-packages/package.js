@@ -28,8 +28,7 @@ module.exports = {
 		'flipbook': 'components/flipbook',
 		'graph': 'components/graph',
 		'listitem-image': 'components/listitem-image',
-		'tabs': 'components/tabs',
-		'toggleslider': 'components/toggleslider'
+		'tabs': 'components/tabs'
 	},
 	'appTemplate': {
 		'mdf-light-template-m': 'app-templates/mobile/mdf-light-template-m',

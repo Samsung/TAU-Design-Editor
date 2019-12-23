@@ -1,6 +1,6 @@
 {
   "label": "Toggleswitch",
-  "selector": ".ui-toggleswitch, .ui-toggle-switch",
+  "selector": ".ui-toggleswitch, .ui-toggle-switch, .ui-toggle-container, .ui-toggle-slider-container",
   "baseElementSelector": "input.ui-toggleswitch",
   "version": "mobile",
   "attachable": true,
@@ -30,5 +30,18 @@
   "draggable": true,
   "class": [
     "ui-toggleswitch-large"
+  ],
+  "styles": [
+    {
+      "icon": "./styles/toggleswitch-circle.png",
+      "name": "Switch",
+      "template": "<input type=\"checkbox\" class=\"ui-toggleswitch\" />"
+    }, {
+      "icon": "./styles/toggleswitch-slider.png",
+      "name": "Slider",
+      "template": "<input type=\"checkbox\" class=\"ui-toggleswitch\" data-appearance=\"slider\">",
+      "new": true,
+      "since": "1.1"
+    }    
   ]
 }
