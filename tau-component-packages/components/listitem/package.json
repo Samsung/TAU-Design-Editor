@@ -58,19 +58,23 @@
   ],
   "styles": [
     {
+      "version": "mobile",
       "icon": "./styles/mobile/2lines-image.png",
       "name": "2 lines with image",
       "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div style=\"background-color: #f0f0f0;\" alt=\"icon\" class=\"ui-li-area ui-li-area-b ui-li-image\"></div></li>"
     }, {
+      "version": "mobile",
       "icon": "./styles/mobile/2lines-big-image.png",
       "name": "2 lines with big image",
       "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div style=\"background-color: rgb(240, 240, 240); background-size: 100%; width: 190px; height: 140px;\" alt=\"icon\" class=\"ui-li-area ui-li-area-b ui-li-image\"></div></li>"
     }, {
+      "version": "mobile",
       "icon": "./styles/mobile/2lines-image-checkbox.png",
       "name": "2 lines with image & checkbox",
       "template": "<li class=\"ui-li-flex ui-li-multilines\"><span class=\"ui-li-area ui-li-area-a\"><span class=\"ui-li-text\"><span>Primary text</span></span><span class=\"ui-li-text-2\"><span>Secondary text</span></span></span><div alt=\"circle-icon\" class=\"ui-li-area ui-li-area-b ui-li-circle-image\"></div><input class=\"ui-li-area-c\" type=\"checkbox\" name=\"c1line-check2\" /></li>"
     },
     {
+      "version": "mobile",
       "icon": "./styles/mobile/ui-expandable.png",
       "name": "Expandable with title",
       "template": "<li class=\"ui-expandable\"><h1>List item</h1><div class=\"ui-box\" style=\"min-width: 30px; min-height: 30px;\"></div></li>"
