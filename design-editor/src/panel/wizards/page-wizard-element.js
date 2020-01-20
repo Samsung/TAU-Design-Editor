@@ -17,16 +17,16 @@ import pathUtils from '../../utils/path-utils';
 const CompositeDisposable = editor.CompositeDisposable;
 const notificationManager = editor.notifications;
 
-const TEMPLATE_PATH = '/panel/wizards/page-wizard-element.html';
+const TEMPLATE_PATH = '/panel/wizards/page-wizard-element.html',
+	DEFAULT_TEMPLATE_NAME = 'template.html';
 
 /**
- * Representing New Page wizard
+ *
  */
 class PageWizard extends DressElement {
-	/**
-	 * Create callback
-	 * @constructor
-	 */
+    /**
+     * Create callback
+     */
     onCreated() {
         if (!this.initialized) {
             this._initialize();
@@ -49,9 +49,9 @@ class PageWizard extends DressElement {
         this.$el.attr('tabindex', '-1');
     }
 
-	/**
-	 * Initialize variables and event listeners
-	 */
+    /**
+     * Init
+     */
     _initialize() {
         this._appPath = appManager.getAppPath();
         this._templateMetadata = {};
@@ -81,13 +81,14 @@ class PageWizard extends DressElement {
     _parseCategories(templateMetadata) {
         var data, metadata = templateMetadata._packages;
 
-		Object.keys(metadata).forEach((templateName) => {
-			data = $.extend(true, {}, metadata[templateName].options);
-			data.id = templateName;
+        Object.keys(metadata).forEach((templateName) => {
+            data = $.extend(true, {}, metadata[templateName].options);
+            data.id = templateName;
+            data.templateFileName = data.templateFileName || DEFAULT_TEMPLATE_NAME;
 
-			if (!this._templateMetadata[data.profile]) {
-				this._templateMetadata[data.profile] = [];
-			}
+            if (!this._templateMetadata[data.profile]) {
+                this._templateMetadata[data.profile] = [];
+            }
 
             this._templateMetadata[data.profile].push(data);
         });
@@ -192,30 +193,33 @@ class PageWizard extends DressElement {
         );
     }
 
-	/**
-	 * Set information about newly generated page
-	 */
-	_setNewPageInfo() {
-		const templateConfig = this._getTemplateConfigByPath(this._thumbnailElement.templatePath, this._projectProfile);
+    /**
+     * Set new page info
+     */
+    _setNewPageInfo() {
+        var templateConfig = this._getTemplateConfigByPath(this._thumbnailElement.templatePath, this._projectProfile),
+            template,
+            pageName = '',
+            dir = '';
 
-		if (templateConfig) {
-			const template = $.ajax({
-					url: path.join(templateConfig.path, templateConfig.templateFileName),
-					async: false
-				}).responseText,
-				pageName = this._pageNameInputElement.getValue(),
-				dir = this._pagePathInputElement.path;
-			this._newPageInfo = {
-				pageName: pageName,
-				workSpacePath: dir,
-				pagePath: path.join(dir, `${pageName}.html`),
-				templatePath: this._thumbnailElement.templatePath,
-				template: template
-			};
-		} else {
-			this._newPageInfo = {};
-		}
-	}
+        if (templateConfig) {
+            template = $.ajax({
+                url: path.join(templateConfig.path, templateConfig.templateFileName),
+                async: false
+            }).responseText;
+            pageName = this._pageNameInputElement.getValue();
+            dir = this._pagePathInputElement.path;
+            this._newPageInfo = {
+                pageName: pageName,
+                workSpacePath: dir,
+                pagePath: path.join(dir, pageName + '.html'),
+                templatePath: this._thumbnailElement.templatePath,
+                template: template
+            };
+        } else {
+            this._newPageInfo = {};
+        }
+    }
 
 	/**
 	 * Validate data
