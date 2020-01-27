@@ -21,7 +21,7 @@ import {SelectLayerElement} from './select-layer/select-layer-element';
 import {SectionControllerElement} from './section-controller-element';
 import {elementSelector} from './element-selector';
 import {GridElement} from './grid-element';
-import {RulerElement} from './ruler-element';
+import {Ruler} from './ruler-element';
 import {ElementDetector} from './element-detector';
 import {componentGenerator} from './component-generator';
 import editor from '../editor';
@@ -382,8 +382,8 @@ class DesignEditor extends DressElement {
 		this._sectionController = new SectionControllerElement();
 
 		this._gridLayer = new GridElement();
-		this._rulerXLayer = new RulerElement();
-		this._rulerYLayer = new RulerElement();
+		this._rulerXLayer = new Ruler();
+		this._rulerYLayer = new Ruler();
 		this._rulerYLayer.setOrientation('vertical');
 		this._tooltipPanel = new TooltipElement();
 

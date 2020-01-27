@@ -1,22 +1,28 @@
 'use babel';
 
 class Ruler extends HTMLCanvasElement {
-    /**
-     * Create callback
-     */
-    createdCallback() {
-        this.options = {
-            orientation: 'horizontal',
-            step: 20,
-            stepForShowNumber: 5,
-            color: 'rgba(157, 165, 180, 0.6)',
-            fontColor: 'rgba(157, 165, 180, 0.6)',
-            defaultSize: 15
-        };
 
-        this.isHorizontal = true;
-        this.setOrientation(this.options.orientation);
-    }
+	constructor() {
+		super();
+		this.createdCallback();
+	}
+
+	/**
+	 * Create callback
+	 */
+	createdCallback() {
+		this.options = {
+			orientation: 'horizontal',
+			step: 20,
+			stepForShowNumber: 5,
+			color: 'rgba(157, 165, 180, 0.6)',
+			fontColor: 'rgba(157, 165, 180, 0.6)',
+			defaultSize: 15
+		};
+
+		this.isHorizontal = true;
+		this.setOrientation(this.options.orientation);
+	}
 
     /**
      * Set orientation
@@ -155,9 +161,6 @@ class Ruler extends HTMLCanvasElement {
     }
 }
 
-const RulerElement = document.registerElement('closet-design-editor-ruler', {
-    prototype: Ruler.prototype,
-    extends: 'canvas'
-});
+customElements.define('closet-design-editor-ruler', Ruler, {extends: 'canvas'});
 
-export {Ruler, RulerElement};
+export {Ruler};
