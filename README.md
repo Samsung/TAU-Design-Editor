@@ -49,6 +49,8 @@ npm run build-vsc
 ![](docs/Preview.gif)
 - Structure Element (Wearable)
 ![](docs/Structure.gif)
+- Radio widget usage (Wearable)
+![](docs/Radiobutton.gif)
 - Newpage (Wearable)
 ![](docs/Newpage.gif)
 - Javascript Assistant (mobile)
