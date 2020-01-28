@@ -8,7 +8,7 @@ import {appManager} from '../../app-manager';
 import {DressElement} from '../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
 import editor from '../../editor';
-import {StateManager} from '../../system/state-manager'
+import {StateManager} from '../../system/state-manager';
 import {} from './components/thumbnail-element';
 import {} from './components/file-picker-element';
 import {} from './components/text-editor-element';
