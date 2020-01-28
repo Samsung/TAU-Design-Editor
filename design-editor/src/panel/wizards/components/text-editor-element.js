@@ -1,7 +1,5 @@
 'use babel';
 
-import $ from 'jquery';
-
 const classes = {
 	BLOCK : 'block',
 	DEFAULT_TEXT : 'pw-page-name',
@@ -11,42 +9,27 @@ const classes = {
 /**
  *
  */
-class TextEditor extends HTMLDivElement {
-	/**
-     * Create callback
-     */
-	createdCallback() {
-		this._initialize();
+class TextEditor extends HTMLElement {
+	constructor() {
+		super();
 		this.options = {
 			path: ''
 		};
-	}
-
-	/**
-     * Init
-     * @private
-     */
-	_initialize() {
 		this._textElement = null;
-		$(this).addClass(classes.BLOCK);
-		this._setElement();
 	}
 
 	/**
-     * Set element
+     * Set elements content
      * @private
      */
-	_setElement() {
-		const $textElement = $(document.createElement('input')),
-			self = this;
-		self._textElement = $textElement[0];
-		$(self).append($textElement);
-		$textElement
-			.attr('mini', true)
-			.attr('required', '')
-			.addClass(classes.BRACKETS_TEXT);
-		$(self).addClass(classes.DEFAULT_TEXT);
-		self._textElement.addEventListener('blur', this.showWarningIfEmpty);
+	connectedCallback() {
+		this.classList.add(classes.BLOCK, classes.DEFAULT_TEXT);
+		this._textElement = document.createElement('input');
+		this._textElement.setAttribute('mini', true);
+		this._textElement.setAttribute('required', '');
+		this._textElement.classList.add(classes.BRACKETS_TEXT);
+		this._textElement.addEventListener('blur', this.showWarningIfEmpty);
+		this.appendChild(this._textElement);
 	}
 
 	/**
@@ -63,7 +46,7 @@ class TextEditor extends HTMLDivElement {
 	 */
 	showWarningIfEmpty(e) {
 		const element = e.target;
-		if (!element.value()) {
+		if (!element.value) {
 			element.parentElement.classList.add('empty-warning');
 		} else {
 			element.parentElement.classList.remove('empty-warning');
@@ -71,6 +54,6 @@ class TextEditor extends HTMLDivElement {
 	}
 }
 
-const TextEditorElement = document.registerElement('text-editor', TextEditor);
+customElements.define('text-editor', TextEditor);
 
-export {TextEditorElement, TextEditor};
+export {TextEditor};

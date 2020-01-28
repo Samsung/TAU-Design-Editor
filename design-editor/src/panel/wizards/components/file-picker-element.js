@@ -1,22 +1,17 @@
 'use babel';
 
-import $ from 'jquery';
-import editor from '../../../editor';
 import utils from '../../../utils/utils';
 
-var remote;
-var dialog;
-var BrowserWindow;
-var BracketsProjectManager;
-var brackets = utils.checkGlobalContext('brackets');
 
-var classes = {
-    BLOCK: 'block',
-    DEFAULT_FILE_EXPLORER_WRAPPER: 'closet-file-picker',
-    DEFAULT_FILE_EXPLORER_TEXT: 'closet-file-picker-text'
+const brackets = utils.checkGlobalContext('brackets');
+
+const classes = {
+	BLOCK: 'block',
+	DEFAULT_FILE_EXPLORER_WRAPPER: 'closet-file-picker',
+	DEFAULT_FILE_EXPLORER_TEXT: 'closet-file-picker-text'
 };
 
-BracketsProjectManager = brackets.getModule('project/ProjectManager');
+const BracketsProjectManager = brackets.getModule('project/ProjectManager');
 
 
 /**
@@ -45,97 +40,72 @@ function getDirectories(onSuccess = () => { }) {
 /**
  *
  */
-class FilePicker extends HTMLDivElement {
-    /**
-     * Create callback
-     */
-    createdCallback() {
-        this._initialize();
-        this.options = {
-            path: ''
-        };
-        this.addEventListener('click', (event) => {
-            this.onClick(event);
-        });
-    }
+class FilePicker extends HTMLElement {
+	/**
+	 * Create callback
+	 */
+	constructor() {
+		super();
+		this.options = {
+			path: ''
+		};
+		this._textElement = null;
+	}
 
-    /**
-     * attached callback
-     */
-    attachedCallback() {
-        this._setDefaultContents();
-    }
+	/**
+	 * attached callback
+	 */
+	attachedCallback() {
+		this._setDefaultContents();
+	}
 
-    /**
-     * On click callback
-     */
-    onClick() {
-        console.log('onClick');
-    }
+	/**
+	 * Set element
+	 * @private
+	 */
+	connectedCallback() {
+		this.classList.add(classes.BLOCK);
+		this._selectPath = document.createElement('select');
+		this._selectPath.addEventListener('change', () => {
+			this._customPath.value = this._selectPath.value;
+			this.path = this._customPath.value;
+		});
+		this._customPath = document.createElement('input');
+		this._customPath.addEventListener('change', () => {
+			this._selectPath.value = this._customPath.value;
+			this.path = this._customPath.value;
+		});
 
-    /**
-     * Init
-     * @private
-     */
-    _initialize() {
-        this._textElement = null;
-        $(this).addClass(classes.BLOCK);
-        this._setElement();
-    }
 
-    /**
-     * Set element
-     * @private
-     */
-    _setElement() {
-        var $textElement,
-            self = this,
-            option;
+		getDirectories((directories) => {
+			directories.forEach((dir) => {
+				const option = document.createElement('option');
+				option.value = dir;
+				option.innerText = dir;
+				this._selectPath.appendChild(option);
+			});
+		});
 
-        self._selectPath = document.createElement('select');
-        self._selectPath.addEventListener('change', () => {
-            self._customPath.value = self._selectPath.value;
-            self.path = self._customPath.value;
-        });
-        self._customPath = document.createElement('input');
-        self._customPath.addEventListener('change', () => {
-            self._selectPath.value = self._customPath.value;
-            self.path = self._customPath.value;
-        });
-        // fill select
-        $(self).append(self._selectPath);
-        $(self).append(self._customPath);
+		// fill select
+		this.appendChild(this._selectPath);
+		this.appendChild(this._customPath);
 
-        getDirectories((directories) => {
-            directories.forEach((dir) => {
-                option = document.createElement('option');
-                option.value = dir;
-                option.innerText = dir;
-                self._selectPath.appendChild(option);
-            });
-        });
-    }
+		this.setPath(this.options.path);
+	}
 
-    /**
-     * Set default content
-     * @private
-     */
-    _setDefaultContents() {
-        this.setPath(this.options.path);
-    }
 
-    /**
-     * set path
-     * @param {string} path
-     */
-    setPath(path) {
-        this.options.path = path;
+	/**
+	 * set path
+	 * @param {string} path
+	 */
+	setPath(path) {
+		this.options.path = path;
 
-        this._selectPath.value = path;
-        this._customPath.value = path;
-    }
+		this._selectPath.value = path;
+		this._customPath.value = path;
+	}
 }
 
-const FilePickerElement = document.registerElement('closet-file-picker', FilePicker);
+customElements.define('closet-file-picker', FilePicker);
 
-export {FilePickerElement, FilePicker};
+export {FilePicker};
