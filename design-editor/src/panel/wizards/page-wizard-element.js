@@ -5,7 +5,7 @@ import path from 'path';
 import {Package, packageManager} from 'content-manager';
 import fs from 'fs';
 import {appManager} from '../../app-manager';
-import {DressElement} from '../../utils/dress-element';
+import Component from '../../utils/component-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
 import editor from '../../editor';
 import {StateManager} from '../../system/state-manager';
@@ -23,131 +23,120 @@ const TEMPLATE_PATH = '/panel/wizards/page-wizard-element.html',
 /**
  *
  */
-class PageWizard extends DressElement {
-    /**
-     * Create callback
+class PageWizard extends Component {
+	/**
+     * Responsible for new Page wizard component
      */
-    onCreated() {
-        if (!this.initialized) {
-            this._initialize();
-            this._registerCommands();
-            this.events = {
-                'click .pw-accept-btn': 'onAccept',
-                'click .pw-cancel-btn': 'onCancel'
-            };
+	constructor() {
+		super();
+		if (!this.initialized) {
+			this._initialize();
+			this.events = {
+				'click .pw-accept-btn': 'onAccept',
+				'click .pw-cancel-btn': 'onCancel'
+			};
 
-            this._template = '';
+			this._template = '';
+		}
+	}
 
-        }
-    }
+	/**
+	 * Initialize components state
+	 */
+	_initialize() {
+		this._appPath = appManager.getAppPath();
+		this._templateMetadata = {};
 
-    /**
-     * attach callback
-     **/
-    onAttached() {
-        this._parseCategories(packageManager.getPackages(Package.TYPE.PAGE_TEMPLATE));
-        this.$el.attr('tabindex', '-1');
-    }
+		this._pageNameInputElement = null;
+		this._pagePathInputElement = null;
+		this._categoryElement = null;
+		this._thumbnailElement = null;
 
-    /**
-     * Init
-     */
-    _initialize() {
-        this._appPath = appManager.getAppPath();
-        this._templateMetadata = {};
+		this._newPageInfo = {};
+		this._parseCategories(packageManager.getPackages(Package.TYPE.PAGE_TEMPLATE));
+		this.setAttribute('tabindex', '-1');
 
-        this._pageNameInputElement = null;
-        this._pagePathInputElement = null;
-        this._categoryElement = null;
-        this._thumbnailElement = null;
+		eventEmitter.on(EVENTS.PageWizardOpen, this.openPageWizard.bind(this));
+	}
 
-        this._newPageInfo = {};
+	/**
+	 * Change template view
+	 * @param {string} profileName
+	 */
+	_changeTemplateView(profileName) {
+		this._thumbnailRefresh(this._templateMetadata[profileName]);
+	}
 
-        eventEmitter.on(EVENTS.PageWizardOpen, this.openPageWizard.bind(this));
-    }
+	/**
+	 * Parse categories
+	 * @param {Object} templateMetadata
+	 */
+	_parseCategories(templateMetadata) {
+		const metadata = templateMetadata._packages;
 
-    /**
-     * Change template view
-     * @param {string} profileName
-     */
-    _changeTemplateView(profileName) {
-        this._thumbnailRefresh(this._templateMetadata[profileName]);
-    }
+		Object.keys(metadata).forEach((templateName) => {
 
-    /**
-     * Parse categories
-     * @param {Object} templateMetadata
-     */
-    _parseCategories(templateMetadata) {
-        var data, metadata = templateMetadata._packages;
+			const data = {
+				...metadata[templateName].options,
+				id: templateName,
+				templateFileName: data.templateFileName || DEFAULT_TEMPLATE_NAME
+			};
+			if (!this._templateMetadata[data.profile]) {
+				this._templateMetadata[data.profile] = [];
+			}
 
-        Object.keys(metadata).forEach((templateName) => {
-            data = $.extend(true, {}, metadata[templateName].options);
-            data.id = templateName;
-            data.templateFileName = data.templateFileName || DEFAULT_TEMPLATE_NAME;
+			this._templateMetadata[data.profile].push(data);
+		});
+	}
 
-            if (!this._templateMetadata[data.profile]) {
-                this._templateMetadata[data.profile] = [];
-            }
+	/**
+	 * Open page wizard
+	 */
+	openPageWizard() {
+		const self = this,
+			projectPath = pathUtils.createProjectPath();
 
-            this._templateMetadata[data.profile].push(data);
-        });
-    }
+		this._projectPath = projectPath;
+		this._projectProfile = StateManager.get('screen').profile;
+		this.createFromTemplate(TEMPLATE_PATH).then(() => {
+			eventEmitter.emit(EVENTS.OpenPanel, {
+				type: 'modal',
+				item: this
+			});
+			this._pagePathInputElement = document.querySelector('closet-file-picker');
+			this._pageNameInputElement = document.querySelector('.pw-page-name');
+			this._pageTemplateWrapperElement = document.querySelector('.closet-template-thumbnail-wrapper');
+			this._thumbnailElement = document.querySelector('closet-pw-thumbnail');
 
-    /**
-     * Open page wizard
-     */
-    openPageWizard() {
-        var self = this,
-            projectPath = pathUtils.createProjectPath();
+			this._pagePathInputElement.path = projectPath;
 
-        this._projectPath = projectPath;
-        this._projectProfile = StateManager.get('screen').profile;
+			this.parentElement.classList.add('closet-page-wizard-panel');
+			this.parentElement.style.zIndex = 9999;
 
-        $.ajax({
-            url: path.join(self._appPath.src, TEMPLATE_PATH)
-        }).done((html) => {
-            self.$el.html(html);
-            eventEmitter.emit(EVENTS.OpenPanel, {
-                type: 'modal',
-                item: self
-            });
+			self._changeTemplateView(self._projectProfile);
+			self.initialized = true;
+			this.bindEvents();
+		});
 
-            self._pagePathInputElement = self.$el.find('closet-file-picker')[0];
-            self._pageNameInputElement = self.$el.find('.pw-page-name')[0];
-            self._pageTemplateWrapperElement = self.$el.find('.closet-template-thumbnail-wrapper')[0];
-            self._thumbnailElement = self.$el.find('closet-pw-thumbnail')[0];
+	}
 
-            self._pagePathInputElement.path = projectPath;
+	/**
+	 * Refresh thumbnail
+	 * @param {Object} thumbnailData
+	 */
+	_thumbnailRefresh(thumbnailData) {
+		this._thumbnailElement.setThumbnailMetadata(thumbnailData);
+		this._thumbnailElement.render();
+	}
 
-            // if (!self._pageNameInputElement.getModel().getText()) {
-            //    self._pageNameInputElement.getModel().setText(DEFAULT_PAGE_NAME);
-            // }
-
-            self.$el.parent().addClass('closet-page-wizard-panel').css('z-index', 9999);
-
-            self._changeTemplateView(self._projectProfile);
-            self.initialized = true;
-        });
-    }
-
-    /**
-     * Refresh thumbnail
-     * @param {Object} thumbnailData
-     */
-    _thumbnailRefresh(thumbnailData) {
-        this._thumbnailElement.setThumbnailMetadata(thumbnailData);
-        this._thumbnailElement.render();
-    }
-
-    /**
-     * Get template config path
-     * @param {string} templatePath
-     * @param {string} profile
-     */
-    _getTemplateConfigByPath(templatePath, profile) {
-        return this._templateMetadata[profile].filter(template => template.path === templatePath)[0];
-    }
+	/**
+	 * Get template config path
+	 * @param {string} templatePath
+	 * @param {string} profile
+	 */
+	_getTemplateConfigByPath(templatePath, profile) {
+		return this._templateMetadata[profile].filter(template => template.path === templatePath)[0];
+	}
 
     /**
      * Save new page
@@ -262,31 +251,17 @@ class PageWizard extends DressElement {
 		}
 	}
 
-    /**
-     * Destroy
-     */
-    _destroy() {
-        eventEmitter.emit(EVENTS.ClosePanel, {item: this, clean: true});
-        this._initialize();
+	/**
+	 * Destroy
+	 */
+	_destroy() {
+		eventEmitter.emit(EVENTS.ClosePanel, {item: this, clean: true});
+		this._initialize();
 
-        this.$el.html('');
-    }
-
-    /**
-     * Register commands
-     */
-    _registerCommands() {
-        this.subscriptions = new CompositeDisposable();
-
-        if (this.subscriptions.add) {
-            this.subscriptions.add(editor.commands.add('closet-page-wizard', {
-                'closet-page-wizard:accept': this.onAccept.bind(this),
-                'closet-page-wizard:cancel': this.onCancel.bind(this)
-            }));
-        }
-    }
+		this.innerHTML = '';
+	}
 
 }
-const PageWizardElement = document.registerElement('closet-page-wizard', PageWizard);
+customElements.define('closet-page-wizard', PageWizard);
 
-export {PageWizardElement, PageWizard};
+export {PageWizard};

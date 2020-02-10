@@ -62,53 +62,60 @@ function attributeTypeCasting(optionName, attributeValue) {
  * ES6 Dress version of HTMLElement
  */
 class DressElement extends HTMLElement {
+	constructor() {
+		super();
+	}
 
-    /**
-     * create callback
-      */
-    onCreated() {
-    }
+	/**
+	 * create callback
+	 */
+	onCreated() {
+	}
 
-    /**
-     * ready callback
-      */
-    onReady() {
-    }
+	/**
+	 * ready callback
+	 */
+	onReady() {
+	}
 
-    /**
-     * attach callback
-      */
-    onAttached() {
-    }
+	/**
+	 * attach callback
+	 */
+	onAttached() {
+	}
 
-    /**
-     * detach callback
-      */
-    onDetached() {
-    }
+	/**
+	 * detach callback
+	 */
+	onDetached() {
+	}
 
-    /**
-     * attribute change callback
-      */
-    onAttributeChanged() {
-    }
+	/**
+	 * attribute change callback
+	 */
+	onAttributeChanged() {
+	}
 
-    /**
-     * change callback
-      */
-    onChanged() {
-    }
+	/**
+	 * change callback
+	 */
+	onChanged() {
+	}
 
-    /**
-     * destroy callback
-      */
-    onDestroy() {
-    }
+	/**
+	 * destroy callback
+	 */
+	onDestroy() {
+	}
 
-    /**
-     * create callback (CE)
-      */
-    createdCallback() {
+	createdCallback() {
+		this.connectedCallback();
+	}
+
+	/**
+	 * create callback (CE)
+	 */
+	connectedCallback() {
         var self = this,
             $el = $(self),
             options = null;
@@ -118,7 +125,6 @@ class DressElement extends HTMLElement {
 
         self.$el = $el;
         self.componentName = '';
-        self.events = self.events || {};
         self.defaults = self.defaults || {
             focusable: false,
             disable: false
@@ -133,18 +139,17 @@ class DressElement extends HTMLElement {
         });
 
         self.onCreated();
-        self.onReady();
+		self.onReady();
+		this._bindEvents();
     }
 
-    /**
-     * attach callback (CE)
-      */
-    attachedCallback() {
-        var self = this;
-        self._unbindEvents();
-        self._bindEvents();
-        self.onAttached();
-    }
+	/**
+	 * attach callback (CE)
+	 */
+	attachedCallback() {
+		this._bindEvents();
+		this.onAttached();
+	}
 
     /**
      * detach callback (CE)
@@ -196,41 +201,41 @@ class DressElement extends HTMLElement {
      * Bind events
       * @private
      */
-    _bindEvents() {
-        var self = this,
-            events = self.events,
-            method = null,
-            match = null,
-            eventName = '',
-            selector = '',
-            listener = null;
+	_bindEvents() {
+		const self = this,
+			events = self.events;
+		let	method = null,
+			match = null,
+			eventName = '',
+			selector = '',
+			listener = null;
 
-        if (!events) {
-            return;
-        }
+		if (!events) {
+			return;
+		}
 
-        Object.keys(events).forEach((key) => {
-            match = key.match(EVENT_SPLIT_REG);
-            eventName = match[1];
-            selector = match[2];
+		Object.keys(events).forEach((key) => {
+			match = key.match(EVENT_SPLIT_REG);
+			eventName = match[1];
+			selector = match[2];
 
-            const methodName = events[key];
-            method = methodName;
-            if (!$.isFunction(method)) {
-                method = self[method];
-            }
+			const methodName = events[key];
+			method = methodName;
+			if (!$.isFunction(method)) {
+				method = self[method];
+			}
 
-            if ($.isFunction(method)) {
-                listener = method.bind(self);
+			if ($.isFunction(method)) {
+				listener = method.bind(self);
 
-                self.$el.on(eventName + '.components' + self.id, selector, listener);
-            } else {
-                self.$el.on(eventName + '.components' + self.id, selector, function (nodeEventName) {
-                    eventEmitter.emit(nodeEventName);
-                }.bind(null, methodName));
-            }
-        });
-    }
+				self.$el.on(`${eventName  }.components${  self.id}`, selector, listener);
+			} else {
+				self.$el.on(`${eventName  }.components${  self.id}`, selector, ((nodeEventName) => {
+					eventEmitter.emit(nodeEventName);
+				}).bind(null, methodName));
+			}
+		});
+	}
 
     /**
      * Unbind events
@@ -297,10 +302,11 @@ class DressElement extends HTMLElement {
      * @param {parent, options, callback, before}
      */
     createFromTemplate(url, {parent, options, callback, before} = {}) {
-        $.get(appManager.getAppPath().src + url, (template) => {
-            const $parentElement = parent || this.$el,
-                content = mustache.render(template, options),
-                $element = $(content);
+		const appPath = appManager.getAppPath().src + url;
+		$.get(appPath, (template) => {
+			const $parentElement = parent || this.$el,
+				content = mustache.render(template, options),
+				$element = $(content);
             if (before) {
                 before.before($element);
             } else {
