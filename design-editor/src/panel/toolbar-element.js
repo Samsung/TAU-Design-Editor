@@ -6,7 +6,7 @@ import path from 'path';
 import {appManager as AppManager} from '../app-manager';
 import {StateManager} from '../system/state-manager';
 import {DressElement} from '../utils/dress-element';
-import {PageWizardElement} from './wizards/page-wizard-element';
+import {PageWizard} from './wizards/page-wizard-element';
 import {EVENTS, eventEmitter} from '../events-emitter';
 import {ViewType} from '../static';
 
@@ -196,7 +196,7 @@ class Toolbar extends DressElement {
      */
 	_initialize() {
 		this._appPath = AppManager.getAppPath();
-		this._pageWizard = new PageWizardElement();
+		this._pageWizard = new PageWizard();
 	}
 
 	/**

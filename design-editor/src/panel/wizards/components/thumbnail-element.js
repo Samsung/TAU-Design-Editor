@@ -65,25 +65,24 @@ class Thumbnail extends HTMLElement {
 
 	/**
 	 * Render
-	 * @returns {*}
+	 * @returns {Object}
 	 */
 	render() {
 		// difference between atom and brackets
 		const projectDirPath = appManager ? appManager.getAppPath().src : '/design-editor/closet';
+		fetch(path.join(projectDirPath, TEMPLATE_FILE_PATH))
+			.then((data) => data.text())
+			.then((templateString) => {
+				const templateRendered = Mustache.render(templateString, {
+					templates: this._thumbnailMetaData,
+					getThumbnailPath() {
+						return path.join(this.path, this.thumbnail.replace(/(\.\/)/g, '/'));
+					}
+				});
 
-		$.ajax({
-			url: path.join(projectDirPath, TEMPLATE_FILE_PATH)
-		}).done((templateString) => {
-			const templateRendered = Mustache.render(templateString, {
-				templates: this._thumbnailMetaData,
-				getThumbnailPath() {
-					return path.join(this.path, this.thumbnail.replace(/(\.\/)/g, '/'));
-				}
-			});
-
-			$(this).empty().append(templateRendered);
-			this.selectedIndex = 0;
-		});
+				$(this).empty().append(templateRendered);
+				this.selectedIndex = 0;
+			}).catch((err) => {throw err;});
 
 		return this;
 	}

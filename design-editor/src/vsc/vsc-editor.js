@@ -13,7 +13,7 @@ import closetComponents from 'closet-component-packages';
 import {VSCPreferenceManager} from './vsc-preference-manager';
 import {PreferenceManager} from '../preference-manager';
 import bracketsDefaultConfig from '../package-config';
-import {BracketsStatusBarElement} from './brackets-status-bar';
+import {BracketsStatusBar} from './brackets-status-bar';
 import {ConfigurationDesignAreaElement} from '../panel/configuration-design-area-element';
 import {stageManager} from '../system/stage-manager';
 import {appManager} from '../app-manager';
@@ -44,11 +44,11 @@ class VSCEditor {
 		VSCPreferenceManager.initialize();
 
 		element = new DesignEditorElement();
-		statusBarElement = new BracketsStatusBarElement();
+		statusBarElement = new BracketsStatusBar();
 		configurationDesignAreaElement = new ConfigurationDesignAreaElement();
 
 		modelManager = ModelManager.getInstance();
-				//appManager = AppManager.getInstance();
+		//appManager = AppManager.getInstance();
 
 		eventEmitter.on(EVENTS.InsertComponent, (event, componentPackageInfo, element) => {
 			const activeClosetEditor = appManager.getActiveDesignEditor();
