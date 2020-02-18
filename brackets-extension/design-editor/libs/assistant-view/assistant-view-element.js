@@ -301,6 +301,6 @@ class AssistantView extends DressElement {
 	}
 }
 
-const AssistantViewElement = document.registerElement('closet-assistant-view', AssistantView);
+customElements.define('closet-assistant-view', AssistantView);
 
-export {AssistantViewElement, AssistantView};
+export {AssistantView};

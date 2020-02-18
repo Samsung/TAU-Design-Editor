@@ -151,6 +151,6 @@ class Info extends DressElement {
     }
 }
 
-const InfoElement = document.registerElement('info-bar', Info);
+customElements.define('info-bar', Info);
 
-export {InfoElement, Info};
+export {Info};

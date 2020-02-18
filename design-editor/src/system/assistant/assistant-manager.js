@@ -6,7 +6,7 @@ import AssistantView from 'assistant-view';
 import pathUtils from '../../utils/path-utils';
 import utils from '../../utils/utils';
 import {eventEmitter, EVENTS} from '../../events-emitter';
-import {AssistantWizardElement} from '../../panel/assistant/assistant-wizard';
+import {AssistantWizard} from '../../panel/assistant/assistant-wizard';
 import {AssistantCodeGenerator} from './assistant-code-generator';
 
 // eslint-disable-next-line max-len
@@ -25,7 +25,7 @@ const JS_TEMPLATE = 'document.getElementById(\'main\').addEventListener(\'pagebe
 class AssistantManager {
 	constructor() {
 		this._assistantView = new AssistantView();
-		this._assistantWizard = new AssistantWizardElement();
+		this._assistantWizard = new AssistantWizard();
 		this._codeGenerator = new AssistantCodeGenerator();
 		this._bindEvents();
 		this._model = null;

@@ -68,5 +68,5 @@ class AttributeInterative extends DressElement {
 	}
 }
 
-const AttributeInteractiveElement = document.registerElement('closet-attribute-interactive', AttributeInterative);
-export {AttributeInteractiveElement, AttributeInterative};
+customElements.define('closet-attribute-interactive', AttributeInterative);
+export {AttributeInterative};

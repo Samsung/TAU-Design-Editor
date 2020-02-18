@@ -227,6 +227,6 @@ class Preview extends DressElement {
 
 }
 
-const PreviewElement = document.registerElement('closet-preview-element', Preview);
+customElements.define('closet-preview-element', Preview);
 
-export {PreviewElement, Preview};
+export {Preview};

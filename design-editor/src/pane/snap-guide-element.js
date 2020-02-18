@@ -5,9 +5,14 @@ import {StateManager} from '../system/state-manager';
 import {DressElement} from '../utils/dress-element';
 
 class SnapGuide extends DressElement {
-    /**
-     * attached callback
-     */
+	constructor() {
+		super();
+		this.connectedCallback();
+	}
+
+	/**
+	 * attached callback
+	 */
     onAttached() {
         this.$el.addClass('orientation-' + this.options.orientation);
     }
@@ -43,5 +48,5 @@ class SnapGuide extends DressElement {
     }
 }
 
-const SnapGuideElement = document.registerElement('closet-design-snap-guide', SnapGuide);
-export {SnapGuideElement, SnapGuide};
+customElements.define('closet-design-snap-guide', SnapGuide);
+export {SnapGuide};

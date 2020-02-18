@@ -64,6 +64,7 @@ function attributeTypeCasting(optionName, attributeValue) {
 class DressElement extends HTMLElement {
 	constructor() {
 		super();
+		this.$el = $(this);
 	}
 
 	/**

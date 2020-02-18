@@ -1,7 +1,7 @@
 'use babel';
 
-import {AssistantViewElement} from './assistant-view-element';
-import {AssistantWizardElement} from '../../../../design-editor/src/panel/assistant/assistant-wizard';
+import {AssistantView} from './assistant-view-element';
+import {AssistantWizard} from '../../../../design-editor/src/panel/assistant/assistant-wizard';
 import {AssistantCodeGenerator} from '../../../../design-editor/src/system/assistant/assistant-code-generator';
 
 const DEFAULT_GRAMMAR = 'source.js';
@@ -20,8 +20,8 @@ class AssistantViewManager {
     constructor() {
         this._codeGenerator = new AssistantCodeGenerator('\r\n');
 
-        this._assistantElement = new AssistantViewElement();
-        this._assistantCodeWizard = new AssistantWizardElement();
+        this._assistantElement = new AssistantView();
+        this._assistantCodeWizard = new AssistantWizard();
 
         this._closetDesignEditor = null;
         this._insertRow = 0;

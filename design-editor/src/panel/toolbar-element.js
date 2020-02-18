@@ -310,6 +310,6 @@ class Toolbar extends DressElement {
 	}
 }
 
-const ToolbarElement = document.registerElement('closet-toolbar-container-element', Toolbar);
+customElements.define('closet-toolbar-container-element', Toolbar);
 
-export {ToolbarElement, Toolbar};
+export {Toolbar};

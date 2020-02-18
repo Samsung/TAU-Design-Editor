@@ -245,6 +245,6 @@ class Behavior extends DressElement {
 	}
 }
 
-const BehaviorElement = document.registerElement('closet-behavior-element', Behavior);
+customElements.define('closet-behavior-element', Behavior);
 
-export {BehaviorElement, Behavior};
+export {Behavior};

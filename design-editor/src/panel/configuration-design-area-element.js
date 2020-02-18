@@ -331,6 +331,6 @@ class ConfigurationDesignArea extends DressElement {
     }
 }
 
-const ConfigurationDesignAreaElement = document.registerElement('configuration-design-area', ConfigurationDesignArea);
+customElements.define('configuration-design-area', ConfigurationDesignArea);
 
-export {ConfigurationDesignAreaElement, ConfigurationDesignArea};
+export {ConfigurationDesignArea};

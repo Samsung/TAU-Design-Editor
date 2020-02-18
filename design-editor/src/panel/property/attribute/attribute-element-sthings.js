@@ -193,6 +193,6 @@ class AttributeSmartThings extends DressElement {
 
 }
 
-const AttributeSmartThingsElement = document.registerElement('closet-attribute-element-smartthings', AttributeSmartThings);
+customElements.define('closet-attribute-element-smartthings', AttributeSmartThings);
 
-export {AttributeSmartThingsElement, AttributeSmartThings};
+export {AttributeSmartThings};

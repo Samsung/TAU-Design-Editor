@@ -148,7 +148,6 @@ class Popup extends DressElement {
         return this._isPopupActive(element) || this._isChildsPopupActive(element);
     }
 }
+customElements.define('closet-popup-element', Popup);
 
-const PopupElement = document.registerElement('closet-popup-element', Popup);
-
-export {PopupElement, Popup};
+export {Popup};

@@ -132,6 +132,6 @@ class AttributeStyles extends DressElement {
 }
 
 
-const AttributeStylesElement = document.registerElement('closet-attribute-styles', AttributeStyles);
+customElements.define('closet-attribute-styles', AttributeStyles);
 
-export {AttributeStylesElement, AttributeStyles};
+export {AttributeStyles};

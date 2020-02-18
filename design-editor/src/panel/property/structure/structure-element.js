@@ -383,6 +383,6 @@ class Structure extends DressElement {
     }
 }
 
-const StructureElement = document.registerElement('closet-structure-element', Structure);
+customElements.define('closet-structure-element', Structure);
 
-export {StructureElement, Structure};
+export {Structure};

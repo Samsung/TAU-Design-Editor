@@ -189,7 +189,6 @@ class AttributeCheckbox extends DressElement {
 }
 
 
+customElements.define('closet-checkbox-element', AttributeCheckbox);
 
-const AttributeCheckboxElement = document.registerElement('closet-checkbox-element', AttributeCheckbox);
-
-export {AttributeCheckboxElement, AttributeCheckbox};
+export {AttributeCheckbox};

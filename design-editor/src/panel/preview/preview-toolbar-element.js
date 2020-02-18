@@ -17,6 +17,6 @@ class PreviewToolbar extends DressElement {
     }
 }
 
-const PreviewToolbarElement = document.registerElement('closet-preview-element-toolbar', PreviewToolbar);
+customElements.define('closet-preview-element-toolbar', PreviewToolbar);
 
-export {PreviewToolbarElement, PreviewToolbar};
+export {PreviewToolbar};

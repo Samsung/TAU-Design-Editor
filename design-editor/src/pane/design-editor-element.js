@@ -17,15 +17,15 @@ import {SnapGuideManager} from './snap-guide-manager';
 import {Guide} from './guide';
 import {DressElement} from '../utils/dress-element';
 import {EVENTS, eventEmitter} from '../events-emitter';
-import {SelectLayerElement} from './select-layer/select-layer-element';
-import {SectionControllerElement} from './section-controller-element';
+import {SelectLayer} from './select-layer/select-layer-element';
+// import {SectionControllerElement} from './section-controller-element';
 import {elementSelector} from './element-selector';
-import {GridElement} from './grid-element';
+import {Grid} from './grid-element';
 import {Ruler} from './ruler-element';
 import {ElementDetector} from './element-detector';
 import {componentGenerator} from './component-generator';
 import editor from '../editor';
-import {TooltipElement} from '../panel/tooltip-element';
+import {Tooltip} from '../panel/tooltip-element';
 import {Devices} from '../system/devices';
 import utils from '../utils/utils';
 import iframeUtils from '../utils/iframe';
@@ -372,27 +372,27 @@ class DesignEditor extends DressElement {
 		});
 
 		// we need first bind events, next we can create another layers
-		this._selectLayer = new SelectLayerElement();
+		this._selectLayer = new SelectLayer();
 		this._selectLayer.options = {
 			designEditor: this,
 			screenWidth: this.screenConfig.width,
 			screenHeight: this.screenConfig.height,
 			screenRatio: this.screenConfig.ratio
 		};
-		this._sectionController = new SectionControllerElement();
+		//this._sectionController = new SectionController();
 
-		this._gridLayer = new GridElement();
+		this._gridLayer = new Grid();
 		this._rulerXLayer = new Ruler();
 		this._rulerYLayer = new Ruler();
 		this._rulerYLayer.setOrientation('vertical');
-		this._tooltipPanel = new TooltipElement();
+		this._tooltipPanel = new Tooltip();
 
 		snapGuides = SnapGuideManager.getInstance().getGuides();
 		this._$scroller
 			.append(this._$iframe)
 			.append(this._$iframeDummy)
-			.append(this._selectLayer)
-			.append(this._sectionController);
+			.append(this._selectLayer);
+		//.append(this._sectionController);
 
 		this.$el.append(this._$designArea);
 
@@ -1564,19 +1564,19 @@ class DesignEditor extends DressElement {
 	}
 }
 
-const DesignEditorElement = document.registerElement('closet-design-editor', DesignEditor);
+customElements.define('closet-design-editor', DesignEditor);
 
 /**
  * This method makes the instance of DesignEditorElement.
  * Design Editor Element is a singleton and to get its instance this method should be used.
  * @returns {*}
  */
-DesignEditorElement.getInstance = function () {
+DesignEditor.getInstance = function () {
 	if (_instance === null) {
-		_instance = new DesignEditorElement();
+		_instance = new DesignEditor();
 	}
 
 	return _instance;
 };
 
-export {DesignEditorElement, DesignEditor};
+export {DesignEditor};
