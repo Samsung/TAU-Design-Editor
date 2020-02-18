@@ -104,6 +104,6 @@ class AlternativeSelector extends DressElement {
 }
 
 
-const AlternativeSelectorElement = document.registerElement('closet-alternative-selector', AlternativeSelector);
+customElements.define('closet-alternative-selector', AlternativeSelector);
 
-export {AlternativeSelectorElement, AlternativeSelector};
+export {AlternativeSelector};

@@ -498,6 +498,6 @@ class AssistantWizard extends DressElement {
     }
 }
 
-const AssistantWizardElement = document.registerElement('closet-assistant-wizard', AssistantWizard);
+customElements.define('closet-assistant-wizard', AssistantWizard);
 
-export {AssistantWizardElement, AssistantWizard};
+export {AssistantWizard};

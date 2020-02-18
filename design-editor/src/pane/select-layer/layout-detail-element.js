@@ -212,6 +212,6 @@ class LayoutDetail extends DressElement {
     }
 }
 
-const LayoutDetailElement = document.registerElement('closet-element-layout-detail', LayoutDetail);
+customElements.define('closet-element-layout-detail', LayoutDetail);
 
-export {LayoutDetailElement, LayoutDetail};
+export {LayoutDetail};

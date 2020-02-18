@@ -1,7 +1,7 @@
 'use babel';
 
 import {StateManager} from '../system/state-manager';
-import {SnapGuideElement} from './snap-guide-element';
+import {SnapGuide} from './snap-guide-element';
 import {PreferenceManager} from '../preference-manager';
 
 const mathAbs = Math.abs;
@@ -14,10 +14,10 @@ class SnapGuideManager {
      */
     constructor() {
         // Cannot call constructor with arguments
-        this.vertical = new SnapGuideElement();
+        this.vertical = new SnapGuide();
         this.vertical.options.orientation = 'vertical';
 
-        this.horizontal = new SnapGuideElement();
+        this.horizontal = new SnapGuide();
         this.horizontal.options.orientation = 'horizontal';
 
         this.screenConfig = StateManager.get('screen');

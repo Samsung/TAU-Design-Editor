@@ -7,14 +7,14 @@ import {EVENTS, eventEmitter} from '../events-emitter';
 import {panelManager} from './panel-manager';
 import {ViewType} from './../static';
 import editor from '../editor';
-import {PropertyContainerElement} from '../panel/property/property-container-element';
-import {AnimationContainerElement} from '../panel/animation/animation-container-element';
-import {StructureElement} from '../panel/property/structure/structure-element';
-import HTMLAssistant from '../pane/select-layer/html-assistant';
-import {ToolbarElement} from '../panel/toolbar-element';
-import {PreviewElement} from '../panel/preview/preview-element';
-import {PreviewToolbarElement} from '../panel/preview/preview-toolbar-element';
-import {InfoElement} from '../pane/select-layer/info-element';
+import {PropertyContainer} from '../panel/property/property-container-element';
+//import {AnimationContainerElement} from '../panel/animation/animation-container-element';
+import {Structure} from '../panel/property/structure/structure-element';
+//import HTMLAssistant from '../pane/select-layer/html-assistant';
+import {Toolbar} from '../panel/toolbar-element';
+import {Preview} from '../panel/preview/preview-element';
+import {PreviewToolbar} from '../panel/preview/preview-toolbar-element';
+import {Info} from '../pane/select-layer/info-element';
 import utils from '../utils/utils';
 
 const CompositeDisposable = editor.CompositeDisposable,
@@ -28,19 +28,17 @@ class StageManager {
      */
 	initialize() {
 		// initialize property container
-		this._propertyContainerElement = new PropertyContainerElement();
-		// initialize animation container
-		this._animationContainerElement = new AnimationContainerElement();
+		this._propertyContainerElement = new PropertyContainer();
 
-		this._structureElement = new StructureElement();
+		this._structureElement = new Structure();
 
-		this._infoElement = new InfoElement();
+		this._infoElement = new Info();
 
-		this._htmlAssistant = new HTMLAssistant();
-		this._toolbarContainerElement = new ToolbarElement();
+		//this._htmlAssistant = new HTMLAssistant();
+		this._toolbarContainerElement = new Toolbar();
 		this._toolbarContainerElementPanel = null;
 
-		this._previewElementToolbar = new PreviewToolbarElement();
+		this._previewElementToolbar = new PreviewToolbar();
 		this._previewElementToolbarPanel = null;
 		// this._interactionViewElementToolbar = new InteractionViewToolbarElement();
 		// this._interactionViewElementToolbarPanel = null;
@@ -244,7 +242,7 @@ class StageManager {
 		}
 
 		if (!$workSpace.hasClass('closet-preview-mode') || isDemoVersion) {
-			preview = new PreviewElement();
+			preview = new Preview();
 			$workSpace.children().last().before(preview);
 			preview.show(
 				{

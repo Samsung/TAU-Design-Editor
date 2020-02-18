@@ -28,6 +28,6 @@ class Panel extends DressElement {
     }
 }
 
-const PanelElement = document.registerElement('closet-panel', Panel);
+customElements.define('closet-panel', Panel);
 
-export {PanelElement, Panel};
+export {Panel};

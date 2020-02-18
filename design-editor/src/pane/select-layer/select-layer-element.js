@@ -9,11 +9,11 @@ import {Interaction} from '../interaction';
 import {DressElement} from '../../utils/dress-element';
 import {elementSelector} from '../element-selector';
 import {ElementDetector} from '../element-detector';
-import {LayoutDetailElement} from './layout-detail-element';
-import {AlternativeSelectorElement} from './alternative-selector-element';
-import {PopupElement} from '../popup-element';
+import {LayoutDetail} from './layout-detail-element';
+import {AlternativeSelector} from './alternative-selector-element';
+import {Popup} from '../popup-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
-import {ExpandableElement} from '../expandable-element';
+import {Expandable} from '../expandable-element';
 
 const INTERNAL_ID_ATTRIBUTE = 'data-id';
 const SCROLL_SPEED = 3;
@@ -62,9 +62,9 @@ class SelectLayer extends DressElement {
         self._selectedElement = null;
         self._$scrollUpElement = null;
         self._$scrollDownElement = null;
-        self._layoutDetail = new LayoutDetailElement();
-        self._popupElement = new PopupElement();
-        self._expandableElement = new ExpandableElement();
+        self._layoutDetail = new LayoutDetail();
+        self._popupElement = new Popup();
+        self._expandableElement = new Expandable();
 
         self._layerWeakMap = new WeakMap();
         self._highlightWeakMap = new WeakMap();
@@ -459,7 +459,7 @@ class SelectLayer extends DressElement {
      * @private
      */
     _makeHoverScroller() {
-        var $element = this.$el,
+        var $element = $(this),
             $closedEditor = $element.closest('closet-design-editor'),
             $dvScrollElement = $closedEditor.find('.closet-dv-scroll'),
             halfElementHeight = $element.height() / 2,
@@ -878,7 +878,7 @@ class SelectLayer extends DressElement {
         }
 
         $element = $(element);
-        altSelector = new AlternativeSelectorElement();
+        altSelector = new AlternativeSelector();
         altSelector.render($element);
         altSelector.layout(this.options.screenRatio);
         this.$el.append(altSelector);
@@ -910,6 +910,6 @@ class SelectLayer extends DressElement {
 }
 
 
-const SelectLayerElement = document.registerElement('closet-select-layer', SelectLayer);
+customElements.define('closet-select-layer', SelectLayer);
 
-export {SelectLayerElement, SelectLayer};
+export {SelectLayer};

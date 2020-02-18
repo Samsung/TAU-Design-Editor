@@ -2,10 +2,10 @@
 
 import $ from 'jquery';
 import Mustache from 'mustache';
-import {ComponentElement} from './component/component-element';
-import {BehaviorElement} from './behavior/behavior-element';
-import {DressElement} from '../../utils/dress-element';
-import {AttributeElement} from './attribute/attribute-element';
+import {Component} from './component/component-element';
+import {Behavior} from './behavior/behavior-element';
+import ComponentElement from '../../utils/component-element';
+import {Attribute} from './attribute/attribute-element';
 import {EVENTS, eventEmitter} from '../../events-emitter';
 
 var TAB_ITEM_TEMPLATE = [
@@ -19,20 +19,25 @@ var TAB_TEMPLATE = [
 /**
  *
  */
-class PropertyContainer extends DressElement {
+class PropertyContainer extends ComponentElement {
+	constructor() {
+		super();
+		this.connectedCallback();
+	}
+
 	/**
 	 * Create callback
 	 */
-	onCreated() {
+	connectedCallback() {
 		const self = this;
 
 		self.$tab = null;
 		self.propertyElements = null;
 		self._activeTabIndex = 0;
 		self.classList.add('closet-property-container');
-		self._attributeEl = new AttributeElement();
-		self._behaviorEl = new BehaviorElement();
-		self._componentEl = new ComponentElement();
+		self._attributeEl = new Attribute();
+		self._behaviorEl = new Behavior();
+		self._componentEl = new Component();
 		self._initializeTab();
 		self.propertyElements = [self._componentEl, self._attributeEl, self._behaviorEl];
 		self._addPropertyElements();
@@ -189,15 +194,14 @@ class PropertyContainer extends DressElement {
         };
     }
 
-    /**
-     * Init tab
-     * @private
-     */
-    _initializeTab() {
-        var self = this;
-        self.$tab = $(Mustache.render(TAB_TEMPLATE));
-        self.$el.empty().append(self.$tab);
-    }
+	/**
+	 * Init tab
+	 * @private
+	 */
+	_initializeTab() {
+		this.$tab = $(Mustache.render(TAB_TEMPLATE));
+		this.appendChild(this.$tab[0]);
+	}
 
 	/**
 	 * Add property element
@@ -213,7 +217,7 @@ class PropertyContainer extends DressElement {
 			propertyElement = self.propertyElements[i];
 			propertyData.title = propertyElement.getElementTitle();
 			self.$tab.append(Mustache.render(TAB_ITEM_TEMPLATE, propertyData));
-			self.$el.append(propertyElement);
+			this.appendChild(propertyElement);
 		}
 	}
 
@@ -258,6 +262,6 @@ class PropertyContainer extends DressElement {
 	}
 }
 
-const PropertyContainerElement = document.registerElement('closet-property-container-element', PropertyContainer);
+customElements.define('closet-property-container-element', PropertyContainer);
 
-export {PropertyContainerElement, PropertyContainer};
+export {PropertyContainer};

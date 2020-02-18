@@ -2,7 +2,7 @@
 
 import {eventEmitter, EVENTS} from '../events-emitter';
 import editor from '../editor';
-import {PanelElement} from './../panel/panel';
+import {Panel} from './../panel/panel';
 
 /**
  *
@@ -102,7 +102,7 @@ class PanelManager {
 
 		options = options || {};
 
-		panel = new PanelElement();
+		panel = new Panel();
 
 		panel.hide();
 		if (side !== 'modal') {
@@ -158,7 +158,7 @@ class PanelManager {
 			} else {
 				panelInstance = this.createPanel(options.type, options);
 			}
-			this._panels.set(options.item, panelInstance);
+			this._panels.set(options.item || {}, panelInstance);
 		}
 		if (options.type !== 'modal' && (options.visible || options.visible === undefined)) {
 			panelInstance.classList.add('closet-editor-panel-visible');

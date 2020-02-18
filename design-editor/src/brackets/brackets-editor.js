@@ -10,11 +10,11 @@ import {BracketsPreferenceManager} from './brackets-preference-manager';
 import {PreferenceManager} from '../preference-manager';
 import bracketsDefaultConfig from '../package-config';
 import {BracketsStatusBar} from './brackets-status-bar';
-import {ConfigurationDesignAreaElement} from '../panel/configuration-design-area-element';
+import {ConfigurationDesignArea} from '../panel/configuration-design-area-element';
 import {stageManager} from '../system/stage-manager';
 import {appManager} from '../app-manager';
 import utils from '../utils/utils';
-import {DesignEditorElement} from '../pane/design-editor-element';
+import {DesignEditor} from '../pane/design-editor-element';
 import {panelManager} from '../system/panel-manager';
 import {EVENTS, eventEmitter} from '../events-emitter';
 import {ModelManager} from '../pane/model-manager';
@@ -42,9 +42,9 @@ class BracketsEditor {
 		// This will register BracketsPreferenceManager inside PreferenceManager
 		BracketsPreferenceManager.initialize();
 
-		element = new DesignEditorElement();
+		element = new DesignEditor();
 		statusBarElement = new BracketsStatusBar();
-		configurationDesignAreaElement = new ConfigurationDesignAreaElement();
+		configurationDesignAreaElement = new ConfigurationDesignArea();
 
 		modelManager = ModelManager.getInstance();
 

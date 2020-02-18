@@ -5,13 +5,12 @@ import {packageManager, Package} from 'content-manager';
 import {appManager as AppManager} from '../../../app-manager';
 import {DressElement} from '../../../utils/dress-element';
 import {EVENTS, eventEmitter} from '../../../events-emitter';
-import {AttributeStylesElement} from './attribute-element-styles';
-import {AttributeLayoutElement} from './attribute-element-layout';
-import {AttributeSmartThingsElement} from './attribute-element-sthings';
-import {AttributeInteractiveElement} from './attribute-element-interactive';
-import {AttributeImageElement} from './attribute-element-image';
-import {AttributeCheckboxElement} from './attribute-element-checkbox';
-import AttributeGradient from './attribute-background-gradient';
+import {AttributeStyles} from './attribute-element-styles';
+import {AttributeLayout} from './attribute-element-layout';
+import {AttributeSmartThings} from './attribute-element-sthings';
+import {AttributeInteractive} from './attribute-element-interactive';
+import {AttributeImage} from './attribute-element-image';
+import {AttributeCheckbox} from './attribute-element-checkbox';
 import utils from '../../../utils/utils';
 import attributeUtils from '../../../utils/attribute-utils';
 import BackgroundGradient from './attribute-background-gradient';
@@ -47,18 +46,23 @@ function convertToOptionName(str) {
  *
  */
 class Attribute extends DressElement {
+	constructor() {
+		super();
+
+	}
+
     /**
      * Create callback
      */
     onCreated() {
-        var self = this;
+		var self = this;
 
-        self._stylesElement = new AttributeStylesElement();
-        self._layoutElement = new AttributeLayoutElement();
-        self._sthingsElement = new AttributeSmartThingsElement();
-        self._interactiveElement = new AttributeInteractiveElement();
-        self._imageElement = new AttributeImageElement();
-        self._checkboxElement = new AttributeCheckboxElement();
+		self._stylesElement = new AttributeStyles();
+		self._layoutElement = new AttributeLayout();
+		self._sthingsElement = new AttributeSmartThings();
+        self._interactiveElement = new AttributeInteractive();
+        self._imageElement = new AttributeImage();
+        self._checkboxElement = new AttributeCheckbox();
 		self.model = null;
 		self._gradient = new BackgroundGradient(document);
         self.classList.add('closet-attribute-element-container');
@@ -934,6 +938,6 @@ class Attribute extends DressElement {
 	}
 }
 
-const AttributeElement = document.registerElement('closet-attribute-element', Attribute);
+customElements.define('closet-attribute-element', Attribute);
 
-export {AttributeElement, Attribute};
+export {Attribute};

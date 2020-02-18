@@ -199,6 +199,6 @@ class AttributeImage extends DressElement {
 	}
 }
 
-const AttributeImageElement = document.registerElement('closet-image-element', AttributeImage);
+customElements.define('closet-image-element', AttributeImage);
 
-export {AttributeImageElement, AttributeImage};
+export {AttributeImage};

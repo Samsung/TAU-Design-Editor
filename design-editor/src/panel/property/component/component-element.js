@@ -584,24 +584,24 @@ class Component extends DressElement {
         return 'Widgets';
     }
 
-    /**
-     * Show element
-     */
-    show() {
-        this._render();
-        this.$el.removeClass('fast-hide')
-            .addClass('fast-show');
-    }
+	/**
+	 * Show element
+	 */
+	show() {
+		this._render();
+		this.classList.remove('fast-hide');
+		this.classList.add('fast-show');
+	}
 
-    /**
-     * Hide element
-     */
-    hide() {
-        this.$el.addClass('fast-hide')
-            .removeClass('fast-show');
-    }
+	/**
+	 * Hide element
+	 */
+	hide() {
+		this.classList.add('fast-hide');
+		this.classList.remove('fast-show');
+	}
 }
 
-const ComponentElement = document.registerElement('closet-component-element', Component);
+customElements.define('closet-component-element', Component);
 
-export {Component, ComponentElement};
+export {Component};

@@ -271,6 +271,6 @@ class AttributeLayout extends DressElement {
 
 }
 
-const AttributeLayoutElement = document.registerElement('closet-attribute-element-layout', AttributeLayout);
+customElements.define('closet-attribute-element-layout', AttributeLayout);
 
-export {AttributeLayoutElement, AttributeLayout};
+export {AttributeLayout};

@@ -1,40 +1,42 @@
 'use babel';
 
-class Grid extends HTMLCanvasElement {
-    /**
-     * Create callback
-     */
-    createdCallback() {
-        this.options = {
-            step: 50,
-            color: 'rgba(255, 255, 255, 0.1)',
-            defaultWidth: 720,
-            defaultHeight: 1280 
-        };
-    }
+class Grid extends HTMLElement {
+	/**
+	 * Create callback
+	 */
+	constructor() {
+		super();
+		this.elemnent = document.createElement('canvas');
+		this.options = {
+			step: 50,
+			color: 'rgba(255, 255, 255, 0.1)',
+			defaultWidth: 720,
+			defaultHeight: 1280
+		};
+	}
 
-    /**
-     * Set layout
-     * @param {Object} offset
-     * @param {number} ratio
-     */
-    setLayout(offset, ratio) {
-        if (this.offsetWidth < this.options.defaultWidth) { // FIX_ME : unexpected layout size is now ignored
-            return;
-        }
-        if (this.offsetHeight < this.options.defaultHeight) {
-            return;
-        }
+	/**
+	 * Set layout
+	 * @param {Object} offset
+	 * @param {number} ratio
+	 */
+	setLayout(offset, ratio) {
+		if (this.elemnent.offsetWidth < this.options.defaultWidth) { // FIX_ME : unexpected layout size is now ignored
+			return;
+		}
+		if (this.elemnent.offsetHeight < this.options.defaultHeight) {
+			return;
+		}
 
-        var width = this.offsetWidth,
-            height = this.offsetHeight;
+		const width = this.elemnent.offsetWidth,
+			height = this.elemnent.offsetHeight;
 
-        this.setAttribute('width', width);
-        this.setAttribute('height', height);
-        this.style.width = width + 'px';
-        this.style.height = height + 'px';
-        this._draw(width, height, offset, ratio);
-    }
+		this.setAttribute('width', width);
+		this.setAttribute('height', height);
+		this.style.width = `${width  }px`;
+		this.style.height = `${height  }px`;
+		this._draw(width, height, offset, ratio);
+	}
 
     /**
      * Scroll
@@ -91,9 +93,6 @@ class Grid extends HTMLCanvasElement {
 }
 
 
-const GridElement = document.registerElement('closet-design-editor-grid', {
-    prototype: Grid.prototype,
-    extends: 'canvas'
-});
+customElements.define('closet-design-editor-grid', Grid);
 
-export {Grid, GridElement};
+export {Grid};

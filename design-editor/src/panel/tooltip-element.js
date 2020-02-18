@@ -177,6 +177,6 @@ class Tooltip extends DressElement {
     }
 }
 
-const TooltipElement = document.registerElement('closet-tooltip', Tooltip);
+customElements.define('closet-tooltip', Tooltip);
 
-export {TooltipElement, Tooltip};
+export {Tooltip};

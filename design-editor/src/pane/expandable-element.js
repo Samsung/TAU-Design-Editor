@@ -93,6 +93,6 @@ class Expandable extends DressElement {
 
 }
 
-const ExpandableElement = document.registerElement('closet-expandable-element', Expandable);
+customElements.define('closet-expandable-element', Expandable);
 
-export {ExpandableElement, Expandable};
+export {Expandable};
