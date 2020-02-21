@@ -79,8 +79,8 @@ class PageWizard extends Component {
 			const data = {
 				...metadata[templateName].options,
 				id: templateName,
-				templateFileName: data.templateFileName || DEFAULT_TEMPLATE_NAME
 			};
+			data.templpateFileName = data.templateFileName || DEFAULT_TEMPLATE_NAME;
 			if (!this._templateMetadata[data.profile]) {
 				this._templateMetadata[data.profile] = [];
 			}
