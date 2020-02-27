@@ -1,4 +1,3 @@
-'use babel';
 
 import mustache from 'mustache';
 import $ from 'jquery';
@@ -13,13 +12,15 @@ const TEMPLATE_FILE = 'panel/property/attribute/templates/attribute-checkbox.htm
 
 class AttributeCheckbox extends DressElement {
 
-  constructor() {
-    this._target;
-    this._model;
-    this._imgEnable;
-    this._imgDisable;
-    this._styleEl;
-  }
+	constructor() {
+		super();
+		// this._target;
+		// this._model;
+		// this._imgEnable;
+		// this._imgDisable;
+		// this._styleEl;
+	}
+
   /**
    * Create callback
     */

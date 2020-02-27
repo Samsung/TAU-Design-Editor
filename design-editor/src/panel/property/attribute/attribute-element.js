@@ -1,5 +1,3 @@
-'use babel';
-
 import $ from 'jquery';
 import {packageManager, Package} from 'content-manager';
 import {appManager as AppManager} from '../../../app-manager';
@@ -18,12 +16,12 @@ import BackgroundGradient from './attribute-background-gradient';
 const TEMPLATE_FILE_PATH = '/panel/property/attribute/';
 const ATTRIBUTE_ELEMENT_FILE_NAME = 'templates/attribute-element.html';
 const attributeTemplates = {
-    'ATTRIBUTE_DIMENSION_POSITION_FILE_NAME': 'templates/attribute-dimension-position.html',
-    'ATTRIBUTE_BACKGROUND_FILE_NAME': 'templates/attribute-background.html',
-    'ATTRIBUTE_FLEX_FILE_NAME': 'templates/attribute-flex.html',
-    'ATTRIBUTE_TEXT_FILE_NAME': 'templates/attribute-text.html',
-    'ATTRIBUTE_BOX_MODEL_FILE_NAME': 'templates/attribute-box-model.html',
-    'ATTRIBUTE_COVERFLOW_NAME': 'templates/attribute-coverflow.html'
+	'ATTRIBUTE_DIMENSION_POSITION_FILE_NAME': 'templates/attribute-dimension-position.html',
+	'ATTRIBUTE_BACKGROUND_FILE_NAME': 'templates/attribute-background.html',
+	'ATTRIBUTE_FLEX_FILE_NAME': 'templates/attribute-flex.html',
+	'ATTRIBUTE_TEXT_FILE_NAME': 'templates/attribute-text.html',
+	'ATTRIBUTE_BOX_MODEL_FILE_NAME': 'templates/attribute-box-model.html',
+	'ATTRIBUTE_COVERFLOW_NAME': 'templates/attribute-coverflow.html'
 };
 const CSS_UNITS = ['em', 'ex', '%', 'px', 'cm', 'mm', 'in', 'pt', 'pc', 'ch', 'rem', 'vh', 'vw'];
 var script;
@@ -114,15 +112,15 @@ class Attribute extends DressElement {
      */
     _initializeAttributeDOM() {
         console.log('_initializeAttributeDOM');
-        var self = this,
-            $el = self.$el,
-            attribute = '';
-        $el.find('.closet-style-element-list').append(self._stylesElement);
-        $el.find('.closet-layout-element-list').append(self._layoutElement);
-        $el.find('.closet-interactive-element-list').append(self._interactiveElement);
-        $el.find('.closet-image-element-list').append(self._imageElement);
-        $el.find('.closet-checkbox-element-list').append(self._checkboxElement);
-        $el.find('.closet-attribute-element-smartthings').append(self._sthingsElement);
+		const self = this,
+			$el = $(this);
+		let attribute = '';
+		$el.find('.closet-style-element-list').append(self._stylesElement);
+		$el.find('.closet-layout-element-list').append(self._layoutElement);
+		$el.find('.closet-interactive-element-list').append(self._interactiveElement);
+		$el.find('.closet-image-element-list').append(self._imageElement);
+		$el.find('.closet-checkbox-element-list').append(self._checkboxElement);
+		$el.find('.closet-attribute-element-smartthings').append(self._sthingsElement);
 
         self._$list = $el.find('.closet-attribute-element-list');
         self._$optionsList = $el.find('.closet-widget-options-list');
@@ -318,18 +316,18 @@ class Attribute extends DressElement {
 
 						li = $(`<li class="${  attributeObject.type.name  }"></li>`);
 						label = $(`<span class="closet-attribute-label">${  attributeObject.label  }</span>`);
-						typeElement.$el.addClass('closet-attribute-type');
+						// typeElement.$el.addClass('closet-attribute-type');
 
 						li.append(label)
 							.append(typeElement)
 							.appendTo(fragment);
 
-						if (typeName === 'file' && options.value) {
-							// display input type="text" with value of element
-							typeElement.firstChild.style.display = 'none';
-							typeElement.lastChild.style.display = 'block';
-							typeElement.lastChild.firstElementChild.value = options.value;
-						}
+						// if (typeName === 'file' && options.value) {
+						// 	// display input type="text" with value of element
+						// 	typeElement.firstChild.style.display = 'none';
+						// 	typeElement.lastChild.style.display = 'block';
+						// 	typeElement.lastChild.firstElementChild.value = options.value;
+						// }
 					}
 				});
 
@@ -406,38 +404,38 @@ class Attribute extends DressElement {
 							options.value = currentValue;
 						}
 
-						const typeElement = new TypeElement(options);
-						const eventName = (type === 'select') ? 'change' : 'keyup';
+						// const typeElement = new TypeElement(options);
+						// const eventName = (type === 'select') ? 'change' : 'keyup';
 
-						typeElement.$el.on(eventName, () => {
-							if (designEditor) {
-								const boundWidgets = element.getAttribute('data-tau-bound');
-								if (boundWidgets) {
-									boundWidgets.split(',').forEach(name => {
-										engine
-											.instanceWidget(element, name)
-											.option(optionName, typeElement.value);
-									});
-								}
-								if (typeElement.value !== '') {
-									designEditor
-										.getModel()
-										.updateAttribute(self._selectedElementId, `data-${  option.name}`,
-											typeElement.value);
-								} else {
-									designEditor
-										.getModel()
-										.removeAttribute(self._selectedElementId, `data-${  option.name}`);
-								}
-							}
-						});
+						// typeElement.$el.on(eventName, () => {
+						// 	if (designEditor) {
+						// 		const boundWidgets = element.getAttribute('data-tau-bound');
+						// 		if (boundWidgets) {
+						// 			boundWidgets.split(',').forEach(name => {
+						// 				engine
+						// 					.instanceWidget(element, name)
+						// 					.option(optionName, typeElement.value);
+						// 			});
+						// 		}
+						// 		if (typeElement.value !== '') {
+						// 			designEditor
+						// 				.getModel()
+						// 				.updateAttribute(self._selectedElementId, `data-${  option.name}`,
+						// 					typeElement.value);
+						// 		} else {
+						// 			designEditor
+						// 				.getModel()
+						// 				.removeAttribute(self._selectedElementId, `data-${  option.name}`);
+						// 		}
+						// 	}
+						// });
 
 						const li = $(`<li class="${  type  }"></li>`);
 						const label = $(`<span class="closet-attribute-label">${  option.label  }</span>`);
-						typeElement.$el.addClass('closet-attribute-type');
+						// typeElement.$el.addClass('closet-attribute-type');
 
 						li.append(label)
-							.append(typeElement)
+							// .append(typeElement)
 							.appendTo(optionsFragment);
 					}
 
@@ -901,33 +899,33 @@ class Attribute extends DressElement {
      * @param {string} attribute
      * @private
      */
-    _updateAttributes(el, attribute) {
-        var self = this,
-            styles = el.style,
-            content = el.content,
-            listElements = self._AttributeElementLists[attribute + 'Elements'];
+	_updateAttributes(el, attribute) {
+		const self = this,
+			styles = el.style,
+			content = el.content,
+			listElements = self._AttributeElementLists[`${attribute  }Elements`];
 
 		Object.keys(listElements).forEach((item) => {
 			const value = styles[item] || this._computedStyle[item];
-            switch (item) {
-            case 'borderColor':
-                listElements[item].val(utils.rgba2hex(value));
-                break;
+			switch (item) {
+			case 'borderColor':
+				listElements[item].val(utils.rgba2hex(value));
+				break;
 			case 'backgroundColor':
 				this.displayBackgroundColorResetButton(el.id);
-                listElements[item].val(utils.rgba2hex(value));
-                break;
-            case 'backgroundImage':
-                self._applyBackgroundImageInfo(this._gradient.createImageCSS(value));
-                break;
-            case 'color':
-                listElements[item].val(utils.rgba2hex(value));
-                break;
-            case 'fontFamily':
-                listElements[item].val(value.replace(/^"(.*)"$/, '$1'));
-                break;
-            case 'content':
-                listElements[item].val(content);
+				listElements[item].val(utils.rgba2hex(value));
+				break;
+			case 'backgroundImage':
+				self._applyBackgroundImageInfo(this._gradient.createImageCSS(value));
+				break;
+			case 'color':
+				listElements[item].val(utils.rgba2hex(value));
+				break;
+			case 'fontFamily':
+				listElements[item].val(value.replace(/^"(.*)"$/, '$1'));
+				break;
+			case 'content':
+				listElements[item].val(content);
 				break;
 			case 'effect':
 				break;

@@ -7,8 +7,9 @@ import attributeUtils from '../../../utils/attribute-utils';
 
 const TEMPLATE_FILE = 'panel/property/attribute/attribute-element-interactive.html';
 
-class AttributeInterative extends DressElement {
-	onAttached() {
+class AttributeInteractive extends DressElement {
+	constructor() {
+		super();
 		this._render();
 	}
 
@@ -68,5 +69,5 @@ class AttributeInterative extends DressElement {
 	}
 }
 
-customElements.define('closet-attribute-interactive', AttributeInterative);
-export {AttributeInterative};
+customElements.define('closet-attribute-interactive', AttributeInteractive);
+export {AttributeInteractive};

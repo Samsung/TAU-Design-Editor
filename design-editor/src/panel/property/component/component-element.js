@@ -1,4 +1,3 @@
-'use babel';
 
 import path from 'path';
 import mustache from 'mustache';
@@ -21,9 +20,9 @@ let waitForInterval = false;
 let renderTimeoutHandler = null;
 
 const dragInfo = {
-    currentDragEvent: null,
-    componentInfo: null,
-    $dragHelper: null
+	currentDragEvent: null,
+	componentInfo: null,
+	$dragHelper: null
 };
 
 const
@@ -53,11 +52,16 @@ function dragInterval() {
  */
 class Component extends DressElement {
 
+	constructor() {
+		super();
+		this._initialize();
+	}
+
 	/**
 	 * Method called when CE is created.
 	 */
 	onCreated() {
-		const screen = StateManager.get('screen');
+		const screen = StateManager.get('screen', 'mobile');
 		this.classList.add('closet-property');
 		// @todo: change this to more configurable
 		this._profile = screen.profile || 'mobile';
@@ -70,13 +74,6 @@ class Component extends DressElement {
 		 */
 		this._dragAnimationFrameRequestId = 0;
 	}
-
-    /**
-     * Method called on attached element to DOM
-     */
-    onAttached() {
-        this._initialize();
-    }
 
 	/**
 	 * Method called when element is destroyed
