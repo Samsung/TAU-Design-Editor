@@ -14,7 +14,7 @@
     "babel-preset-es2015": "^6.9.0",
     "fs-extra": "latest",
     "jquery": "latest",
-    "jquery-ui": "1.10.5",
+    "jquery-ui": "1.13.0",
     "js-beautify": "^1.6.2",
     "mustache": "latest"
   },
