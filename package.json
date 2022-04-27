@@ -33,7 +33,7 @@
     "cross-env": "^5.2.0",
     "css-loader": ">=0.28.11",
     "eslint": "^5.16.0",
-    "grunt": "^1.0.3",
+    "grunt": "^1.5.2",
     "jsdom": "15.1.1",
     "jsdom-global": "3.0.2",
     "less-loader": "^4.1.0",
