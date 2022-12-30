@@ -38,7 +38,7 @@
     "jsdom-global": "3.0.2",
     "less-loader": "^4.1.0",
     "lint-diff": "^1.2.1",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "nyc": "^14.1.1",
     "subpackage": "^1.1.0",
     "webpack": "^4.33.0",
